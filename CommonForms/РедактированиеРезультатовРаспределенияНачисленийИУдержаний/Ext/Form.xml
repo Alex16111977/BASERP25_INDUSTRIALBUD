@@ -1,0 +1,1279 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
+	<Title>
+		<v8:item>
+			<v8:lang>ru</v8:lang>
+			<v8:content>Распределение по статьям финансирования</v8:content>
+		</v8:item>
+		<v8:item>
+			<v8:lang>uk</v8:lang>
+			<v8:content>Розподіл за статтями фінансування</v8:content>
+		</v8:item>
+	</Title>
+	<Width>60</Width>
+	<WindowOpeningMode>LockOwnerWindow</WindowOpeningMode>
+	<AutoTitle>false</AutoTitle>
+	<CommandBarLocation>Bottom</CommandBarLocation>
+	<CommandSet>
+		<ExcludedCommand>Abort</ExcludedCommand>
+		<ExcludedCommand>Cancel</ExcludedCommand>
+		<ExcludedCommand>Close</ExcludedCommand>
+		<ExcludedCommand>CustomizeForm</ExcludedCommand>
+		<ExcludedCommand>Help</ExcludedCommand>
+		<ExcludedCommand>Ignore</ExcludedCommand>
+		<ExcludedCommand>No</ExcludedCommand>
+		<ExcludedCommand>OK</ExcludedCommand>
+		<ExcludedCommand>RestoreValues</ExcludedCommand>
+		<ExcludedCommand>Retry</ExcludedCommand>
+		<ExcludedCommand>SaveValues</ExcludedCommand>
+		<ExcludedCommand>Yes</ExcludedCommand>
+	</CommandSet>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+		<HorizontalAlign>Right</HorizontalAlign>
+		<Autofill>false</Autofill>
+	</AutoCommandBar>
+	<Events>
+		<Event name="BeforeClose">ПередЗакрытием</Event>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+		<Event name="FillCheckProcessingAtServer">ОбработкаПроверкиЗаполненияНаСервере</Event>
+	</Events>
+	<ChildItems>
+		<LabelField name="Сотрудник" id="24">
+			<DataPath>Сотрудник</DataPath>
+			<TitleLocation>None</TitleLocation>
+			<ContextMenu name="СотрудникКонтекстноеМеню" id="25"/>
+			<ExtendedTooltip name="СотрудникРасширеннаяПодсказка" id="26"/>
+		</LabelField>
+		<Pages name="РезультатыСтраницы" id="33">
+			<PagesRepresentation>None</PagesRepresentation>
+			<ExtendedTooltip name="РезультатыСтраницыРасширеннаяПодсказка" id="34"/>
+			<ChildItems>
+				<Page name="ОдинРезультатСтраница" id="35">
+					<ExtendedTooltip name="ОдинРезультатСтраницаРасширеннаяПодсказка" id="36"/>
+					<ChildItems>
+						<UsualGroup name="ГруппаРаспределяемая" id="95">
+							<Group>Horizontal</Group>
+							<Behavior>Usual</Behavior>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="ГруппаРаспределяемаяРасширеннаяПодсказка" id="96"/>
+							<ChildItems>
+								<LabelField name="ВидРасчета" id="27">
+									<DataPath>РаспределяемыйРезультат[0].Представление</DataPath>
+									<TitleLocation>None</TitleLocation>
+									<ContextMenu name="ВидРасчетаКонтекстноеМеню" id="28"/>
+									<ExtendedTooltip name="ВидРасчетаРасширеннаяПодсказка" id="29"/>
+								</LabelField>
+								<InputField name="Результат" id="30">
+									<DataPath>РаспределяемыйРезультат[0].Результат</DataPath>
+									<ReadOnly>true</ReadOnly>
+									<TitleLocation>None</TitleLocation>
+									<ContextMenu name="РезультатКонтекстноеМеню" id="31"/>
+									<ExtendedTooltip name="РезультатРасширеннаяПодсказка" id="32"/>
+								</InputField>
+							</ChildItems>
+						</UsualGroup>
+						<Table name="РаспределениеРезультата" id="70">
+							<Representation>List</Representation>
+							<HeightInTableRows>3</HeightInTableRows>
+							<EnableStartDrag>true</EnableStartDrag>
+							<EnableDrag>true</EnableDrag>
+							<FileDragMode>AsFile</FileDragMode>
+							<DataPath>РаспределениеРезультатов</DataPath>
+							<SearchStringLocation>None</SearchStringLocation>
+							<ViewStatusLocation>None</ViewStatusLocation>
+							<SearchControlLocation>None</SearchControlLocation>
+							<RowFilter xsi:nil="true"/>
+							<ContextMenu name="РаспределениеРезультатаКонтекстноеМеню" id="71"/>
+							<AutoCommandBar name="РаспределениеРезультатаКоманднаяПанель" id="72"/>
+							<ExtendedTooltip name="РаспределениеРезультатаРасширеннаяПодсказка" id="73"/>
+							<SearchStringAddition name="РаспределениеРезультатаСтрокаПоиска" id="99">
+								<AdditionSource>
+									<Item>РаспределениеРезультата</Item>
+									<Type>SearchStringRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="РаспределениеРезультатаСтрокаПоискаКонтекстноеМеню" id="100"/>
+								<ExtendedTooltip name="РаспределениеРезультатаСтрокаПоискаРасширеннаяПодсказка" id="101"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="РаспределениеРезультатаСостояниеПросмотра" id="102">
+								<AdditionSource>
+									<Item>РаспределениеРезультата</Item>
+									<Type>ViewStatusRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="РаспределениеРезультатаСостояниеПросмотраКонтекстноеМеню" id="103"/>
+								<ExtendedTooltip name="РаспределениеРезультатаСостояниеПросмотраРасширеннаяПодсказка" id="104"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="РаспределениеРезультатаУправлениеПоиском" id="105">
+								<AdditionSource>
+									<Item>РаспределениеРезультата</Item>
+									<Type>SearchControl</Type>
+								</AdditionSource>
+								<ContextMenu name="РаспределениеРезультатаУправлениеПоискомКонтекстноеМеню" id="106"/>
+								<ExtendedTooltip name="РаспределениеРезультатаУправлениеПоискомРасширеннаяПодсказка" id="107"/>
+							</SearchControlAddition>
+							<Events>
+								<Event name="OnEditEnd">РаспределениеРезультатаПриОкончанииРедактирования</Event>
+								<Event name="OnStartEdit">РаспределениеРезультатаПриНачалеРедактирования</Event>
+								<Event name="AfterDeleteRow">РаспределениеРезультатаПослеУдаления</Event>
+							</Events>
+							<ChildItems>
+								<InputField name="РаспределениеРезультатаСотрудник" id="74">
+									<DataPath>РаспределениеРезультатов.Сотрудник</DataPath>
+									<Visible>false</Visible>
+									<EditMode>EnterOnInput</EditMode>
+									<ChoiceButton>false</ChoiceButton>
+									<AutoChoiceIncomplete>true</AutoChoiceIncomplete>
+									<AutoMarkIncomplete>true</AutoMarkIncomplete>
+									<TextEdit>false</TextEdit>
+									<ChoiceParameterLinks>
+										<xr:Link>
+											<xr:Name>Отбор.ТекущаяОрганизация</xr:Name>
+											<xr:DataPath xsi:type="xs:string">Организация</xr:DataPath>
+											<xr:ValueChange>Clear</xr:ValueChange>
+										</xr:Link>
+										<xr:Link>
+											<xr:Name>Отбор.ДатаПримененияОтбора</xr:Name>
+											<xr:DataPath xsi:type="xs:string">Период</xr:DataPath>
+											<xr:ValueChange>Clear</xr:ValueChange>
+										</xr:Link>
+									</ChoiceParameterLinks>
+									<ContextMenu name="РаспределениеРезультатаСотрудникКонтекстноеМеню" id="75"/>
+									<ExtendedTooltip name="РаспределениеРезультатаСотрудникРасширеннаяПодсказка" id="76"/>
+									<Events>
+										<Event name="ChoiceProcessing">РаспределениеРезультатаСотрудникОбработкаВыбора</Event>
+									</Events>
+								</InputField>
+								<InputField name="РаспределениеРезультатаПодразделение" id="77">
+									<DataPath>РаспределениеРезультатов.Подразделение</DataPath>
+									<Visible>false</Visible>
+									<EditMode>EnterOnInput</EditMode>
+									<Width>10</Width>
+									<AutoChoiceIncomplete>true</AutoChoiceIncomplete>
+									<ChoiceParameterLinks>
+										<xr:Link>
+											<xr:Name>Отбор.Владелец</xr:Name>
+											<xr:DataPath xsi:type="xs:string">Организация</xr:DataPath>
+											<xr:ValueChange>Clear</xr:ValueChange>
+										</xr:Link>
+									</ChoiceParameterLinks>
+									<ContextMenu name="РаспределениеРезультатаПодразделениеКонтекстноеМеню" id="78"/>
+									<ExtendedTooltip name="РаспределениеРезультатаПодразделениеРасширеннаяПодсказка" id="79"/>
+								</InputField>
+								<InputField name="РаспределениеРезультатаСтатьяФинансирования" id="80">
+									<DataPath>РаспределениеРезультатов.СтатьяФинансирования</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<AutoChoiceIncomplete>true</AutoChoiceIncomplete>
+									<AutoMarkIncomplete>true</AutoMarkIncomplete>
+									<ContextMenu name="РаспределениеРезультатаСтатьяФинансированияКонтекстноеМеню" id="81"/>
+									<ExtendedTooltip name="РаспределениеРезультатаСтатьяФинансированияРасширеннаяПодсказка" id="82"/>
+								</InputField>
+								<InputField name="РаспределениеРезультатаСтатьяРасходов" id="83">
+									<DataPath>РаспределениеРезультатов.СтатьяРасходов</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<Width>15</Width>
+									<AutoChoiceIncomplete>true</AutoChoiceIncomplete>
+									<AutoMarkIncomplete>true</AutoMarkIncomplete>
+									<ContextMenu name="РаспределениеРезультатаСтатьяРасходовКонтекстноеМеню" id="84"/>
+									<ExtendedTooltip name="РаспределениеРезультатаСтатьяРасходовРасширеннаяПодсказка" id="85"/>
+								</InputField>
+								<InputField name="РаспределениеРезультатаСпособОтраженияЗарплатыВБухучете" id="86">
+									<DataPath>РаспределениеРезультатов.СпособОтраженияЗарплатыВБухучете</DataPath>
+									<Visible>false</Visible>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Способ отражения</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Спосіб відображення</v8:content>
+										</v8:item>
+									</Title>
+									<EditMode>EnterOnInput</EditMode>
+									<AutoChoiceIncomplete>true</AutoChoiceIncomplete>
+									<AutoMarkIncomplete>true</AutoMarkIncomplete>
+									<ContextMenu name="РаспределениеРезультатаСпособОтраженияЗарплатыВБухучетеКонтекстноеМеню" id="87"/>
+									<ExtendedTooltip name="РаспределениеРезультатаСпособОтраженияЗарплатыВБухучетеРасширеннаяПодсказка" id="88"/>
+								</InputField>
+								<CheckBoxField name="РаспределениеРезультатаОблагаетсяЕНВД" id="89">
+									<DataPath>РаспределениеРезультатов.ОблагаетсяЕНВД</DataPath>
+									<Visible>false</Visible>
+									<EditMode>EnterOnInput</EditMode>
+									<CheckBoxType>Auto</CheckBoxType>
+									<ContextMenu name="РаспределениеРезультатаОблагаетсяЕНВДКонтекстноеМеню" id="90"/>
+									<ExtendedTooltip name="РаспределениеРезультатаОблагаетсяЕНВДРасширеннаяПодсказка" id="91"/>
+								</CheckBoxField>
+								<InputField name="РаспределениеРезультатаРезультат" id="92">
+									<DataPath>РаспределениеРезультатов.Результат</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Сумма</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Сума</v8:content>
+										</v8:item>
+									</Title>
+									<EditMode>EnterOnInput</EditMode>
+									<FixingInTable>Right</FixingInTable>
+									<FooterDataPath>ИтогоРезультатРаспределения</FooterDataPath>
+									<Width>12</Width>
+									<HorizontalStretch>false</HorizontalStretch>
+									<ContextMenu name="РаспределениеРезультатаРезультатКонтекстноеМеню" id="93"/>
+									<ExtendedTooltip name="РаспределениеРезультатаРезультатРасширеннаяПодсказка" id="94"/>
+								</InputField>
+							</ChildItems>
+						</Table>
+					</ChildItems>
+				</Page>
+				<Page name="НесколькоРезультатовСтраница" id="37">
+					<ExtendedTooltip name="НесколькоРезультатовСтраницаРасширеннаяПодсказка" id="38"/>
+					<ChildItems>
+						<Table name="РаспределяемыйРезультат" id="39">
+							<Representation>List</Representation>
+							<TitleLocation>Top</TitleLocation>
+							<CommandBarLocation>None</CommandBarLocation>
+							<ReadOnly>true</ReadOnly>
+							<HeightInTableRows>3</HeightInTableRows>
+							<Header>false</Header>
+							<AutoInsertNewRow>true</AutoInsertNewRow>
+							<EnableStartDrag>true</EnableStartDrag>
+							<EnableDrag>true</EnableDrag>
+							<FileDragMode>AsFile</FileDragMode>
+							<DataPath>РаспределяемыйРезультат</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Распределяемые суммы</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Розподіляються суми</v8:content>
+								</v8:item>
+							</Title>
+							<CommandSet>
+								<ExcludedCommand>Add</ExcludedCommand>
+								<ExcludedCommand>CancelSearch</ExcludedCommand>
+								<ExcludedCommand>Change</ExcludedCommand>
+								<ExcludedCommand>Copy</ExcludedCommand>
+								<ExcludedCommand>CopyToClipboard</ExcludedCommand>
+								<ExcludedCommand>Delete</ExcludedCommand>
+								<ExcludedCommand>EndEdit</ExcludedCommand>
+								<ExcludedCommand>Find</ExcludedCommand>
+								<ExcludedCommand>MoveDown</ExcludedCommand>
+								<ExcludedCommand>MoveUp</ExcludedCommand>
+								<ExcludedCommand>OutputList</ExcludedCommand>
+								<ExcludedCommand>SelectAll</ExcludedCommand>
+								<ExcludedCommand>SortListAsc</ExcludedCommand>
+								<ExcludedCommand>SortListDesc</ExcludedCommand>
+							</CommandSet>
+							<SearchStringLocation>None</SearchStringLocation>
+							<ViewStatusLocation>None</ViewStatusLocation>
+							<SearchControlLocation>None</SearchControlLocation>
+							<RowFilter xsi:nil="true"/>
+							<ContextMenu name="РаспределяемыйРезультатКонтекстноеМеню" id="40"/>
+							<AutoCommandBar name="РаспределяемыйРезультатКоманднаяПанель" id="41"/>
+							<ExtendedTooltip name="РаспределяемыйРезультатРасширеннаяПодсказка" id="42"/>
+							<SearchStringAddition name="РаспределяемыйРезультатСтрокаПоиска" id="108">
+								<AdditionSource>
+									<Item>РаспределяемыйРезультат</Item>
+									<Type>SearchStringRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="РаспределяемыйРезультатСтрокаПоискаКонтекстноеМеню" id="109"/>
+								<ExtendedTooltip name="РаспределяемыйРезультатСтрокаПоискаРасширеннаяПодсказка" id="110"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="РаспределяемыйРезультатСостояниеПросмотра" id="111">
+								<AdditionSource>
+									<Item>РаспределяемыйРезультат</Item>
+									<Type>ViewStatusRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="РаспределяемыйРезультатСостояниеПросмотраКонтекстноеМеню" id="112"/>
+								<ExtendedTooltip name="РаспределяемыйРезультатСостояниеПросмотраРасширеннаяПодсказка" id="113"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="РаспределяемыйРезультатУправлениеПоиском" id="114">
+								<AdditionSource>
+									<Item>РаспределяемыйРезультат</Item>
+									<Type>SearchControl</Type>
+								</AdditionSource>
+								<ContextMenu name="РаспределяемыйРезультатУправлениеПоискомКонтекстноеМеню" id="115"/>
+								<ExtendedTooltip name="РаспределяемыйРезультатУправлениеПоискомРасширеннаяПодсказка" id="116"/>
+							</SearchControlAddition>
+							<Events>
+								<Event name="OnActivateRow">РаспределяемыйРезультатПриАктивизацииСтроки</Event>
+							</Events>
+							<ChildItems>
+								<InputField name="РаспределяемыйРезультатПредставление" id="46">
+									<DataPath>РаспределяемыйРезультат.Представление</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="РаспределяемыйРезультатПредставлениеКонтекстноеМеню" id="47"/>
+									<ExtendedTooltip name="РаспределяемыйРезультатПредставлениеРасширеннаяПодсказка" id="48"/>
+								</InputField>
+								<InputField name="РаспределяемыйРезультатРезультат" id="49">
+									<DataPath>РаспределяемыйРезультат.Результат</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="РаспределяемыйРезультатРезультатКонтекстноеМеню" id="50"/>
+									<ExtendedTooltip name="РаспределяемыйРезультатРезультатРасширеннаяПодсказка" id="51"/>
+								</InputField>
+							</ChildItems>
+						</Table>
+						<Table name="РаспределениеРезультатов" id="1">
+							<Representation>List</Representation>
+							<HeightInTableRows>3</HeightInTableRows>
+							<EnableStartDrag>true</EnableStartDrag>
+							<EnableDrag>true</EnableDrag>
+							<FileDragMode>AsFile</FileDragMode>
+							<DataPath>РаспределениеРезультатов</DataPath>
+							<SearchStringLocation>None</SearchStringLocation>
+							<ViewStatusLocation>None</ViewStatusLocation>
+							<SearchControlLocation>None</SearchControlLocation>
+							<RowFilter xsi:nil="true"/>
+							<ContextMenu name="РаспределениеРезультатовКонтекстноеМеню" id="2"/>
+							<AutoCommandBar name="РаспределениеРезультатовКоманднаяПанель" id="3"/>
+							<ExtendedTooltip name="РаспределениеРезультатовРасширеннаяПодсказка" id="4"/>
+							<SearchStringAddition name="РаспределениеРезультатовСтрокаПоиска" id="117">
+								<AdditionSource>
+									<Item>РаспределениеРезультатов</Item>
+									<Type>SearchStringRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="РаспределениеРезультатовСтрокаПоискаКонтекстноеМеню" id="118"/>
+								<ExtendedTooltip name="РаспределениеРезультатовСтрокаПоискаРасширеннаяПодсказка" id="119"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="РаспределениеРезультатовСостояниеПросмотра" id="120">
+								<AdditionSource>
+									<Item>РаспределениеРезультатов</Item>
+									<Type>ViewStatusRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="РаспределениеРезультатовСостояниеПросмотраКонтекстноеМеню" id="121"/>
+								<ExtendedTooltip name="РаспределениеРезультатовСостояниеПросмотраРасширеннаяПодсказка" id="122"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="РаспределениеРезультатовУправлениеПоиском" id="123">
+								<AdditionSource>
+									<Item>РаспределениеРезультатов</Item>
+									<Type>SearchControl</Type>
+								</AdditionSource>
+								<ContextMenu name="РаспределениеРезультатовУправлениеПоискомКонтекстноеМеню" id="124"/>
+								<ExtendedTooltip name="РаспределениеРезультатовУправлениеПоискомРасширеннаяПодсказка" id="125"/>
+							</SearchControlAddition>
+							<Events>
+								<Event name="OnEditEnd">РаспределениеРезультатовПриОкончанииРедактирования</Event>
+								<Event name="OnStartEdit">РаспределениеРезультатовПриНачалеРедактирования</Event>
+								<Event name="AfterDeleteRow">РаспределениеРезультатовПослеУдаления</Event>
+							</Events>
+							<ChildItems>
+								<InputField name="РаспределениеРезультатовСотрудник" id="52">
+									<DataPath>РаспределениеРезультатов.Сотрудник</DataPath>
+									<Visible>false</Visible>
+									<EditMode>EnterOnInput</EditMode>
+									<ChoiceButton>false</ChoiceButton>
+									<AutoChoiceIncomplete>true</AutoChoiceIncomplete>
+									<AutoMarkIncomplete>true</AutoMarkIncomplete>
+									<TextEdit>false</TextEdit>
+									<ChoiceParameterLinks>
+										<xr:Link>
+											<xr:Name>Отбор.ТекущаяОрганизация</xr:Name>
+											<xr:DataPath xsi:type="xs:string">Организация</xr:DataPath>
+											<xr:ValueChange>Clear</xr:ValueChange>
+										</xr:Link>
+										<xr:Link>
+											<xr:Name>Отбор.ДатаПримененияОтбора</xr:Name>
+											<xr:DataPath xsi:type="xs:string">Период</xr:DataPath>
+											<xr:ValueChange>Clear</xr:ValueChange>
+										</xr:Link>
+									</ChoiceParameterLinks>
+									<ContextMenu name="РаспределениеРезультатовСотрудникКонтекстноеМеню" id="53"/>
+									<ExtendedTooltip name="РаспределениеРезультатовСотрудникРасширеннаяПодсказка" id="54"/>
+									<Events>
+										<Event name="ChoiceProcessing">РаспределениеРезультатовСотрудникОбработкаВыбора</Event>
+									</Events>
+								</InputField>
+								<InputField name="РаспределениеРезультатовПодразделение" id="55">
+									<DataPath>РаспределениеРезультатов.Подразделение</DataPath>
+									<Visible>false</Visible>
+									<EditMode>EnterOnInput</EditMode>
+									<Width>10</Width>
+									<AutoChoiceIncomplete>true</AutoChoiceIncomplete>
+									<ChoiceParameterLinks>
+										<xr:Link>
+											<xr:Name>Отбор.Владелец</xr:Name>
+											<xr:DataPath xsi:type="xs:string">Организация</xr:DataPath>
+											<xr:ValueChange>Clear</xr:ValueChange>
+										</xr:Link>
+									</ChoiceParameterLinks>
+									<ContextMenu name="РаспределениеРезультатовПодразделениеКонтекстноеМеню" id="56"/>
+									<ExtendedTooltip name="РаспределениеРезультатовПодразделениеРасширеннаяПодсказка" id="57"/>
+								</InputField>
+								<InputField name="РаспределениеРезультатовСтатьяФинансирования" id="5">
+									<DataPath>РаспределениеРезультатов.СтатьяФинансирования</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<AutoChoiceIncomplete>true</AutoChoiceIncomplete>
+									<AutoMarkIncomplete>true</AutoMarkIncomplete>
+									<ContextMenu name="РаспределениеРезультатовСтатьяФинансированияКонтекстноеМеню" id="6"/>
+									<ExtendedTooltip name="РаспределениеРезультатовСтатьяФинансированияРасширеннаяПодсказка" id="7"/>
+								</InputField>
+								<InputField name="РаспределениеРезультатовСтатьяРасходов" id="8">
+									<DataPath>РаспределениеРезультатов.СтатьяРасходов</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<Width>15</Width>
+									<AutoChoiceIncomplete>true</AutoChoiceIncomplete>
+									<AutoMarkIncomplete>true</AutoMarkIncomplete>
+									<ContextMenu name="РаспределениеРезультатовСтатьяРасходовКонтекстноеМеню" id="9"/>
+									<ExtendedTooltip name="РаспределениеРезультатовСтатьяРасходовРасширеннаяПодсказка" id="10"/>
+								</InputField>
+								<InputField name="РаспределениеРезультатовСпособОтраженияЗарплатыВБухучете" id="11">
+									<DataPath>РаспределениеРезультатов.СпособОтраженияЗарплатыВБухучете</DataPath>
+									<Visible>false</Visible>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Способ отражения</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Спосіб відображення</v8:content>
+										</v8:item>
+									</Title>
+									<EditMode>EnterOnInput</EditMode>
+									<AutoChoiceIncomplete>true</AutoChoiceIncomplete>
+									<AutoMarkIncomplete>true</AutoMarkIncomplete>
+									<ContextMenu name="РаспределениеРезультатовСпособОтраженияЗарплатыВБухучетеКонтекстноеМеню" id="12"/>
+									<ExtendedTooltip name="РаспределениеРезультатовСпособОтраженияЗарплатыВБухучетеРасширеннаяПодсказка" id="13"/>
+								</InputField>
+								<CheckBoxField name="РаспределениеРезультатовОблагаетсяЕНВД" id="14">
+									<DataPath>РаспределениеРезультатов.ОблагаетсяЕНВД</DataPath>
+									<Visible>false</Visible>
+									<EditMode>EnterOnInput</EditMode>
+									<CheckBoxType>Auto</CheckBoxType>
+									<ContextMenu name="РаспределениеРезультатовОблагаетсяЕНВДКонтекстноеМеню" id="15"/>
+									<ExtendedTooltip name="РаспределениеРезультатовОблагаетсяЕНВДРасширеннаяПодсказка" id="16"/>
+								</CheckBoxField>
+								<InputField name="РаспределениеРезультатовРезультат" id="17">
+									<DataPath>РаспределениеРезультатов.Результат</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Сумма</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Сума</v8:content>
+										</v8:item>
+									</Title>
+									<EditMode>EnterOnInput</EditMode>
+									<FixingInTable>Right</FixingInTable>
+									<FooterDataPath>ИтогоРезультатРаспределения</FooterDataPath>
+									<Width>12</Width>
+									<HorizontalStretch>false</HorizontalStretch>
+									<ContextMenu name="РаспределениеРезультатовРезультатКонтекстноеМеню" id="18"/>
+									<ExtendedTooltip name="РаспределениеРезультатовРезультатРасширеннаяПодсказка" id="19"/>
+								</InputField>
+							</ChildItems>
+						</Table>
+					</ChildItems>
+				</Page>
+			</ChildItems>
+		</Pages>
+		<UsualGroup name="РезультатРаспределенияИнфо" id="58">
+			<Group>Horizontal</Group>
+			<Behavior>Usual</Behavior>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="РезультатРаспределенияИнфоРасширеннаяПодсказка" id="59"/>
+			<ChildItems>
+				<PictureField name="РезультатРаспределенияИнфоКартинка" id="60">
+					<DataPath>РезультатРаспределенияИнфоКартинка</DataPath>
+					<TitleLocation>None</TitleLocation>
+					<Width>3</Width>
+					<Height>1</Height>
+					<HorizontalStretch>false</HorizontalStretch>
+					<VerticalStretch>false</VerticalStretch>
+					<Border width="1">
+						<v8ui:style xsi:type="v8ui:ControlBorderType">WithoutBorder</v8ui:style>
+					</Border>
+					<FileDragMode>AsFile</FileDragMode>
+					<ContextMenu name="РезультатРаспределенияИнфоКартинкаКонтекстноеМеню" id="61"/>
+					<ExtendedTooltip name="РезультатРаспределенияИнфоКартинкаРасширеннаяПодсказка" id="62"/>
+				</PictureField>
+				<LabelField name="РезультатРаспределенияИнфоНадпись" id="63">
+					<DataPath>РезультатРаспределенияИнфоНадпись</DataPath>
+					<TitleLocation>None</TitleLocation>
+					<TextColor>style:ПоясняющийТекст</TextColor>
+					<ContextMenu name="РезультатРаспределенияИнфоНадписьКонтекстноеМеню" id="64"/>
+					<ExtendedTooltip name="РезультатРаспределенияИнфоНадписьРасширеннаяПодсказка" id="65"/>
+				</LabelField>
+				<CommandBar name="ГруппаКоманды" id="126">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Группа команды</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Група команди</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Группа команды</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Група команди</v8:content>
+						</v8:item>
+					</ToolTip>
+					<Width>1</Width>
+					<HorizontalLocation>Right</HorizontalLocation>
+					<ExtendedTooltip name="ГруппаКомандыРасширеннаяПодсказка" id="127"/>
+					<ChildItems>
+						<Button name="ФормаOk" id="128">
+							<Type>CommandBarButton</Type>
+							<DefaultButton>true</DefaultButton>
+							<CommandName>Form.Command.ОК</CommandName>
+							<ExtendedTooltip name="ФормаOkРасширеннаяПодсказка" id="129"/>
+						</Button>
+						<Button name="ФормаОтмена" id="130">
+							<Type>CommandBarButton</Type>
+							<CommandName>Form.Command.Отмена</CommandName>
+							<ExtendedTooltip name="ФормаОтменаРасширеннаяПодсказка" id="131"/>
+						</Button>
+					</ChildItems>
+				</CommandBar>
+			</ChildItems>
+		</UsualGroup>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="РаспределениеРезультатов" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Распределение результатов</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Розподіл результатів</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:ValueTable</v8:Type>
+			</Type>
+			<SavedData>true</SavedData>
+			<Columns>
+				<Column name="СтатьяФинансирования" id="1">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Статья финансирования</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Стаття фінансування</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.СтатьиФинансированияЗарплата</v8:Type>
+					</Type>
+				</Column>
+				<Column name="СтатьяРасходов" id="2">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Статья расходов</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Стаття витрат</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.СтатьиРасходовЗарплата</v8:Type>
+					</Type>
+					<FunctionalOptions>
+						<Item>FunctionalOption.РаботаВБюджетномУчреждении</Item>
+					</FunctionalOptions>
+				</Column>
+				<Column name="СпособОтраженияЗарплатыВБухучете" id="3">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Способ отражения зарплаты в бухучете</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Спосіб відображення зарплати в бухобліку</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.СпособыОтраженияЗарплатыВБухУчете</v8:Type>
+					</Type>
+				</Column>
+				<Column name="ОблагаетсяЕНВД" id="4">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>ЕНВД</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>ЕНВД</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:boolean</v8:Type>
+					</Type>
+				</Column>
+				<Column name="Результат" id="5">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Результат</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Результат</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>15</v8:Digits>
+							<v8:FractionDigits>2</v8:FractionDigits>
+							<v8:AllowedSign>Any</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="Сотрудник" id="6">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Рабочее место</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Робоче місце</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.Сотрудники</v8:Type>
+					</Type>
+				</Column>
+				<Column name="Подразделение" id="7">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Подразделение</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Підрозділ</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.ПодразделенияОрганизаций</v8:Type>
+					</Type>
+				</Column>
+				<Column name="ВидУдержания" id="9">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Вид удержания</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Вид утримання</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:EnumRef.ВидыОсобыхНачисленийИУдержаний</v8:Type>
+						<v8:Type>cfg:ChartOfCalculationTypesRef.Удержания</v8:Type>
+					</Type>
+				</Column>
+				<Column name="КодСтатьиФинансирования" id="8">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Код статьи финансирования</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Код статті фінансування</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>3</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="ПредставлениеРабочегоМеста" id="10">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Представление рабочего места</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Представлення робочого місця</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="Территория" id="11">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Территория</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Територія</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.ТерриторииВыполненияРабот</v8:Type>
+					</Type>
+				</Column>
+			</Columns>
+		</Attribute>
+		<Attribute name="ИдентификаторСтроки" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Идентификатор строки</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Ідентифікатор рядка</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>7</v8:Digits>
+					<v8:FractionDigits>0</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ОписаниеТаблицы" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Описание таблицы</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Опис таблиці</v8:content>
+				</v8:item>
+			</Title>
+			<Type/>
+		</Attribute>
+		<Attribute name="Сотрудник" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сотрудник</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Співробітник</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.Сотрудники</v8:Type>
+				<v8:Type>cfg:CatalogRef.ФизическиеЛица</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="РаспределяемыйРезультат" id="7">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Распределяемый результат</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Розподіляється результат</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:ValueTable</v8:Type>
+			</Type>
+			<Columns>
+				<Column name="Представление" id="2">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Представление</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Представлення</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="Результат" id="3">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Результат</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Результат</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>15</v8:Digits>
+							<v8:FractionDigits>2</v8:FractionDigits>
+							<v8:AllowedSign>Any</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="ВидРасчета" id="4">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Вид расчета</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Вид розрахунку</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:EnumRef.ВидыОсобыхНачисленийИУдержаний</v8:Type>
+						<v8:Type>cfg:ChartOfCalculationTypesRef.Начисления</v8:Type>
+						<v8:Type>cfg:ChartOfCalculationTypesRef.Удержания</v8:Type>
+					</Type>
+				</Column>
+				<Column name="РезультатРаспределения" id="5">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Результат распределения</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Результат розподілу</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>15</v8:Digits>
+							<v8:FractionDigits>2</v8:FractionDigits>
+							<v8:AllowedSign>Any</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="ВидОперации" id="1">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Вид операции</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Вид операції</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:EnumRef.ВидыОперацийПоЗарплате</v8:Type>
+					</Type>
+				</Column>
+				<Column name="Территория" id="6">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Территория</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Територія</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.ТерриторииВыполненияРабот</v8:Type>
+					</Type>
+				</Column>
+			</Columns>
+		</Attribute>
+		<Attribute name="РезультатРаспределенияИнфоНадпись" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Результат распределения инфо надпись</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Результат розподілу інфо напис</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="РезультатРаспределенияИнфоКартинка" id="6">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Результат распределения инфо картинка</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Результат розподілу інфо картинка</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8ui:Picture</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ЦветаСтиляПоясняющийТекст" id="8">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Цвета стиля поясняющий текст</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Кольори стилю пояснювальний текст</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8ui:Color</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ЦветаСтиляПоясняющийОшибкуТекст" id="9">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Цвета стиля поясняющий ошибку текст</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Кольори стилю текст що пояснює помилку</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8ui:Color</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="Подразделение" id="10">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Подразделение</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Підрозділ</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.ПодразделенияОрганизаций</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="Период" id="11">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Период</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Період</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="Организация" id="12">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Организация</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Організація</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.Организации</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ЕдинственныйСотрудник" id="13">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Единственный сотрудник</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Єдиний співробітник</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.Сотрудники</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="РаспределениеПособий" id="14">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Распределение пособий</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Розподіл допомог</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ОдинРезультат" id="15">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Один результат</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Один результат</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ИтогоРезультатРаспределения" id="16">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Итого результат распределения</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Разом результат розподілу</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>15</v8:Digits>
+					<v8:FractionDigits>2</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ИменаДоступныхКолонок" id="17">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Имена доступных колонок</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Імена доступних колонок</v8:content>
+				</v8:item>
+			</Title>
+			<Type/>
+		</Attribute>
+		<Attribute name="ИспользоватьОбособленныеТерритории" id="18">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Использовать обособленные территории</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Використовувати відокремлені території</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ИсходноеРаспределениеРезультатов" id="19">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Исходное распределение результатов</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Початкове розподіл результатів</v8:content>
+				</v8:item>
+			</Title>
+			<Type/>
+		</Attribute>
+		<ConditionalAppearance>
+			<dcsset:item>
+				<dcsset:selection>
+					<dcsset:item>
+						<dcsset:field>РаспределяемыйРезультатРезультат</dcsset:field>
+					</dcsset:item>
+				</dcsset:selection>
+				<dcsset:filter>
+					<dcsset:item xsi:type="dcsset:FilterItemComparison">
+						<dcsset:left xsi:type="dcscor:Field">РаспределяемыйРезультат.Результат</dcsset:left>
+						<dcsset:comparisonType>NotEqual</dcsset:comparisonType>
+						<dcsset:right xsi:type="dcscor:Field">РаспределяемыйРезультат.РезультатРаспределения</dcsset:right>
+					</dcsset:item>
+				</dcsset:filter>
+				<dcsset:appearance>
+					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+						<dcscor:parameter>ЦветТекста</dcscor:parameter>
+						<dcscor:value xsi:type="v8ui:Color">style:ПоясняющийОшибкуТекст</dcscor:value>
+					</dcscor:item>
+				</dcsset:appearance>
+			</dcsset:item>
+			<dcsset:item>
+				<dcsset:selection>
+					<dcsset:item>
+						<dcsset:field>РаспределениеРезультатаСотрудник</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>РаспределениеРезультатовСотрудник</dcsset:field>
+					</dcsset:item>
+				</dcsset:selection>
+				<dcsset:filter>
+					<dcsset:item xsi:type="dcsset:FilterItemComparison">
+						<dcsset:left xsi:type="dcscor:Field">ЕдинственныйСотрудник</dcsset:left>
+						<dcsset:comparisonType>Filled</dcsset:comparisonType>
+					</dcsset:item>
+				</dcsset:filter>
+				<dcsset:appearance>
+					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+						<dcscor:parameter>Видимость</dcscor:parameter>
+						<dcscor:value xsi:type="xs:boolean">false</dcscor:value>
+					</dcscor:item>
+				</dcsset:appearance>
+			</dcsset:item>
+			<dcsset:item>
+				<dcsset:selection>
+					<dcsset:item>
+						<dcsset:field>РаспределениеРезультатаСотрудник</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>РаспределениеРезультатовСотрудник</dcsset:field>
+					</dcsset:item>
+				</dcsset:selection>
+				<dcsset:filter>
+					<dcsset:item xsi:type="dcsset:FilterItemComparison">
+						<dcsset:left xsi:type="dcscor:Field">ЕдинственныйСотрудник</dcsset:left>
+						<dcsset:comparisonType>NotFilled</dcsset:comparisonType>
+					</dcsset:item>
+				</dcsset:filter>
+				<dcsset:appearance>
+					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+						<dcscor:parameter>Текст</dcscor:parameter>
+						<dcscor:value xsi:type="dcscor:Field">РаспределениеРезультатов.ПредставлениеРабочегоМеста</dcscor:value>
+					</dcscor:item>
+				</dcsset:appearance>
+			</dcsset:item>
+		</ConditionalAppearance>
+	</Attributes>
+	<Commands>
+		<Command name="ОК" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>ОК</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>ОК</v8:content>
+				</v8:item>
+			</Title>
+			<Action>ОК</Action>
+			<ModifiesSavedData>true</ModifiesSavedData>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="Отмена" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отмена</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Відмінити</v8:content>
+				</v8:item>
+			</Title>
+			<Action>Отмена</Action>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+	</Commands>
+	<Parameters>
+		<Parameter name="Период">
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+		</Parameter>
+		<Parameter name="Организация">
+			<Type>
+				<v8:Type>cfg:CatalogRef.Организации</v8:Type>
+			</Type>
+		</Parameter>
+		<Parameter name="РаспределениеРезультатов">
+			<Type/>
+		</Parameter>
+		<Parameter name="ИдентификаторСтроки">
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>7</v8:Digits>
+					<v8:FractionDigits>0</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</Type>
+		</Parameter>
+		<Parameter name="Сотрудник">
+			<Type>
+				<v8:Type>cfg:CatalogRef.Сотрудники</v8:Type>
+				<v8:Type>cfg:CatalogRef.ФизическиеЛица</v8:Type>
+			</Type>
+		</Parameter>
+		<Parameter name="РаспределяемыйРезультат">
+			<Type/>
+		</Parameter>
+		<Parameter name="ОписаниеТаблицы">
+			<Type/>
+		</Parameter>
+		<Parameter name="Подразделение">
+			<Type>
+				<v8:Type>cfg:CatalogRef.ПодразделенияОрганизаций</v8:Type>
+			</Type>
+		</Parameter>
+	</Parameters>
+</Form>

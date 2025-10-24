@@ -1,0 +1,2097 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
+	<Title>
+		<v8:item>
+			<v8:lang>ru</v8:lang>
+			<v8:content>Доступность видов рабочих центров</v8:content>
+		</v8:item>
+		<v8:item>
+			<v8:lang>uk</v8:lang>
+			<v8:content>Доступність видів робочих центрів</v8:content>
+		</v8:item>
+	</Title>
+	<AutoTitle>false</AutoTitle>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+		<ChildItems>
+			<Button name="СохранитьИзменения" id="170">
+				<Type>CommandBarButton</Type>
+				<DefaultButton>true</DefaultButton>
+				<CommandName>Form.Command.СохранитьИзменения</CommandName>
+				<ExtendedTooltip name="СохранитьИзмененияРасширеннаяПодсказка" id="171"/>
+			</Button>
+			<Button name="ФормаОбновитьДанные" id="401">
+				<Type>CommandBarButton</Type>
+				<CommandName>Form.Command.ОбновитьДанные</CommandName>
+				<LocationInCommandBar>InAdditionalSubmenu</LocationInCommandBar>
+				<ExtendedTooltip name="ФормаОбновитьДанныеРасширеннаяПодсказка" id="402"/>
+			</Button>
+		</ChildItems>
+	</AutoCommandBar>
+	<Events>
+		<Event name="NotificationProcessing">ОбработкаОповещения</Event>
+		<Event name="BeforeClose">ПередЗакрытием</Event>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+	</Events>
+	<ChildItems>
+		<UsualGroup name="ГруппаОтборы" id="14">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отборы</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Відбори</v8:content>
+				</v8:item>
+			</Title>
+			<Group>Horizontal</Group>
+			<Behavior>Usual</Behavior>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаОтборыРасширеннаяПодсказка" id="15"/>
+			<ChildItems>
+				<InputField name="РежимРедактированияДоступности" id="409">
+					<DataPath>РежимРедактированияДоступности</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Ввод доступности</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Введення доступності</v8:content>
+						</v8:item>
+					</Title>
+					<TitleLocation>Top</TitleLocation>
+					<AutoMaxWidth>false</AutoMaxWidth>
+					<MaxWidth>30</MaxWidth>
+					<ListChoiceMode>true</ListChoiceMode>
+					<ContextMenu name="РежимРедактированияДоступностиКонтекстноеМеню" id="410"/>
+					<ExtendedTooltip name="РежимРедактированияДоступностиРасширеннаяПодсказка" id="411"/>
+					<Events>
+						<Event name="OnChange">РежимРедактированияДоступностиПриИзменении</Event>
+					</Events>
+				</InputField>
+				<InputField name="ОтборПодразделение" id="8">
+					<DataPath>ОтборПодразделение</DataPath>
+					<TitleLocation>Top</TitleLocation>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Отбор по подразделению, к которому относятся виды рабочих центров</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Відбір по підрозділу, до якого відносяться види робочих центрів</v8:content>
+						</v8:item>
+					</ToolTip>
+					<AutoMaxWidth>false</AutoMaxWidth>
+					<MaxWidth>28</MaxWidth>
+					<ClearButton>false</ClearButton>
+					<OpenButton>false</OpenButton>
+					<ChoiceParameters>
+						<app:item name="Отбор.ПроизводственноеПодразделение">
+							<app:value xsi:type="FormChoiceListDesTimeValue">
+								<Presentation/>
+								<Value xsi:type="xs:boolean">true</Value>
+							</app:value>
+						</app:item>
+					</ChoiceParameters>
+					<ContextMenu name="ОтборПодразделениеКонтекстноеМеню" id="9"/>
+					<ExtendedTooltip name="ОтборПодразделениеРасширеннаяПодсказка" id="10"/>
+					<Events>
+						<Event name="OnChange">ОтборПодразделениеПриИзменении</Event>
+					</Events>
+				</InputField>
+				<UsualGroup name="ГруппаПериод" id="418">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Период</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Період</v8:content>
+						</v8:item>
+					</Title>
+					<Group>Vertical</Group>
+					<Behavior>Usual</Behavior>
+					<Representation>None</Representation>
+					<ShowTitle>false</ShowTitle>
+					<ExtendedTooltip name="ГруппаПериодРасширеннаяПодсказка" id="419"/>
+					<ChildItems>
+						<UsualGroup name="ГруппаПериод2" id="420">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Период 2</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>період 2</v8:content>
+								</v8:item>
+							</Title>
+							<Group>Horizontal</Group>
+							<Behavior>Usual</Behavior>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="ГруппаПериод2РасширеннаяПодсказка" id="421"/>
+							<ChildItems>
+								<InputField name="НачалоПериода" id="154">
+									<DataPath>НачалоПериода</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Период с</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Період з</v8:content>
+										</v8:item>
+									</Title>
+									<TitleLocation>Top</TitleLocation>
+									<AutoMaxWidth>false</AutoMaxWidth>
+									<MaxWidth>9</MaxWidth>
+									<ContextMenu name="НачалоПериодаКонтекстноеМеню" id="155"/>
+									<ExtendedTooltip name="НачалоПериодаРасширеннаяПодсказка" id="156"/>
+									<Events>
+										<Event name="OnChange">НачалоПериодаПриИзменении</Event>
+									</Events>
+								</InputField>
+								<InputField name="ОкончаниеПериода" id="157">
+									<DataPath>ОкончаниеПериода</DataPath>
+									<TitleLocation>Top</TitleLocation>
+									<AutoMaxWidth>false</AutoMaxWidth>
+									<MaxWidth>9</MaxWidth>
+									<ContextMenu name="ОкончаниеПериодаКонтекстноеМеню" id="158"/>
+									<ExtendedTooltip name="ОкончаниеПериодаРасширеннаяПодсказка" id="159"/>
+									<Events>
+										<Event name="OnChange">ОкончаниеПериодаПриИзменении</Event>
+									</Events>
+								</InputField>
+								<LabelField name="ИнформацияКРежимуРаботы" id="412">
+									<DataPath>ИнформацияКРежимуРаботы</DataPath>
+									<TitleLocation>None</TitleLocation>
+									<TextColor>style:ПоясняющийТекст</TextColor>
+									<ContextMenu name="ИнформацияКРежимуРаботыКонтекстноеМеню" id="413"/>
+									<ExtendedTooltip name="ИнформацияКРежимуРаботыРасширеннаяПодсказка" id="414"/>
+								</LabelField>
+								<Button name="УстановитьПериодДляВводаДоступности" id="428">
+									<Type>Hyperlink</Type>
+									<CommandName>Form.Command.УстановитьПериодДляВводаДоступности</CommandName>
+									<ExtendedTooltip name="УстановитьПериодДляВводаДоступностиРасширеннаяПодсказка" id="429"/>
+								</Button>
+							</ChildItems>
+						</UsualGroup>
+					</ChildItems>
+				</UsualGroup>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="ГруппаФорма" id="82">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Форма</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Форма</v8:content>
+				</v8:item>
+			</Title>
+			<Group>Vertical</Group>
+			<Behavior>Usual</Behavior>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаФормаРасширеннаяПодсказка" id="83"/>
+			<ChildItems>
+				<Pages name="СтраницыКомандыСписка" id="311">
+					<EnableContentChange>true</EnableContentChange>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Страницы команды списка</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Сторінки команди списку</v8:content>
+						</v8:item>
+					</Title>
+					<PagesRepresentation>None</PagesRepresentation>
+					<ExtendedTooltip name="СтраницыКомандыСпискаРасширеннаяПодсказка" id="312"/>
+					<ChildItems>
+						<Page name="СтраницаКомандыВводДоступностиДляГрафика" id="317">
+							<EnableContentChange>true</EnableContentChange>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Страница команды ввод доступности для графика</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Сторінка команди введення доступності для графіка</v8:content>
+								</v8:item>
+							</Title>
+							<ExtendedTooltip name="СтраницаКомандыВводДоступностиДляГрафикаРасширеннаяПодсказка" id="318"/>
+							<ChildItems>
+								<CommandBar name="КомандыСтраницаВводДоступностиДляГрафика" id="319">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Команды доступность видов РЦ полный режим</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Команди доступність видів РЦ повний режим</v8:content>
+										</v8:item>
+									</Title>
+									<ExtendedTooltip name="КомандыСтраницаВводДоступностиДляГрафикаРасширеннаяПодсказка" id="320"/>
+									<ChildItems>
+										<Button name="ДоступностьВидовРЦЗаполнитьДоступностьПоВидуРЦ" id="323">
+											<Type>CommandBarButton</Type>
+											<CommandName>Form.Command.ЗаполнитьДоступностьДляФормированияГрафика</CommandName>
+											<ExtendedTooltip name="ДоступностьВидовРЦЗаполнитьДоступностьПоВидуРЦРасширеннаяПодсказка" id="324"/>
+										</Button>
+										<Button name="ВидыРЦПоказатьКудаВнесеныРучныеИзменения1" id="327">
+											<Type>CommandBarButton</Type>
+											<CommandName>Form.Command.ПоказатьКудаВнесеныРучныеИзменения</CommandName>
+											<ExtendedTooltip name="ВидыРЦПоказатьКудаВнесеныРучныеИзменения1РасширеннаяПодсказка" id="328"/>
+										</Button>
+										<ButtonGroup name="ВидыРЦГруппаПоиск1" id="329">
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Виды РЦ группа поиск</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>uk</v8:lang>
+													<v8:content>Види РЦ група пошук</v8:content>
+												</v8:item>
+											</Title>
+											<ExtendedTooltip name="ВидыРЦГруппаПоиск1РасширеннаяПодсказка" id="330"/>
+											<ChildItems>
+												<Button name="ВидыРЦНайти1" id="331">
+													<Type>CommandBarButton</Type>
+													<CommandName>Form.Item.ДоступностьВидовРЦ.StandardCommand.Find</CommandName>
+													<ExtendedTooltip name="ВидыРЦНайти1РасширеннаяПодсказка" id="332"/>
+												</Button>
+												<Button name="ВидыРЦОтменитьПоиск1" id="333">
+													<Type>CommandBarButton</Type>
+													<CommandName>Form.Item.ДоступностьВидовРЦ.StandardCommand.CancelSearch</CommandName>
+													<ExtendedTooltip name="ВидыРЦОтменитьПоиск1РасширеннаяПодсказка" id="334"/>
+												</Button>
+											</ChildItems>
+										</ButtonGroup>
+									</ChildItems>
+								</CommandBar>
+							</ChildItems>
+						</Page>
+						<Page name="СтраницаКомандыДоступностьДляРасписания" id="335">
+							<EnableContentChange>true</EnableContentChange>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Страница команды доступность для расписания</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Сторінка команди доступність для розкладу</v8:content>
+								</v8:item>
+							</Title>
+							<ExtendedTooltip name="СтраницаКомандыДоступностьДляРасписанияРасширеннаяПодсказка" id="336"/>
+							<ChildItems>
+								<CommandBar name="КомандыДоступностьВидовРЦПолныйРежим1" id="337">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Команды доступность видов РЦ полный режим</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Команди доступність видів РЦ повний режим</v8:content>
+										</v8:item>
+									</Title>
+									<ExtendedTooltip name="КомандыДоступностьВидовРЦПолныйРежим1РасширеннаяПодсказка" id="338"/>
+									<ChildItems>
+										<Button name="ДоступностьВидовРЦЗаполнитьДоступностьПоРЦ" id="343">
+											<Type>CommandBarButton</Type>
+											<CommandName>Form.Command.ЗаполнитьДоступностьДляФормированияРасписания</CommandName>
+											<ExtendedTooltip name="ДоступностьВидовРЦЗаполнитьДоступностьПоРЦРасширеннаяПодсказка" id="344"/>
+										</Button>
+										<Button name="ВидыРЦПоказатьКудаВнесеныРучныеИзменения2" id="345">
+											<Type>CommandBarButton</Type>
+											<CommandName>Form.Command.ПоказатьКудаВнесеныРучныеИзменения</CommandName>
+											<ExtendedTooltip name="ВидыРЦПоказатьКудаВнесеныРучныеИзменения2РасширеннаяПодсказка" id="346"/>
+										</Button>
+										<ButtonGroup name="ВидыРЦГруппаПоиск2" id="347">
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Виды РЦ группа поиск</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>uk</v8:lang>
+													<v8:content>Види РЦ група пошук</v8:content>
+												</v8:item>
+											</Title>
+											<ExtendedTooltip name="ВидыРЦГруппаПоиск2РасширеннаяПодсказка" id="348"/>
+											<ChildItems>
+												<Button name="ВидыРЦНайти2" id="349">
+													<Type>CommandBarButton</Type>
+													<CommandName>Form.Item.ДоступностьВидовРЦ.StandardCommand.Find</CommandName>
+													<ExtendedTooltip name="ВидыРЦНайти2РасширеннаяПодсказка" id="350"/>
+												</Button>
+												<Button name="ВидыРЦОтменитьПоиск2" id="351">
+													<Type>CommandBarButton</Type>
+													<CommandName>Form.Item.ДоступностьВидовРЦ.StandardCommand.CancelSearch</CommandName>
+													<ExtendedTooltip name="ВидыРЦОтменитьПоиск2РасширеннаяПодсказка" id="352"/>
+												</Button>
+											</ChildItems>
+										</ButtonGroup>
+									</ChildItems>
+								</CommandBar>
+							</ChildItems>
+						</Page>
+						<Page name="СтраницаКомандыТолькоПросмотр" id="353">
+							<EnableContentChange>true</EnableContentChange>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Страница команды только просмотр</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Сторінка команди тільки перегляд</v8:content>
+								</v8:item>
+							</Title>
+							<ExtendedTooltip name="СтраницаКомандыТолькоПросмотрРасширеннаяПодсказка" id="354"/>
+							<ChildItems>
+								<CommandBar name="КомандыДоступностьВидовРЦПолныйРежим2" id="355">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Команды доступность видов РЦ полный режим</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Команди доступність видів РЦ повний режим</v8:content>
+										</v8:item>
+									</Title>
+									<ExtendedTooltip name="КомандыДоступностьВидовРЦПолныйРежим2РасширеннаяПодсказка" id="356"/>
+									<ChildItems>
+										<ButtonGroup name="ВидыРЦГруппаПоиск3" id="361">
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Виды РЦ группа поиск</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>uk</v8:lang>
+													<v8:content>Види РЦ група пошук</v8:content>
+												</v8:item>
+											</Title>
+											<ExtendedTooltip name="ВидыРЦГруппаПоиск3РасширеннаяПодсказка" id="362"/>
+											<ChildItems>
+												<Button name="ВидыРЦНайти3" id="363">
+													<Type>CommandBarButton</Type>
+													<CommandName>Form.Item.ДоступностьВидовРЦ.StandardCommand.Find</CommandName>
+													<ExtendedTooltip name="ВидыРЦНайти3РасширеннаяПодсказка" id="364"/>
+												</Button>
+												<Button name="ВидыРЦОтменитьПоиск3" id="365">
+													<Type>CommandBarButton</Type>
+													<CommandName>Form.Item.ДоступностьВидовРЦ.StandardCommand.CancelSearch</CommandName>
+													<ExtendedTooltip name="ВидыРЦОтменитьПоиск3РасширеннаяПодсказка" id="366"/>
+												</Button>
+											</ChildItems>
+										</ButtonGroup>
+										<Button name="ИзменитьФорму" id="369">
+											<Type>CommandBarButton</Type>
+											<CommandName>Form.StandardCommand.CustomizeForm</CommandName>
+											<ExtendedTooltip name="ИзменитьФормуРасширеннаяПодсказка" id="370"/>
+										</Button>
+										<Button name="Справка" id="367">
+											<Type>CommandBarButton</Type>
+											<CommandName>Form.StandardCommand.Help</CommandName>
+											<ExtendedTooltip name="СправкаРасширеннаяПодсказка" id="368"/>
+										</Button>
+									</ChildItems>
+								</CommandBar>
+							</ChildItems>
+						</Page>
+					</ChildItems>
+				</Pages>
+				<Table name="ДоступностьВидовРЦ" id="1">
+					<Representation>List</Representation>
+					<CommandBarLocation>None</CommandBarLocation>
+					<ChangeRowSet>false</ChangeRowSet>
+					<ChangeRowOrder>false</ChangeRowOrder>
+					<UseAlternationRowColor>true</UseAlternationRowColor>
+					<AutoInsertNewRow>true</AutoInsertNewRow>
+					<FileDragMode>AsFile</FileDragMode>
+					<DataPath>ДоступностьВидовРЦ</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Доступность видов РЦ</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Доступність видів РЦ</v8:content>
+						</v8:item>
+					</Title>
+					<CommandSet>
+						<ExcludedCommand>Add</ExcludedCommand>
+						<ExcludedCommand>Change</ExcludedCommand>
+						<ExcludedCommand>Copy</ExcludedCommand>
+						<ExcludedCommand>Delete</ExcludedCommand>
+						<ExcludedCommand>EndEdit</ExcludedCommand>
+						<ExcludedCommand>MoveDown</ExcludedCommand>
+						<ExcludedCommand>MoveUp</ExcludedCommand>
+						<ExcludedCommand>SortListAsc</ExcludedCommand>
+						<ExcludedCommand>SortListDesc</ExcludedCommand>
+					</CommandSet>
+					<RowFilter xsi:nil="true"/>
+					<ContextMenu name="ДоступностьВидовРЦКонтекстноеМеню" id="2">
+						<ChildItems>
+							<Button name="ВидыРЦКонтекстноеМенюВывестиСписок" id="66">
+								<Type>CommandBarButton</Type>
+								<CommandName>Form.Item.ДоступностьВидовРЦ.StandardCommand.OutputList</CommandName>
+								<ExtendedTooltip name="ВидыРЦКонтекстноеМенюВывестиСписокРасширеннаяПодсказка" id="67"/>
+							</Button>
+							<Button name="ВидыРЦКонтекстноеМенюКопироватьВБуферОбмена" id="68">
+								<Type>CommandBarButton</Type>
+								<CommandName>Form.Item.ДоступностьВидовРЦ.StandardCommand.CopyToClipboard</CommandName>
+								<ExtendedTooltip name="ВидыРЦКонтекстноеМенюКопироватьВБуферОбменаРасширеннаяПодсказка" id="69"/>
+							</Button>
+							<Button name="ВидыРЦКонтекстноеМенюВыделитьВсе" id="70">
+								<Type>CommandBarButton</Type>
+								<CommandName>Form.Item.ДоступностьВидовРЦ.StandardCommand.SelectAll</CommandName>
+								<ExtendedTooltip name="ВидыРЦКонтекстноеМенюВыделитьВсеРасширеннаяПодсказка" id="71"/>
+							</Button>
+						</ChildItems>
+					</ContextMenu>
+					<AutoCommandBar name="ДоступностьВидовРЦКоманднаяПанель" id="3">
+						<Autofill>false</Autofill>
+					</AutoCommandBar>
+					<ExtendedTooltip name="ДоступностьВидовРЦРасширеннаяПодсказка" id="4"/>
+					<SearchStringAddition name="ДоступностьВидовРЦСтрокаПоиска" id="453">
+						<AdditionSource>
+							<Item>ДоступностьВидовРЦ</Item>
+							<Type>SearchStringRepresentation</Type>
+						</AdditionSource>
+						<ContextMenu name="ДоступностьВидовРЦСтрокаПоискаКонтекстноеМеню" id="454"/>
+						<ExtendedTooltip name="ДоступностьВидовРЦСтрокаПоискаРасширеннаяПодсказка" id="455"/>
+					</SearchStringAddition>
+					<ViewStatusAddition name="ДоступностьВидовРЦСостояниеПросмотра" id="456">
+						<AdditionSource>
+							<Item>ДоступностьВидовРЦ</Item>
+							<Type>ViewStatusRepresentation</Type>
+						</AdditionSource>
+						<ContextMenu name="ДоступностьВидовРЦСостояниеПросмотраКонтекстноеМеню" id="457"/>
+						<ExtendedTooltip name="ДоступностьВидовРЦСостояниеПросмотраРасширеннаяПодсказка" id="458"/>
+					</ViewStatusAddition>
+					<SearchControlAddition name="ДоступностьВидовРЦУправлениеПоиском" id="459">
+						<AdditionSource>
+							<Item>ДоступностьВидовРЦ</Item>
+							<Type>SearchControl</Type>
+						</AdditionSource>
+						<ContextMenu name="ДоступностьВидовРЦУправлениеПоискомКонтекстноеМеню" id="460"/>
+						<ExtendedTooltip name="ДоступностьВидовРЦУправлениеПоискомРасширеннаяПодсказка" id="461"/>
+					</SearchControlAddition>
+					<Events>
+						<Event name="Selection">ДоступностьВидовРЦВыбор</Event>
+					</Events>
+					<ChildItems>
+						<LabelField name="ДоступностьВидовРЦВидРабочегоЦентра" id="5">
+							<DataPath>ДоступностьВидовРЦ.ВидРабочегоЦентра</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<FixingInTable>Left</FixingInTable>
+							<ContextMenu name="ДоступностьВидовРЦВидРабочегоЦентраКонтекстноеМеню" id="6"/>
+							<ExtendedTooltip name="ДоступностьВидовРЦВидРабочегоЦентраРасширеннаяПодсказка" id="7"/>
+						</LabelField>
+						<ColumnGroup name="ДоступностьВидовРЦГруппаДоступность" id="193">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Доступность видов РЦ группа доступность</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Доступність видів РЦ група доступність</v8:content>
+								</v8:item>
+							</Title>
+							<ShowTitle>false</ShowTitle>
+							<ShowInHeader>true</ShowInHeader>
+							<HeaderPicture>
+								<xr:Ref>CommonPicture.ОтображениеДоступностиЗаголовок</xr:Ref>
+								<xr:LoadTransparent>false</xr:LoadTransparent>
+							</HeaderPicture>
+							<FixingInTable>Left</FixingInTable>
+							<ExtendedTooltip name="ДоступностьВидовРЦГруппаДоступностьРасширеннаяПодсказка" id="194"/>
+							<ChildItems>
+								<ColumnGroup name="ДоступностьВидовРЦГруппа1" id="438">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Доступность видов РЦ группа 1</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Доступність видів РЦ група 1</v8:content>
+										</v8:item>
+									</Title>
+									<Group>Horizontal</Group>
+									<ExtendedTooltip name="ДоступностьВидовРЦГруппа1РасширеннаяПодсказка" id="439"/>
+									<ChildItems>
+										<PictureField name="ДоступностьВидовРЦОтображениеДоступностиКартинка1" id="184">
+											<DataPath>ДоступностьВидовРЦ.ОтображениеДоступностиКартинка1</DataPath>
+											<TitleLocation>None</TitleLocation>
+											<EditMode>EnterOnInput</EditMode>
+											<ShowInHeader>false</ShowInHeader>
+											<HorizontalStretch>false</HorizontalStretch>
+											<ValuesPicture>
+												<xr:Ref>CommonPicture.ОтображениеДоступностиВидовРЦКоллекция</xr:Ref>
+												<xr:LoadTransparent>false</xr:LoadTransparent>
+											</ValuesPicture>
+											<FileDragMode>AsFile</FileDragMode>
+											<ContextMenu name="ДоступностьВидовРЦОтображениеДоступностиКартинка1КонтекстноеМеню" id="185"/>
+											<ExtendedTooltip name="ДоступностьВидовРЦОтображениеДоступностиКартинка1РасширеннаяПодсказка" id="186"/>
+										</PictureField>
+										<PictureField name="ДоступностьВидовРЦОтображениеРедактированиеДоступности1" id="440">
+											<DataPath>ДоступностьВидовРЦ.ОтображениеРедактированиеДоступности1</DataPath>
+											<EditMode>EnterOnInput</EditMode>
+											<ShowInHeader>false</ShowInHeader>
+											<HorizontalStretch>false</HorizontalStretch>
+											<ValuesPicture>
+												<xr:Ref>StdPicture.Change</xr:Ref>
+												<xr:LoadTransparent>true</xr:LoadTransparent>
+											</ValuesPicture>
+											<FileDragMode>AsFile</FileDragMode>
+											<ContextMenu name="ДоступностьВидовРЦОтображениеРедактированиеДоступности1КонтекстноеМеню" id="441"/>
+											<ExtendedTooltip name="ДоступностьВидовРЦОтображениеРедактированиеДоступности1РасширеннаяПодсказка" id="442"/>
+										</PictureField>
+									</ChildItems>
+								</ColumnGroup>
+								<ColumnGroup name="ДоступностьВидовРЦГруппа2" id="443">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Доступность видов РЦ группа 2</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Доступність видів РЦ група 2</v8:content>
+										</v8:item>
+									</Title>
+									<Group>Horizontal</Group>
+									<ExtendedTooltip name="ДоступностьВидовРЦГруппа2РасширеннаяПодсказка" id="444"/>
+									<ChildItems>
+										<PictureField name="ДоступностьВидовРЦОтображениеДоступностиКартинка2" id="187">
+											<DataPath>ДоступностьВидовРЦ.ОтображениеДоступностиКартинка2</DataPath>
+											<TitleLocation>None</TitleLocation>
+											<EditMode>EnterOnInput</EditMode>
+											<ShowInHeader>false</ShowInHeader>
+											<HorizontalStretch>false</HorizontalStretch>
+											<ValuesPicture>
+												<xr:Ref>CommonPicture.ОтображениеДоступностиВидовРЦКоллекция</xr:Ref>
+												<xr:LoadTransparent>false</xr:LoadTransparent>
+											</ValuesPicture>
+											<FileDragMode>AsFile</FileDragMode>
+											<ContextMenu name="ДоступностьВидовРЦОтображениеДоступностиКартинка2КонтекстноеМеню" id="188"/>
+											<ExtendedTooltip name="ДоступностьВидовРЦОтображениеДоступностиКартинка2РасширеннаяПодсказка" id="189"/>
+										</PictureField>
+										<PictureField name="ДоступностьВидовРЦОтображениеРедактированиеДоступности2" id="445">
+											<DataPath>ДоступностьВидовРЦ.ОтображениеРедактированиеДоступности2</DataPath>
+											<EditMode>EnterOnInput</EditMode>
+											<ShowInHeader>false</ShowInHeader>
+											<HorizontalStretch>false</HorizontalStretch>
+											<ValuesPicture>
+												<xr:Ref>StdPicture.Change</xr:Ref>
+												<xr:LoadTransparent>true</xr:LoadTransparent>
+											</ValuesPicture>
+											<FileDragMode>AsFile</FileDragMode>
+											<ContextMenu name="ДоступностьВидовРЦОтображениеРедактированиеДоступности2КонтекстноеМеню" id="446"/>
+											<ExtendedTooltip name="ДоступностьВидовРЦОтображениеРедактированиеДоступности2РасширеннаяПодсказка" id="447"/>
+										</PictureField>
+									</ChildItems>
+								</ColumnGroup>
+								<ColumnGroup name="ДоступностьВидовРЦГруппа3" id="448">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Доступность видов РЦ группа 3</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Доступність видів РЦ група 3</v8:content>
+										</v8:item>
+									</Title>
+									<Group>Horizontal</Group>
+									<ExtendedTooltip name="ДоступностьВидовРЦГруппа3РасширеннаяПодсказка" id="449"/>
+									<ChildItems>
+										<PictureField name="ДоступностьВидовРЦОтображениеДоступностиКартинка3" id="190">
+											<DataPath>ДоступностьВидовРЦ.ОтображениеДоступностиКартинка3</DataPath>
+											<TitleLocation>None</TitleLocation>
+											<EditMode>EnterOnInput</EditMode>
+											<ShowInHeader>false</ShowInHeader>
+											<HorizontalStretch>false</HorizontalStretch>
+											<ValuesPicture>
+												<xr:Ref>CommonPicture.ОтображениеДоступностиВидовРЦКоллекция</xr:Ref>
+												<xr:LoadTransparent>false</xr:LoadTransparent>
+											</ValuesPicture>
+											<FileDragMode>AsFile</FileDragMode>
+											<ContextMenu name="ДоступностьВидовРЦОтображениеДоступностиКартинка3КонтекстноеМеню" id="191"/>
+											<ExtendedTooltip name="ДоступностьВидовРЦОтображениеДоступностиКартинка3РасширеннаяПодсказка" id="192"/>
+										</PictureField>
+										<PictureField name="ДоступностьВидовРЦОтображениеРедактированиеДоступности3" id="450">
+											<DataPath>ДоступностьВидовРЦ.ОтображениеРедактированиеДоступности3</DataPath>
+											<EditMode>EnterOnInput</EditMode>
+											<ShowInHeader>false</ShowInHeader>
+											<HorizontalStretch>false</HorizontalStretch>
+											<ValuesPicture>
+												<xr:Ref>StdPicture.Change</xr:Ref>
+												<xr:LoadTransparent>true</xr:LoadTransparent>
+											</ValuesPicture>
+											<FileDragMode>AsFile</FileDragMode>
+											<ContextMenu name="ДоступностьВидовРЦОтображениеРедактированиеДоступности3КонтекстноеМеню" id="451"/>
+											<ExtendedTooltip name="ДоступностьВидовРЦОтображениеРедактированиеДоступности3РасширеннаяПодсказка" id="452"/>
+										</PictureField>
+									</ChildItems>
+								</ColumnGroup>
+							</ChildItems>
+						</ColumnGroup>
+						<ColumnGroup name="ДоступностьВидовРЦГруппаВведенаПо" id="195">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Заполнено по</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Заповнено по</v8:content>
+								</v8:item>
+							</Title>
+							<ShowInHeader>true</ShowInHeader>
+							<FixingInTable>Left</FixingInTable>
+							<ExtendedTooltip name="ДоступностьВидовРЦГруппаВведенаПоРасширеннаяПодсказка" id="196"/>
+							<ChildItems>
+								<LabelField name="ДоступностьВидовРЦДоступностьВведенаПо1" id="178">
+									<DataPath>ДоступностьВидовРЦ.ДоступностьВведенаПо1</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ShowInHeader>false</ShowInHeader>
+									<Width>12</Width>
+									<HorizontalStretch>false</HorizontalStretch>
+									<ContextMenu name="ДоступностьВидовРЦДоступностьВведенаПо1КонтекстноеМеню" id="179"/>
+									<ExtendedTooltip name="ДоступностьВидовРЦДоступностьВведенаПо1РасширеннаяПодсказка" id="180"/>
+								</LabelField>
+								<LabelField name="ДоступностьВидовРЦДоступностьВведенаПо2" id="207">
+									<DataPath>ДоступностьВидовРЦ.ДоступностьВведенаПо2</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ShowInHeader>false</ShowInHeader>
+									<ContextMenu name="ДоступностьВидовРЦДоступностьВведенаПо2КонтекстноеМеню" id="208"/>
+									<ExtendedTooltip name="ДоступностьВидовРЦДоступностьВведенаПо2РасширеннаяПодсказка" id="209"/>
+								</LabelField>
+								<LabelField name="ДоступностьВидовРЦДоступностьВведенаПо3" id="210">
+									<DataPath>ДоступностьВидовРЦ.ДоступностьВведенаПо3</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ShowInHeader>false</ShowInHeader>
+									<ContextMenu name="ДоступностьВидовРЦДоступностьВведенаПо3КонтекстноеМеню" id="211"/>
+									<ExtendedTooltip name="ДоступностьВидовРЦДоступностьВведенаПо3РасширеннаяПодсказка" id="212"/>
+								</LabelField>
+							</ChildItems>
+						</ColumnGroup>
+						<ColumnGroup name="ДоступностьВидовРЦГруппаИтого" id="199">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Итого, ч</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Разом, год</v8:content>
+								</v8:item>
+							</Title>
+							<ShowInHeader>true</ShowInHeader>
+							<FixingInTable>Left</FixingInTable>
+							<ExtendedTooltip name="ДоступностьВидовРЦГруппаИтогоРасширеннаяПодсказка" id="200"/>
+							<ChildItems>
+								<LabelField name="ДоступностьВидовРЦИтогоДоступно1" id="148">
+									<DataPath>ДоступностьВидовРЦ.ИтогоДоступно1</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<FixingInTable>Left</FixingInTable>
+									<ShowInHeader>false</ShowInHeader>
+									<ContextMenu name="ДоступностьВидовРЦИтогоДоступно1КонтекстноеМеню" id="149"/>
+									<ExtendedTooltip name="ДоступностьВидовРЦИтогоДоступно1РасширеннаяПодсказка" id="150"/>
+								</LabelField>
+								<LabelField name="ДоступностьВидовРЦИтогоДоступно2" id="201">
+									<DataPath>ДоступностьВидовРЦ.ИтогоДоступно2</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ShowInHeader>false</ShowInHeader>
+									<ContextMenu name="ДоступностьВидовРЦИтогоДоступно2КонтекстноеМеню" id="202"/>
+									<ExtendedTooltip name="ДоступностьВидовРЦИтогоДоступно2РасширеннаяПодсказка" id="203"/>
+								</LabelField>
+								<LabelField name="ДоступностьВидовРЦИтогоДоступно3" id="204">
+									<DataPath>ДоступностьВидовРЦ.ИтогоДоступно3</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ShowInHeader>false</ShowInHeader>
+									<ContextMenu name="ДоступностьВидовРЦИтогоДоступно3КонтекстноеМеню" id="205"/>
+									<ExtendedTooltip name="ДоступностьВидовРЦИтогоДоступно3РасширеннаяПодсказка" id="206"/>
+								</LabelField>
+							</ChildItems>
+						</ColumnGroup>
+						<LabelField name="ДоступностьВидовРЦПоследняяПустаяКолонка" id="284">
+							<DataPath>ДоступностьВидовРЦ.ПоследняяПустаяКолонка</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<ShowInHeader>false</ShowInHeader>
+							<ContextMenu name="ДоступностьВидовРЦПоследняяПустаяКолонкаКонтекстноеМеню" id="285"/>
+							<ExtendedTooltip name="ДоступностьВидовРЦПоследняяПустаяКолонкаРасширеннаяПодсказка" id="286"/>
+						</LabelField>
+					</ChildItems>
+				</Table>
+				<UsualGroup name="ГруппаОбозначения" id="371">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Обозначения</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Позначення</v8:content>
+						</v8:item>
+					</Title>
+					<Group>Horizontal</Group>
+					<Behavior>Collapsible</Behavior>
+					<CollapsedRepresentationTitle>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Показать обозначения</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Показати позначення</v8:content>
+						</v8:item>
+					</CollapsedRepresentationTitle>
+					<ControlRepresentation>Picture</ControlRepresentation>
+					<Representation>None</Representation>
+					<ExtendedTooltip name="ГруппаОбозначенияРасширеннаяПодсказка" id="372"/>
+					<ChildItems>
+						<UsualGroup name="ГруппаОбозначенияЛево" id="397">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Обозначения лево</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Позначення ліво</v8:content>
+								</v8:item>
+							</Title>
+							<Group>Vertical</Group>
+							<Behavior>Usual</Behavior>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="ГруппаОбозначенияЛевоРасширеннаяПодсказка" id="398"/>
+							<ChildItems>
+								<UsualGroup name="ГруппаДоступностьВРЦ" id="373">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Доступность ВРЦ</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Доступність ВРЦ</v8:content>
+										</v8:item>
+									</Title>
+									<Group>Horizontal</Group>
+									<Behavior>Usual</Behavior>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="ГруппаДоступностьВРЦРасширеннаяПодсказка" id="374"/>
+									<ChildItems>
+										<PictureDecoration name="КартинкаОтображениеДоступностиВидРЦ" id="375">
+											<Title formatted="false">
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Картинка отображение доступности вид РЦ</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>uk</v8:lang>
+													<v8:content>Картинка відображення доступності вид РЦ</v8:content>
+												</v8:item>
+											</Title>
+											<Picture>
+												<xr:Ref>CommonPicture.ОтображениеДоступностиВидРЦ</xr:Ref>
+												<xr:LoadTransparent>false</xr:LoadTransparent>
+											</Picture>
+											<FileDragMode>AsFile</FileDragMode>
+											<ContextMenu name="КартинкаОтображениеДоступностиВидРЦКонтекстноеМеню" id="376"/>
+											<ExtendedTooltip name="КартинкаОтображениеДоступностиВидРЦРасширеннаяПодсказка" id="377"/>
+										</PictureDecoration>
+										<LabelDecoration name="ПояснениеКартинкаОтображениеДоступностиВидРЦ" id="378">
+											<AutoMaxWidth>false</AutoMaxWidth>
+											<TextColor>style:ПоясняющийТекст</TextColor>
+											<Title formatted="false">
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>- доступность введенная для вида РЦ</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>uk</v8:lang>
+													<v8:content>- доступність введена для виду РЦ</v8:content>
+												</v8:item>
+											</Title>
+											<ContextMenu name="ПояснениеКартинкаОтображениеДоступностиВидРЦКонтекстноеМеню" id="379"/>
+											<ExtendedTooltip name="ПояснениеКартинкаОтображениеДоступностиВидРЦРасширеннаяПодсказка" id="380"/>
+										</LabelDecoration>
+									</ChildItems>
+								</UsualGroup>
+								<UsualGroup name="ГруппаДоступностьРЦ" id="381">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Группа доступность ВРЦ</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Група доступність ВРЦ</v8:content>
+										</v8:item>
+									</Title>
+									<Group>Horizontal</Group>
+									<Behavior>Usual</Behavior>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="ГруппаДоступностьРЦРасширеннаяПодсказка" id="382"/>
+									<ChildItems>
+										<PictureDecoration name="КартинкаОтображениеДоступностиРЦ" id="383">
+											<Title formatted="false">
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Картинка отображение доступности РЦ</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>uk</v8:lang>
+													<v8:content>Картинка відображення доступності РЦ</v8:content>
+												</v8:item>
+											</Title>
+											<Picture>
+												<xr:Ref>CommonPicture.ОтображениеДоступностиРЦ</xr:Ref>
+												<xr:LoadTransparent>false</xr:LoadTransparent>
+											</Picture>
+											<FileDragMode>AsFile</FileDragMode>
+											<ContextMenu name="КартинкаОтображениеДоступностиРЦКонтекстноеМеню" id="384"/>
+											<ExtendedTooltip name="КартинкаОтображениеДоступностиРЦРасширеннаяПодсказка" id="385"/>
+										</PictureDecoration>
+										<LabelDecoration name="ПояснениеКартинкаОтображениеДоступностиРЦ" id="386">
+											<AutoMaxWidth>false</AutoMaxWidth>
+											<TextColor>style:ПоясняющийТекст</TextColor>
+											<Title formatted="false">
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>- доступность определяемая по графикам работы РЦ</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>uk</v8:lang>
+													<v8:content>- доступність визначається за графіками роботи РЦ</v8:content>
+												</v8:item>
+											</Title>
+											<ContextMenu name="ПояснениеКартинкаОтображениеДоступностиРЦКонтекстноеМеню" id="387"/>
+											<ExtendedTooltip name="ПояснениеКартинкаОтображениеДоступностиРЦРасширеннаяПодсказка" id="388"/>
+										</LabelDecoration>
+									</ChildItems>
+								</UsualGroup>
+								<UsualGroup name="ГруппаДоступностьГрафик" id="389">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Группа доступность ВРЦ</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Група доступність ВРЦ</v8:content>
+										</v8:item>
+									</Title>
+									<Group>Horizontal</Group>
+									<Behavior>Usual</Behavior>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="ГруппаДоступностьГрафикРасширеннаяПодсказка" id="390"/>
+									<ChildItems>
+										<PictureDecoration name="КартинкаОтображениеДоступностиГрафикПроизводства" id="391">
+											<Title formatted="false">
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Картинка отображение доступности график производства</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>uk</v8:lang>
+													<v8:content>Картинка відображення доступності графік виробництва</v8:content>
+												</v8:item>
+											</Title>
+											<Picture>
+												<xr:Ref>CommonPicture.ОтображениеДоступностиГрафикПроизводства</xr:Ref>
+												<xr:LoadTransparent>false</xr:LoadTransparent>
+											</Picture>
+											<FileDragMode>AsFile</FileDragMode>
+											<ContextMenu name="КартинкаОтображениеДоступностиГрафикПроизводстваКонтекстноеМеню" id="392"/>
+											<ExtendedTooltip name="КартинкаОтображениеДоступностиГрафикПроизводстваРасширеннаяПодсказка" id="393"/>
+										</PictureDecoration>
+										<LabelDecoration name="ПояснениеКартинкаОтображениеДоступностиГрафикПроизводства" id="394">
+											<AutoMaxWidth>false</AutoMaxWidth>
+											<TextColor>style:ПоясняющийТекст</TextColor>
+											<Title formatted="false">
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>- доступность занятая графиком производства</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>uk</v8:lang>
+													<v8:content>- доступність зайнята графіком виробництва</v8:content>
+												</v8:item>
+											</Title>
+											<ContextMenu name="ПояснениеКартинкаОтображениеДоступностиГрафикПроизводстваКонтекстноеМеню" id="395"/>
+											<ExtendedTooltip name="ПояснениеКартинкаОтображениеДоступностиГрафикПроизводстваРасширеннаяПодсказка" id="396"/>
+										</LabelDecoration>
+									</ChildItems>
+								</UsualGroup>
+							</ChildItems>
+						</UsualGroup>
+						<UsualGroup name="ГруппаОбозначенияПраво" id="399">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Обозначения право</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Позначення право</v8:content>
+								</v8:item>
+							</Title>
+							<Group>Vertical</Group>
+							<Behavior>Usual</Behavior>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="ГруппаОбозначенияПравоРасширеннаяПодсказка" id="400"/>
+							<ChildItems>
+								<UsualGroup name="ГруппаПояснениеВводДоступности" id="430">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Пояснение ввод доступности</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Пояснення введення доступності</v8:content>
+										</v8:item>
+									</Title>
+									<Group>Horizontal</Group>
+									<Behavior>Usual</Behavior>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="ГруппаПояснениеВводДоступностиРасширеннаяПодсказка" id="431"/>
+									<ChildItems>
+										<PictureDecoration name="Декорация1" id="432">
+											<Picture>
+												<xr:Ref>StdPicture.Change</xr:Ref>
+												<xr:LoadTransparent>true</xr:LoadTransparent>
+											</Picture>
+											<FileDragMode>AsFile</FileDragMode>
+											<ContextMenu name="Декорация1КонтекстноеМеню" id="433"/>
+											<ExtendedTooltip name="Декорация1РасширеннаяПодсказка" id="434"/>
+										</PictureDecoration>
+										<LabelDecoration name="Декорация2" id="435">
+											<AutoMaxWidth>false</AutoMaxWidth>
+											<TextColor>style:ПоясняющийТекст</TextColor>
+											<Title formatted="false">
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>- выполняется ввод доступности</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>uk</v8:lang>
+													<v8:content>- виконується введення доступності</v8:content>
+												</v8:item>
+											</Title>
+											<ContextMenu name="Декорация2КонтекстноеМеню" id="436"/>
+											<ExtendedTooltip name="Декорация2РасширеннаяПодсказка" id="437"/>
+										</LabelDecoration>
+									</ChildItems>
+								</UsualGroup>
+								<UsualGroup name="ГруппаПояснениеВнесеныРучныеИзменения" id="160">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Пояснение внесены ручные изменения</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Пояснення внесені ручні зміни</v8:content>
+										</v8:item>
+									</Title>
+									<Group>Horizontal</Group>
+									<Behavior>Usual</Behavior>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="ГруппаПояснениеВнесеныРучныеИзмененияРасширеннаяПодсказка" id="161"/>
+									<ChildItems>
+										<PictureDecoration name="КартинкаДефицитДоступности" id="162">
+											<Title formatted="false">
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Картинка дефицит доступности</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>uk</v8:lang>
+													<v8:content>Картинка дефіцит доступності</v8:content>
+												</v8:item>
+											</Title>
+											<Picture>
+												<xr:Ref>CommonPicture.ДефицитДоступности</xr:Ref>
+												<xr:LoadTransparent>false</xr:LoadTransparent>
+											</Picture>
+											<FileDragMode>AsFile</FileDragMode>
+											<ContextMenu name="КартинкаДефицитДоступностиКонтекстноеМеню" id="163"/>
+											<ExtendedTooltip name="КартинкаДефицитДоступностиРасширеннаяПодсказка" id="164"/>
+										</PictureDecoration>
+										<LabelDecoration name="ДекорацияДефицитДоступности" id="415">
+											<AutoMaxWidth>false</AutoMaxWidth>
+											<TextColor>style:ПоясняющийТекст</TextColor>
+											<Title formatted="false">
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>- дефицит доступности</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>uk</v8:lang>
+													<v8:content>- дефіцит доступності</v8:content>
+												</v8:item>
+											</Title>
+											<ContextMenu name="ДекорацияДефицитДоступностиКонтекстноеМеню" id="416"/>
+											<ExtendedTooltip name="ДекорацияДефицитДоступностиРасширеннаяПодсказка" id="417"/>
+										</LabelDecoration>
+									</ChildItems>
+								</UsualGroup>
+								<LabelDecoration name="ПояснениеВнесеныРучныеИзменения" id="165">
+									<AutoMaxWidth>false</AutoMaxWidth>
+									<TextColor>style:ПоясняющийТекст</TextColor>
+									<Title formatted="true">
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>&lt;b&gt;Жирным &lt;/&gt;выделена доступность РЦ, в которую внесены ручные изменения</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>&lt;b&gt;Жирним &lt;/&gt;виділена доступність РЦ, в яку внесено ручні зміни</v8:content>
+										</v8:item>
+									</Title>
+									<ContextMenu name="ПояснениеВнесеныРучныеИзмененияКонтекстноеМеню" id="166"/>
+									<ExtendedTooltip name="ПояснениеВнесеныРучныеИзмененияРасширеннаяПодсказка" id="167"/>
+								</LabelDecoration>
+							</ChildItems>
+						</UsualGroup>
+					</ChildItems>
+				</UsualGroup>
+			</ChildItems>
+		</UsualGroup>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="ДоступностьВидовРЦ" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Доступность видов РЦ</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Доступність видів РЦ</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:ValueTable</v8:Type>
+			</Type>
+			<SavedData>true</SavedData>
+			<Columns>
+				<Column name="ВидРабочегоЦентра" id="1">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Вид рабочего центра</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Вид робочого центру</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.ВидыРабочихЦентров</v8:Type>
+					</Type>
+				</Column>
+				<Column name="ОтображениеДоступности1" id="4">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Отображение доступности1</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Відображення доступности1</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:EnumRef.ВариантыОтображенияДоступности</v8:Type>
+					</Type>
+				</Column>
+				<Column name="ОтображениеДоступности2" id="5">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Отображение доступности2</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Відображення доступности2</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:EnumRef.ВариантыОтображенияДоступности</v8:Type>
+					</Type>
+				</Column>
+				<Column name="ОтображениеДоступности3" id="6">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Отображение доступности3</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Відображення доступности3</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:EnumRef.ВариантыОтображенияДоступности</v8:Type>
+					</Type>
+				</Column>
+				<Column name="ДоступностьВведенаПо1" id="8">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Введена по</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Введена по</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:dateTime</v8:Type>
+						<v8:DateQualifiers>
+							<v8:DateFractions>Date</v8:DateFractions>
+						</v8:DateQualifiers>
+					</Type>
+				</Column>
+				<Column name="ДоступностьВведенаПо2" id="2">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Введена по</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Введена по</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:dateTime</v8:Type>
+						<v8:DateQualifiers>
+							<v8:DateFractions>Date</v8:DateFractions>
+						</v8:DateQualifiers>
+					</Type>
+				</Column>
+				<Column name="ДоступностьВведенаПо3" id="11">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Введена по</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Введена по</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:dateTime</v8:Type>
+						<v8:DateQualifiers>
+							<v8:DateFractions>Date</v8:DateFractions>
+						</v8:DateQualifiers>
+					</Type>
+				</Column>
+				<Column name="ИтогоДоступно1" id="13">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Итого</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Разом</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>2</v8:FractionDigits>
+							<v8:AllowedSign>Nonnegative</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="ИтогоДоступно2" id="14">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Итого</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Разом</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>2</v8:FractionDigits>
+							<v8:AllowedSign>Nonnegative</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="ИтогоДоступно3" id="15">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Итого</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Разом</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>2</v8:FractionDigits>
+							<v8:AllowedSign>Nonnegative</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="ПоследняяПустаяКолонка" id="3">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Последняя пустая колонка</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Остання порожня колонка</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="ВводитьДоступностьДляВидаРЦ" id="7">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Вводить доступность для вида РЦ</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Вводити доступність для виду РЦ</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:boolean</v8:Type>
+					</Type>
+				</Column>
+				<Column name="ИтогоДоступностьВидРЦ" id="9">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Итого</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Разом</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+							<v8:AllowedSign>Nonnegative</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="ИтогоДоступностьГрафик" id="10">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Итого</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Разом</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+							<v8:AllowedSign>Nonnegative</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="ИтогоДоступностьРЦ" id="12">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Итого</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Разом</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+							<v8:AllowedSign>Nonnegative</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="ОтображениеДоступностиКартинка1" id="16">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Отображение доступности1</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Відображення доступности1</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>1</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+							<v8:AllowedSign>Nonnegative</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="ОтображениеДоступностиКартинка2" id="17">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Отображение доступности1</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Відображення доступности1</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>1</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+							<v8:AllowedSign>Nonnegative</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="ОтображениеДоступностиКартинка3" id="18">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Отображение доступности1</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Відображення доступности1</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>1</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+							<v8:AllowedSign>Nonnegative</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="НеПоказывать" id="19">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Не показывать</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Не показувати</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:boolean</v8:Type>
+					</Type>
+				</Column>
+				<Column name="ОтображениеРедактированиеДоступности1" id="20">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Отображение доступности1</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Відображення доступности1</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:boolean</v8:Type>
+					</Type>
+				</Column>
+				<Column name="ОтображениеРедактированиеДоступности2" id="21">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Отображение доступности1</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Відображення доступности1</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:boolean</v8:Type>
+					</Type>
+				</Column>
+				<Column name="ОтображениеРедактированиеДоступности3" id="22">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Отображение доступности1</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Відображення доступности1</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:boolean</v8:Type>
+					</Type>
+				</Column>
+			</Columns>
+		</Attribute>
+		<Attribute name="ОтборПодразделение" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Подразделение</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Підрозділ</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.СтруктураПредприятия</v8:Type>
+			</Type>
+			<FillCheck>ShowError</FillCheck>
+		</Attribute>
+		<Attribute name="НачалоПериода" id="11">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Период с</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Період з</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+			<FillCheck>ShowError</FillCheck>
+		</Attribute>
+		<Attribute name="ОкончаниеПериода" id="12">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>по</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>по</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+			<FillCheck>ShowError</FillCheck>
+		</Attribute>
+		<Attribute name="ТекущееПодразделение" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Подразделение</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Підрозділ</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.СтруктураПредприятия</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ОтображаетсяДоступностьПоВидуРЦ" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отображается доступность по виду РЦ</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Відображається доступність за видом РЦ</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ОтображаетсяДоступностьПоГрафикуРаботыРЦ" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отображается доступность по графику работы РЦ</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Відображається доступність за графіком роботи РЦ</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ОтображаетсяДоступностьПоГрафикуПроизводства" id="6">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отображается доступность по графику производства</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Відображається доступність за графіком виробництва</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ИнтервалПланирования" id="7">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Интервал планирования</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Інтервал планування</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:EnumRef.ТочностьГрафикаПроизводства</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="СписокОтображаемыхДат" id="8">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Список отображаемых дат</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Список відображуваних дат</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:ValueListType</v8:Type>
+			</Type>
+			<Settings xsi:type="v8:TypeDescription"/>
+		</Attribute>
+		<Attribute name="ТекущееНачалоПериода" id="9">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Период с</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Період з</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ТекущееОкончаниеПериода" id="10">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>по</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>по</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="РежимВводаДоступностиДляГрафикаПроизводства" id="13">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Ввод доступности видов РЦ для формирования графика производства</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Введення доступності видів РЦ для формування графіка виробництва</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="РежимВводаДоступностиДляФормированияРасписанияРаботыРЦ" id="14">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Ввод графика работы РЦ для формирования расписания работы РЦ</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Введення графіка роботи РЦ для формування розкладу роботи РЦ</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="НадписьДоступностьДляГрафикаНужноЗаполнитьПо" id="15">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Надпись доступность для графика нужно заполнить по</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Напис доступність для графіка потрібно заповнити за</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="НадписьГрафикРаботыРЦНужноЗаполнитьПо" id="16">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Надпись график работы РЦНужно заполнить по</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Напис графік роботи РЦНужно заповнити за</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="РежимРедактированияДоступности" id="19">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Режим работы</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Режим роботи</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:EnumRef.РежимыРедактированияДоступностиВидовРЦ</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ИнформацияКРежимуРаботы" id="20">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Информация к режиму работы</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Інформація до режиму роботи</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="АдресДанныхГрафикиРаботыРЦ" id="21">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Адрес данных графики работы РЦ</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Адреса даних графіки роботи РЦ</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="СохранятьПараметрыОтбора" id="22">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сохранять параметры отбора</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Зберігати параметри відбору</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ТекущееРежимРедактированияДоступности" id="24">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Режим работы</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Режим роботи</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:EnumRef.РежимыРедактированияДоступностиВидовРЦ</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ПоказатьКудаВнесеныРучныеИзменения" id="23">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Показать куда внесены ручные изменения</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Показати куди внесено ручні зміни</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ДоступностьДляГрафикаНужноЗаполнитьПо" id="25">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Доступность для графика нужно заполнить по</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Доступність для графіка потрібно заповнити по</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ГрафикРаботыРЦНужноЗаполнитьПо" id="26">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>График работы РЦНужно заполнить по</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Графік роботи РЦПотрібно заповнити по</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ДоступностьДляГрафикаЗаполненаПо" id="27">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Доступность для графика заполнена по</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Доступність для графіка заповнена по</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ГрафикРаботыРЦЗаполненПо" id="28">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>График работы РЦЗаполнен по</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Графік роботи РЦЗаповнений по</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ТекущийВидРабочегоЦентраВСтроке" id="29">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Текущий вид рабочего центра в строке</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Поточний вигляд робочого центру в рядку</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.ВидыРабочихЦентров</v8:Type>
+			</Type>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="ЗаполнитьДоступностьДляФормированияГрафика" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Заполнить доступность</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Заповнити доступність</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Заполнить доступность для формирования графика</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Заповнити доступність для формування графіка</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>КомандаЗаполнитьДоступностьДляФормированияГрафика</Action>
+			<ModifiesSavedData>true</ModifiesSavedData>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="СохранитьИзменения" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сохранить изменения</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Зберегти зміни</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сохранить изменения</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Зберегти зміни</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Shortcut>Ctrl+S</Shortcut>
+			<Picture>
+				<xr:Ref>StdPicture.Write</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>КомандаСохранитьИзменения</Action>
+			<Representation>TextPicture</Representation>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="ПоказатьКудаВнесеныРучныеИзменения" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Показать ручные изменения</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Показати ручні зміни</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Показать куда внесены ручные изменения</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Показати куди внесено ручні зміни</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>КомандаПоказатьКудаВнесеныРучныеИзменения</Action>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="ЗаполнитьДоступностьДляФормированияРасписания" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Заполнить графики работы</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Заповнити графіки роботи</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Заполнить доступность для формирования расписания</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Заповнити доступність для формування розкладу</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>КомандаЗаполнитьДоступностьДляФормированияРасписания</Action>
+			<ModifiesSavedData>true</ModifiesSavedData>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="ОбновитьДанные" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Обновить данные</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Оновити дані</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Обновить данные</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Оновити дані</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Shortcut>F5</Shortcut>
+			<Picture>
+				<xr:Ref>StdPicture.Refresh</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>КомандаОбновитьДанные</Action>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="УстановитьПериодДляВводаДоступности" id="6">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>(установить)</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>(установити)</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Установить период для ввода требуемой доступности</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Встановити період для введення потрібної доступності</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>КомандаУстановитьПериодДляВводаДоступности</Action>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+	</Commands>
+</Form>

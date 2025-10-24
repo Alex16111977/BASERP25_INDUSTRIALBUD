@@ -1,0 +1,600 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
+	<Title>
+		<v8:item>
+			<v8:lang>ru</v8:lang>
+			<v8:content>Выплата начисленной зарплаты</v8:content>
+		</v8:item>
+		<v8:item>
+			<v8:lang>uk</v8:lang>
+			<v8:content>Виплата нарахованої зарплати</v8:content>
+		</v8:item>
+	</Title>
+	<Width>67</Width>
+	<Height>150</Height>
+	<WindowOpeningMode>LockOwnerWindow</WindowOpeningMode>
+	<AutoTitle>false</AutoTitle>
+	<ChildItemsWidth>Equal</ChildItemsWidth>
+	<Customizable>false</Customizable>
+	<CommandBarLocation>Bottom</CommandBarLocation>
+	<VerticalScroll>useIfNecessary</VerticalScroll>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+		<HorizontalAlign>Right</HorizontalAlign>
+		<Autofill>false</Autofill>
+		<ChildItems>
+			<Button name="Провести" id="55">
+				<Type>CommandBarButton</Type>
+				<DefaultButton>true</DefaultButton>
+				<CommandName>Form.Command.ПровестиВедомости</CommandName>
+				<ExtendedTooltip name="ПровестиExtendedTooltip" id="56"/>
+			</Button>
+			<Button name="Отмена" id="47">
+				<Type>CommandBarButton</Type>
+				<CommandName>Form.Command.Отмена</CommandName>
+				<Title>
+					<v8:item>
+						<v8:lang>ru</v8:lang>
+						<v8:content>Отмена</v8:content>
+					</v8:item>
+					<v8:item>
+						<v8:lang>uk</v8:lang>
+						<v8:content>Відмінити</v8:content>
+					</v8:item>
+				</Title>
+				<ExtendedTooltip name="ОтменаExtendedTooltip" id="58"/>
+			</Button>
+		</ChildItems>
+	</AutoCommandBar>
+	<Events>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+	</Events>
+	<ChildItems>
+		<InputField name="РасчетныйДокумент" id="49">
+			<DataPath>РасчетныйДокумент</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>По документу</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>По документу</v8:content>
+				</v8:item>
+			</Title>
+			<ContextMenu name="РасчетныйДокументКонтекстноеМеню" id="50"/>
+			<ExtendedTooltip name="РасчетныйДокументExtendedTooltip" id="59"/>
+			<Events>
+				<Event name="OnChange">РасчетныйДокументПриИзменении</Event>
+			</Events>
+		</InputField>
+		<UsualGroup name="ПараметрыСоздания" id="6">
+			<Group>Vertical</Group>
+			<Behavior>Usual</Behavior>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ПараметрыСозданияExtendedTooltip" id="60"/>
+			<ChildItems>
+				<InputField name="СпособВыплаты" id="53">
+					<DataPath>СпособВыплаты</DataPath>
+					<OpenButton>false</OpenButton>
+					<ContextMenu name="СпособВыплатыКонтекстноеМеню" id="54"/>
+					<ExtendedTooltip name="СпособВыплатыExtendedTooltip" id="61"/>
+					<Events>
+						<Event name="OnChange">СпособВыплатыПриИзменении</Event>
+					</Events>
+				</InputField>
+				<InputField name="Округление" id="85">
+					<DataPath>Округление</DataPath>
+					<AutoMarkIncomplete>true</AutoMarkIncomplete>
+					<ContextMenu name="ОкруглениеКонтекстноеМеню" id="86"/>
+					<ExtendedTooltip name="ОкруглениеРасширеннаяПодсказка" id="87"/>
+					<Events>
+						<Event name="OnChange">ОкруглениеПриИзменении</Event>
+					</Events>
+				</InputField>
+				<InputField name="ПорядокЗаполненияНалогов" id="91">
+					<DataPath>ПорядокЗаполненияНалогов</DataPath>
+					<AutoMarkIncomplete>true</AutoMarkIncomplete>
+					<ContextMenu name="ПорядокЗаполненияНалоговКонтекстноеМеню" id="92"/>
+					<ExtendedTooltip name="ПорядокЗаполненияНалоговРасширеннаяПодсказка" id="93"/>
+					<Events>
+						<Event name="OnChange">ПорядокЗаполненияНалоговПриИзменении</Event>
+					</Events>
+				</InputField>
+				<InputField name="ПроцентВыплаты" id="88">
+					<DataPath>ПроцентВыплаты</DataPath>
+					<ContextMenu name="ПроцентВыплатыКонтекстноеМеню" id="89"/>
+					<ExtendedTooltip name="ПроцентВыплатыРасширеннаяПодсказка" id="90"/>
+					<Events>
+						<Event name="OnChange">ПроцентВыплатыПриИзменении</Event>
+					</Events>
+				</InputField>
+				<InputField name="Дата" id="51">
+					<DataPath>ДатаВыплаты</DataPath>
+					<ContextMenu name="ДатаКонтекстноеМеню" id="52"/>
+					<ExtendedTooltip name="ДатаExtendedTooltip" id="62"/>
+					<Events>
+						<Event name="OnChange">ДатаПриИзменении</Event>
+					</Events>
+				</InputField>
+				<UsualGroup name="РазрезыГруппа" id="71">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Разрезы группа</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Розрізи група</v8:content>
+						</v8:item>
+					</Title>
+					<Group>Horizontal</Group>
+					<Behavior>Usual</Behavior>
+					<Representation>None</Representation>
+					<ShowTitle>false</ShowTitle>
+					<ExtendedTooltip name="РазрезыГруппаРасширеннаяПодсказка" id="72"/>
+					<ChildItems>
+						<CheckBoxField name="ВРазрезеПодразделений" id="22">
+							<DataPath>ВРазрезеПодразделений</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>В разрезе подразделений</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>В розрізі підрозділів</v8:content>
+								</v8:item>
+							</Title>
+							<TitleLocation>Right</TitleLocation>
+							<CheckBoxType>Auto</CheckBoxType>
+							<ContextMenu name="ВРазрезеПодразделенийКонтекстноеМеню" id="23"/>
+							<ExtendedTooltip name="ВРазрезеПодразделенийExtendedTooltip" id="63"/>
+							<Events>
+								<Event name="OnChange">ВРазрезеПодразделенийПриИзменении</Event>
+							</Events>
+						</CheckBoxField>
+						<CheckBoxField name="ВРазрезеИсточников" id="73">
+							<DataPath>ВРазрезеИсточников</DataPath>
+							<TitleLocation>Right</TitleLocation>
+							<CheckBoxType>Auto</CheckBoxType>
+							<ContextMenu name="ВРазрезеИсточниковКонтекстноеМеню" id="74"/>
+							<ExtendedTooltip name="ВРазрезеИсточниковРасширеннаяПодсказка" id="75"/>
+							<Events>
+								<Event name="OnChange">ВРазрезеИсточниковПриИзменении</Event>
+							</Events>
+						</CheckBoxField>
+					</ChildItems>
+				</UsualGroup>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="Ведомости" id="12">
+			<HorizontalStretch>true</HorizontalStretch>
+			<Group>Horizontal</Group>
+			<Behavior>Usual</Behavior>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ВедомостиExtendedTooltip" id="64"/>
+			<ChildItems>
+				<Table name="ТаблицаВедомостей" id="30">
+					<Representation>List</Representation>
+					<Header>false</Header>
+					<AutoInsertNewRow>true</AutoInsertNewRow>
+					<EnableStartDrag>true</EnableStartDrag>
+					<EnableDrag>true</EnableDrag>
+					<FileDragMode>AsFile</FileDragMode>
+					<DataPath>Ведомости</DataPath>
+					<CommandSet>
+						<ExcludedCommand>Add</ExcludedCommand>
+						<ExcludedCommand>CancelSearch</ExcludedCommand>
+						<ExcludedCommand>Change</ExcludedCommand>
+						<ExcludedCommand>Copy</ExcludedCommand>
+						<ExcludedCommand>CopyToClipboard</ExcludedCommand>
+						<ExcludedCommand>EndEdit</ExcludedCommand>
+						<ExcludedCommand>Find</ExcludedCommand>
+						<ExcludedCommand>MoveDown</ExcludedCommand>
+						<ExcludedCommand>MoveUp</ExcludedCommand>
+						<ExcludedCommand>SelectAll</ExcludedCommand>
+						<ExcludedCommand>SortListAsc</ExcludedCommand>
+						<ExcludedCommand>SortListDesc</ExcludedCommand>
+					</CommandSet>
+					<SearchStringLocation>None</SearchStringLocation>
+					<ViewStatusLocation>None</ViewStatusLocation>
+					<SearchControlLocation>None</SearchControlLocation>
+					<RowFilter xsi:nil="true"/>
+					<ContextMenu name="ТаблицаВедомостейКонтекстноеМеню" id="31"/>
+					<AutoCommandBar name="ТаблицаВедомостейКоманднаяПанель" id="32">
+						<ChildItems>
+							<Button name="ИзменитьВедомость" id="46">
+								<Type>CommandBarButton</Type>
+								<Representation>PictureAndText</Representation>
+								<CommandName>Form.Command.ИзменитьВедомость</CommandName>
+								<ExtendedTooltip name="ИзменитьВедомостьExtendedTooltip" id="65"/>
+							</Button>
+							<Button name="УдалитьВедомость" id="38">
+								<Type>CommandBarButton</Type>
+								<Representation>PictureAndText</Representation>
+								<CommandName>Form.Item.ТаблицаВедомостей.StandardCommand.Delete</CommandName>
+								<Title>
+									<v8:item>
+										<v8:lang>ru</v8:lang>
+										<v8:content>Удалить</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>uk</v8:lang>
+										<v8:content>Вилучити</v8:content>
+									</v8:item>
+								</Title>
+								<ExtendedTooltip name="УдалитьВедомостьExtendedTooltip" id="66"/>
+							</Button>
+							<Button name="СоздатьВедомости" id="1">
+								<Type>CommandBarButton</Type>
+								<Representation>PictureAndText</Representation>
+								<Width>14</Width>
+								<Height>1</Height>
+								<CommandName>Form.Command.СоздатьВедомости</CommandName>
+								<Font ref="style:TextFont" kind="StyleItem"/>
+								<ExtendedTooltip name="СоздатьВедомостиExtendedTooltip" id="67"/>
+							</Button>
+						</ChildItems>
+					</AutoCommandBar>
+					<ExtendedTooltip name="ТаблицаВедомостейExtendedTooltip" id="68"/>
+					<SearchStringAddition name="ТаблицаВедомостейСтрокаПоиска" id="76">
+						<AdditionSource>
+							<Item>ТаблицаВедомостей</Item>
+							<Type>SearchStringRepresentation</Type>
+						</AdditionSource>
+						<ContextMenu name="ТаблицаВедомостейСтрокаПоискаКонтекстноеМеню" id="77"/>
+						<ExtendedTooltip name="ТаблицаВедомостейСтрокаПоискаРасширеннаяПодсказка" id="78"/>
+					</SearchStringAddition>
+					<ViewStatusAddition name="ТаблицаВедомостейСостояниеПросмотра" id="79">
+						<AdditionSource>
+							<Item>ТаблицаВедомостей</Item>
+							<Type>ViewStatusRepresentation</Type>
+						</AdditionSource>
+						<ContextMenu name="ТаблицаВедомостейСостояниеПросмотраКонтекстноеМеню" id="80"/>
+						<ExtendedTooltip name="ТаблицаВедомостейСостояниеПросмотраРасширеннаяПодсказка" id="81"/>
+					</ViewStatusAddition>
+					<SearchControlAddition name="ТаблицаВедомостейУправлениеПоиском" id="82">
+						<AdditionSource>
+							<Item>ТаблицаВедомостей</Item>
+							<Type>SearchControl</Type>
+						</AdditionSource>
+						<ContextMenu name="ТаблицаВедомостейУправлениеПоискомКонтекстноеМеню" id="83"/>
+						<ExtendedTooltip name="ТаблицаВедомостейУправлениеПоискомРасширеннаяПодсказка" id="84"/>
+					</SearchControlAddition>
+					<Events>
+						<Event name="Selection">ТаблицаВедомостейВыбор</Event>
+						<Event name="BeforeAddRow">ТаблицаВедомостейПередНачаломДобавления</Event>
+					</Events>
+					<ChildItems>
+						<InputField name="ТаблицаВедомостейИдентификатор" id="39">
+							<DataPath>Ведомости.Адрес</DataPath>
+							<Visible>false</Visible>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="ТаблицаВедомостейИдентификаторКонтекстноеМеню" id="40"/>
+							<ExtendedTooltip name="ТаблицаВедомостейИдентификаторExtendedTooltip" id="69"/>
+						</InputField>
+						<InputField name="ТаблицаВедомостейПредставление" id="35">
+							<DataPath>Ведомости.Представление</DataPath>
+							<ReadOnly>true</ReadOnly>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Документ</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Документ</v8:content>
+								</v8:item>
+							</Title>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="ТаблицаВедомостейПредставлениеКонтекстноеМеню" id="36"/>
+							<ExtendedTooltip name="ТаблицаВедомостейПредставлениеExtendedTooltip" id="70"/>
+						</InputField>
+					</ChildItems>
+				</Table>
+			</ChildItems>
+		</UsualGroup>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="ВРазрезеПодразделений" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>В разрезе подразделений</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>В розрізі підрозділів</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+			<FunctionalOptions>
+				<Item>FunctionalOption.ВыполнятьРасчетЗарплатыПоПодразделениям</Item>
+			</FunctionalOptions>
+		</Attribute>
+		<Attribute name="Ведомости" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Ведомости</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Відомості</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:ValueTable</v8:Type>
+			</Type>
+			<Columns>
+				<Column name="Адрес" id="1">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Адрес</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Адреса</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>100</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="Представление" id="2">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Представление</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Представлення</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>180</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+					<Edit>
+						<xr:Common>false</xr:Common>
+					</Edit>
+				</Column>
+			</Columns>
+		</Attribute>
+		<Attribute name="РасчетныйДокумент" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Расчетный документ</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Розрахунковий документ</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:TypeSet>cfg:DocumentRef</v8:TypeSet>
+			</Type>
+			<FillCheck>ShowError</FillCheck>
+		</Attribute>
+		<Attribute name="ДатаВыплаты" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Дата выплаты</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Дата виплати</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+			<FillCheck>ShowError</FillCheck>
+		</Attribute>
+		<Attribute name="СпособВыплаты" id="6">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Выплачивать</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Виплачувати</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.СпособыВыплатыЗарплаты</v8:Type>
+			</Type>
+			<FillCheck>ShowError</FillCheck>
+		</Attribute>
+		<Attribute name="ВРазрезеИсточников" id="7">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>В разрезе источников финансирования</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>В розрізі джерел фінансування</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+			<FunctionalOptions>
+				<Item>FunctionalOption.ИспользоватьСтатьиФинансированияЗарплатаРасширенный</Item>
+			</FunctionalOptions>
+		</Attribute>
+		<Attribute name="ПроцентВыплаты" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Процент выплаты</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Відсоток виплати</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>3</v8:Digits>
+					<v8:FractionDigits>0</v8:FractionDigits>
+					<v8:AllowedSign>Nonnegative</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ПорядокЗаполненияНалогов" id="8">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Порядок заполнения налогов</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Порядок заповнення податків</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:EnumRef.ПорядокЗаполненияНалогов</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="Округление" id="9">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Округление</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Округлення</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.СпособыОкругленияПриРасчетеЗарплаты</v8:Type>
+			</Type>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="СоздатьВедомости" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Создать ведомости</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Створити відомості</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Создать ведомости</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Створити відомості</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>СоздатьВедомостиВыполнить</Action>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="ИзменитьВедомость" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Изменить</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Змінити</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Изменить (или открыть) текущую ведомость</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Змінити (або відкрити) поточну відомість</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Shortcut>F12</Shortcut>
+			<Picture>
+				<xr:Ref>StdPicture.Change</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>ИзменитьВедомостьВыполнить</Action>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="Отмена" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отмена</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Відмінити</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отмена</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Відмінити</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ОтменаВыполнить</Action>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="ПровестиВедомости" id="6">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Провести  и закрыть</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Провести і закрити</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Провести ведомости</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Провести відомості</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ПровестиВедомостиВыполнить</Action>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+	</Commands>
+</Form>

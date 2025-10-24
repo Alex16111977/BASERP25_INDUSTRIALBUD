@@ -1,0 +1,899 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
+	<WindowOpeningMode>LockOwnerWindow</WindowOpeningMode>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+		<ChildItems>
+			<Button name="ФормаПеренестиВДокумент" id="16">
+				<Type>CommandBarButton</Type>
+				<DefaultButton>true</DefaultButton>
+				<CommandName>Form.Command.ПеренестиВДокумент</CommandName>
+				<ExtendedTooltip name="ФормаПеренестиВДокументРасширеннаяПодсказка" id="17"/>
+			</Button>
+			<ButtonGroup name="ФормаКомандыСписка" id="208">
+				<Title>
+					<v8:item>
+						<v8:lang>ru</v8:lang>
+						<v8:content>Форма команды списка</v8:content>
+					</v8:item>
+					<v8:item>
+						<v8:lang>uk</v8:lang>
+						<v8:content>Форма команди списку</v8:content>
+					</v8:item>
+				</Title>
+				<ExtendedTooltip name="ФормаКомандыСпискаРасширеннаяПодсказка" id="209"/>
+				<ChildItems>
+					<Button name="ФормаВывестиСписок" id="212">
+						<Type>CommandBarButton</Type>
+						<CommandName>Form.Item.РаспределенныеМатериалы.StandardCommand.OutputList</CommandName>
+						<ExtendedTooltip name="ФормаВывестиСписокРасширеннаяПодсказка" id="213"/>
+					</Button>
+					<Button name="ФормаСортироватьСписокПоУбыванию" id="214">
+						<Type>CommandBarButton</Type>
+						<CommandName>Form.Item.РаспределенныеМатериалы.StandardCommand.SortListDesc</CommandName>
+						<ExtendedTooltip name="ФормаСортироватьСписокПоУбываниюРасширеннаяПодсказка" id="215"/>
+					</Button>
+					<Button name="ФормаСортироватьСписокПоВозрастанию" id="216">
+						<Type>CommandBarButton</Type>
+						<CommandName>Form.Item.РаспределенныеМатериалы.StandardCommand.SortListAsc</CommandName>
+						<ExtendedTooltip name="ФормаСортироватьСписокПоВозрастаниюРасширеннаяПодсказка" id="217"/>
+					</Button>
+					<Button name="ФормаПереместитьВниз" id="218">
+						<Type>CommandBarButton</Type>
+						<CommandName>Form.Item.РаспределенныеМатериалы.StandardCommand.MoveDown</CommandName>
+						<ExtendedTooltip name="ФормаПереместитьВнизРасширеннаяПодсказка" id="219"/>
+					</Button>
+					<Button name="ФормаПереместитьВверх" id="220">
+						<Type>CommandBarButton</Type>
+						<CommandName>Form.Item.РаспределенныеМатериалы.StandardCommand.MoveUp</CommandName>
+						<ExtendedTooltip name="ФормаПереместитьВверхРасширеннаяПодсказка" id="221"/>
+					</Button>
+					<Button name="ФормаЗакончитьРедактирование" id="226">
+						<Type>CommandBarButton</Type>
+						<CommandName>Form.Item.РаспределенныеМатериалы.StandardCommand.EndEdit</CommandName>
+						<ExtendedTooltip name="ФормаЗакончитьРедактированиеРасширеннаяПодсказка" id="227"/>
+					</Button>
+					<Button name="ФормаУдалить" id="228">
+						<Type>CommandBarButton</Type>
+						<CommandName>Form.Item.РаспределенныеМатериалы.StandardCommand.Delete</CommandName>
+						<ExtendedTooltip name="ФормаУдалитьРасширеннаяПодсказка" id="229"/>
+					</Button>
+					<Button name="ФормаИзменить" id="230">
+						<Type>CommandBarButton</Type>
+						<CommandName>Form.Item.РаспределенныеМатериалы.StandardCommand.Change</CommandName>
+						<ExtendedTooltip name="ФормаИзменитьРасширеннаяПодсказка" id="231"/>
+					</Button>
+					<Button name="ФормаСкопировать" id="232">
+						<Type>CommandBarButton</Type>
+						<CommandName>Form.Item.РаспределенныеМатериалы.StandardCommand.Copy</CommandName>
+						<ExtendedTooltip name="ФормаСкопироватьРасширеннаяПодсказка" id="233"/>
+					</Button>
+				</ChildItems>
+			</ButtonGroup>
+		</ChildItems>
+	</AutoCommandBar>
+	<Events>
+		<Event name="BeforeClose">ПередЗакрытием</Event>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+		<Event name="OnClose">ПриЗакрытии</Event>
+	</Events>
+	<ChildItems>
+		<UsualGroup name="ГруппаРаспределение" id="33">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Распределенные материалы</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Розподілені матеріали</v8:content>
+				</v8:item>
+			</Title>
+			<Group>Vertical</Group>
+			<Behavior>Usual</Behavior>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаРаспределениеРасширеннаяПодсказка" id="34"/>
+			<ChildItems>
+				<UsualGroup name="ГруппаИнформацияОбОшибках" id="179">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Информация об ошибках</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Інформація про помилки</v8:content>
+						</v8:item>
+					</Title>
+					<Group>Horizontal</Group>
+					<Behavior>Usual</Behavior>
+					<Representation>StrongSeparation</Representation>
+					<ExtendedTooltip name="ГруппаИнформацияОбОшибкахРасширеннаяПодсказка" id="180"/>
+					<ChildItems>
+						<PictureDecoration name="КартинкаВнимание" id="181">
+							<Title formatted="false">
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Картинка внимание</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Картинка увага</v8:content>
+								</v8:item>
+							</Title>
+							<FileDragMode>AsFile</FileDragMode>
+							<ContextMenu name="КартинкаВниманиеКонтекстноеМеню" id="182"/>
+							<ExtendedTooltip name="КартинкаВниманиеРасширеннаяПодсказка" id="183"/>
+						</PictureDecoration>
+						<LabelDecoration name="НадписьВнимание" id="184">
+							<AutoMaxWidth>false</AutoMaxWidth>
+							<Title formatted="false">
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Спецификация указана не во всех строках выпускаемой продукции.</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Специфікація вказана не у всіх рядках продукції.</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Для таких строк невозможно определить требуемый перечень и количество материалов по спецификации.</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Для таких рядків неможливо визначити необхідний перелік і кількість матеріалів по специфікації.</v8:content>
+								</v8:item>
+							</ToolTip>
+							<ContextMenu name="НадписьВниманиеКонтекстноеМеню" id="185"/>
+							<ExtendedTooltip name="НадписьВниманиеРасширеннаяПодсказка" id="186"/>
+						</LabelDecoration>
+					</ChildItems>
+				</UsualGroup>
+				<UsualGroup name="ГруппаБыстрыеОтборыИСортировка" id="187">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Быстрые отборы и сортировка</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Швидкі відбори і сортування</v8:content>
+						</v8:item>
+					</Title>
+					<Group>Horizontal</Group>
+					<Behavior>Usual</Behavior>
+					<Representation>None</Representation>
+					<ShowTitle>false</ShowTitle>
+					<ExtendedTooltip name="ГруппаБыстрыеОтборыИСортировкаРасширеннаяПодсказка" id="188"/>
+					<ChildItems>
+						<InputField name="ОтборПоСпецификации" id="192">
+							<DataPath>ОтборПоСпецификации</DataPath>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Спецификация, по которой требуются материалы</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Специфікація, за якою потрібні матеріали</v8:content>
+								</v8:item>
+							</ToolTip>
+							<ClearButton>true</ClearButton>
+							<CreateButton>false</CreateButton>
+							<ListChoiceMode>true</ListChoiceMode>
+							<ChooseType>false</ChooseType>
+							<ContextMenu name="ОтборПоСпецификацииКонтекстноеМеню" id="193"/>
+							<ExtendedTooltip name="ОтборПоСпецификацииРасширеннаяПодсказка" id="194"/>
+							<Events>
+								<Event name="OnChange">ОтборПоПродукцииПриИзменении</Event>
+								<Event name="Clearing">ОтборПоПродукцииОчистка</Event>
+							</Events>
+						</InputField>
+					</ChildItems>
+				</UsualGroup>
+				<Table name="РаспределенныеМатериалы" id="72">
+					<Representation>List</Representation>
+					<AutoInsertNewRow>true</AutoInsertNewRow>
+					<EnableStartDrag>true</EnableStartDrag>
+					<EnableDrag>true</EnableDrag>
+					<FileDragMode>AsFile</FileDragMode>
+					<DataPath>РаспределенныеМатериалы</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Распределенные материалы</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Розподілені матеріали</v8:content>
+						</v8:item>
+					</Title>
+					<RowFilter xsi:nil="true"/>
+					<ContextMenu name="РаспределенныеМатериалыКонтекстноеМеню" id="73"/>
+					<AutoCommandBar name="РаспределенныеМатериалыКоманднаяПанель" id="74">
+						<Autofill>false</Autofill>
+						<ChildItems>
+							<Button name="РаспределенныеМатериалыДобавить" id="210">
+								<Type>CommandBarButton</Type>
+								<CommandName>Form.Item.РаспределенныеМатериалы.StandardCommand.Add</CommandName>
+								<ExtendedTooltip name="РаспределенныеМатериалыДобавитьРасширеннаяПодсказка" id="211"/>
+							</Button>
+							<Button name="РаспределенныеМатериалыСортироватьПоМатериалам" id="195">
+								<Type>CommandBarButton</Type>
+								<CommandName>Form.Command.СортироватьПоМатериалам</CommandName>
+								<ExtendedTooltip name="РаспределенныеМатериалыСортироватьПоМатериаламРасширеннаяПодсказка" id="196"/>
+							</Button>
+							<Button name="РаспределенныеМатериалыСортироватьПоСпецификации" id="197">
+								<Type>CommandBarButton</Type>
+								<CommandName>Form.Command.СортироватьПоСпецификации</CommandName>
+								<ExtendedTooltip name="РаспределенныеМатериалыСортироватьПоСпецификацииРасширеннаяПодсказка" id="198"/>
+							</Button>
+						</ChildItems>
+					</AutoCommandBar>
+					<ExtendedTooltip name="РаспределенныеМатериалыРасширеннаяПодсказка" id="75"/>
+					<SearchStringAddition name="РаспределенныеМатериалыСтрокаПоиска" id="199">
+						<AdditionSource>
+							<Item>РаспределенныеМатериалы</Item>
+							<Type>SearchStringRepresentation</Type>
+						</AdditionSource>
+						<ContextMenu name="РаспределенныеМатериалыСтрокаПоискаКонтекстноеМеню" id="200"/>
+						<ExtendedTooltip name="РаспределенныеМатериалыСтрокаПоискаРасширеннаяПодсказка" id="201"/>
+					</SearchStringAddition>
+					<ViewStatusAddition name="РаспределенныеМатериалыСостояниеПросмотра" id="202">
+						<AdditionSource>
+							<Item>РаспределенныеМатериалы</Item>
+							<Type>ViewStatusRepresentation</Type>
+						</AdditionSource>
+						<ContextMenu name="РаспределенныеМатериалыСостояниеПросмотраКонтекстноеМеню" id="203"/>
+						<ExtendedTooltip name="РаспределенныеМатериалыСостояниеПросмотраРасширеннаяПодсказка" id="204"/>
+					</ViewStatusAddition>
+					<SearchControlAddition name="РаспределенныеМатериалыУправлениеПоиском" id="205">
+						<AdditionSource>
+							<Item>РаспределенныеМатериалы</Item>
+							<Type>SearchControl</Type>
+						</AdditionSource>
+						<ContextMenu name="РаспределенныеМатериалыУправлениеПоискомКонтекстноеМеню" id="206"/>
+						<ExtendedTooltip name="РаспределенныеМатериалыУправлениеПоискомРасширеннаяПодсказка" id="207"/>
+					</SearchControlAddition>
+					<Events>
+						<Event name="OnEditEnd">РаспределенныеМатериалыПриОкончанииРедактирования</Event>
+						<Event name="OnStartEdit">РаспределенныеМатериалыПриНачалеРедактирования</Event>
+						<Event name="AfterDeleteRow">РаспределенныеМатериалыПослеУдаления</Event>
+					</Events>
+					<ChildItems>
+						<InputField name="РаспределенныеМатериалыСпецификация" id="82">
+							<DataPath>РаспределенныеМатериалы.Спецификация</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<ListChoiceMode>true</ListChoiceMode>
+							<AutoMarkIncomplete>true</AutoMarkIncomplete>
+							<ContextMenu name="РаспределенныеМатериалыСпецификацияКонтекстноеМеню" id="83"/>
+							<ExtendedTooltip name="РаспределенныеМатериалыСпецификацияРасширеннаяПодсказка" id="84"/>
+						</InputField>
+						<LabelField name="РаспределенныеМатериалыКодСтроки" id="85">
+							<DataPath>РаспределенныеМатериалы.КодСтроки</DataPath>
+							<UserVisible>
+								<xr:Common>false</xr:Common>
+							</UserVisible>
+							<EditMode>EnterOnInput</EditMode>
+							<Width>3</Width>
+							<ContextMenu name="РаспределенныеМатериалыКодСтрокиКонтекстноеМеню" id="86"/>
+							<ExtendedTooltip name="РаспределенныеМатериалыКодСтрокиРасширеннаяПодсказка" id="87"/>
+						</LabelField>
+						<InputField name="РаспределенныеМатериалыНоменклатура" id="76">
+							<DataPath>РаспределенныеМатериалы.Номенклатура</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<Width>16</Width>
+							<ChoiceFoldersAndItems>Items</ChoiceFoldersAndItems>
+							<ChoiceParameters>
+								<app:item name="Отбор.ТипНоменклатуры">
+									<app:value xsi:type="FormChoiceListDesTimeValue">
+										<Presentation/>
+										<Value xsi:type="v8:FixedArray">
+											<v8:Value xsi:type="FormChoiceListDesTimeValue">
+												<Presentation/>
+												<Value xsi:type="xr:DesignTimeRef">Enum.ТипыНоменклатуры.EnumValue.Товар</Value>
+											</v8:Value>
+											<v8:Value xsi:type="FormChoiceListDesTimeValue">
+												<Presentation/>
+												<Value xsi:type="xr:DesignTimeRef">Enum.ТипыНоменклатуры.EnumValue.МногооборотнаяТара</Value>
+											</v8:Value>
+										</Value>
+									</app:value>
+								</app:item>
+							</ChoiceParameters>
+							<ContextMenu name="РаспределенныеМатериалыНоменклатураКонтекстноеМеню" id="77"/>
+							<ExtendedTooltip name="РаспределенныеМатериалыНоменклатураРасширеннаяПодсказка" id="78"/>
+							<Events>
+								<Event name="OnChange">РаспределенныеМатериалыНоменклатураПриИзменении</Event>
+							</Events>
+						</InputField>
+						<InputField name="РаспределенныеМатериалыХарактеристика" id="79">
+							<DataPath>РаспределенныеМатериалы.Характеристика</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<Width>16</Width>
+							<ChoiceParameterLinks>
+								<xr:Link>
+									<xr:Name>Номенклатура</xr:Name>
+									<xr:DataPath xsi:type="xs:string">Items.РаспределенныеМатериалы.CurrentData.Номенклатура</xr:DataPath>
+									<xr:ValueChange>DontChange</xr:ValueChange>
+								</xr:Link>
+							</ChoiceParameterLinks>
+							<ContextMenu name="РаспределенныеМатериалыХарактеристикаКонтекстноеМеню" id="80"/>
+							<ExtendedTooltip name="РаспределенныеМатериалыХарактеристикаРасширеннаяПодсказка" id="81"/>
+						</InputField>
+						<LabelField name="РаспределенныеМатериалыКоличествоПлан" id="160">
+							<DataPath>РаспределенныеМатериалы.КоличествоПлан</DataPath>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Количество материалов, которое требуется согласно маршрутной спецификации</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Кількість матеріалів, яка необхідна згідно маршрутної специфікації</v8:content>
+								</v8:item>
+							</ToolTip>
+							<EditMode>EnterOnInput</EditMode>
+							<Width>10</Width>
+							<ContextMenu name="РаспределенныеМатериалыКоличествоПланКонтекстноеМеню" id="161"/>
+							<ExtendedTooltip name="РаспределенныеМатериалыКоличествоПланРасширеннаяПодсказка" id="162"/>
+						</LabelField>
+						<InputField name="РаспределенныеМатериалыКоличество" id="91">
+							<DataPath>РаспределенныеМатериалы.Количество</DataPath>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Количество материалов, подобранное согласно спецификации и возможностей давальца</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Кількість матеріалів, підібрана відповідно до специфікації і можливостей давальця</v8:content>
+								</v8:item>
+							</ToolTip>
+							<EditMode>EnterOnInput</EditMode>
+							<HeaderPicture>
+								<xr:Ref>StdPicture.Change</xr:Ref>
+								<xr:LoadTransparent>true</xr:LoadTransparent>
+							</HeaderPicture>
+							<Width>10</Width>
+							<ContextMenu name="РаспределенныеМатериалыКоличествоКонтекстноеМеню" id="92"/>
+							<ExtendedTooltip name="РаспределенныеМатериалыКоличествоРасширеннаяПодсказка" id="93"/>
+							<Events>
+								<Event name="OnChange">РаспределенныеМатериалыКоличествоПриИзменении</Event>
+							</Events>
+						</InputField>
+						<LabelField name="РаспределенныеМатериалыНоменклатураЕдиницаИзмерения" id="152">
+							<DataPath>РаспределенныеМатериалы.Номенклатура.ЕдиницаИзмерения</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Ед. изм.</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Од. вим.</v8:content>
+								</v8:item>
+							</Title>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="РаспределенныеМатериалыНоменклатураЕдиницаИзмеренияКонтекстноеМеню" id="153"/>
+							<ExtendedTooltip name="РаспределенныеМатериалыНоменклатураЕдиницаИзмеренияРасширеннаяПодсказка" id="154"/>
+						</LabelField>
+					</ChildItems>
+				</Table>
+			</ChildItems>
+		</UsualGroup>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="РаспределенныеМатериалы" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Распределенные материалы</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Розподілені матеріали</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:ValueTable</v8:Type>
+			</Type>
+			<Columns>
+				<Column name="Номенклатура" id="1">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Номенклатура</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Номенклатура</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.Номенклатура</v8:Type>
+					</Type>
+				</Column>
+				<Column name="Характеристика" id="2">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Характеристика</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Характеристика</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.ХарактеристикиНоменклатуры</v8:Type>
+					</Type>
+					<FunctionalOptions>
+						<Item>FunctionalOption.ИспользоватьХарактеристикиНоменклатуры</Item>
+					</FunctionalOptions>
+				</Column>
+				<Column name="Спецификация" id="3">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Спецификация</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Специфікація</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.РесурсныеСпецификации</v8:Type>
+					</Type>
+				</Column>
+				<Column name="КодСтроки" id="4">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Код строки</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Код рядка</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+							<v8:AllowedSign>Nonnegative</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="Количество" id="5">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Подобрано</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Підібрано</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>15</v8:Digits>
+							<v8:FractionDigits>3</v8:FractionDigits>
+							<v8:AllowedSign>Nonnegative</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="КоличествоУпаковок" id="6">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Подобрано</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Підібрано</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>15</v8:Digits>
+							<v8:FractionDigits>3</v8:FractionDigits>
+							<v8:AllowedSign>Nonnegative</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="Упаковка" id="7">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Упаковка</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Упаковка</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.УпаковкиЕдиницыИзмерения</v8:Type>
+					</Type>
+					<FunctionalOptions>
+						<Item>FunctionalOption.ИспользоватьУпаковкиНоменклатуры</Item>
+					</FunctionalOptions>
+				</Column>
+				<Column name="КоличествоПлан" id="8">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Требуется по спецификации</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Потрібно по специфікації</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>15</v8:Digits>
+							<v8:FractionDigits>3</v8:FractionDigits>
+							<v8:AllowedSign>Nonnegative</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="ХарактеристикиИспользуются" id="13">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Характеристики используются</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Характеристики використовуються</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:boolean</v8:Type>
+					</Type>
+				</Column>
+				<Column name="ТипНоменклатуры" id="9">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Тип номенклатуры</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Тип номенклатури</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:EnumRef.ТипыНоменклатуры</v8:Type>
+					</Type>
+				</Column>
+			</Columns>
+		</Attribute>
+		<Attribute name="Продукция" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Продукция</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Продукція</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:ValueTable</v8:Type>
+			</Type>
+			<Columns>
+				<Column name="Номенклатура" id="1">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Номенклатура</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Номенклатура</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.Номенклатура</v8:Type>
+					</Type>
+				</Column>
+				<Column name="Характеристика" id="2">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Характеристика</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Характеристика</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.ХарактеристикиНоменклатуры</v8:Type>
+					</Type>
+				</Column>
+				<Column name="КодСтроки" id="3">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Код строки</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Код рядка</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+							<v8:AllowedSign>Nonnegative</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="КоличествоУпаковок" id="4">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Количество</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Кількість</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>15</v8:Digits>
+							<v8:FractionDigits>3</v8:FractionDigits>
+							<v8:AllowedSign>Nonnegative</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="Упаковка" id="5">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Упаковка</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Упаковка</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.УпаковкиЕдиницыИзмерения</v8:Type>
+					</Type>
+				</Column>
+				<Column name="Спецификация" id="6">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Спецификация</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Специфікація</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.РесурсныеСпецификации</v8:Type>
+					</Type>
+				</Column>
+				<Column name="Количество" id="7">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Количество</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Кількість</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>15</v8:Digits>
+							<v8:FractionDigits>3</v8:FractionDigits>
+							<v8:AllowedSign>Nonnegative</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="ХарактеристикиИспользуются" id="8">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Характеристики используются</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Характеристики використовуються</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:boolean</v8:Type>
+					</Type>
+				</Column>
+			</Columns>
+		</Attribute>
+		<Attribute name="ОтборПоСпецификации" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Материалы для спецификации</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Матеріали для специфікації</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.РесурсныеСпецификации</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ПеренестиВДокумент" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Перенести в документ</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Перенести в документ</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ДатаЗаказа" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Дата заказа</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Дата замовлення</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="НаправлениеДеятельности" id="6">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Направление деятельности</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Напрям діяльності</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.НаправленияДеятельности</v8:Type>
+			</Type>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="ПеренестиВДокумент" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Перенести в документ</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Перенести в документ</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Перенести в документ</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Перенести в документ</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ПеренестиВДокумент</Action>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="СортироватьПоМатериалам" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сортировать по материалам</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Сортувати по матеріалах</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сортировать по материалам по возрастанию</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Сортувати по матеріалах за зростанням</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Picture>
+				<xr:Ref>StdPicture.SortListAsc</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>СортироватьПоМатериалам</Action>
+			<Representation>TextPicture</Representation>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="СортироватьПоСпецификации" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сортировать по спецификации</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Сортувати за специфікацією</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сортировать по материалам по возрастанию</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Сортувати по матеріалах за зростанням</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Picture>
+				<xr:Ref>StdPicture.SortListAsc</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>СортироватьПоСпецификации</Action>
+			<Representation>TextPicture</Representation>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+	</Commands>
+	<Parameters>
+		<Parameter name="АдресВоВременномХранилище">
+			<Type/>
+		</Parameter>
+		<Parameter name="Подразделение">
+			<Type>
+				<v8:Type>cfg:CatalogRef.СтруктураПредприятия</v8:Type>
+			</Type>
+		</Parameter>
+		<Parameter name="СписокВыбораПродукции">
+			<Type/>
+		</Parameter>
+		<Parameter name="СписокСпецификаций">
+			<Type/>
+		</Parameter>
+	</Parameters>
+</Form>

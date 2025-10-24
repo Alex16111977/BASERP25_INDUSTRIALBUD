@@ -1,0 +1,598 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
+	<Title>
+		<v8:item>
+			<v8:lang>ru</v8:lang>
+			<v8:content>Параметры планирования работы рабочих центров</v8:content>
+		</v8:item>
+		<v8:item>
+			<v8:lang>uk</v8:lang>
+			<v8:content>Параметри планування роботи робочих центрів</v8:content>
+		</v8:item>
+	</Title>
+	<WindowOpeningMode>LockOwnerWindow</WindowOpeningMode>
+	<AutoTitle>false</AutoTitle>
+	<Customizable>false</Customizable>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+		<ChildItems>
+			<Button name="ЗавершитьРедактирование" id="264">
+				<Type>CommandBarButton</Type>
+				<DefaultButton>true</DefaultButton>
+				<CommandName>Form.Command.ЗавершитьРедактирование</CommandName>
+				<ExtendedTooltip name="ЗавершитьРедактированиеРасширеннаяПодсказка" id="265"/>
+			</Button>
+		</ChildItems>
+	</AutoCommandBar>
+	<Events>
+		<Event name="BeforeClose">ПередЗакрытием</Event>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+		<Event name="FillCheckProcessingAtServer">ОбработкаПроверкиЗаполненияНаСервере</Event>
+	</Events>
+	<ChildItems>
+		<UsualGroup name="ГруппаХарактерЗагрузки" id="211">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Характер загрузки</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Характер завантаження</v8:content>
+				</v8:item>
+			</Title>
+			<Group>Vertical</Group>
+			<Behavior>Usual</Behavior>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаХарактерЗагрузкиРасширеннаяПодсказка" id="212"/>
+			<ChildItems>
+				<RadioButtonField name="ПараллельнаяЗагрузка" id="213">
+					<DataPath>ПараллельнаяЗагрузка</DataPath>
+					<RadioButtonType>Auto</RadioButtonType>
+					<ChoiceList>
+						<xr:Item>
+							<xr:Presentation/>
+							<xr:CheckState>0</xr:CheckState>
+							<xr:Value xsi:type="FormChoiceListDesTimeValue">
+								<Presentation>
+									<v8:item>
+										<v8:lang>ru</v8:lang>
+										<v8:content>Не допускается</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>uk</v8:lang>
+										<v8:content>Не допускається</v8:content>
+									</v8:item>
+								</Presentation>
+								<Value xsi:type="xs:decimal">0</Value>
+							</xr:Value>
+						</xr:Item>
+						<xr:Item>
+							<xr:Presentation/>
+							<xr:CheckState>0</xr:CheckState>
+							<xr:Value xsi:type="FormChoiceListDesTimeValue">
+								<Presentation>
+									<v8:item>
+										<v8:lang>ru</v8:lang>
+										<v8:content>Допускается</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>uk</v8:lang>
+										<v8:content>Допускається</v8:content>
+									</v8:item>
+								</Presentation>
+								<Value xsi:type="xs:decimal">1</Value>
+							</xr:Value>
+						</xr:Item>
+					</ChoiceList>
+					<ContextMenu name="ПараллельнаяЗагрузкаКонтекстноеМеню" id="214"/>
+					<ExtendedTooltip name="ПараллельнаяЗагрузкаРасширеннаяПодсказка" id="215"/>
+					<Events>
+						<Event name="OnChange">ПараллельнаяЗагрузкаПриИзменении</Event>
+					</Events>
+				</RadioButtonField>
+				<InputField name="ЕдиницаИзмеренияЗагрузки" id="201">
+					<DataPath>Объект.ЕдиницаИзмеренияЗагрузки</DataPath>
+					<Width>12</Width>
+					<DropListButton>true</DropListButton>
+					<ContextMenu name="ЕдиницаИзмеренияЗагрузкиКонтекстноеМеню" id="202"/>
+					<ExtendedTooltip name="ЕдиницаИзмеренияЗагрузкиРасширеннаяПодсказка" id="203"/>
+				</InputField>
+				<UsualGroup name="ГруппаАсинхроннаяЗагрузка" id="218">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Асинхронная загрузка</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Асинхронне завантаження</v8:content>
+						</v8:item>
+					</Title>
+					<Group>Vertical</Group>
+					<Behavior>Usual</Behavior>
+					<Representation>None</Representation>
+					<ShowTitle>false</ShowTitle>
+					<ExtendedTooltip name="ГруппаАсинхроннаяЗагрузкаРасширеннаяПодсказка" id="219"/>
+					<ChildItems>
+						<RadioButtonField name="ВариантЗагрузкиАсинхронный" id="232">
+							<DataPath>Объект.ВариантЗагрузки</DataPath>
+							<TitleLocation>None</TitleLocation>
+							<ToolTipRepresentation>ShowBottom</ToolTipRepresentation>
+							<RadioButtonType>Auto</RadioButtonType>
+							<ItemHeight>1</ItemHeight>
+							<ChoiceList>
+								<xr:Item>
+									<xr:Presentation/>
+									<xr:CheckState>0</xr:CheckState>
+									<xr:Value xsi:type="FormChoiceListDesTimeValue">
+										<Presentation>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>Асинхронная загрузка</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>uk</v8:lang>
+												<v8:content>Асинхронне завантаження</v8:content>
+											</v8:item>
+										</Presentation>
+										<Value xsi:type="xr:DesignTimeRef">Enum.ВариантыЗагрузкиРабочихЦентров.EnumValue.Асинхронный</Value>
+									</xr:Value>
+								</xr:Item>
+							</ChoiceList>
+							<ContextMenu name="ВариантЗагрузкиАсинхронныйКонтекстноеМеню" id="233"/>
+							<ExtendedTooltip name="ВариантЗагрузкиАсинхронныйРасширеннаяПодсказка" id="234">
+								<AutoMaxWidth>false</AutoMaxWidth>
+								<Title formatted="false">
+									<v8:item>
+										<v8:lang>ru</v8:lang>
+										<v8:content>Примером вида рабочего центра с асинхронной загрузкой является печь - можно выпекать одновременно несколько видов продукции и в процессе выпекания одной продукции можно начать выпекание другой продукции.</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>uk</v8:lang>
+										<v8:content>Прикладом виду робочого центру з асинхронним завантаженням є піч - можна випікати одночасно кілька видів продукції і в процесі випікання однієї продукції можна розпочати випікання іншого продукції.</v8:content>
+									</v8:item>
+								</Title>
+							</ExtendedTooltip>
+							<Events>
+								<Event name="OnChange">ВариантЗагрузкиАсинхронныйПриИзменении</Event>
+							</Events>
+						</RadioButtonField>
+					</ChildItems>
+				</UsualGroup>
+				<UsualGroup name="ГруппаСинхроннаяЗагрузка" id="216">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Синхронная загрузка</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Синхронне завантаження</v8:content>
+						</v8:item>
+					</Title>
+					<Group>Vertical</Group>
+					<Behavior>Usual</Behavior>
+					<Representation>None</Representation>
+					<ShowTitle>false</ShowTitle>
+					<ExtendedTooltip name="ГруппаСинхроннаяЗагрузкаРасширеннаяПодсказка" id="217"/>
+					<ChildItems>
+						<Pages name="СтраницыСинхроннаяЗагрузка" id="252">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Страницы синхронная загрузка</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Сторінки синхронна завантаження</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTipRepresentation>ShowBottom</ToolTipRepresentation>
+							<PagesRepresentation>None</PagesRepresentation>
+							<ExtendedTooltip name="СтраницыСинхроннаяЗагрузкаРасширеннаяПодсказка" id="253">
+								<AutoMaxWidth>false</AutoMaxWidth>
+								<Title formatted="false">
+									<v8:item>
+										<v8:lang>ru</v8:lang>
+										<v8:content>Примером вида рабочего центра с синхронной загрузкой является стиральная машина - вещи стираются одинаковое время, а начало и окончание стирки вещей одинаковое.</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>uk</v8:lang>
+										<v8:content>Прикладом виду робочого центру з синхронним завантаженням є пральна машина - речі стираються однаковий час, а початок і закінчення прання речей однакове.</v8:content>
+									</v8:item>
+								</Title>
+							</ExtendedTooltip>
+							<ChildItems>
+								<Page name="СтраницаСинхроннаяЗагрузкаСВременемРаботы" id="254">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Страница синхронная загрузка с временем работы</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Сторінка синхронна завантаження з часом роботи</v8:content>
+										</v8:item>
+									</Title>
+									<Group>Horizontal</Group>
+									<ExtendedTooltip name="СтраницаСинхроннаяЗагрузкаСВременемРаботыРасширеннаяПодсказка" id="255"/>
+									<ChildItems>
+										<RadioButtonField name="ВариантЗагрузкиСинхронный2" id="261">
+											<DataPath>Объект.ВариантЗагрузки</DataPath>
+											<TitleLocation>None</TitleLocation>
+											<RadioButtonType>Auto</RadioButtonType>
+											<ColumnsCount>1</ColumnsCount>
+											<ChoiceList>
+												<xr:Item>
+													<xr:Presentation/>
+													<xr:CheckState>0</xr:CheckState>
+													<xr:Value xsi:type="FormChoiceListDesTimeValue">
+														<Presentation>
+															<v8:item>
+																<v8:lang>ru</v8:lang>
+																<v8:content>Синхронная загрузка</v8:content>
+															</v8:item>
+															<v8:item>
+																<v8:lang>uk</v8:lang>
+																<v8:content>Синхронне завантаження</v8:content>
+															</v8:item>
+														</Presentation>
+														<Value xsi:type="xr:DesignTimeRef">Enum.ВариантыЗагрузкиРабочихЦентров.EnumValue.Синхронный</Value>
+													</xr:Value>
+												</xr:Item>
+											</ChoiceList>
+											<ContextMenu name="ВариантЗагрузкиСинхронный2КонтекстноеМеню" id="262"/>
+											<ExtendedTooltip name="ВариантЗагрузкиСинхронный2РасширеннаяПодсказка" id="263"/>
+											<Events>
+												<Event name="OnChange">ВариантЗагрузкиСинхронный2ПриИзменении</Event>
+											</Events>
+										</RadioButtonField>
+										<UsualGroup name="ГруппаВремяРаботыЕдИзм" id="244">
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Время работы ед изм</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>uk</v8:lang>
+													<v8:content>Час роботи од вим</v8:content>
+												</v8:item>
+											</Title>
+											<Group>Horizontal</Group>
+											<Behavior>Usual</Behavior>
+											<Representation>None</Representation>
+											<ShowTitle>false</ShowTitle>
+											<ExtendedTooltip name="ГруппаВремяРаботыЕдИзмРасширеннаяПодсказка" id="245"/>
+											<ChildItems>
+												<InputField name="ВремяРаботы" id="246">
+													<DataPath>Объект.ВремяРаботы</DataPath>
+													<ContextMenu name="ВремяРаботыКонтекстноеМеню" id="247"/>
+													<ExtendedTooltip name="ВремяРаботыРасширеннаяПодсказка" id="248"/>
+												</InputField>
+												<InputField name="ЕдиницаИзмерения" id="249">
+													<DataPath>Объект.ЕдиницаИзмерения</DataPath>
+													<TitleLocation>None</TitleLocation>
+													<Width>6</Width>
+													<HorizontalStretch>false</HorizontalStretch>
+													<DropListButton>false</DropListButton>
+													<ChoiceButton>true</ChoiceButton>
+													<ChoiceButtonRepresentation>ShowInInputField</ChoiceButtonRepresentation>
+													<ListChoiceMode>true</ListChoiceMode>
+													<ChoiceList>
+														<xr:Item>
+															<xr:Presentation/>
+															<xr:CheckState>0</xr:CheckState>
+															<xr:Value xsi:type="FormChoiceListDesTimeValue">
+																<Presentation/>
+																<Value xsi:type="xr:DesignTimeRef">Enum.ЕдиницыИзмеренияВремени.EnumValue.Минута</Value>
+															</xr:Value>
+														</xr:Item>
+														<xr:Item>
+															<xr:Presentation/>
+															<xr:CheckState>0</xr:CheckState>
+															<xr:Value xsi:type="FormChoiceListDesTimeValue">
+																<Presentation/>
+																<Value xsi:type="xr:DesignTimeRef">Enum.ЕдиницыИзмеренияВремени.EnumValue.Час</Value>
+															</xr:Value>
+														</xr:Item>
+														<xr:Item>
+															<xr:Presentation/>
+															<xr:CheckState>0</xr:CheckState>
+															<xr:Value xsi:type="FormChoiceListDesTimeValue">
+																<Presentation/>
+																<Value xsi:type="xr:DesignTimeRef">Enum.ЕдиницыИзмеренияВремени.EnumValue.Сутки</Value>
+															</xr:Value>
+														</xr:Item>
+													</ChoiceList>
+													<ContextMenu name="ЕдиницаИзмеренияКонтекстноеМеню" id="250"/>
+													<ExtendedTooltip name="ЕдиницаИзмеренияРасширеннаяПодсказка" id="251"/>
+												</InputField>
+											</ChildItems>
+										</UsualGroup>
+									</ChildItems>
+								</Page>
+								<Page name="СтраницаСинхроннаяЗагрузкаБезВремениРаботы" id="256">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Страница синхронная загрузка без времени работы</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Сторінка синхронна завантаження без часу роботи</v8:content>
+										</v8:item>
+									</Title>
+									<ExtendedTooltip name="СтраницаСинхроннаяЗагрузкаБезВремениРаботыРасширеннаяПодсказка" id="257"/>
+									<ChildItems>
+										<RadioButtonField name="ВариантЗагрузкиСинхронный1" id="258">
+											<DataPath>Объект.ВариантЗагрузки</DataPath>
+											<TitleLocation>None</TitleLocation>
+											<RadioButtonType>Auto</RadioButtonType>
+											<ColumnsCount>1</ColumnsCount>
+											<ChoiceList>
+												<xr:Item>
+													<xr:Presentation/>
+													<xr:CheckState>0</xr:CheckState>
+													<xr:Value xsi:type="FormChoiceListDesTimeValue">
+														<Presentation>
+															<v8:item>
+																<v8:lang>ru</v8:lang>
+																<v8:content>Синхронная загрузка (время работы определяется в вариантах наладки)</v8:content>
+															</v8:item>
+															<v8:item>
+																<v8:lang>uk</v8:lang>
+																<v8:content>Синхронне завантаження (час роботи визначається у варіантах наладки)</v8:content>
+															</v8:item>
+														</Presentation>
+														<Value xsi:type="xr:DesignTimeRef">Enum.ВариантыЗагрузкиРабочихЦентров.EnumValue.Синхронный</Value>
+													</xr:Value>
+												</xr:Item>
+											</ChoiceList>
+											<ContextMenu name="ВариантЗагрузкиСинхронный1КонтекстноеМеню" id="259"/>
+											<ExtendedTooltip name="ВариантЗагрузкиСинхронный1РасширеннаяПодсказка" id="260"/>
+										</RadioButtonField>
+									</ChildItems>
+								</Page>
+							</ChildItems>
+						</Pages>
+					</ChildItems>
+				</UsualGroup>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="ГруппаИспользуютсяВариантыНаладки" id="154">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Используются варианты наладки</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Використовуються варіанти наладки</v8:content>
+				</v8:item>
+			</Title>
+			<Group>Vertical</Group>
+			<Behavior>Usual</Behavior>
+			<Representation>NormalSeparation</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаИспользуютсяВариантыНаладкиРасширеннаяПодсказка" id="155"/>
+			<ChildItems>
+				<CheckBoxField name="ИспользуютсяВариантыНаладки" id="156">
+					<DataPath>Объект.ИспользуютсяВариантыНаладки</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Использовать варианты наладки</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Використовувати варіанти наладки</v8:content>
+						</v8:item>
+					</Title>
+					<TitleLocation>Right</TitleLocation>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="ИспользуютсяВариантыНаладкиКонтекстноеМеню" id="157"/>
+					<ExtendedTooltip name="ИспользуютсяВариантыНаладкиРасширеннаяПодсказка" id="158"/>
+					<Events>
+						<Event name="OnChange">ИспользуютсяВариантыНаладкиПриИзменении</Event>
+					</Events>
+				</CheckBoxField>
+				<InputField name="ЕдиницаВремениПереналадки" id="159">
+					<DataPath>Объект.ЕдиницаВремениПереналадки</DataPath>
+					<Width>6</Width>
+					<HorizontalStretch>false</HorizontalStretch>
+					<ListChoiceMode>true</ListChoiceMode>
+					<ChoiceList>
+						<xr:Item>
+							<xr:Presentation/>
+							<xr:CheckState>0</xr:CheckState>
+							<xr:Value xsi:type="FormChoiceListDesTimeValue">
+								<Presentation/>
+								<Value xsi:type="xr:DesignTimeRef">Enum.ЕдиницыИзмеренияВремени.EnumValue.Минута</Value>
+							</xr:Value>
+						</xr:Item>
+						<xr:Item>
+							<xr:Presentation/>
+							<xr:CheckState>0</xr:CheckState>
+							<xr:Value xsi:type="FormChoiceListDesTimeValue">
+								<Presentation/>
+								<Value xsi:type="xr:DesignTimeRef">Enum.ЕдиницыИзмеренияВремени.EnumValue.Час</Value>
+							</xr:Value>
+						</xr:Item>
+						<xr:Item>
+							<xr:Presentation/>
+							<xr:CheckState>0</xr:CheckState>
+							<xr:Value xsi:type="FormChoiceListDesTimeValue">
+								<Presentation/>
+								<Value xsi:type="xr:DesignTimeRef">Enum.ЕдиницыИзмеренияВремени.EnumValue.Сутки</Value>
+							</xr:Value>
+						</xr:Item>
+					</ChoiceList>
+					<ContextMenu name="ЕдиницаВремениПереналадкиКонтекстноеМеню" id="160"/>
+					<ExtendedTooltip name="ЕдиницаВремениПереналадкиРасширеннаяПодсказка" id="161"/>
+				</InputField>
+				<UsualGroup name="ГруппаВремяНаладки" id="162">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Время наладки</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Час наладки</v8:content>
+						</v8:item>
+					</Title>
+					<Group>Horizontal</Group>
+					<Behavior>Usual</Behavior>
+					<Representation>None</Representation>
+					<ShowTitle>false</ShowTitle>
+					<ExtendedTooltip name="ГруппаВремяНаладкиРасширеннаяПодсказка" id="163"/>
+					<ChildItems>
+						<InputField name="ВремяПереналадки" id="164">
+							<DataPath>ВремяПереналадки</DataPath>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Время переналадки вида рабочего центра при переходе на текущий вариант наладки с любых других.</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Час переналадки виду робочого центру при переході на поточний варіант наладки з будь-яких інших.</v8:content>
+								</v8:item>
+							</ToolTip>
+							<Width>6</Width>
+							<ChoiceButton>false</ChoiceButton>
+							<SpinButton>true</SpinButton>
+							<ContextMenu name="ВремяПереналадкиКонтекстноеМеню" id="165"/>
+							<ExtendedTooltip name="ВремяПереналадкиРасширеннаяПодсказка" id="166"/>
+						</InputField>
+						<LabelField name="ЕдиницаВремениПереналадки1" id="167">
+							<DataPath>Объект.ЕдиницаВремениПереналадки</DataPath>
+							<TitleLocation>None</TitleLocation>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Указывает в какой единице задано время переналадки.</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Зазначає в якій одиниці задано час переналадки.</v8:content>
+								</v8:item>
+							</ToolTip>
+							<Width>4</Width>
+							<HorizontalStretch>false</HorizontalStretch>
+							<ContextMenu name="ЕдиницаВремениПереналадки1КонтекстноеМеню" id="168"/>
+							<ExtendedTooltip name="ЕдиницаВремениПереналадки1РасширеннаяПодсказка" id="169"/>
+						</LabelField>
+						<LabelDecoration name="ДекорацияПояснениеВремяПереналадки" id="170">
+							<AutoMaxWidth>false</AutoMaxWidth>
+							<Title formatted="false">
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>при переходе на любой вариант наладки с любых других</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>при переході на будь-який варіант наладки з будь-яких інших</v8:content>
+								</v8:item>
+							</Title>
+							<ContextMenu name="ДекорацияПояснениеВремяПереналадкиКонтекстноеМеню" id="171"/>
+							<ExtendedTooltip name="ДекорацияПояснениеВремяПереналадкиРасширеннаяПодсказка" id="172"/>
+						</LabelDecoration>
+					</ChildItems>
+				</UsualGroup>
+			</ChildItems>
+		</UsualGroup>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Объект" id="1">
+			<Type>
+				<v8:Type>cfg:CatalogObject.ВидыРабочихЦентров</v8:Type>
+			</Type>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="ВремяПереналадки" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Время переналадки</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Час переналадки</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>10</v8:Digits>
+					<v8:FractionDigits>0</v8:FractionDigits>
+					<v8:AllowedSign>Nonnegative</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</Type>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="ПараллельнаяЗагрузка" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Параллельная загрузка</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Паралельне завантаження</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>1</v8:Digits>
+					<v8:FractionDigits>0</v8:FractionDigits>
+					<v8:AllowedSign>Nonnegative</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</Type>
+			<SavedData>true</SavedData>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="ЗавершитьРедактирование" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Завершить редактирование</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Завершити редагування</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Завершить редактирование</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Завершити редагування</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>КомандаЗавершитьРедактирование</Action>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+	</Commands>
+	<CommandInterface>
+		<NavigationPanel>
+			<Item>
+				<Command>Catalog.ВариантыНаладки.Command.ВариантыНаладкиВидаРабочегоЦентра</Command>
+				<Type>Auto</Type>
+				<CommandGroup>FormNavigationPanelGoTo</CommandGroup>
+				<Index>1</Index>
+			</Item>
+			<Item>
+				<Command>Catalog.РабочиеЦентры.Command.РабочиеЦентры</Command>
+				<Type>Auto</Type>
+				<CommandGroup>FormNavigationPanelGoTo</CommandGroup>
+			</Item>
+		</NavigationPanel>
+	</CommandInterface>
+</Form>
