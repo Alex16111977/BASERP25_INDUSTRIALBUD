@@ -1,0 +1,238 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<DataCompositionSchema xmlns="http://v8.1c.ru/8.1/data-composition-system/schema" xmlns:dcscom="http://v8.1c.ru/8.1/data-composition-system/common" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<dataSource>
+		<name>ИсточникДанных1</name>
+		<dataSourceType>Local</dataSourceType>
+	</dataSource>
+	<dataSet xsi:type="DataSetObject">
+		<name>ИсходныеИсточникиДанных</name>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ИсточникДанныхИсходный</dataPath>
+			<field>ИсточникДанных</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Источник данных исходный</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Джерело даних вихідне</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<dataSource>ИсточникДанных1</dataSource>
+		<objectName>ТаблицаДопДанных</objectName>
+	</dataSet>
+	<dataSet xsi:type="DataSetQuery">
+		<name>СопоставлениеИсточниковДанных</name>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ИсточникДанныхИсходный</dataPath>
+			<field>ИсточникДанныхИсходный</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Источник данных исходный</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Джерело даних вихідне</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ИсточникДанных</dataPath>
+			<field>ИсточникДанных</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Источник данных</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Джерело даних</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<dataSource>ИсточникДанных1</dataSource>
+		<query>
+//++ НЕ УТКА
+// ИМЕЮТСЯ ТЕГИ ВЫРЕЗКИ
+//-- НЕ УТКА
+//++ Локализация
+// ИМЕЮТСЯ ТЕГИ ВЫРЕЗКИ
+//-- Локализация
+
+ВЫБРАТЬ
+	НастройкиХозяйственныхОпераций.Ссылка КАК ИсточникДанных,
+	&amp;ИсточникДанныхИсходный КАК ИсточникДанныхИсходный
+ИЗ
+	Перечисление.ХозяйственныеОперации КАК НастройкиХозяйственныхОпераций
+ГДЕ
+	НастройкиХозяйственныхОпераций.Ссылка = &amp;ИсточникДанныхИсходный
+
+ОБЪЕДИНИТЬ ВСЕ
+
+ВЫБРАТЬ
+	СтатьиАктивовПассивов.Ссылка,
+	&amp;ИсточникДанныхИсходный
+ИЗ
+	ПланВидовХарактеристик.СтатьиАктивовПассивов КАК СтатьиАктивовПассивов
+ГДЕ
+	СтатьиАктивовПассивов.Ссылка = &amp;ИсточникДанныхИсходный
+
+ОБЪЕДИНИТЬ ВСЕ
+
+ВЫБРАТЬ
+	&amp;ИсточникДанныхИсходный,
+	&amp;ИсточникДанныхИсходный
+ГДЕ
+	(ТИПЗНАЧЕНИЯ(&amp;ИсточникДанныхИсходный) = ТИП(СТРОКА)
+	ИЛИ ТИПЗНАЧЕНИЯ(&amp;ИсточникДанныхИсходный) = ТИП(БУЛЕВО))
+	
+//++ Локализация
+ОБЪЕДИНИТЬ ВСЕ
+
+ВЫБРАТЬ
+	Хозрасчетный.Ссылка КАК ИсточникДанных,
+	&amp;ИсточникДанныхИсходный КАК ИсточникДанныхИсходный
+ИЗ
+	ПланСчетов.Хозрасчетный КАК Хозрасчетный
+ГДЕ
+	ВЫБОР
+			КОГДА &amp;ТребуетсяИерархия ИЛИ &amp;ИсточникДанныхИсходный = Значение(ПланСчетов.Хозрасчетный.ПустаяСсылка)
+				ТОГДА Хозрасчетный.Ссылка В ИЕРАРХИИ (&amp;ИсточникДанныхИсходный)
+			ИНАЧЕ Хозрасчетный.Ссылка = &amp;ИсточникДанныхИсходный
+		КОНЕЦ
+
+ОБЪЕДИНИТЬ ВСЕ
+
+ВЫБРАТЬ
+	// Для забалансовых счетов
+	ЗНАЧЕНИЕ(ПланСчетов.Хозрасчетный.ПустаяСсылка) КАК ИсточникДанных,
+	&amp;ИсточникДанныхИсходный КАК ИсточникДанныхИсходный
+ГДЕ
+	&amp;ИсточникДанныхИсходный = ЗНАЧЕНИЕ(ПланСчетов.Хозрасчетный.ПустаяСсылка)
+//-- Локализация
+
+//++ НЕ УТКА
+ОБЪЕДИНИТЬ ВСЕ
+
+ВЫБРАТЬ
+	Международный.Ссылка,
+	&amp;ИсточникДанныхИсходный
+ИЗ
+	ПланСчетов.Международный КАК Международный
+ГДЕ
+	ВЫБОР
+			КОГДА &amp;ТребуетсяИерархия ИЛИ &amp;ИсточникДанныхИсходный = Значение(ПланСчетов.Международный.ПустаяСсылка)
+				ТОГДА Международный.Ссылка В ИЕРАРХИИ (&amp;ИсточникДанныхИсходный)
+			ИНАЧЕ Международный.Ссылка = &amp;ИсточникДанныхИсходный
+		КОНЕЦ
+
+ОБЪЕДИНИТЬ ВСЕ
+
+ВЫБРАТЬ
+	// Для забалансовых счетов
+	ЗНАЧЕНИЕ(ПланСчетов.Международный.ПустаяСсылка) КАК ИсточникДанных,
+	&amp;ИсточникДанныхИсходный КАК ИсточникДанныхИсходный
+ГДЕ
+	&amp;ИсточникДанныхИсходный = ЗНАЧЕНИЕ(ПланСчетов.Международный.ПустаяСсылка)
+//-- НЕ УТКА
+</query>
+	</dataSet>
+	<dataSetLink>
+		<sourceDataSet>ИсходныеИсточникиДанных</sourceDataSet>
+		<destinationDataSet>СопоставлениеИсточниковДанных</destinationDataSet>
+		<sourceExpression>ИсточникДанныхИсходный</sourceExpression>
+		<destinationExpression>ИсточникДанныхИсходный</destinationExpression>
+		<parameter>ИсточникДанныхИсходный</parameter>
+		<parameterListAllowed>false</parameterListAllowed>
+	</dataSetLink>
+	<parameter>
+		<name>ИсточникДанныхИсходный</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Источник данных исходный</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>uk</v8:lang>
+				<v8:content>Джерело даних вихідне</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:boolean</v8:Type>
+			<v8:Type xmlns:d4p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d4p1:ChartOfCharacteristicTypesRef.СтатьиАктивовПассивов</v8:Type>
+			<v8:Type>xs:string</v8:Type>
+			<v8:Type xmlns:d4p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d4p1:CatalogRef.НастройкиХозяйственныхОпераций</v8:Type>
+			<v8:TypeSet xmlns:d4p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d4p1:ChartOfAccountsRef</v8:TypeSet>
+			<v8:StringQualifiers>
+				<v8:Length>200</v8:Length>
+				<v8:AllowedLength>Variable</v8:AllowedLength>
+			</v8:StringQualifiers>
+		</valueType>
+		<value xsi:nil="true"/>
+		<useRestriction>true</useRestriction>
+	</parameter>
+	<parameter>
+		<name>ТребуетсяИерархия</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Требуется иерархия</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>uk</v8:lang>
+				<v8:content>Потрібна ієрархія</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:boolean</v8:Type>
+		</valueType>
+		<value xsi:type="xs:boolean">true</value>
+		<useRestriction>true</useRestriction>
+		<use>Always</use>
+	</parameter>
+	<settingsVariant>
+		<dcsset:name>Основной</dcsset:name>
+		<dcsset:presentation xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Основной</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>uk</v8:lang>
+				<v8:content>Основний</v8:content>
+			</v8:item>
+		</dcsset:presentation>
+		<dcsset:settings xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows">
+			<dcsset:selection>
+				<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+			</dcsset:selection>
+			<dcsset:item xsi:type="dcsset:StructureItemGroup">
+				<dcsset:groupItems>
+					<dcsset:item xsi:type="dcsset:GroupItemField">
+						<dcsset:field>ИсточникДанных</dcsset:field>
+						<dcsset:groupType>Items</dcsset:groupType>
+						<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+						<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+						<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+					</dcsset:item>
+					<dcsset:item xsi:type="dcsset:GroupItemField">
+						<dcsset:field>ИсточникДанныхИсходный</dcsset:field>
+						<dcsset:groupType>Items</dcsset:groupType>
+						<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+						<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+						<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+					</dcsset:item>
+				</dcsset:groupItems>
+				<dcsset:order>
+					<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+				</dcsset:order>
+				<dcsset:selection>
+					<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+				</dcsset:selection>
+			</dcsset:item>
+		</dcsset:settings>
+	</settingsVariant>
+</DataCompositionSchema>

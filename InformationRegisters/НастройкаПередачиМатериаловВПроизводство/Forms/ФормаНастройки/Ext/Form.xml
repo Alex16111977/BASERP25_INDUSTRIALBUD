@@ -1,0 +1,636 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
+	<Title>
+		<v8:item>
+			<v8:lang>ru</v8:lang>
+			<v8:content>Настройка передачи материала в производство</v8:content>
+		</v8:item>
+		<v8:item>
+			<v8:lang>uk</v8:lang>
+			<v8:content>Настройка передачі матеріалу у виробництво</v8:content>
+		</v8:item>
+	</Title>
+	<AutoTitle>false</AutoTitle>
+	<CommandSet>
+		<ExcludedCommand>CustomizeForm</ExcludedCommand>
+		<ExcludedCommand>RestoreValues</ExcludedCommand>
+		<ExcludedCommand>SaveValues</ExcludedCommand>
+	</CommandSet>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+		<ChildItems>
+			<Button name="ФормаЗаписатьИЗакрыть" id="32">
+				<Type>CommandBarButton</Type>
+				<DefaultButton>true</DefaultButton>
+				<CommandName>Form.Command.ЗаписатьИЗакрыть</CommandName>
+				<ExtendedTooltip name="ФормаЗаписатьИЗакрытьExtendedTooltip" id="52"/>
+			</Button>
+			<Button name="ФормаЗаписать" id="33">
+				<Type>CommandBarButton</Type>
+				<CommandName>Form.Command.Записать</CommandName>
+				<ExtendedTooltip name="ФормаЗаписатьExtendedTooltip" id="53"/>
+			</Button>
+		</ChildItems>
+	</AutoCommandBar>
+	<Events>
+		<Event name="BeforeClose">ПередЗакрытием</Event>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+		<Event name="FillCheckProcessingAtServer">ОбработкаПроверкиЗаполненияНаСервере</Event>
+	</Events>
+	<ChildItems>
+		<LabelField name="Подразделение" id="7">
+			<DataPath>Подразделение</DataPath>
+			<ContextMenu name="ПодразделениеКонтекстноеМеню" id="8"/>
+			<ExtendedTooltip name="ПодразделениеExtendedTooltip" id="54"/>
+		</LabelField>
+		<LabelField name="Номенклатура" id="3">
+			<DataPath>Номенклатура</DataPath>
+			<ContextMenu name="НоменклатураКонтекстноеМеню" id="4"/>
+			<ExtendedTooltip name="НоменклатураExtendedTooltip" id="55"/>
+		</LabelField>
+		<LabelField name="Характеристика" id="5">
+			<DataPath>Характеристика</DataPath>
+			<ContextMenu name="ХарактеристикаКонтекстноеМеню" id="6"/>
+			<ExtendedTooltip name="ХарактеристикаExtendedTooltip" id="56"/>
+		</LabelField>
+		<UsualGroup name="ГруппаСпособНастройки" id="34">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Передача материала:</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Передача матеріалу:</v8:content>
+				</v8:item>
+			</Title>
+			<TitleTextColor>style:ГруппаВариантовОтчетовЦвет82</TitleTextColor>
+			<Group>Vertical</Group>
+			<Behavior>Usual</Behavior>
+			<Representation>NormalSeparation</Representation>
+			<ExtendedTooltip name="ГруппаСпособНастройкиExtendedTooltip" id="57"/>
+			<ChildItems>
+				<RadioButtonField name="СпособНастройки1" id="1">
+					<DataPath>СпособНастройки</DataPath>
+					<TitleLocation>None</TitleLocation>
+					<RadioButtonType>Auto</RadioButtonType>
+					<ColumnsCount>1</ColumnsCount>
+					<ChoiceList>
+						<xr:Item>
+							<xr:Presentation/>
+							<xr:CheckState>0</xr:CheckState>
+							<xr:Value xsi:type="FormChoiceListDesTimeValue">
+								<Presentation/>
+								<Value xsi:type="xr:DesignTimeRef">Enum.СпособыНастройкиПередачиМатериаловВПроизводство.EnumValue.ОпределяетсяНастройкойДляПодразделения</Value>
+							</xr:Value>
+						</xr:Item>
+					</ChoiceList>
+					<ContextMenu name="СпособНастройки1КонтекстноеМеню" id="2"/>
+					<ExtendedTooltip name="СпособНастройки1ExtendedTooltip" id="58"/>
+					<Events>
+						<Event name="OnChange">СпособНастройкиПриИзменении</Event>
+					</Events>
+				</RadioButtonField>
+				<Pages name="ГруппаНастройкаСтраницыПодразделение" id="45">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Настройка страницы подразделение</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Настройка сторінки підрозділ</v8:content>
+						</v8:item>
+					</Title>
+					<PagesRepresentation>None</PagesRepresentation>
+					<ExtendedTooltip name="ГруппаНастройкаСтраницыПодразделениеExtendedTooltip" id="59"/>
+					<ChildItems>
+						<Page name="ГруппаНастройкаСтраницаПодразделение" id="12">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Настройка страница подразделение</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Настройка сторінка підрозділ</v8:content>
+								</v8:item>
+							</Title>
+							<ExtendedTooltip name="ГруппаНастройкаСтраницаПодразделениеExtendedTooltip" id="60"/>
+							<ChildItems>
+								<LabelField name="СкладПодразделение" id="18">
+									<DataPath>СкладПодразделение</DataPath>
+									<ReadOnly>true</ReadOnly>
+									<ContextMenu name="СкладПодразделениеКонтекстноеМеню" id="19"/>
+									<ExtendedTooltip name="СкладПодразделениеExtendedTooltip" id="61"/>
+								</LabelField>
+								<LabelDecoration name="ОснованиеДляПолучения1" id="40">
+									<AutoMaxWidth>false</AutoMaxWidth>
+									<Title formatted="false">
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Материал передается в производство: По заказу на производство</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Матеріал передається у виробництво: По замовленню на виробництво</v8:content>
+										</v8:item>
+									</Title>
+									<ContextMenu name="ОснованиеДляПолучения1КонтекстноеМеню" id="41"/>
+									<ExtendedTooltip name="ОснованиеДляПолучения1ExtendedTooltip" id="62"/>
+								</LabelDecoration>
+							</ChildItems>
+						</Page>
+						<Page name="ГруппаНастройкаСтраницаПодразделениеНеЗадана" id="37">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Настройка страница подразделение не задана</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Настройка сторінка підрозділ не задана</v8:content>
+								</v8:item>
+							</Title>
+							<ExtendedTooltip name="ГруппаНастройкаСтраницаПодразделениеНеЗаданаExtendedTooltip" id="63"/>
+							<ChildItems>
+								<LabelDecoration name="ДекорацияНастройкаНеЗадана" id="38">
+									<AutoMaxWidth>false</AutoMaxWidth>
+									<TextColor>style:SpecialTextColor</TextColor>
+									<Title formatted="false">
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Настройка не задана</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Настройка не задана</v8:content>
+										</v8:item>
+									</Title>
+									<ContextMenu name="ДекорацияНастройкаНеЗаданаКонтекстноеМеню" id="39"/>
+									<ExtendedTooltip name="ДекорацияНастройкаНеЗаданаExtendedTooltip" id="64"/>
+								</LabelDecoration>
+							</ChildItems>
+						</Page>
+					</ChildItems>
+				</Pages>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="ГруппаНастройкаGередачиВПроизводство" id="10">
+			<EnableContentChange>true</EnableContentChange>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Настройка передачи в производство:</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Настройка передачі у виробництво:</v8:content>
+				</v8:item>
+			</Title>
+			<TitleTextColor>style:ГруппаВариантовОтчетовЦвет82</TitleTextColor>
+			<Group>Vertical</Group>
+			<Behavior>Usual</Behavior>
+			<Representation>NormalSeparation</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаНастройкаGередачиВПроизводствоExtendedTooltip" id="65"/>
+			<ChildItems>
+				<RadioButtonField name="СпособНастройки2" id="43">
+					<DataPath>СпособНастройки</DataPath>
+					<TitleLocation>None</TitleLocation>
+					<RadioButtonType>Auto</RadioButtonType>
+					<ColumnsCount>1</ColumnsCount>
+					<ChoiceList>
+						<xr:Item>
+							<xr:Presentation/>
+							<xr:CheckState>0</xr:CheckState>
+							<xr:Value xsi:type="FormChoiceListDesTimeValue">
+								<Presentation/>
+								<Value xsi:type="xr:DesignTimeRef">Enum.СпособыНастройкиПередачиМатериаловВПроизводство.EnumValue.НастраиваетсяИндивидуально</Value>
+							</xr:Value>
+						</xr:Item>
+					</ChoiceList>
+					<ContextMenu name="СпособНастройки2КонтекстноеМеню" id="44"/>
+					<ExtendedTooltip name="СпособНастройки2ExtendedTooltip" id="66"/>
+					<Events>
+						<Event name="OnChange">СпособНастройкиПриИзменении</Event>
+					</Events>
+				</RadioButtonField>
+				<InputField name="Склад" id="14">
+					<DataPath>Склад</DataPath>
+					<ContextMenu name="СкладКонтекстноеМеню" id="15"/>
+					<ExtendedTooltip name="СкладExtendedTooltip" id="67"/>
+				</InputField>
+				<UsualGroup name="ГруппаОснованиеДляПолучения" id="27">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Материал передается в производство:</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Матеріал передається у виробництво:</v8:content>
+						</v8:item>
+					</Title>
+					<Group>Vertical</Group>
+					<Behavior>Usual</Behavior>
+					<Representation>None</Representation>
+					<ExtendedTooltip name="ГруппаОснованиеДляПолученияExtendedTooltip" id="68"/>
+					<ChildItems>
+						<UsualGroup name="Группа1" id="46">
+							<Group>Horizontal</Group>
+							<Behavior>Usual</Behavior>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="Группа1ExtendedTooltip" id="74"/>
+							<ChildItems>
+								<LabelDecoration name="Декорация1" id="47">
+									<ContextMenu name="Декорация1КонтекстноеМеню" id="48"/>
+									<ExtendedTooltip name="Декорация1ExtendedTooltip" id="75"/>
+								</LabelDecoration>
+								<UsualGroup name="ГруппаОснованиеДляПолученияПоЗаказуНаВнутреннееПотребление" id="31">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Основание для получения по заказу на внутреннее потребление</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Підстава для отримання за замовленням на внутрішнє споживання</v8:content>
+										</v8:item>
+									</Title>
+									<Group>Vertical</Group>
+									<Behavior>Usual</Behavior>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="ГруппаОснованиеДляПолученияПоЗаказуНаВнутреннееПотреблениеExtendedTooltip" id="76"/>
+									<ChildItems>
+										<RadioButtonField name="ОснованиеДляПолучения2" id="28">
+											<DataPath>ОснованиеДляПолучения</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>На основании чего материалы передаются в производство</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>uk</v8:lang>
+													<v8:content>На підставі чого матеріали передаються у виробництво</v8:content>
+												</v8:item>
+											</Title>
+											<TitleLocation>None</TitleLocation>
+											<RadioButtonType>Auto</RadioButtonType>
+											<ColumnsCount>1</ColumnsCount>
+											<ChoiceList>
+												<xr:Item>
+													<xr:Presentation/>
+													<xr:CheckState>0</xr:CheckState>
+													<xr:Value xsi:type="FormChoiceListDesTimeValue">
+														<Presentation/>
+														<Value xsi:type="xr:DesignTimeRef">Enum.ОснованияДляПолученияМатериаловВПроизводстве.EnumValue.ПоЗаказуНаПроизводство</Value>
+													</xr:Value>
+												</xr:Item>
+											</ChoiceList>
+											<ContextMenu name="ОснованиеДляПолучения2КонтекстноеМеню" id="29"/>
+											<ExtendedTooltip name="ОснованиеДляПолучения2ExtendedTooltip" id="77"/>
+										</RadioButtonField>
+										<LabelDecoration name="ДекорацияПояснениеПоЗаказуНаПроизводство" id="23">
+											<AutoMaxWidth>false</AutoMaxWidth>
+											<TextColor>style:ПоясняющийТекст</TextColor>
+											<Title formatted="false">
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Используется для материалов, которые передаются со склада в производственное подразделение по заказу на производство. При заполнении спецификации заказа для таких материалов будет установлен признак "Заказать на склад".</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>uk</v8:lang>
+													<v8:content>Використовується для матеріалів, які передаються зі складу у виробничий підрозділ по замовленню на виробництво. При заповненні специфікації замовлення для таких матеріалів буде встановлена ознака "Замовити на склад".</v8:content>
+												</v8:item>
+											</Title>
+											<ContextMenu name="ДекорацияПояснениеПоЗаказуНаПроизводствоКонтекстноеМеню" id="24"/>
+											<ExtendedTooltip name="ДекорацияПояснениеПоЗаказуНаПроизводствоExtendedTooltip" id="78"/>
+										</LabelDecoration>
+									</ChildItems>
+								</UsualGroup>
+							</ChildItems>
+						</UsualGroup>
+						<UsualGroup name="Группа2" id="49">
+							<Group>Horizontal</Group>
+							<Behavior>Usual</Behavior>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="Группа2ExtendedTooltip" id="69"/>
+							<ChildItems>
+								<LabelDecoration name="Декорация2" id="50">
+									<ContextMenu name="Декорация2КонтекстноеМеню" id="51"/>
+									<ExtendedTooltip name="Декорация2ExtendedTooltip" id="70"/>
+								</LabelDecoration>
+								<UsualGroup name="ГруппаОснованиеДляПолученияПоЗаказуНаПроизводство" id="30">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Основание для получения по заказу на производство</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Підстава для отримання за замовленням на виробництво</v8:content>
+										</v8:item>
+									</Title>
+									<Group>Vertical</Group>
+									<Behavior>Usual</Behavior>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="ГруппаОснованиеДляПолученияПоЗаказуНаПроизводствоExtendedTooltip" id="71"/>
+									<ChildItems>
+										<RadioButtonField name="ОснованиеДляПолучения3" id="16">
+											<DataPath>ОснованиеДляПолучения</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>На основании чего материалы передаются в производство</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>uk</v8:lang>
+													<v8:content>На підставі чого матеріали передаються у виробництво</v8:content>
+												</v8:item>
+											</Title>
+											<TitleLocation>None</TitleLocation>
+											<RadioButtonType>Auto</RadioButtonType>
+											<ColumnsCount>1</ColumnsCount>
+											<ChoiceList>
+												<xr:Item>
+													<xr:Presentation/>
+													<xr:CheckState>0</xr:CheckState>
+													<xr:Value xsi:type="FormChoiceListDesTimeValue">
+														<Presentation/>
+														<Value xsi:type="xr:DesignTimeRef">Enum.ОснованияДляПолученияМатериаловВПроизводстве.EnumValue.ПоЗаказуНаВнутреннееПотребление</Value>
+													</xr:Value>
+												</xr:Item>
+											</ChoiceList>
+											<ContextMenu name="ОснованиеДляПолучения3КонтекстноеМеню" id="17"/>
+											<ExtendedTooltip name="ОснованиеДляПолучения3ExtendedTooltip" id="72"/>
+										</RadioButtonField>
+										<LabelDecoration name="ДекорацияПоЗаказуНаВнутреннееПотребление" id="25">
+											<AutoMaxWidth>false</AutoMaxWidth>
+											<Height>3</Height>
+											<TextColor>style:ПоясняющийТекст</TextColor>
+											<Title formatted="false">
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Используется для материалов, наличие которых в производстве подразумевается постоянно. Например, этот вариант можно использовать для дешевых материалов, потребляемых в больших количествах (смазочные материалы, гвозди и т.п.). При заполнении спецификации заказа для таких материалов будет установлен признак "Из запаса подразделения".</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>uk</v8:lang>
+													<v8:content>Використовується для матеріалів, наявність яких у виробництві мається на увазі постійно. Наприклад, цей параметр можна використовувати для дешевих матеріалів, що споживаються у великих кількостях (мастильні матеріали, цвяхи тощо). При заповненні специфікації замовлення для таких матеріалів буде встановлена ознака "Із запасу підрозділу".</v8:content>
+												</v8:item>
+											</Title>
+											<ContextMenu name="ДекорацияПоЗаказуНаВнутреннееПотреблениеКонтекстноеМеню" id="26"/>
+											<ExtendedTooltip name="ДекорацияПоЗаказуНаВнутреннееПотреблениеExtendedTooltip" id="73"/>
+										</LabelDecoration>
+									</ChildItems>
+								</UsualGroup>
+							</ChildItems>
+						</UsualGroup>
+					</ChildItems>
+				</UsualGroup>
+			</ChildItems>
+		</UsualGroup>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="СпособНастройки" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Передача материала</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Передача матеріалу</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:EnumRef.СпособыНастройкиПередачиМатериаловВПроизводство</v8:Type>
+			</Type>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="Подразделение" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Подразделение-получатель</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Підрозділ-одержувач</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.СтруктураПредприятия</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="Номенклатура" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Номенклатура</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Номенклатура</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.Номенклатура</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="Характеристика" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Характеристика</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Характеристика</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.ХарактеристикиНоменклатуры</v8:Type>
+			</Type>
+			<FunctionalOptions>
+				<Item>FunctionalOption.ИспользоватьХарактеристикиНоменклатуры</Item>
+			</FunctionalOptions>
+		</Attribute>
+		<Attribute name="ХарактеристикиИспользуются" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Характеристики используются</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Характеристики використовуються</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="Склад" id="6">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Склад материалов</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Склад матеріалів</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.Склады</v8:Type>
+			</Type>
+			<SavedData>true</SavedData>
+			<FillCheck>ShowError</FillCheck>
+			<FunctionalOptions>
+				<Item>FunctionalOption.ИспользоватьНесколькоСкладов</Item>
+			</FunctionalOptions>
+		</Attribute>
+		<Attribute name="ОснованиеДляПолучения" id="7">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Основание для получения</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Підстава для отримання</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:EnumRef.ОснованияДляПолученияМатериаловВПроизводстве</v8:Type>
+			</Type>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="СкладПодразделение" id="8">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Склад материалов</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Склад матеріалів</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.Склады</v8:Type>
+			</Type>
+			<FunctionalOptions>
+				<Item>FunctionalOption.ИспользоватьНесколькоСкладов</Item>
+			</FunctionalOptions>
+		</Attribute>
+		<Attribute name="ЕстьНастройкиДляПодразделения" id="10">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Есть настройки для подразделения</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Є настройки для підрозділу</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ИспользоватьНесколькоСкладов" id="11">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Использовать несколько складов</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Використовувати кілька складів</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="СкладПоУмолчанию" id="12">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Склад по умолчанию</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Склад по умовчанню</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.Склады</v8:Type>
+			</Type>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="ЗаписатьИЗакрыть" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Записать и закрыть</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Записати і закрити</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Записать и закрыть</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Записати і закрити</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Picture>
+				<xr:Ref>StdPicture.WriteAndClose</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>КомандаЗаписатьИЗакрыть</Action>
+			<Representation>Text</Representation>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="Записать" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Записать</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Записати</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Записать</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Записати</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Picture>
+				<xr:Ref>StdPicture.Write</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>КомандаЗаписать</Action>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+	</Commands>
+</Form>

@@ -1,0 +1,409 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
+	<WindowOpeningMode>LockOwnerWindow</WindowOpeningMode>
+	<AutoTitle>false</AutoTitle>
+	<UseForFoldersAndItems>Items</UseForFoldersAndItems>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1"/>
+	<Events>
+		<Event name="AfterWrite">ПослеЗаписи</Event>
+		<Event name="AfterWriteAtServer">ПослеЗаписиНаСервере</Event>
+		<Event name="NotificationProcessing">ОбработкаОповещения</Event>
+		<Event name="OnReadAtServer">ПриЧтенииНаСервере</Event>
+		<Event name="OnOpen">ПриОткрытии</Event>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+		<Event name="BeforeWriteAtServer">ПередЗаписьюНаСервере</Event>
+		<Event name="FillCheckProcessingAtServer">ОбработкаПроверкиЗаполненияНаСервере</Event>
+	</Events>
+	<ChildItems>
+		<InputField name="Владелец" id="92">
+			<DataPath>Объект.Owner</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сотрудник</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Співробітник</v8:content>
+				</v8:item>
+			</Title>
+			<ContextMenu name="ВладелецКонтекстноеМеню" id="93"/>
+			<ExtendedTooltip name="ВладелецРасширеннаяПодсказка" id="94"/>
+		</InputField>
+		<CheckBoxField name="ОсновноеОбразование" id="80">
+			<DataPath>Объект.ОсновноеОбразование</DataPath>
+			<TitleLocation>None</TitleLocation>
+			<CheckBoxType>Tumbler</CheckBoxType>
+			<EditFormat>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>БЛ='Дополнительное обучение'; БИ='Основное образование'</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>БЛ='Додаткове навчання'; БИ='Основна освіта'</v8:content>
+				</v8:item>
+			</EditFormat>
+			<ContextMenu name="ОсновноеОбразованиеКонтекстноеМеню" id="81"/>
+			<ExtendedTooltip name="ОсновноеОбразованиеРасширеннаяПодсказка" id="82"/>
+			<Events>
+				<Event name="OnChange">ОсновноеОбразованиеПриИзменении</Event>
+			</Events>
+		</CheckBoxField>
+		<UsualGroup name="ГруппаВидОбразования" id="51">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Вид образования по ОКИН</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Вид освіти за ОКИН</v8:content>
+				</v8:item>
+			</Title>
+			<Group>Horizontal</Group>
+			<Behavior>Usual</Behavior>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаВидОбразованияРасширеннаяПодсказка" id="52"/>
+			<ChildItems>
+				<InputField name="ВидОбразования" id="7">
+					<DataPath>Объект.ВидОбразования</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Вид</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Вид</v8:content>
+						</v8:item>
+					</Title>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ВидОбразованияКонтекстноеМеню" id="8"/>
+					<ExtendedTooltip name="ВидОбразованияРасширеннаяПодсказка" id="9"/>
+					<Events>
+						<Event name="OnChange">ВидОбразованияПриИзменении</Event>
+					</Events>
+				</InputField>
+				<InputField name="ВидПослевузовскогоОбразования" id="10">
+					<DataPath>Объект.ВидПослевузовскогоОбразования</DataPath>
+					<TitleLocation>None</TitleLocation>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ВидПослевузовскогоОбразованияКонтекстноеМеню" id="11"/>
+					<ExtendedTooltip name="ВидПослевузовскогоОбразованияРасширеннаяПодсказка" id="12"/>
+				</InputField>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="ГруппаВидОбучения" id="73">
+			<Group>Horizontal</Group>
+			<Behavior>Usual</Behavior>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаВидОбученияРасширеннаяПодсказка" id="74"/>
+			<ChildItems>
+				<LabelDecoration name="ДекорацияВидОбучения" id="89">
+					<Width>12</Width>
+					<Title formatted="false">
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Вид обучения</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Вид навчання</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="ДекорацияВидОбученияКонтекстноеМеню" id="90"/>
+					<ExtendedTooltip name="ДекорацияВидОбученияРасширеннаяПодсказка" id="91"/>
+				</LabelDecoration>
+				<CheckBoxField name="Переподготовка" id="83">
+					<DataPath>Переподготовка</DataPath>
+					<TitleLocation>Right</TitleLocation>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="ПереподготовкаКонтекстноеМеню" id="84"/>
+					<ExtendedTooltip name="ПереподготовкаРасширеннаяПодсказка" id="85"/>
+					<Events>
+						<Event name="OnChange">ПереподготовкаПриИзменении</Event>
+					</Events>
+				</CheckBoxField>
+				<CheckBoxField name="ПовышениеКвалификации" id="86">
+					<DataPath>ПовышениеКвалификации</DataPath>
+					<TitleLocation>Right</TitleLocation>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="ПовышениеКвалификацииКонтекстноеМеню" id="87"/>
+					<ExtendedTooltip name="ПовышениеКвалификацииРасширеннаяПодсказка" id="88"/>
+					<Events>
+						<Event name="OnChange">ПовышениеКвалификацииПриИзменении</Event>
+					</Events>
+				</CheckBoxField>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="ГруппаСведения" id="68">
+			<Group>Vertical</Group>
+			<Behavior>Usual</Behavior>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаСведенияРасширеннаяПодсказка" id="69"/>
+			<ChildItems>
+				<InputField name="УчебноеЗаведение" id="13">
+					<DataPath>Объект.УчебноеЗаведение</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="УчебноеЗаведениеКонтекстноеМеню" id="14"/>
+					<ExtendedTooltip name="УчебноеЗаведениеРасширеннаяПодсказка" id="15"/>
+				</InputField>
+				<UsualGroup name="ГруппаПериодОбучения" id="53">
+					<Group>Horizontal</Group>
+					<Behavior>Usual</Behavior>
+					<Representation>None</Representation>
+					<ShowTitle>false</ShowTitle>
+					<ExtendedTooltip name="ГруппаПериодОбученияРасширеннаяПодсказка" id="54"/>
+					<ChildItems>
+						<InputField name="Начало" id="37">
+							<DataPath>Объект.Начало</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Период обучения с</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Період навчання з</v8:content>
+								</v8:item>
+							</Title>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="НачалоКонтекстноеМеню" id="38"/>
+							<ExtendedTooltip name="НачалоРасширеннаяПодсказка" id="39"/>
+						</InputField>
+						<InputField name="Окончание" id="40">
+							<DataPath>Объект.Окончание</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>по</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>по</v8:content>
+								</v8:item>
+							</Title>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="ОкончаниеКонтекстноеМеню" id="41"/>
+							<ExtendedTooltip name="ОкончаниеРасширеннаяПодсказка" id="42"/>
+						</InputField>
+					</ChildItems>
+				</UsualGroup>
+				<InputField name="ФормаОбучения" id="98">
+					<DataPath>Объект.ФормаОбучения</DataPath>
+					<ContextMenu name="ФормаОбученияКонтекстноеМеню" id="99"/>
+					<ExtendedTooltip name="ФормаОбученияРасширеннаяПодсказка" id="100"/>
+				</InputField>
+				<InputField name="Специальность" id="16">
+					<DataPath>Объект.Специальность</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="СпециальностьКонтекстноеМеню" id="17"/>
+					<ExtendedTooltip name="СпециальностьРасширеннаяПодсказка" id="18"/>
+				</InputField>
+				<InputField name="Квалификация" id="34">
+					<DataPath>Объект.Квалификация</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="КвалификацияКонтекстноеМеню" id="35"/>
+					<ExtendedTooltip name="КвалификацияРасширеннаяПодсказка" id="36"/>
+				</InputField>
+				<UsualGroup name="ГруппаКурсЧасов" id="57">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Группа курс часов</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Група курс годин</v8:content>
+						</v8:item>
+					</Title>
+					<Group>Horizontal</Group>
+					<Behavior>Usual</Behavior>
+					<Representation>None</Representation>
+					<ShowTitle>false</ShowTitle>
+					<ExtendedTooltip name="ГруппаКурсЧасовРасширеннаяПодсказка" id="58"/>
+					<ChildItems>
+						<InputField name="НаименованиеКурса" id="43">
+							<DataPath>Объект.НаименованиеКурса</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Курс</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Курс</v8:content>
+								</v8:item>
+							</Title>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="НаименованиеКурсаКонтекстноеМеню" id="44"/>
+							<ExtendedTooltip name="НаименованиеКурсаРасширеннаяПодсказка" id="45"/>
+						</InputField>
+						<InputField name="КоличествоЧасов" id="46">
+							<DataPath>Объект.КоличествоЧасов</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="КоличествоЧасовКонтекстноеМеню" id="47"/>
+							<ExtendedTooltip name="КоличествоЧасовРасширеннаяПодсказка" id="48"/>
+						</InputField>
+					</ChildItems>
+				</UsualGroup>
+				<InputField name="Основание" id="95">
+					<DataPath>Объект.Основание</DataPath>
+					<ContextMenu name="ОснованиеКонтекстноеМеню" id="96"/>
+					<ExtendedTooltip name="ОснованиеРасширеннаяПодсказка" id="97"/>
+				</InputField>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="ГруппаДокумент" id="49">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Документ, подтверждающий получение образования</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Документ, що підтверджує отримання освіти</v8:content>
+				</v8:item>
+			</Title>
+			<Group>Horizontal</Group>
+			<Behavior>Usual</Behavior>
+			<Representation>None</Representation>
+			<ExtendedTooltip name="ГруппаДокументРасширеннаяПодсказка" id="50"/>
+			<ChildItems>
+				<UsualGroup name="ГруппаВидДокументаДатаВыдачи" id="78">
+					<Group>Vertical</Group>
+					<Behavior>Usual</Behavior>
+					<Representation>None</Representation>
+					<ShowTitle>false</ShowTitle>
+					<ExtendedTooltip name="ГруппаВидДокументаДатаВыдачиРасширеннаяПодсказка" id="79"/>
+					<ChildItems>
+						<InputField name="ВидДокумента" id="19">
+							<DataPath>Объект.ВидДокумента</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Документ</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Документ</v8:content>
+								</v8:item>
+							</Title>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="ВидДокументаКонтекстноеМеню" id="20"/>
+							<ExtendedTooltip name="ВидДокументаРасширеннаяПодсказка" id="21"/>
+						</InputField>
+						<InputField name="ДатаВыдачи" id="28">
+							<DataPath>Объект.ДатаВыдачи</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="ДатаВыдачиКонтекстноеМеню" id="29"/>
+							<ExtendedTooltip name="ДатаВыдачиРасширеннаяПодсказка" id="30"/>
+						</InputField>
+					</ChildItems>
+				</UsualGroup>
+				<InputField name="Серия" id="22">
+					<DataPath>Объект.Серия</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<Width>15</Width>
+					<ContextMenu name="СерияКонтекстноеМеню" id="23"/>
+					<ExtendedTooltip name="СерияРасширеннаяПодсказка" id="24"/>
+				</InputField>
+				<InputField name="Номер" id="25">
+					<DataPath>Объект.Номер</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<Width>15</Width>
+					<ContextMenu name="НомерКонтекстноеМеню" id="26"/>
+					<ExtendedTooltip name="НомерРасширеннаяПодсказка" id="27"/>
+				</InputField>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="ГруппаДополнительныеРеквизиты" id="101">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Дополнительно</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Додатково</v8:content>
+				</v8:item>
+			</Title>
+			<Group>Vertical</Group>
+			<Behavior>Usual</Behavior>
+			<ExtendedTooltip name="ГруппаДополнительныеРеквизитыExtendedTooltip" id="102"/>
+		</UsualGroup>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Объект" id="1">
+			<Type>
+				<v8:Type>cfg:CatalogObject.ОбразованиеФизическихЛиц</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="ПовышениеКвалификации" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Повышение квалификации</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Підвищення кваліфікації</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="Переподготовка" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Переподготовка</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Перепідготовка</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<ConditionalAppearance>
+			<dcsset:item>
+				<dcsset:selection>
+					<dcsset:item>
+						<dcsset:field>ВидПослевузовскогоОбразования</dcsset:field>
+					</dcsset:item>
+				</dcsset:selection>
+				<dcsset:filter>
+					<dcsset:item xsi:type="dcsset:FilterItemGroup">
+						<dcsset:groupType>OrGroup</dcsset:groupType>
+						<dcsset:item xsi:type="dcsset:FilterItemComparison">
+							<dcsset:left xsi:type="dcscor:Field">Объект.ВидОбразования</dcsset:left>
+							<dcsset:comparisonType>Equal</dcsset:comparisonType>
+							<dcsset:right xsi:type="dcscor:DesignTimeValue">Справочник.ВидыОбразованияФизическихЛиц.ВысшееОбразованиеПодготовкаКадровВысшейКвалификации</dcsset:right>
+						</dcsset:item>
+						<dcsset:item xsi:type="dcsset:FilterItemComparison">
+							<dcsset:left xsi:type="dcscor:Field">Объект.ВидОбразования</dcsset:left>
+							<dcsset:comparisonType>Equal</dcsset:comparisonType>
+							<dcsset:right xsi:type="dcscor:DesignTimeValue">Справочник.ВидыОбразованияФизическихЛиц.ПослевузовскоеОбразование</dcsset:right>
+						</dcsset:item>
+					</dcsset:item>
+				</dcsset:filter>
+				<dcsset:appearance>
+					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+						<dcscor:parameter>Видимость</dcscor:parameter>
+						<dcscor:value xsi:type="xs:boolean">true</dcscor:value>
+					</dcscor:item>
+				</dcsset:appearance>
+			</dcsset:item>
+		</ConditionalAppearance>
+	</Attributes>
+</Form>

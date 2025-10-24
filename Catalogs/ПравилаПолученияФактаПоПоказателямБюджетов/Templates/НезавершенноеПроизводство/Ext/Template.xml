@@ -1,0 +1,344 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<DataCompositionSchema xmlns="http://v8.1c.ru/8.1/data-composition-system/schema" xmlns:dcscom="http://v8.1c.ru/8.1/data-composition-system/common" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<dataSource>
+		<name>ИсточникДанных1</name>
+		<dataSourceType>Local</dataSourceType>
+	</dataSource>
+	<dataSet xsi:type="DataSetQuery">
+		<name>НаборДанных1</name>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ИдентификаторИсточникаДанных</dataPath>
+			<field>ИдентификаторИсточникаДанных</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Идентификатор источника данных</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Ідентифікатор джерела даних</v8:content>
+				</v8:item>
+			</title>
+			<useRestriction>
+				<condition>true</condition>
+			</useRestriction>
+			<valueType>
+				<v8:TypeId>d52d0bac-ddd8-4177-82b4-0b9455a276bd</v8:TypeId>
+			</valueType>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Организация</dataPath>
+			<field>Организация</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Организация</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Організація</v8:content>
+				</v8:item>
+			</title>
+			<role>
+				<dcscom:dimension>true</dcscom:dimension>
+			</role>
+			<valueType>
+				<v8:Type xmlns:d5p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d5p1:CatalogRef.Организации</v8:Type>
+			</valueType>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Подразделение</dataPath>
+			<field>Подразделение</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Подразделение</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Підрозділ</v8:content>
+				</v8:item>
+			</title>
+			<role>
+				<dcscom:dimension>true</dcscom:dimension>
+			</role>
+			<valueType>
+				<v8:Type xmlns:d5p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d5p1:CatalogRef.СтруктураПредприятия</v8:Type>
+			</valueType>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>НаправлениеДеятельности</dataPath>
+			<field>НаправлениеДеятельности</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Направление деятельности</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Напрям діяльності</v8:content>
+				</v8:item>
+			</title>
+			<valueType>
+				<v8:Type xmlns:d5p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d5p1:CatalogRef.НаправленияДеятельности</v8:Type>
+			</valueType>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>СуммаУпр</dataPath>
+			<field>СуммаУпр</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сумма упр</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Сума упр</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ИсточникДанных</dataPath>
+			<field>ИсточникДанных</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Источник данных</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Джерело даних</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<dataSource>ИсточникДанных1</dataSource>
+		<query>
+//++ НЕ УТКА
+// НЕ ПЕРЕЗАПОЛНЯТЬ КОНСТРУКТОРОМ - ЕСТЬ ТЕГИ ВЫРЕЗКИ
+//-- НЕ УТКА
+
+ВЫБРАТЬ РАЗРЕШЕННЫЕ
+	ЗНАЧЕНИЕ(ПланВидовХарактеристик.СтатьиАктивовПассивов.НезавершенноеПроизводство) КАК ИсточникДанных,
+	ПрочиеРасходыНезавершенногоПроизводства.Организация КАК Организация,
+	ПрочиеРасходыНезавершенногоПроизводства.Подразделение КАК Подразделение,
+	ВЫБОР &amp;ТипУпрСуммы
+		КОГДА 0
+			ТОГДА ПрочиеРасходыНезавершенногоПроизводства.СтоимостьОстаток
+		КОГДА 1
+			ТОГДА ПрочиеРасходыНезавершенногоПроизводства.СтоимостьУпрОстаток
+		ИНАЧЕ 
+			ПрочиеРасходыНезавершенногоПроизводства.СтоимостьУпрОстаток
+	КОНЕЦ КАК СуммаУпр,
+	ВЫБОР
+		КОГДА &amp;УправлениеПредприятием = ИСТИНА
+				И (ЛОЖЬ
+//++ Устарело_Производство21
+					ИЛИ ПрочиеРасходыНезавершенногоПроизводства.ЗаказНаПроизводство ССЫЛКА Документ.ВыпускПродукции
+//++ НЕ УТКА
+					ИЛИ ПрочиеРасходыНезавершенногоПроизводства.ЗаказНаПроизводство ССЫЛКА Документ.ЗаказНаПроизводство
+//-- НЕ УТКА
+//-- Устарело_Производство21
+					ИЛИ ПрочиеРасходыНезавершенногоПроизводства.ЗаказНаПроизводство ССЫЛКА Документ.ЗаказПереработчику)
+			ТОГДА ЕСТЬNULL(ПрочиеРасходыНезавершенногоПроизводства.ЗаказНаПроизводство.НаправлениеДеятельности, ЗНАЧЕНИЕ(Справочник.НаправленияДеятельности.ПустаяСсылка))
+		ИНАЧЕ НЕОПРЕДЕЛЕНО
+	КОНЕЦ КАК НаправлениеДеятельности
+{ВЫБРАТЬ
+	ИсточникДанных,
+	Организация.*,
+	Подразделение.*,
+	СуммаУпр,
+	НаправлениеДеятельности.*}
+ИЗ
+	РегистрНакопления.ПрочиеРасходыНезавершенногоПроизводства.Остатки(&amp;ПериодГраница, &amp;ПривилегированныйРежимИсточника = &amp;ПривилегированныйРежим {("ИдентификаторИсточникаДанных") КАК ИдентификаторИсточникаДанных, (ЗНАЧЕНИЕ(ПланВидовХарактеристик.СтатьиАктивовПассивов.НезавершенноеПроизводство)) КАК ИсточникДанных, (Организация).* КАК Организация, (Подразделение).* КАК Подразделение, (ВЫБОР
+			    КОГДА &amp;УправлениеПредприятием = ИСТИНА
+			            И (ЛОЖЬ
+//++ Устарело_Производство21
+			            	ИЛИ ЗаказНаПроизводство ССЫЛКА Документ.ВыпускПродукции
+//++ НЕ УТКА
+			                ИЛИ ЗаказНаПроизводство ССЫЛКА Документ.ЗаказНаПроизводство
+//-- НЕ УТКА
+//-- Устарело_Производство21
+			                ИЛИ ЗаказНаПроизводство ССЫЛКА Документ.ЗаказПереработчику)
+			        ТОГДА ЕСТЬNULL(ЗаказНаПроизводство.НаправлениеДеятельности, ЗНАЧЕНИЕ(Справочник.НаправленияДеятельности.ПустаяСсылка))
+			    ИНАЧЕ НЕОПРЕДЕЛЕНО
+			КОНЕЦ).* КАК НаправлениеДеятельности}) КАК ПрочиеРасходыНезавершенногоПроизводства
+
+ОБЪЕДИНИТЬ ВСЕ
+
+ВЫБРАТЬ
+	ЗНАЧЕНИЕ(ПланВидовХарактеристик.СтатьиАктивовПассивов.НезавершенноеПроизводство),
+	СебестоимостьТоваров.Организация,
+	АналитикаПодразделения.Ссылка,
+	ВЫБОР &amp;ТипУпрСуммы
+		КОГДА 0
+			ТОГДА СебестоимостьТоваров.СтоимостьОстаток + СебестоимостьТоваров.ДопРасходыОстаток + СебестоимостьТоваров.ПостатейныеПостоянныеСНДСОстаток + СебестоимостьТоваров.ТрудозатратыОстаток + СебестоимостьТоваров.ПостатейныеПеременныеСНДСОстаток
+		КОГДА 1
+			ТОГДА СебестоимостьТоваров.СтоимостьУпрОстаток + СебестоимостьТоваров.ДопРасходыУпрОстаток + СебестоимостьТоваров.ПостатейныеПостоянныеУпрОстаток + СебестоимостьТоваров.ТрудозатратыУпрОстаток + СебестоимостьТоваров.ПостатейныеПеременныеУпрОстаток
+		ИНАЧЕ 
+			СебестоимостьТоваров.СтоимостьУпрОстаток + СебестоимостьТоваров.ДопРасходыУпрОстаток + СебестоимостьТоваров.ПостатейныеПостоянныеУпрОстаток + СебестоимостьТоваров.ТрудозатратыУпрОстаток + СебестоимостьТоваров.ПостатейныеПеременныеУпрОстаток
+	КОНЕЦ КАК СуммаУпр,
+	Назначения.НаправлениеДеятельности
+ИЗ
+	РегистрНакопления.СебестоимостьТоваров.Остатки(
+			&amp;ПериодГраница,
+			&amp;ПривилегированныйРежимИсточника = &amp;ПривилегированныйРежим
+				И РазделУчета = ЗНАЧЕНИЕ(Перечисление.РазделыУчетаСебестоимостиТоваров.ПроизводственныеЗатраты) {("ИдентификаторИсточникаДанных") КАК ИдентификаторИсточникаДанных, (ЗНАЧЕНИЕ(ПланВидовХарактеристик.СтатьиАктивовПассивов.НезавершенноеПроизводство)) КАК ИсточникДанных, (Организация).* КАК Организация}) КАК СебестоимостьТоваров
+		ЛЕВОЕ СОЕДИНЕНИЕ Справочник.Назначения КАК Назначения
+		ПО СебестоимостьТоваров.АналитикаУчетаНоменклатуры.Назначение = Назначения.Ссылка
+		ЛЕВОЕ СОЕДИНЕНИЕ Справочник.СтруктураПредприятия КАК АналитикаПодразделения
+		ПО СебестоимостьТоваров.АналитикаФинансовогоУчета = АналитикаПодразделения.Ссылка
+{ГДЕ
+	Назначения.НаправлениеДеятельности.* КАК НаправлениеДеятельности,
+	АналитикаПодразделения.Ссылка.* КАК Подразделение}
+
+ОБЪЕДИНИТЬ ВСЕ
+
+ВЫБРАТЬ
+	ЗНАЧЕНИЕ(ПланВидовХарактеристик.СтатьиАктивовПассивов.НезавершенноеПроизводство),
+	ТрудозатратыНезавершенногоПроизводства.Организация,
+	ТрудозатратыНезавершенногоПроизводства.Подразделение,
+	ТрудозатратыНезавершенногоПроизводства.СтоимостьОстаток,
+//++ НЕ УТКА
+//++ Устарело_Производство21
+	ВЫБОР
+		КОГДА &amp;УправлениеПредприятием = ИСТИНА
+			ТОГДА ЕСТЬNULL(ТрудозатратыНезавершенногоПроизводства.ЗаказНаПроизводство.НаправлениеДеятельности, ЗНАЧЕНИЕ(Справочник.НаправленияДеятельности.ПустаяСсылка))
+		ИНАЧЕ
+//-- Устарело_Производство21
+//-- НЕ УТКА
+		НЕОПРЕДЕЛЕНО
+//++ НЕ УТКА
+//++ Устарело_Производство21
+	КОНЕЦ
+//-- Устарело_Производство21
+//-- НЕ УТКА
+ИЗ
+	РегистрНакопления.ТрудозатратыНезавершенногоПроизводства.Остатки(&amp;ПериодГраница, &amp;ПривилегированныйРежимИсточника = &amp;ПривилегированныйРежим {("ИдентификаторИсточникаДанных") КАК ИдентификаторИсточникаДанных, (ЗНАЧЕНИЕ(ПланВидовХарактеристик.СтатьиАктивовПассивов.НезавершенноеПроизводство)) КАК ИсточникДанных, (Организация).* КАК Организация, (Подразделение).* КАК Подразделение, 
+		(
+//++ НЕ УТКА
+//++ Устарело_Производство21
+		ВЫБОР
+			КОГДА &amp;УправлениеПредприятием = ИСТИНА
+				ТОГДА ЕСТЬNULL(ЗаказНаПроизводство.НаправлениеДеятельности, ЗНАЧЕНИЕ(Справочник.НаправленияДеятельности.ПустаяСсылка))
+			ИНАЧЕ
+//-- Устарело_Производство21
+//-- НЕ УТКА
+				НЕОПРЕДЕЛЕНО
+//++ НЕ УТКА
+//++ Устарело_Производство21
+			КОНЕЦ
+//-- Устарело_Производство21
+//-- НЕ УТКА
+		).* КАК НаправлениеДеятельности}) КАК ТрудозатратыНезавершенногоПроизводства
+</query>
+		<autoFillFields>false</autoFillFields>
+	</dataSet>
+	<parameter>
+		<name>УправлениеПредприятием</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Управление предприятием</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>uk</v8:lang>
+				<v8:content>Управління підприємством</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:boolean</v8:Type>
+		</valueType>
+		<value xsi:type="xs:boolean">false</value>
+		<useRestriction>false</useRestriction>
+		<expression>ПолучитьФункциональнуюОпцию("УправлениеПредприятием") </expression>
+		<availableAsField>false</availableAsField>
+	</parameter>
+	<parameter>
+		<name>ПривилегированныйРежим</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Привилегированный режим</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>uk</v8:lang>
+				<v8:content>Привілейований режим</v8:content>
+			</v8:item>
+		</title>
+		<value xsi:nil="true"/>
+		<useRestriction>true</useRestriction>
+	</parameter>
+	<parameter>
+		<name>ПривилегированныйРежимИсточника</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Привилегированный режим источника</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>uk</v8:lang>
+				<v8:content>Привілейований режим джерела</v8:content>
+			</v8:item>
+		</title>
+		<value xsi:nil="true"/>
+		<useRestriction>true</useRestriction>
+	</parameter>
+	<parameter>
+		<name>ПериодГраница</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Период граница</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>uk</v8:lang>
+				<v8:content>Період межа</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>DateTime</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
+		<useRestriction>true</useRestriction>
+	</parameter>
+	<parameter>
+		<name>ТипУпрСуммы</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Тип упр суммы</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>uk</v8:lang>
+				<v8:content>Тип упр суми</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:decimal</v8:Type>
+			<v8:NumberQualifiers>
+				<v8:Digits>0</v8:Digits>
+				<v8:FractionDigits>0</v8:FractionDigits>
+				<v8:AllowedSign>Any</v8:AllowedSign>
+			</v8:NumberQualifiers>
+		</valueType>
+		<value xsi:type="xs:decimal">0</value>
+		<useRestriction>true</useRestriction>
+	</parameter>
+	<settingsVariant>
+		<dcsset:name>Основной</dcsset:name>
+		<dcsset:presentation xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Основной</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>uk</v8:lang>
+				<v8:content>Основний</v8:content>
+			</v8:item>
+		</dcsset:presentation>
+		<dcsset:settings xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows"/>
+	</settingsVariant>
+</DataCompositionSchema>

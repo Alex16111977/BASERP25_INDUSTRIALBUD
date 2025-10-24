@@ -1,0 +1,407 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<DataCompositionSchema xmlns="http://v8.1c.ru/8.1/data-composition-system/schema" xmlns:dcscom="http://v8.1c.ru/8.1/data-composition-system/common" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<dataSource>
+		<name>ИсточникДанных1</name>
+		<dataSourceType>Local</dataSourceType>
+	</dataSource>
+	<dataSet xsi:type="DataSetQuery">
+		<name>НаборДанных1</name>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Номенклатура</dataPath>
+			<field>Номенклатура</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Номенклатура</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Номенклатура</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ТипЗатрат</dataPath>
+			<field>ТипЗатрат</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Тип затрат</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Тип витрат</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Характеристика</dataPath>
+			<field>Характеристика</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Характеристика</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Характеристика</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Калькуляция</dataPath>
+			<field>Калькуляция</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Калькуляция</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Калькуляція</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<dataSource>ИсточникДанных1</dataSource>
+		<query>ВЫБРАТЬ
+	ПлановыеМатериальныеЗатраты.Калькуляция КАК Калькуляция,
+	ПлановыеМатериальныеЗатраты.Номенклатура КАК Номенклатура,
+	ПлановыеМатериальныеЗатраты.Характеристика КАК Характеристика,
+	ПлановыеМатериальныеЗатраты.Период КАК Период
+ПОМЕСТИТЬ НоменклатураДляЦен
+ИЗ
+	РегистрНакопления.ПлановыеМатериальныеЗатраты КАК ПлановыеМатериальныеЗатраты
+{ГДЕ
+	ПлановыеМатериальныеЗатраты.Калькуляция = &amp;Калькуляция}
+	
+СГРУППИРОВАТЬ ПО
+	ПлановыеМатериальныеЗатраты.Калькуляция,
+	ПлановыеМатериальныеЗатраты.Номенклатура,
+	ПлановыеМатериальныеЗатраты.Характеристика,
+	ПлановыеМатериальныеЗатраты.Период
+;
+
+ВЫБРАТЬ
+	НоменклатураДляЦен.Калькуляция КАК Калькуляция,
+	НоменклатураДляЦен.Номенклатура КАК Номенклатура,
+	НоменклатураДляЦен.Характеристика КАК Характеристика,
+	НоменклатураДляЦен.Период КАК Период,
+	МАКСИМУМ(ЦеныНоменклатуры.Период) КАК ПериодЦены
+ПОМЕСТИТЬ ДатыЦенВРазрезе
+ИЗ
+	НоменклатураДляЦен КАК НоменклатураДляЦен
+		ЛЕВОЕ СОЕДИНЕНИЕ РегистрСведений.ЦеныНоменклатуры КАК ЦеныНоменклатуры
+		ПО (ЦеныНоменклатуры.Номенклатура = НоменклатураДляЦен.Номенклатура)
+			И (ЦеныНоменклатуры.Характеристика = НоменклатураДляЦен.Характеристика)
+			И (ЦеныНоменклатуры.ВидЦены = НоменклатураДляЦен.Калькуляция.ВидЦены)
+			И НоменклатураДляЦен.Период &gt;= ЦеныНоменклатуры.Период
+
+СГРУППИРОВАТЬ ПО
+	НоменклатураДляЦен.Калькуляция,
+	НоменклатураДляЦен.Период,
+	НоменклатураДляЦен.Характеристика,
+	НоменклатураДляЦен.Номенклатура
+;
+
+////////////////////////////////////////////////////////////////////////////////
+ВЫБРАТЬ
+	ДатыЦенВРазрезе.Калькуляция КАК Калькуляция,
+	ДатыЦенВРазрезе.Номенклатура КАК Номенклатура,
+	ДатыЦенВРазрезе.Характеристика КАК Характеристика,
+	ДатыЦенВРазрезе.Период КАК Период,
+	ЕСТЬNULL(ЦеныНоменклатуры.Упаковка, ЗНАЧЕНИЕ(Справочник.УпаковкиЕдиницыИзмерения.ПустаяСсылка)) КАК Упаковка,
+	ЕСТЬNULL(ЦеныНоменклатуры.Цена, 0) КАК Цена,
+	ЦеныНоменклатуры.Валюта КАК Валюта
+ПОМЕСТИТЬ ЦеныНоменклатуры
+ИЗ
+	ДатыЦенВРазрезе КАК ДатыЦенВРазрезе
+		ЛЕВОЕ СОЕДИНЕНИЕ РегистрСведений.ЦеныНоменклатуры КАК ЦеныНоменклатуры
+		ПО ДатыЦенВРазрезе.Номенклатура = ЦеныНоменклатуры.Номенклатура
+			И ДатыЦенВРазрезе.Характеристика = ЦеныНоменклатуры.Характеристика
+			И (ЦеныНоменклатуры.ВидЦены = ДатыЦенВРазрезе.Калькуляция.ВидЦены)
+			И ДатыЦенВРазрезе.ПериодЦены = ЦеныНоменклатуры.Период
+;
+
+ВЫБРАТЬ
+	ПлановыеТрудозатраты.Калькуляция КАК Калькуляция,
+	ПлановыеТрудозатраты.ВидРабот КАК ВидРабот,
+	ПлановыеТрудозатраты.Период КАК Период
+ПОМЕСТИТЬ ВидыРабот
+ИЗ
+	РегистрНакопления.ПлановыеТрудозатраты КАК ПлановыеТрудозатраты
+{ГДЕ
+	ПлановыеТрудозатраты.Калькуляция = &amp;Калькуляция}
+
+СГРУППИРОВАТЬ ПО
+	ПлановыеТрудозатраты.Калькуляция,
+	ПлановыеТрудозатраты.Период,
+	ПлановыеТрудозатраты.ВидРабот
+;
+
+ВЫБРАТЬ
+	ВидыРабот.Калькуляция КАК Калькуляция,
+	ВидыРабот.ВидРабот КАК ВидРабот,
+	ВидыРабот.Период КАК Период,
+	МАКСИМУМ(РасценкиРаботСотрудников.Период) КАК ПериодРасценки
+ПОМЕСТИТЬ ДатыРасценок
+ИЗ
+	ВидыРабот КАК ВидыРабот
+		ЛЕВОЕ СОЕДИНЕНИЕ РегистрСведений.РасценкиРаботСотрудников КАК РасценкиРаботСотрудников
+		ПО (РасценкиРаботСотрудников.ВидРабот = ВидыРабот.ВидРабот)
+			И (РасценкиРаботСотрудников.Период &lt;= ВидыРабот.Период)
+
+СГРУППИРОВАТЬ ПО
+	ВидыРабот.Калькуляция,
+	ВидыРабот.ВидРабот,
+	ВидыРабот.Период
+;
+
+////////////////////////////////////////////////////////////////////////////////
+ВЫБРАТЬ
+	ДатыРасценок.Калькуляция,
+	ДатыРасценок.ВидРабот КАК ВидРабот,
+	ДатыРасценок.Период КАК Период,
+	ЕСТЬNULL(РасценкиРаботСотрудников.Расценка, 0) КАК Расценка
+ПОМЕСТИТЬ Расценки
+ИЗ
+	ДатыРасценок КАК ДатыРасценок
+		ЛЕВОЕ СОЕДИНЕНИЕ РегистрСведений.РасценкиРаботСотрудников КАК РасценкиРаботСотрудников
+		ПО ДатыРасценок.ВидРабот = РасценкиРаботСотрудников.ВидРабот
+			И ДатыРасценок.ПериодРасценки = РасценкиРаботСотрудников.Период
+;
+
+ВЫБРАТЬ РАЗЛИЧНЫЕ
+	ПлановыеМатериальныеЗатраты.Калькуляция КАК Калькуляция,
+	ПлановыеМатериальныеЗатраты.Номенклатура КАК Номенклатура,
+	ПлановыеМатериальныеЗатраты.Характеристика КАК Характеристика,
+	"Материалы" КАК ТипЗатрат
+ИЗ
+	РегистрНакопления.ПлановыеМатериальныеЗатраты КАК ПлановыеМатериальныеЗатраты
+		ЛЕВОЕ СОЕДИНЕНИЕ ЦеныНоменклатуры КАК ЦеныНоменклатуры
+		ПО ПлановыеМатериальныеЗатраты.Калькуляция = ЦеныНоменклатуры.Калькуляция
+			И ПлановыеМатериальныеЗатраты.Номенклатура = ЦеныНоменклатуры.Номенклатура
+			И ПлановыеМатериальныеЗатраты.Характеристика = ЦеныНоменклатуры.Характеристика
+			И ПлановыеМатериальныеЗатраты.Период = ЦеныНоменклатуры.Период
+ГДЕ
+	НЕ ПлановыеМатериальныеЗатраты.ЭтоПолуфабрикат
+	И ЕСТЬNULL(ЦеныНоменклатуры.Цена, 0) = 0
+{ГДЕ
+	ПлановыеМатериальныеЗатраты.Калькуляция = &amp;Калькуляция}
+	
+ОБЪЕДИНИТЬ ВСЕ
+
+ВЫБРАТЬ РАЗЛИЧНЫЕ
+	ПлановыеТрудозатраты.Калькуляция,
+	ПлановыеТрудозатраты.ВидРабот,
+	НЕОПРЕДЕЛЕНО,
+	"Трудозатраты"
+ИЗ
+	РегистрНакопления.ПлановыеТрудозатраты КАК ПлановыеТрудозатраты
+		ЛЕВОЕ СОЕДИНЕНИЕ Расценки КАК Расценки
+		ПО ПлановыеТрудозатраты.Калькуляция = Расценки.Калькуляция
+			И ПлановыеТрудозатраты.ВидРабот = Расценки.ВидРабот
+			И ПлановыеТрудозатраты.Период = Расценки.Период
+ГДЕ
+	ЕСТЬNULL(Расценки.Расценка, 0) = 0
+{ГДЕ
+	ПлановыеТрудозатраты.Калькуляция = &amp;Калькуляция}</query>
+	</dataSet>
+	<parameter>
+		<name>Калькуляция</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Калькуляция</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>uk</v8:lang>
+				<v8:content>Калькуляція</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type xmlns:d4p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d4p1:DocumentRef.ПлановаяКалькуляция2_2</v8:Type>
+		</valueType>
+		<value xsi:nil="true"/>
+		<useRestriction>false</useRestriction>
+	</parameter>
+	<settingsVariant>
+		<dcsset:name>ОшибкиРасчетаКалькуляцииПродукции</dcsset:name>
+		<dcsset:presentation xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Ошибки расчета калькуляции продукции</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>uk</v8:lang>
+				<v8:content>Помилки розрахунку калькуляції продукції</v8:content>
+			</v8:item>
+		</dcsset:presentation>
+		<dcsset:settings xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows">
+			<dcsset:selection>
+				<dcsset:item xsi:type="dcsset:SelectedItemFolder">
+					<dcsset:item xsi:type="dcsset:SelectedItemField">
+						<dcsset:field>Номенклатура</dcsset:field>
+					</dcsset:item>
+					<dcsset:item xsi:type="dcsset:SelectedItemField">
+						<dcsset:field>Характеристика</dcsset:field>
+					</dcsset:item>
+					<dcsset:placement>Together</dcsset:placement>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>ТипЗатрат</dcsset:field>
+				</dcsset:item>
+			</dcsset:selection>
+			<dcsset:dataParameters>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>Калькуляция</dcscor:parameter>
+					<dcscor:value xsi:nil="true"/>
+				</dcscor:item>
+			</dcsset:dataParameters>
+			<dcsset:outputParameters>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>ВыводитьЗаголовок</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">DontOutput</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>Заголовок</dcscor:parameter>
+					<dcscor:value xsi:type="v8:LocalStringType">
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Позиции без установленных цен/расценок</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Позиції без встановлених цін/розцінок</v8:content>
+						</v8:item>
+					</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>ВыводитьОтбор</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">DontOutput</dcscor:value>
+				</dcscor:item>
+			</dcsset:outputParameters>
+			<dcsset:item xsi:type="dcsset:StructureItemGroup">
+				<dcsset:groupItems>
+					<dcsset:item xsi:type="dcsset:GroupItemField">
+						<dcsset:field>ТипЗатрат</dcsset:field>
+						<dcsset:groupType>Items</dcsset:groupType>
+						<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+						<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+						<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+					</dcsset:item>
+				</dcsset:groupItems>
+				<dcsset:filter>
+					<dcsset:item xsi:type="dcsset:FilterItemComparison">
+						<dcsset:left xsi:type="dcscor:Field">ТипЗатрат</dcsset:left>
+						<dcsset:comparisonType>Contains</dcsset:comparisonType>
+						<dcsset:right xsi:type="xs:string">Материалы</dcsset:right>
+					</dcsset:item>
+				</dcsset:filter>
+				<dcsset:order>
+					<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+				</dcsset:order>
+				<dcsset:outputParameters>
+					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+						<dcscor:parameter>ВыводитьЗаголовок</dcscor:parameter>
+						<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">Output</dcscor:value>
+					</dcscor:item>
+					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+						<dcscor:parameter>Заголовок</dcscor:parameter>
+						<dcscor:value xsi:type="v8:LocalStringType">
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Материалы без установленных цен</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>uk</v8:lang>
+								<v8:content>Матеріали без встановлених цін</v8:content>
+							</v8:item>
+						</dcscor:value>
+					</dcscor:item>
+					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+						<dcscor:parameter>ВыводитьОтбор</dcscor:parameter>
+						<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">DontOutput</dcscor:value>
+					</dcscor:item>
+				</dcsset:outputParameters>
+				<dcsset:item xsi:type="dcsset:StructureItemTable">
+					<dcsset:row>
+						<dcsset:order>
+							<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+						</dcsset:order>
+						<dcsset:selection>
+							<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+						</dcsset:selection>
+					</dcsset:row>
+				</dcsset:item>
+			</dcsset:item>
+			<dcsset:item xsi:type="dcsset:StructureItemGroup">
+				<dcsset:groupItems>
+					<dcsset:item xsi:type="dcsset:GroupItemField">
+						<dcsset:field>ТипЗатрат</dcsset:field>
+						<dcsset:groupType>Items</dcsset:groupType>
+						<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+						<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+						<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+					</dcsset:item>
+				</dcsset:groupItems>
+				<dcsset:filter>
+					<dcsset:item xsi:type="dcsset:FilterItemComparison">
+						<dcsset:left xsi:type="dcscor:Field">ТипЗатрат</dcsset:left>
+						<dcsset:comparisonType>Contains</dcsset:comparisonType>
+						<dcsset:right xsi:type="xs:string">Трудозатраты</dcsset:right>
+					</dcsset:item>
+				</dcsset:filter>
+				<dcsset:order>
+					<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+				</dcsset:order>
+				<dcsset:outputParameters>
+					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+						<dcscor:parameter>ВыводитьЗаголовок</dcscor:parameter>
+						<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">Output</dcscor:value>
+					</dcscor:item>
+					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+						<dcscor:parameter>Заголовок</dcscor:parameter>
+						<dcscor:value xsi:type="v8:LocalStringType">
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Виды работ без установленных расценок</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>uk</v8:lang>
+								<v8:content>Види робіт без встановлених розцінок</v8:content>
+							</v8:item>
+						</dcscor:value>
+					</dcscor:item>
+					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+						<dcscor:parameter>ВыводитьОтбор</dcscor:parameter>
+						<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">DontOutput</dcscor:value>
+					</dcscor:item>
+				</dcsset:outputParameters>
+				<dcsset:item xsi:type="dcsset:StructureItemTable">
+					<dcsset:row>
+						<dcsset:order>
+							<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+						</dcsset:order>
+						<dcsset:selection>
+							<dcsset:item xsi:type="dcsset:SelectedItemField">
+								<dcsset:field>Номенклатура</dcsset:field>
+								<dcsset:lwsTitle>
+									<v8:item>
+										<v8:lang>ru</v8:lang>
+										<v8:content>Виды работ</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>uk</v8:lang>
+										<v8:content>Види робіт</v8:content>
+									</v8:item>
+								</dcsset:lwsTitle>
+							</dcsset:item>
+						</dcsset:selection>
+					</dcsset:row>
+				</dcsset:item>
+			</dcsset:item>
+		</dcsset:settings>
+	</settingsVariant>
+</DataCompositionSchema>
