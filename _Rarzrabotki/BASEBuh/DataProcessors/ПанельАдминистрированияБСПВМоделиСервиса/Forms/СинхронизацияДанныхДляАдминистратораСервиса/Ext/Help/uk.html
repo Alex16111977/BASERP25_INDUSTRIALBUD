@@ -1,0 +1,22 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"><html><head><style>TABLE {
+	BORDER-TOP: 0px; BORDER-RIGHT: 0px; WIDTH: 98%; BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; cellSpacing: 4; cellPadding: 0
+}
+TD {
+	VERTICAL-ALIGN: top
+}
+</style><meta content="text/html;charset=utf-8" http-equiv="content-type"></meta><link rel="stylesheet" type="text/css" href="v8help://service_book/service_style"></link><meta name="GENERATOR" content="MSHTML 11.00.10570.1001"></meta></head><body>
+<p>У даній панелі здійснюється настройка синхронізації даних для інформаційної бази.</p>
+<table><tbody><tr><td width="30%">
+<li><strong>Каталог тимчасових файлів Windows</strong></li></td>
+<td>Шлях до єдиного каталогу тимчасових файлів всіх серверів кластера, який буде використовуватися для серверів, що працюють під управлінням ОС Windows.</td></tr><tr><td>
+<li><strong>Каталог тимчасових файлів Linux</strong></li></td>
+<td>Шлях до єдиного каталогу тимчасових файлів всіх серверів кластера, який буде використовуватися для серверів, що працюють під управлінням ОС Linux.</td></tr><tr><td colspan="2">
+<p>Каталоги тимчасових файлів можна <strong>не заповнювати</strong>, коли в кластері платформи працює тільки <strong>один сервер</strong> або програма працює у <strong>файловому режимі</strong>. <br> Якщо всі сервера кластера працюють під управлінням операційних систем одного сімейства (Windows/Linux), то друге поле заповнювати не обов'язково.</p>
+<p>Каталог повинен бути <strong>доступний на читання і запис</strong> для всіх серверів кластера. В тому числі - для всіх користувачів операційних систем, від імені яких запускаються сервера платформи. Так само UNC шлях до нього повинен бути однаковим для всіх серверів одного сімейства - для цього каталог необхідно підключати до серверів під одним ім'ям.</p>
+<p>У полі <strong>Каталог тимчасових файлів Linux</strong> можна вказати тільки локальний шлях, наприклад, /home/path.</p>
+<p>Щоб використовувати UNC шлях, потрібно зробити на нього посилання. Для цього під правами адміністратора (root) зробіть наступне:</p>
+<p><strong>mkdir folder<br></strong>--- замість folder напишіть ім'я каталогу. наприклад в каталозі /home робимо mkdir shared - створить каталог shared з повним шляхом /home/shared.</p>
+<p><strong>mount -t cifs //server/share folder -o //domain/user, password=pwd</strong><br> - де //server/share - UNC шлях до іншого комп'ютера , folder - шлях каталогу на комп'ютері Linux, наприклад \home\shared //domain/user - ім'я домену/користувача, якщо потрібно, pwd - пароль користувача (якщо потрібно).</p>
+<p>Якщо ім'я і пароль не потрібні, команда виглядає так: <br><strong>mount -t cifs //server/share folder</strong></p>
+<p>Після цього в дорозі до того вказуємо folder, наприклад, /home/shared</p>
+<p>Докладніше про адміністрування сервера платформи див. документацію до платформи</p></td></tr></tbody></table><p> </p></body></html>

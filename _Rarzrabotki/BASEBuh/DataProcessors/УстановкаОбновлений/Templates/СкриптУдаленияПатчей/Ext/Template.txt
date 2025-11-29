@@ -1,0 +1,19 @@
+﻿'use strict'
+
+// Example:
+// wscript.exe <this-file> /ConnectionString:"File='C:\1c\db\ssl\master';Usr='Администратор';Pwd=''" /COMConnectorName:"v83.COMConnector" /FixFileNames:"" /RemoveFixNames:"e16605f0-ddc8-4ed2-be25-d572043a1a32"
+
+try {
+  var ConnectionString = WScript.Arguments.Named.Item('ConnectionString')
+  var COMConnectorName = WScript.Arguments.Named.Item('COMConnectorName')
+  var fixFileNames = WScript.Arguments.Named.Item('FixFileNames')
+  var removeFixNames = WScript.Arguments.Named.Item('RemoveFixNames')
+
+  var COMConnector = new ActiveXObject(COMConnectorName)
+  var connection = COMConnector.Connect(ConnectionString)
+
+  connection.ОбновлениеКонфигурации.ОбновитьИсправленияИзСкрипта(fixFileNames, removeFixNames)
+} catch (ex) {
+  WScript.Echo(ex.message)
+  WScript.Quit(1)
+}
