@@ -1,0 +1,668 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
+	<CommandBarLocation>Top</CommandBarLocation>
+	<VerticalScroll>useIfNecessary</VerticalScroll>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+		<Autofill>false</Autofill>
+		<ChildItems>
+			<Button name="ФормаЗаписатьИЗакрыть" id="14">
+				<Type>CommandBarButton</Type>
+				<DefaultButton>true</DefaultButton>
+				<CommandName>Form.Command.ЗаписатьИЗакрыть</CommandName>
+				<ExtendedTooltip name="ФормаЗаписатьИЗакрытьExtendedTooltip" id="44"/>
+			</Button>
+			<Button name="ФормаЗаписать" id="15">
+				<Type>CommandBarButton</Type>
+				<CommandName>Form.Command.Записать</CommandName>
+				<ExtendedTooltip name="ФормаЗаписатьExtendedTooltip" id="45"/>
+			</Button>
+		</ChildItems>
+	</AutoCommandBar>
+	<Events>
+		<Event name="OnOpen">ПриОткрытии</Event>
+		<Event name="BeforeClose">ПередЗакрытием</Event>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+	</Events>
+	<ChildItems>
+		<LabelField name="АвторизованныйПользователь" id="77">
+			<DataPath>АвторизованныйПользователь</DataPath>
+			<Hiperlink>true</Hiperlink>
+			<ContextMenu name="АвторизованныйПользовательКонтекстноеМеню" id="78"/>
+			<ExtendedTooltip name="АвторизованныйПользовательРасширеннаяПодсказка" id="79"/>
+			<Events>
+				<Event name="Click">АвторизованныйПользовательНажатие</Event>
+			</Events>
+		</LabelField>
+		<InputField name="ОсновнаяОрганизация" id="10">
+			<DataPath>ОсновнаяОрганизация</DataPath>
+			<ClearButton>true</ClearButton>
+			<ContextMenu name="ОсновнаяОрганизацияКонтекстноеМеню" id="11"/>
+			<ExtendedTooltip name="ОсновнаяОрганизацияExtendedTooltip" id="48"/>
+		</InputField>
+		<InputField name="ОсновноеПодразделение" id="6">
+			<DataPath>ОсновноеПодразделение</DataPath>
+			<ClearButton>true</ClearButton>
+			<ChoiceParameterLinks>
+				<xr:Link>
+					<xr:Name>Отбор.Владелец</xr:Name>
+					<xr:DataPath xsi:type="xs:string">ОсновнаяОрганизация</xr:DataPath>
+					<xr:ValueChange>Clear</xr:ValueChange>
+				</xr:Link>
+			</ChoiceParameterLinks>
+			<ContextMenu name="ОсновноеПодразделениеКонтекстноеМеню" id="7"/>
+			<ExtendedTooltip name="ОсновноеПодразделениеExtendedTooltip" id="49"/>
+			<Events>
+				<Event name="OnChange">ОсновноеПодразделениеПриИзменении</Event>
+			</Events>
+		</InputField>
+		<InputField name="ОсновноеОбособленноеПодразделениеОрганизации" id="38">
+			<DataPath>ОсновноеОбособленноеПодразделениеОрганизации</DataPath>
+			<ClearButton>true</ClearButton>
+			<ChoiceParameterLinks>
+				<xr:Link>
+					<xr:Name>Отбор.Владелец</xr:Name>
+					<xr:DataPath xsi:type="xs:string">ОсновнаяОрганизация</xr:DataPath>
+					<xr:ValueChange>Clear</xr:ValueChange>
+				</xr:Link>
+			</ChoiceParameterLinks>
+			<ContextMenu name="ОсновноеОбособленноеПодразделениеОрганизацииКонтекстноеМеню" id="39"/>
+			<ExtendedTooltip name="ОсновноеОбособленноеПодразделениеОрганизацииExtendedTooltip" id="50"/>
+			<Events>
+				<Event name="OnChange">ОсновноеОбособленноеПодразделениеОрганизацииПриИзменении</Event>
+			</Events>
+		</InputField>
+		<InputField name="ОсновнойСклад" id="8">
+			<DataPath>ОсновнойСклад</DataPath>
+			<ClearButton>true</ClearButton>
+			<ContextMenu name="ОсновнойСкладКонтекстноеМеню" id="9"/>
+			<ExtendedTooltip name="ОсновнойСкладExtendedTooltip" id="51"/>
+		</InputField>
+		<InputField name="ОсновноеМестоСоставленияДокумента" id="40">
+			<DataPath>ОсновноеМестоСоставленияДокумента</DataPath>
+			<ClearButton>true</ClearButton>
+			<ContextMenu name="ОсновноеМестоСоставленияДокументаКонтекстноеМеню" id="41"/>
+			<ExtendedTooltip name="ОсновноеМестоСоставленияДокументаExtendedTooltip" id="52"/>
+		</InputField>
+		<InputField name="ОсновнойПредставительОрганизации" id="42">
+			<DataPath>ОсновнойПредставительОрганизации</DataPath>
+			<ClearButton>true</ClearButton>
+			<ContextMenu name="ОсновнойПредставительОрганизацииКонтекстноеМеню" id="43"/>
+			<ExtendedTooltip name="ОсновнойПредставительОрганизацииExtendedTooltip" id="53"/>
+		</InputField>
+		<InputField name="КтоВыписалНалоговуюНакладную" id="64">
+			<DataPath>КтоВыписалНалоговуюНакладную</DataPath>
+			<ClearButton>true</ClearButton>
+			<ContextMenu name="КтоВыписалНалоговуюНакладнуюКонтекстноеМеню" id="65"/>
+			<ExtendedTooltip name="КтоВыписалНалоговуюНакладнуюРасширеннаяПодсказка" id="66"/>
+		</InputField>
+		<InputField name="НоменклатураДляЗаполненияНалоговыхНакладных" id="67">
+			<DataPath>НоменклатураДляЗаполненияНалоговыхНакладных</DataPath>
+			<ClearButton>true</ClearButton>
+			<ContextMenu name="НоменклатураДляЗаполненияНалоговыхНакладныхКонтекстноеМеню" id="68"/>
+			<ExtendedTooltip name="НоменклатураДляЗаполненияНалоговыхНакладныхРасширеннаяПодсказка" id="69"/>
+		</InputField>
+		<RadioButtonField name="ИспользоватьТекущуюДатуКомпьютера" id="27">
+			<DataPath>ИспользоватьТекущуюДатуКомпьютера</DataPath>
+			<RadioButtonType>Auto</RadioButtonType>
+			<ChoiceList>
+				<xr:Item>
+					<xr:Presentation/>
+					<xr:CheckState>0</xr:CheckState>
+					<xr:Value xsi:type="FormChoiceListDesTimeValue">
+						<Presentation>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Текущая дата компьютера</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>uk</v8:lang>
+								<v8:content>Поточна дата комп'ютера</v8:content>
+							</v8:item>
+						</Presentation>
+						<Value xsi:type="xs:decimal">0</Value>
+					</xr:Value>
+				</xr:Item>
+			</ChoiceList>
+			<ContextMenu name="ИспользоватьТекущуюДатуКомпьютераКонтекстноеМеню" id="28"/>
+			<ExtendedTooltip name="ИспользоватьТекущуюДатуКомпьютераExtendedTooltip" id="58"/>
+			<Events>
+				<Event name="OnChange">ИспользоватьТекущуюДатуКомпьютераПриИзменении</Event>
+			</Events>
+		</RadioButtonField>
+		<UsualGroup name="ГруппаДругоеЗначение" id="29">
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Группа другое значение</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Група інше значення</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Group>Horizontal</Group>
+			<Behavior>Usual</Behavior>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаДругоеЗначениеExtendedTooltip" id="59"/>
+			<ChildItems>
+				<RadioButtonField name="ИспользоватьЗначение" id="20">
+					<DataPath>ИспользоватьТекущуюДатуКомпьютера</DataPath>
+					<TitleTextColor>style:FormBackColor</TitleTextColor>
+					<RadioButtonType>Auto</RadioButtonType>
+					<ChoiceList>
+						<xr:Item>
+							<xr:Presentation/>
+							<xr:CheckState>0</xr:CheckState>
+							<xr:Value xsi:type="FormChoiceListDesTimeValue">
+								<Presentation>
+									<v8:item>
+										<v8:lang>ru</v8:lang>
+										<v8:content>Другая дата:</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>uk</v8:lang>
+										<v8:content>Інша дата:</v8:content>
+									</v8:item>
+								</Presentation>
+								<Value xsi:type="xs:decimal">1</Value>
+							</xr:Value>
+						</xr:Item>
+					</ChoiceList>
+					<ContextMenu name="ИспользоватьЗначениеКонтекстноеМеню" id="21"/>
+					<ExtendedTooltip name="ИспользоватьЗначениеExtendedTooltip" id="61"/>
+					<Events>
+						<Event name="OnChange">ИспользоватьТекущуюДатуКомпьютераПриИзменении</Event>
+					</Events>
+				</RadioButtonField>
+				<InputField name="ЗначениеРабочейДаты" id="22">
+					<DataPath>ЗначениеРабочейДаты</DataPath>
+					<TitleLocation>None</TitleLocation>
+					<ContextMenu name="ЗначениеРабочейДатыКонтекстноеМеню" id="23"/>
+					<ExtendedTooltip name="ЗначениеРабочейДатыExtendedTooltip" id="62"/>
+				</InputField>
+			</ChildItems>
+		</UsualGroup>
+		<CheckBoxField name="ЗапрашиватьПодтверждениеПриЗавершенииПрограммы" id="12">
+			<DataPath>ЗапрашиватьПодтверждениеПриЗавершенииПрограммы</DataPath>
+			<TitleLocation>Right</TitleLocation>
+			<TitleHeight>1</TitleHeight>
+			<CheckBoxType>Auto</CheckBoxType>
+			<ContextMenu name="ЗапрашиватьПодтверждениеПриЗавершенииПрограммыКонтекстноеМеню" id="13"/>
+			<ExtendedTooltip name="ЗапрашиватьПодтверждениеПриЗавершенииПрограммыExtendedTooltip" id="63"/>
+		</CheckBoxField>
+		<InputField name="ВариантМасштабаФорм" id="74">
+			<DataPath>ВариантМасштабаФорм</DataPath>
+			<ListChoiceMode>true</ListChoiceMode>
+			<ChoiceList>
+				<xr:Item>
+					<xr:Presentation/>
+					<xr:CheckState>0</xr:CheckState>
+					<xr:Value xsi:type="FormChoiceListDesTimeValue">
+						<Presentation>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>По умолчанию</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>uk</v8:lang>
+								<v8:content>По умовчанню</v8:content>
+							</v8:item>
+						</Presentation>
+						<Value xsi:type="xs:string">Авто</Value>
+					</xr:Value>
+				</xr:Item>
+				<xr:Item>
+					<xr:Presentation/>
+					<xr:CheckState>0</xr:CheckState>
+					<xr:Value xsi:type="FormChoiceListDesTimeValue">
+						<Presentation>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Компактный</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>uk</v8:lang>
+								<v8:content>Компактний</v8:content>
+							</v8:item>
+						</Presentation>
+						<Value xsi:type="xs:string">Компактный</Value>
+					</xr:Value>
+				</xr:Item>
+				<xr:Item>
+					<xr:Presentation/>
+					<xr:CheckState>0</xr:CheckState>
+					<xr:Value xsi:type="FormChoiceListDesTimeValue">
+						<Presentation>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Обычный</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>uk</v8:lang>
+								<v8:content>Звичайний</v8:content>
+							</v8:item>
+						</Presentation>
+						<Value xsi:type="xs:string">Обычный</Value>
+					</xr:Value>
+				</xr:Item>
+			</ChoiceList>
+			<ContextMenu name="ВариантМасштабаФормКонтекстноеМеню" id="75"/>
+			<ExtendedTooltip name="ВариантМасштабаФормРасширеннаяПодсказка" id="76"/>
+		</InputField>
+		<Button name="ПараметрыПроксиСервера" id="72">
+			<Type>Hyperlink</Type>
+			<CommandName>CommonCommand.ПерсональнаяНастройкаПроксиСервера</CommandName>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Параметры прокси-сервера</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Параметри проксі-сервера</v8:content>
+				</v8:item>
+			</Title>
+			<ExtendedTooltip name="ПараметрыПроксиСервераРасширеннаяПодсказка" id="73"/>
+		</Button>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="ОсновнаяОрганизация" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Основная организация</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Основна організація</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.Организации</v8:Type>
+			</Type>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="ОсновноеПодразделение" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Основное подразделение</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Основний підрозділ</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.ПодразделенияОрганизаций</v8:Type>
+			</Type>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="ОсновнойСклад" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Основной склад</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Основний склад</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.Склады</v8:Type>
+			</Type>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="ТекущаяОрганизация" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Текущая организация</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Поточна організація</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.Организации</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ЗапрашиватьПодтверждениеПриЗавершенииПрограммы" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Запрашивать подтверждение при завершении программы</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Запитувати підтвердження при завершенні програми</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="ТекущееПодразделение" id="6">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Текущее подразделение</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Поточний підрозділ</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.ПодразделенияОрганизаций</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ТекущийСклад" id="7">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Текущий склад</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Поточний склад</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.Склады</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ЗначениеРабочейДаты" id="8">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Использовать значение</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Використовувати значення</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ИспользоватьТекущуюДатуКомпьютера" id="9">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Рабочая дата</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Робоча дата</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>0</v8:Digits>
+					<v8:FractionDigits>0</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="НастройкиПредупреждений" id="10">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Настройки предупреждений</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Настройки попереджень</v8:content>
+				</v8:item>
+			</Title>
+			<Type/>
+		</Attribute>
+		<Attribute name="ОсновноеОбособленноеПодразделениеОрганизации" id="11">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Основное обособленное подразделение</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Основний відокремлений підрозділ</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.ОбособленныеПодразделенияОрганизаций</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ТекущееОбособленноеПодразделениеОрганизации" id="12">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Основное обособленное подразделение организации</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Основний відокремлений підрозділ організації</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.ОбособленныеПодразделенияОрганизаций</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ОсновноеМестоСоставленияДокумента" id="13">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Основное место составления документа</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Основне місце складання документа</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ТекущееМестоСоставленияДокумента" id="14">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Текущее место составления документа</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Поточне місце складання документа</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ОсновнойПредставительОрганизации" id="15">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Основной представитель организации</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Основний представник організації</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.ФизическиеЛица</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ТекущийПредставительОрганизации" id="16">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Текущий представитель организации</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Поточний представник організації</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.ФизическиеЛица</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="КтоВыписалНалоговуюНакладную" id="17">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Кто обычно выписывает налоговые накладные</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Хто звичайно виписує податкові накладні</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.ФизическиеЛица</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ТекущийКтоВыписалНалоговуюНакладную" id="18">
+			<Type>
+				<v8:Type>cfg:CatalogRef.ФизическиеЛица</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="НоменклатураДляЗаполненияНалоговыхНакладных" id="19">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Номенклатура для заполнения налоговых накладных</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Номенклатура для заповнення податкових накладних</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.Номенклатура</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ТекущаяНоменклатураДляЗаполненияНалоговыхНакладных" id="20">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Номенклатура для заполнения налоговых накладных</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Номенклатура для заповнення податкових накладних</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.Номенклатура</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ВариантМасштабаФорм" id="21">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Вариант масштаба форм</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Варіант масштабу форм</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="АвторизованныйПользователь" id="22">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Учетная запись</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Обліковий запис</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.ВнешниеПользователи</v8:Type>
+				<v8:Type>cfg:CatalogRef.Пользователи</v8:Type>
+			</Type>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="ЗаписатьИЗакрыть" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Записать и закрыть</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Записати і закрити</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Записать и закрыть</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Записати і закрити</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ЗаписатьИЗакрыть</Action>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="Записать" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Записать</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Записати</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Записать</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Записати</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Picture>
+				<xr:Ref>StdPicture.Write</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>Записать</Action>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+	</Commands>
+</Form>

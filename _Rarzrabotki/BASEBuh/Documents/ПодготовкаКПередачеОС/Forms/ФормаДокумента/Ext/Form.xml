@@ -1,0 +1,848 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
+	<VerticalScroll>useIfNecessary</VerticalScroll>
+	<AutoTime>CurrentOrLast</AutoTime>
+	<UsePostingMode>Auto</UsePostingMode>
+	<RepostOnWrite>true</RepostOnWrite>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1"/>
+	<Events>
+		<Event name="ChoiceProcessing">ОбработкаВыбора</Event>
+		<Event name="AfterWriteAtServer">ПослеЗаписиНаСервере</Event>
+		<Event name="NotificationProcessing">ОбработкаОповещения</Event>
+		<Event name="OnReadAtServer">ПриЧтенииНаСервере</Event>
+		<Event name="OnOpen">ПриОткрытии</Event>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+	</Events>
+	<ChildItems>
+		<UsualGroup name="ГруппаШапка" id="6">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Шапка</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Шапка</v8:content>
+				</v8:item>
+			</Title>
+			<Group>Horizontal</Group>
+			<Behavior>Usual</Behavior>
+			<Representation>None</Representation>
+			<ChildItemsWidth>Equal</ChildItemsWidth>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаШапкаРасширеннаяПодсказка" id="63"/>
+			<ChildItems>
+				<UsualGroup name="ГруппаЛеваяКолонка" id="7">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Левая колонка</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Лівий стовпчик</v8:content>
+						</v8:item>
+					</Title>
+					<Group>Vertical</Group>
+					<Behavior>Usual</Behavior>
+					<Representation>None</Representation>
+					<United>false</United>
+					<ShowTitle>false</ShowTitle>
+					<ExtendedTooltip name="ГруппаЛеваяКолонкаРасширеннаяПодсказка" id="64"/>
+					<ChildItems>
+						<UsualGroup name="ГруппаНомерДата" id="5">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Номер / дата</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Номер / дата</v8:content>
+								</v8:item>
+							</Title>
+							<Group>Horizontal</Group>
+							<Behavior>Usual</Behavior>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="ГруппаНомерДатаРасширеннаяПодсказка" id="65"/>
+							<ChildItems>
+								<InputField name="Номер" id="1">
+									<DataPath>Объект.Number</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<HorizontalStretch>false</HorizontalStretch>
+									<ContextMenu name="НомерКонтекстноеМеню" id="2"/>
+									<ExtendedTooltip name="НомерРасширеннаяПодсказка" id="66"/>
+								</InputField>
+								<InputField name="Дата" id="3">
+									<DataPath>Объект.Date</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>от</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>від</v8:content>
+										</v8:item>
+									</Title>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ДатаКонтекстноеМеню" id="4"/>
+									<ExtendedTooltip name="ДатаРасширеннаяПодсказка" id="67"/>
+									<Events>
+										<Event name="OnChange">ДатаПриИзменении</Event>
+									</Events>
+								</InputField>
+								<PictureField name="СостояниеДокумента" id="108">
+									<DataPath>СостояниеДокумента</DataPath>
+									<TitleLocation>None</TitleLocation>
+									<GroupVerticalAlign>Center</GroupVerticalAlign>
+									<Width>2</Width>
+									<Height>1</Height>
+									<HorizontalStretch>false</HorizontalStretch>
+									<VerticalStretch>false</VerticalStretch>
+									<ValuesPicture>
+										<xr:Ref>CommonPicture.СостоянияДокумента</xr:Ref>
+										<xr:LoadTransparent>true</xr:LoadTransparent>
+									</ValuesPicture>
+									<Border width="1">
+										<v8ui:style xsi:type="v8ui:ControlBorderType">WithoutBorder</v8ui:style>
+									</Border>
+									<FileDragMode>AsFile</FileDragMode>
+									<ContextMenu name="СостояниеДокументаКонтекстноеМеню" id="109">
+										<Autofill>false</Autofill>
+									</ContextMenu>
+									<ExtendedTooltip name="СостояниеДокументаРасширеннаяПодсказка" id="110"/>
+								</PictureField>
+							</ChildItems>
+						</UsualGroup>
+						<InputField name="СобытиеОС" id="15">
+							<DataPath>Объект.СобытиеОС</DataPath>
+							<ContextMenu name="СобытиеОСКонтекстноеМеню" id="16"/>
+							<ExtendedTooltip name="СобытиеОСРасширеннаяПодсказка" id="70"/>
+						</InputField>
+					</ChildItems>
+				</UsualGroup>
+				<UsualGroup name="ГруппаПраваяКолонка" id="8">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Правая колонка</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Правий стовпчик</v8:content>
+						</v8:item>
+					</Title>
+					<Group>Vertical</Group>
+					<Behavior>Usual</Behavior>
+					<Representation>None</Representation>
+					<United>false</United>
+					<ShowTitle>false</ShowTitle>
+					<ExtendedTooltip name="ГруппаПраваяКолонкаРасширеннаяПодсказка" id="69"/>
+					<ChildItems>
+						<InputField name="Организация" id="11">
+							<DataPath>Объект.Организация</DataPath>
+							<ContextMenu name="ОрганизацияКонтекстноеМеню" id="12"/>
+							<ExtendedTooltip name="ОрганизацияРасширеннаяПодсказка" id="68"/>
+							<Events>
+								<Event name="OnChange">ОрганизацияПриИзменении</Event>
+							</Events>
+						</InputField>
+						<CheckBoxField name="СписыватьСуммуДооценокНаНераспределеннуюПрибыль" id="35">
+							<DataPath>Объект.СписыватьСуммуДооценокНаНераспределеннуюПрибыль</DataPath>
+							<TitleLocation>Right</TitleLocation>
+							<CheckBoxType>Auto</CheckBoxType>
+							<ContextMenu name="СписыватьСуммуДооценокНаНераспределеннуюПрибыльКонтекстноеМеню" id="36"/>
+							<ExtendedTooltip name="СписыватьСуммуДооценокНаНераспределеннуюПрибыльРасширеннаяПодсказка" id="71"/>
+						</CheckBoxField>
+					</ChildItems>
+				</UsualGroup>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="ГруппаОсновныеСредства" id="17">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Основные средства</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Основні засоби</v8:content>
+				</v8:item>
+			</Title>
+			<Group>Vertical</Group>
+			<Behavior>Usual</Behavior>
+			<ExtendedTooltip name="ГруппаОсновныеСредстваРасширеннаяПодсказка" id="72"/>
+			<ChildItems>
+				<Table name="ОС" id="18">
+					<AutoInsertNewRow>true</AutoInsertNewRow>
+					<EnableStartDrag>true</EnableStartDrag>
+					<EnableDrag>true</EnableDrag>
+					<FileDragMode>AsFile</FileDragMode>
+					<DataPath>Объект.ОС</DataPath>
+					<SearchStringLocation>None</SearchStringLocation>
+					<ViewStatusLocation>None</ViewStatusLocation>
+					<SearchControlLocation>None</SearchControlLocation>
+					<RowFilter xsi:nil="true"/>
+					<ContextMenu name="ОСКонтекстноеМеню" id="19"/>
+					<AutoCommandBar name="ОСКоманднаяПанель" id="20">
+						<ChildItems>
+							<Popup name="ОсновныеСредстваГруппаЗаполнить" id="25">
+								<Title>
+									<v8:item>
+										<v8:lang>ru</v8:lang>
+										<v8:content>Заполнить</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>uk</v8:lang>
+										<v8:content>Заповнити</v8:content>
+									</v8:item>
+								</Title>
+								<ExtendedTooltip name="ОсновныеСредстваГруппаЗаполнитьРасширеннаяПодсказка" id="73"/>
+								<ChildItems>
+									<Button name="ОСЗаполнитьДляСпискаОС" id="62">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.ЗаполнитьДляСпискаОС</CommandName>
+										<ExtendedTooltip name="ОСЗаполнитьДляСпискаОСРасширеннаяПодсказка" id="74"/>
+									</Button>
+									<Button name="ЗаполнитьПоНаименованию" id="26">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.ЗаполнитьПоНаименованию</CommandName>
+										<Title>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>По наименованию</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>uk</v8:lang>
+												<v8:content>По найменуванню</v8:content>
+											</v8:item>
+										</Title>
+										<ExtendedTooltip name="ЗаполнитьПоНаименованиюРасширеннаяПодсказка" id="75"/>
+									</Button>
+								</ChildItems>
+							</Popup>
+							<Button name="ОсновныеСредстваПодбор" id="27">
+								<Type>CommandBarButton</Type>
+								<CommandName>Form.Command.Подбор</CommandName>
+								<ExtendedTooltip name="ОсновныеСредстваПодборРасширеннаяПодсказка" id="76"/>
+							</Button>
+						</ChildItems>
+					</AutoCommandBar>
+					<ExtendedTooltip name="ОСРасширеннаяПодсказка" id="77"/>
+					<SearchStringAddition name="ОССтрокаПоиска" id="78">
+						<AdditionSource>
+							<Item>ОС</Item>
+							<Type>SearchStringRepresentation</Type>
+						</AdditionSource>
+						<ContextMenu name="ОССтрокаПоискаКонтекстноеМеню" id="79"/>
+						<ExtendedTooltip name="ОССтрокаПоискаРасширеннаяПодсказка" id="80"/>
+					</SearchStringAddition>
+					<ViewStatusAddition name="ОССостояниеПросмотра" id="81">
+						<AdditionSource>
+							<Item>ОС</Item>
+							<Type>ViewStatusRepresentation</Type>
+						</AdditionSource>
+						<ContextMenu name="ОССостояниеПросмотраКонтекстноеМеню" id="82"/>
+						<ExtendedTooltip name="ОССостояниеПросмотраРасширеннаяПодсказка" id="83"/>
+					</ViewStatusAddition>
+					<SearchControlAddition name="ОСУправлениеПоиском" id="84">
+						<AdditionSource>
+							<Item>ОС</Item>
+							<Type>SearchControl</Type>
+						</AdditionSource>
+						<ContextMenu name="ОСУправлениеПоискомКонтекстноеМеню" id="85"/>
+						<ExtendedTooltip name="ОСУправлениеПоискомРасширеннаяПодсказка" id="86"/>
+					</SearchControlAddition>
+					<Events>
+						<Event name="OnStartEdit">ОСПриНачалеРедактирования</Event>
+					</Events>
+					<ChildItems>
+						<LabelField name="ОСНомерСтроки" id="21">
+							<DataPath>Объект.ОС.LineNumber</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="ОСНомерСтрокиКонтекстноеМеню" id="22"/>
+							<ExtendedTooltip name="ОСНомерСтрокиРасширеннаяПодсказка" id="87"/>
+						</LabelField>
+						<ColumnGroup name="ОСГруппаОсновноеСредствоИнвентарныйНомер" id="37">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Основное средство / инвентарный номер</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Основний засіб / інвентарний номер</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>ОСГруппа основное средство инвентарный номер</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>ОЗГрупа основний засіб інвентарний номер</v8:content>
+								</v8:item>
+							</ToolTip>
+							<ExtendedTooltip name="ОСГруппаОсновноеСредствоИнвентарныйНомерРасширеннаяПодсказка" id="88"/>
+							<ChildItems>
+								<InputField name="ОСОсновноеСредство" id="23">
+									<DataPath>Объект.ОС.ОсновноеСредство</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ОСОсновноеСредствоКонтекстноеМеню" id="24"/>
+									<ExtendedTooltip name="ОСОсновноеСредствоРасширеннаяПодсказка" id="89"/>
+									<Events>
+										<Event name="OnChange">ОСОсновноеСредствоПриИзменении</Event>
+									</Events>
+								</InputField>
+								<InputField name="ОСИнвентарныйНомер" id="32">
+									<DataPath>Объект.ОС.ИнвентарныйНомер</DataPath>
+									<ReadOnly>true</ReadOnly>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ОСИнвентарныйНомерКонтекстноеМеню" id="33"/>
+									<ExtendedTooltip name="ОСИнвентарныйНомерРасширеннаяПодсказка" id="90"/>
+								</InputField>
+							</ChildItems>
+						</ColumnGroup>
+						<ColumnGroup name="ОСГруппаСтоимостьБУ" id="38">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>ОСГруппа стоимость БУ</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>ОЗГрупа вартість БО</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>ОСГруппа стоимость БУ</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>ОЗГрупа вартість БО</v8:content>
+								</v8:item>
+							</ToolTip>
+							<ExtendedTooltip name="ОСГруппаСтоимостьБУРасширеннаяПодсказка" id="91"/>
+							<ChildItems>
+								<InputField name="ОССтоимостьБУ" id="39">
+									<DataPath>Объект.ОС.СтоимостьБУ</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ОССтоимостьБУКонтекстноеМеню" id="40"/>
+									<ExtendedTooltip name="ОССтоимостьБУРасширеннаяПодсказка" id="92"/>
+									<Events>
+										<Event name="OnChange">ОССтоимостьБУПриИзменении</Event>
+									</Events>
+								</InputField>
+								<InputField name="ОСОставшаясяСтоимостьБУ" id="41">
+									<DataPath>Объект.ОС.ОставшаясяСтоимостьБУ</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ОСОставшаясяСтоимостьБУКонтекстноеМеню" id="42"/>
+									<ExtendedTooltip name="ОСОставшаясяСтоимостьБУРасширеннаяПодсказка" id="93"/>
+								</InputField>
+							</ChildItems>
+						</ColumnGroup>
+						<ColumnGroup name="ОСГруппаАмортизацияБУ" id="43">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>ОСГруппа амортизация БУ</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>ОЗГрупа амортизація БО</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>ОСГруппа амортизация БУ</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>ОЗГрупа амортизація БО</v8:content>
+								</v8:item>
+							</ToolTip>
+							<ExtendedTooltip name="ОСГруппаАмортизацияБУРасширеннаяПодсказка" id="94"/>
+							<ChildItems>
+								<InputField name="ОСАмортизацияБУ" id="52">
+									<DataPath>Объект.ОС.АмортизацияБУ</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ОСАмортизацияБУКонтекстноеМеню" id="53"/>
+									<ExtendedTooltip name="ОСАмортизацияБУРасширеннаяПодсказка" id="95"/>
+									<Events>
+										<Event name="OnChange">ОСАмортизацияБУПриИзменении</Event>
+									</Events>
+								</InputField>
+								<InputField name="ОСАмортизацияЗаМесяцБУ" id="54">
+									<DataPath>Объект.ОС.АмортизацияЗаМесяцБУ</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ОСАмортизацияЗаМесяцБУКонтекстноеМеню" id="55"/>
+									<ExtendedTooltip name="ОСАмортизацияЗаМесяцБУРасширеннаяПодсказка" id="96"/>
+									<Events>
+										<Event name="OnChange">ОСАмортизацияЗаМесяцБУПриИзменении</Event>
+									</Events>
+								</InputField>
+							</ChildItems>
+						</ColumnGroup>
+						<ColumnGroup name="ОСГруппаСтоимостьНУ" id="44">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>ОСГруппа стоимость НУ</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>ОЗГрупа вартість ПО</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>ОСГруппа стоимость НУ</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>ОЗГрупа вартість ПО</v8:content>
+								</v8:item>
+							</ToolTip>
+							<ExtendedTooltip name="ОСГруппаСтоимостьНУРасширеннаяПодсказка" id="97"/>
+							<ChildItems>
+								<InputField name="ОССтоимостьНУ" id="50">
+									<DataPath>Объект.ОС.СтоимостьНУ</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ОССтоимостьНУКонтекстноеМеню" id="51"/>
+									<ExtendedTooltip name="ОССтоимостьНУРасширеннаяПодсказка" id="98"/>
+									<Events>
+										<Event name="OnChange">ОССтоимостьНУПриИзменении</Event>
+									</Events>
+								</InputField>
+								<InputField name="ОСОставшаясяСтоимостьНУ" id="56">
+									<DataPath>Объект.ОС.ОставшаясяСтоимостьНУ</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ОСОставшаясяСтоимостьНУКонтекстноеМеню" id="57"/>
+									<ExtendedTooltip name="ОСОставшаясяСтоимостьНУРасширеннаяПодсказка" id="99"/>
+								</InputField>
+							</ChildItems>
+						</ColumnGroup>
+						<ColumnGroup name="ОСГруппаАмортизацияНУ" id="45">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>ОСГруппа амортизация НУ</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>ОЗГрупа амортизація ПО</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>ОСГруппа амортизация НУ</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>ОЗГрупа амортизація ПО</v8:content>
+								</v8:item>
+							</ToolTip>
+							<ExtendedTooltip name="ОСГруппаАмортизацияНУРасширеннаяПодсказка" id="100"/>
+							<ChildItems>
+								<InputField name="ОСАмортизацияНУ" id="46">
+									<DataPath>Объект.ОС.АмортизацияНУ</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ОСАмортизацияНУКонтекстноеМеню" id="47"/>
+									<ExtendedTooltip name="ОСАмортизацияНУРасширеннаяПодсказка" id="101"/>
+									<Events>
+										<Event name="OnChange">ОСАмортизацияНУПриИзменении</Event>
+									</Events>
+								</InputField>
+								<InputField name="ОСАмортизацияЗаМесяцНУ" id="48">
+									<DataPath>Объект.ОС.АмортизацияЗаМесяцНУ</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ОСАмортизацияЗаМесяцНУКонтекстноеМеню" id="49"/>
+									<ExtendedTooltip name="ОСАмортизацияЗаМесяцНУРасширеннаяПодсказка" id="102"/>
+									<Events>
+										<Event name="OnChange">ОСАмортизацияЗаМесяцНУПриИзменении</Event>
+									</Events>
+								</InputField>
+							</ChildItems>
+						</ColumnGroup>
+						<InputField name="ОСПревышениеСуммДооценокНадСуммамиУценокБУ" id="58">
+							<DataPath>Объект.ОС.ПревышениеСуммДооценокНадСуммамиУценокБУ</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Превышение сумм дооценок над суммами уценок (+/-)</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Перевищення сум дооцінок над сумами уцінок (+/-)</v8:content>
+								</v8:item>
+							</Title>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="ОСПревышениеСуммДооценокНадСуммамиУценокБУКонтекстноеМеню" id="59"/>
+							<ExtendedTooltip name="ОСПревышениеСуммДооценокНадСуммамиУценокБУРасширеннаяПодсказка" id="103"/>
+						</InputField>
+						<InputField name="ОССчетПродажиОС" id="60">
+							<DataPath>Объект.ОС.СчетПродажиОС</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="ОССчетПродажиОСКонтекстноеМеню" id="61"/>
+							<ExtendedTooltip name="ОССчетПродажиОСРасширеннаяПодсказка" id="104"/>
+						</InputField>
+					</ChildItems>
+				</Table>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="ГруппаКомментарий" id="111">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Группа комментарий</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Група коментар</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Группа комментарий</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Група коментар</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Group>Horizontal</Group>
+			<Behavior>Usual</Behavior>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаКомментарийРасширеннаяПодсказка" id="112"/>
+			<ChildItems>
+				<InputField name="Комментарий" id="30">
+					<DataPath>Объект.Комментарий</DataPath>
+					<TitleLocation>Left</TitleLocation>
+					<VerticalStretch>false</VerticalStretch>
+					<ChoiceButton>true</ChoiceButton>
+					<ContextMenu name="КомментарийКонтекстноеМеню" id="31"/>
+					<ExtendedTooltip name="КомментарийРасширеннаяПодсказка" id="106"/>
+					<Events>
+						<Event name="StartChoice">КомментарийНачалоВыбора</Event>
+					</Events>
+				</InputField>
+				<InputField name="Ответственный" id="28">
+					<DataPath>Объект.Ответственный</DataPath>
+					<ContextMenu name="ОтветственныйКонтекстноеМеню" id="29"/>
+					<ExtendedTooltip name="ОтветственныйРасширеннаяПодсказка" id="105"/>
+				</InputField>
+			</ChildItems>
+		</UsualGroup>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Объект" id="1">
+			<Type>
+				<v8:Type>cfg:DocumentObject.ПодготовкаКПередачеОС</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+			<SavedData>true</SavedData>
+			<UseAlways>
+				<Field>Объект.RegisterRecords</Field>
+			</UseAlways>
+			<Columns>
+				<AdditionalColumns table="Объект.ОС">
+					<Column name="ИнвентарныйНомер" id="1">
+						<Title>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Инвентарный номер</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>uk</v8:lang>
+								<v8:content>Інвентарний номер</v8:content>
+							</v8:item>
+						</Title>
+						<Type>
+							<v8:Type>xs:string</v8:Type>
+							<v8:StringQualifiers>
+								<v8:Length>0</v8:Length>
+								<v8:AllowedLength>Variable</v8:AllowedLength>
+							</v8:StringQualifiers>
+						</Type>
+					</Column>
+					<Column name="ОставшаясяСтоимостьБУ" id="2">
+						<Title>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Ост. стоимость (БУ)</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>uk</v8:lang>
+								<v8:content>Зал. вартість (БО)</v8:content>
+							</v8:item>
+						</Title>
+						<Type>
+							<v8:Type>xs:decimal</v8:Type>
+							<v8:NumberQualifiers>
+								<v8:Digits>15</v8:Digits>
+								<v8:FractionDigits>2</v8:FractionDigits>
+								<v8:AllowedSign>Any</v8:AllowedSign>
+							</v8:NumberQualifiers>
+						</Type>
+					</Column>
+					<Column name="ОставшаясяСтоимостьНУ" id="3">
+						<Title>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Ост. стоимость (НУ)</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>uk</v8:lang>
+								<v8:content>Зал. вартість (ПО)</v8:content>
+							</v8:item>
+						</Title>
+						<Type>
+							<v8:Type>xs:decimal</v8:Type>
+							<v8:NumberQualifiers>
+								<v8:Digits>15</v8:Digits>
+								<v8:FractionDigits>2</v8:FractionDigits>
+								<v8:AllowedSign>Any</v8:AllowedSign>
+							</v8:NumberQualifiers>
+						</Type>
+					</Column>
+				</AdditionalColumns>
+			</Columns>
+		</Attribute>
+		<Attribute name="МаксПериодПервоначальныхСведенийОС" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Макс период первоначальных сведений ОС</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Макс період первинних відомостей ОЗ</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>DateTime</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ТекущаяДатаДокумента" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Предыдущая дата документа</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Попередня дата документа</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>DateTime</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="НастройкиПредупреждений" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Настройки предупреждений</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Настройки попереджень</v8:content>
+				</v8:item>
+			</Title>
+			<Type/>
+		</Attribute>
+		<Attribute name="ПлательщикНалогаНаПрибыль" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Плательщик налога на прибыль</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Платник податку на прибуток</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="СостояниеДокумента" id="6">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Состояние документа</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Стан документа</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>10</v8:Digits>
+					<v8:FractionDigits>0</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ПараметрыПодключаемыхКоманд" id="7">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Параметры подключаемых команд</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Параметри команд, які підключаються</v8:content>
+				</v8:item>
+			</Title>
+			<Type/>
+		</Attribute>
+		<ConditionalAppearance>
+			<dcsset:item>
+				<dcsset:use>false</dcsset:use>
+				<dcsset:selection>
+					<dcsset:item>
+						<dcsset:field>ОССтоимостьНУ</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>ОСОставшаясяСтоимостьНУ</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>ОСАмортизацияЗаМесяцНУ</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>ОСАмортизацияНУ</dcsset:field>
+					</dcsset:item>
+				</dcsset:selection>
+				<dcsset:filter>
+					<dcsset:item xsi:type="dcsset:FilterItemComparison">
+						<dcsset:left xsi:type="dcscor:Field">ПлательщикНалогаНаПрибыль</dcsset:left>
+						<dcsset:comparisonType>Equal</dcsset:comparisonType>
+						<dcsset:right xsi:type="xs:boolean">false</dcsset:right>
+					</dcsset:item>
+				</dcsset:filter>
+				<dcsset:appearance>
+					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+						<dcscor:parameter>Видимость</dcscor:parameter>
+						<dcscor:value xsi:type="xs:boolean">false</dcscor:value>
+					</dcscor:item>
+				</dcsset:appearance>
+			</dcsset:item>
+			<dcsset:item>
+				<dcsset:selection>
+					<dcsset:item>
+						<dcsset:field>ОСПревышениеСуммДооценокНадСуммамиУценокБУ</dcsset:field>
+					</dcsset:item>
+				</dcsset:selection>
+				<dcsset:filter>
+					<dcsset:item xsi:type="dcsset:FilterItemComparison">
+						<dcsset:left xsi:type="dcscor:Field">Объект.СписыватьСуммуДооценокНаНераспределеннуюПрибыль</dcsset:left>
+						<dcsset:comparisonType>Equal</dcsset:comparisonType>
+						<dcsset:right xsi:type="xs:boolean">false</dcsset:right>
+					</dcsset:item>
+				</dcsset:filter>
+				<dcsset:appearance>
+					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+						<dcscor:parameter>Видимость</dcscor:parameter>
+						<dcscor:value xsi:type="xs:boolean">false</dcscor:value>
+					</dcscor:item>
+				</dcsset:appearance>
+			</dcsset:item>
+		</ConditionalAppearance>
+	</Attributes>
+	<Commands>
+		<Command name="ЗаполнитьПоНаименованию" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Заполнить по наименованию</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Заповнити по найменуванню</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Заполнить по наименованию</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Заповнити по найменуванню</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ЗаполнитьПоНаименованию</Action>
+			<ModifiesSavedData>true</ModifiesSavedData>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="Подбор" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Подбор</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Підбір</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Подбор</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Підбір</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>Подбор</Action>
+			<ModifiesSavedData>true</ModifiesSavedData>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="ЗаполнитьДляСпискаОС" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Для списка ОС</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Для списку ОЗ</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Заполнить для списка ОС</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Заповнити для списку ОЗ</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ЗаполнитьДляСпискаОС</Action>
+			<ModifiesSavedData>true</ModifiesSavedData>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+	</Commands>
+</Form>

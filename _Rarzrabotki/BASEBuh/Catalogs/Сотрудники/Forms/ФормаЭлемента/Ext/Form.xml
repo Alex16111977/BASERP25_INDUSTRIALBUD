@@ -1,0 +1,2432 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
+	<Width>105</Width>
+	<AutoTitle>false</AutoTitle>
+	<VerticalScroll>useIfNecessary</VerticalScroll>
+	<UseForFoldersAndItems>Items</UseForFoldersAndItems>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+		<Autofill>false</Autofill>
+		<ChildItems>
+			<Button name="КомандаЗаписатьИЗакрыть" id="689">
+				<Type>CommandBarButton</Type>
+				<DefaultButton>true</DefaultButton>
+				<CommandName>Form.Command.КомандаЗаписатьИЗакрыть</CommandName>
+				<ExtendedTooltip name="КомандаЗаписатьИЗакрытьРасширеннаяПодсказка" id="690"/>
+			</Button>
+			<Button name="ФормаЗаписатьИЗакрыть" id="691">
+				<Type>CommandBarButton</Type>
+				<Visible>false</Visible>
+				<CommandName>Form.StandardCommand.WriteAndClose</CommandName>
+				<ExtendedTooltip name="ФормаЗаписатьИЗакрытьРасширеннаяПодсказка" id="692"/>
+			</Button>
+			<Button name="КомандаЗаписать" id="693">
+				<Type>CommandBarButton</Type>
+				<CommandName>Form.Command.КомандаЗаписать</CommandName>
+				<ExtendedTooltip name="КомандаЗаписатьРасширеннаяПодсказка" id="694"/>
+			</Button>
+			<Button name="ФормаЗаписать" id="695">
+				<Type>CommandBarButton</Type>
+				<Visible>false</Visible>
+				<CommandName>Form.StandardCommand.Write</CommandName>
+				<ExtendedTooltip name="ФормаЗаписатьРасширеннаяПодсказка" id="696"/>
+			</Button>
+			<Popup name="ОформитьДокумент" id="573">
+				<Title>
+					<v8:item>
+						<v8:lang>ru</v8:lang>
+						<v8:content>Оформить документ</v8:content>
+					</v8:item>
+					<v8:item>
+						<v8:lang>uk</v8:lang>
+						<v8:content>Оформити документ</v8:content>
+					</v8:item>
+				</Title>
+				<ToolTip>
+					<v8:item>
+						<v8:lang>ru</v8:lang>
+						<v8:content>Оформить документ</v8:content>
+					</v8:item>
+					<v8:item>
+						<v8:lang>uk</v8:lang>
+						<v8:content>Оформити документ</v8:content>
+					</v8:item>
+				</ToolTip>
+				<ExtendedTooltip name="ОформитьДокументРасширеннаяПодсказка" id="616"/>
+				<ChildItems>
+					<Button name="ФормаОформитьПриемНаРаботу" id="574">
+						<Type>CommandBarButton</Type>
+						<CommandName>Form.Command.ОформитьПриемНаРаботу</CommandName>
+						<ExtendedTooltip name="ФормаОформитьПриемНаРаботуРасширеннаяПодсказка" id="617"/>
+					</Button>
+					<Button name="ФормаОформитьКадровыйПеревод" id="575">
+						<Type>CommandBarButton</Type>
+						<CommandName>Form.Command.ОформитьКадровыйПеревод</CommandName>
+						<ExtendedTooltip name="ФормаОформитьКадровыйПереводРасширеннаяПодсказка" id="618"/>
+					</Button>
+					<Button name="ФормаОформитьУвольнение" id="576">
+						<Type>CommandBarButton</Type>
+						<CommandName>Form.Command.ОформитьУвольнение</CommandName>
+						<ExtendedTooltip name="ФормаОформитьУвольнениеРасширеннаяПодсказка" id="619"/>
+					</Button>
+				</ChildItems>
+			</Popup>
+		</ChildItems>
+	</AutoCommandBar>
+	<Events>
+		<Event name="AfterWrite">ПослеЗаписи</Event>
+		<Event name="AfterWriteAtServer">ПослеЗаписиНаСервере</Event>
+		<Event name="NotificationProcessing">ОбработкаОповещения</Event>
+		<Event name="OnReadAtServer">ПриЧтенииНаСервере</Event>
+		<Event name="OnOpen">ПриОткрытии</Event>
+		<Event name="BeforeClose">ПередЗакрытием</Event>
+		<Event name="BeforeWrite">ПередЗаписью</Event>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+		<Event name="BeforeWriteAtServer">ПередЗаписьюНаСервере</Event>
+		<Event name="OnWriteAtServer">ПриЗаписиНаСервере</Event>
+		<Event name="OnClose">ПриЗакрытии</Event>
+		<Event name="FillCheckProcessingAtServer">ОбработкаПроверкиЗаполненияНаСервере</Event>
+	</Events>
+	<ChildItems>
+		<UsualGroup name="ФИОНомерИдентификаторы" id="195">
+			<Group>Vertical</Group>
+			<Behavior>Usual</Behavior>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ФИОНомерИдентификаторыРасширеннаяПодсказка" id="620"/>
+			<ChildItems>
+				<InputField name="ГоловнаяОрганизация" id="568">
+					<DataPath>Сотрудник.ГоловнаяОрганизация</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Организация</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Організація</v8:content>
+						</v8:item>
+					</Title>
+					<HorizontalStretch>false</HorizontalStretch>
+					<AutoChoiceIncomplete>true</AutoChoiceIncomplete>
+					<AutoMarkIncomplete>true</AutoMarkIncomplete>
+					<ContextMenu name="ГоловнаяОрганизацияКонтекстноеМеню" id="569"/>
+					<ExtendedTooltip name="ГоловнаяОрганизацияРасширеннаяПодсказка" id="621"/>
+				</InputField>
+				<UsualGroup name="ГруппаФИОТабельныйНомер" id="602">
+					<Group>Horizontal</Group>
+					<Behavior>Usual</Behavior>
+					<Representation>None</Representation>
+					<ShowTitle>false</ShowTitle>
+					<ExtendedTooltip name="ГруппаФИОТабельныйНомерРасширеннаяПодсказка" id="622"/>
+					<ChildItems>
+						<UsualGroup name="ГруппаФИОРасшифровка" id="603">
+							<Group>Vertical</Group>
+							<Behavior>Usual</Behavior>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="ГруппаФИОРасшифровкаРасширеннаяПодсказка" id="623"/>
+							<ChildItems>
+								<InputField name="ФИО" id="168">
+									<DataPath>ФизическоеЛицо.ФИО</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>ФИО</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>ПІБ</v8:content>
+										</v8:item>
+									</Title>
+									<AutoMarkIncomplete>true</AutoMarkIncomplete>
+									<ChooseType>false</ChooseType>
+									<ContextMenu name="ФИОКонтекстноеМеню" id="169"/>
+									<ExtendedTooltip name="ФИОРасширеннаяПодсказка" id="624"/>
+									<Events>
+										<Event name="OnChange">ФИОПриИзменении</Event>
+									</Events>
+								</InputField>
+								<UsualGroup name="ПолноеИмяГруппа" id="564">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Полное имя группа</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Повне ім'я група</v8:content>
+										</v8:item>
+									</Title>
+									<Group>Horizontal</Group>
+									<Behavior>Usual</Behavior>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="ПолноеИмяГруппаРасширеннаяПодсказка" id="625"/>
+									<ChildItems>
+										<Pages name="ГруппаСтраницыПолноеИмя" id="535">
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Группа страницы полное имя</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>uk</v8:lang>
+													<v8:content>Група сторінки повне ім'я</v8:content>
+												</v8:item>
+											</Title>
+											<PagesRepresentation>None</PagesRepresentation>
+											<ExtendedTooltip name="ГруппаСтраницыПолноеИмяРасширеннаяПодсказка" id="626"/>
+											<ChildItems>
+												<Page name="ГруппаСтраницаПолноеИмяСкрытое" id="536">
+													<Title>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Группа страница полное имя скрытое</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>uk</v8:lang>
+															<v8:content>Група сторінка повне ім'я приховане</v8:content>
+														</v8:item>
+													</Title>
+													<ExtendedTooltip name="ГруппаСтраницаПолноеИмяСкрытоеРасширеннаяПодсказка" id="627"/>
+													<ChildItems>
+														<LabelDecoration name="ДекорацияПолноеИмя" id="537">
+															<ContextMenu name="ДекорацияПолноеИмяКонтекстноеМеню" id="538"/>
+															<ExtendedTooltip name="ДекорацияПолноеИмяРасширеннаяПодсказка" id="628"/>
+														</LabelDecoration>
+													</ChildItems>
+												</Page>
+												<Page name="ГруппаСтраницаПолноеИмя" id="539">
+													<Title>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Группа страница полное имя</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>uk</v8:lang>
+															<v8:content>Група сторінка повне ім'я</v8:content>
+														</v8:item>
+													</Title>
+													<HorizontalStretch>false</HorizontalStretch>
+													<Group>Horizontal</Group>
+													<ExtendedTooltip name="ГруппаСтраницаПолноеИмяРасширеннаяПодсказка" id="629"/>
+													<ChildItems>
+														<LabelField name="Фамилия" id="156">
+															<DataPath>ФИОФизическихЛиц.Фамилия</DataPath>
+															<ReadOnly>true</ReadOnly>
+															<BackColor>style:FormBackColor</BackColor>
+															<Font ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+															<ContextMenu name="ФамилияКонтекстноеМеню" id="157"/>
+															<ExtendedTooltip name="ФамилияРасширеннаяПодсказка" id="630"/>
+														</LabelField>
+														<LabelField name="Имя" id="158">
+															<DataPath>ФИОФизическихЛиц.Имя</DataPath>
+															<ReadOnly>true</ReadOnly>
+															<TitleLocation>Left</TitleLocation>
+															<Font ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+															<ContextMenu name="ИмяКонтекстноеМеню" id="159"/>
+															<ExtendedTooltip name="ИмяРасширеннаяПодсказка" id="631"/>
+														</LabelField>
+														<LabelField name="Отчество" id="160">
+															<DataPath>ФИОФизическихЛиц.Отчество</DataPath>
+															<ReadOnly>true</ReadOnly>
+															<TitleLocation>Left</TitleLocation>
+															<Font ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+															<ContextMenu name="ОтчествоКонтекстноеМеню" id="161"/>
+															<ExtendedTooltip name="ОтчествоРасширеннаяПодсказка" id="632"/>
+														</LabelField>
+													</ChildItems>
+												</Page>
+											</ChildItems>
+										</Pages>
+									</ChildItems>
+								</UsualGroup>
+							</ChildItems>
+						</UsualGroup>
+						<UsualGroup name="ГруппаКомандФИО" id="566">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Группа команд ФИО</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Група команд ПІБ</v8:content>
+								</v8:item>
+							</Title>
+							<Group>Vertical</Group>
+							<Behavior>Usual</Behavior>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="ГруппаКомандФИОРасширеннаяПодсказка" id="633"/>
+							<ChildItems>
+								<LabelDecoration name="СотрудникИзменилФИО" id="419">
+									<UserVisible>
+										<xr:Common>false</xr:Common>
+										<xr:Value name="Role.ДобавлениеИзменениеДанныхСотрудников">true</xr:Value>
+										<xr:Value name="Role.ПолныеПрава">true</xr:Value>
+									</UserVisible>
+									<Title formatted="false">
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Изменить ФИО</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Змінити ПІБ</v8:content>
+										</v8:item>
+									</Title>
+									<ToolTip>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Сотрудник изменил ФИО</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Співробітник змінив ПІБ</v8:content>
+										</v8:item>
+									</ToolTip>
+									<Hyperlink>true</Hyperlink>
+									<VerticalAlign>Top</VerticalAlign>
+									<ContextMenu name="СотрудникИзменилФИОКонтекстноеМеню" id="420"/>
+									<ExtendedTooltip name="СотрудникИзменилФИОРасширеннаяПодсказка" id="634"/>
+									<Events>
+										<Event name="Click">СотрудникИзменилФИОНажатие</Event>
+									</Events>
+								</LabelDecoration>
+								<Button name="ФИОФизическихЛицИстория" id="226">
+									<Type>Hyperlink</Type>
+									<CommandName>Form.Command.ФИОФизическихЛицИстория</CommandName>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>История ФИО</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Історія ПІБ</v8:content>
+										</v8:item>
+									</Title>
+									<ExtendedTooltip name="ФИОФизическихЛицИсторияРасширеннаяПодсказка" id="635"/>
+								</Button>
+							</ChildItems>
+						</UsualGroup>
+						<InputField name="Код" id="1">
+							<DataPath>Сотрудник.Code</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Таб. номер</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Таб. номер</v8:content>
+								</v8:item>
+							</Title>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="КодКонтекстноеМеню" id="2"/>
+							<ExtendedTooltip name="КодРасширеннаяПодсказка" id="636"/>
+						</InputField>
+					</ChildItems>
+				</UsualGroup>
+				<UsualGroup name="ГруппаДатаРожденияПолДРФО" id="577">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Основные личные данные сотрудника</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Основні особисті дані співробітника</v8:content>
+						</v8:item>
+					</Title>
+					<TitleTextColor>style:ПоясняющийТекст</TitleTextColor>
+					<TitleFont ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Группа дата рождения пол ДРФО</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Група дата народження стать ДРФО</v8:content>
+						</v8:item>
+					</ToolTip>
+					<Group>Horizontal</Group>
+					<Behavior>Usual</Behavior>
+					<Representation>None</Representation>
+					<ExtendedTooltip name="ГруппаДатаРожденияПолДРФОРасширеннаяПодсказка" id="637"/>
+					<ChildItems>
+						<UsualGroup name="ГруппаДатаРожденияПол" id="600">
+							<Group>Vertical</Group>
+							<Behavior>Usual</Behavior>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="ГруппаДатаРожденияПолРасширеннаяПодсказка" id="638"/>
+							<ChildItems>
+								<InputField name="ФизлицоДатаРождения" id="129">
+									<DataPath>ФизическоеЛицо.ДатаРождения</DataPath>
+									<ChoiceButton>false</ChoiceButton>
+									<ContextMenu name="ФизлицоДатаРожденияКонтекстноеМеню" id="130"/>
+									<ExtendedTooltip name="ФизлицоДатаРожденияРасширеннаяПодсказка" id="639"/>
+									<Events>
+										<Event name="OnChange">ФизлицоДатаРожденияПриИзменении</Event>
+									</Events>
+								</InputField>
+								<InputField name="ФизлицоПол" id="131">
+									<DataPath>ФизическоеЛицо.Пол</DataPath>
+									<Width>11</Width>
+									<HorizontalStretch>false</HorizontalStretch>
+									<ContextMenu name="ФизлицоПолКонтекстноеМеню" id="132"/>
+									<ExtendedTooltip name="ФизлицоПолРасширеннаяПодсказка" id="640"/>
+									<Events>
+										<Event name="OnChange">ФизлицоПолПриИзменении</Event>
+									</Events>
+								</InputField>
+							</ChildItems>
+						</UsualGroup>
+						<UsualGroup name="ГруппаИнформацияКПустойДатеРождения" id="604">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Группа информация к пустой дате рождения</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Група інформація до порожньої дати народження</v8:content>
+								</v8:item>
+							</Title>
+							<Group>Horizontal</Group>
+							<Behavior>Usual</Behavior>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="ГруппаИнформацияКПустойДатеРожденияРасширеннаяПодсказка" id="641"/>
+							<ChildItems>
+								<PictureField name="ФизическоеЛицоДатаРожденияКартинка" id="605">
+									<DataPath>ФизическоеЛицоДатаРожденияКартинка</DataPath>
+									<TitleLocation>None</TitleLocation>
+									<Width>3</Width>
+									<Height>1</Height>
+									<HorizontalStretch>false</HorizontalStretch>
+									<VerticalStretch>false</VerticalStretch>
+									<Border width="1">
+										<v8ui:style xsi:type="v8ui:ControlBorderType">WithoutBorder</v8ui:style>
+									</Border>
+									<FileDragMode>AsFile</FileDragMode>
+									<ContextMenu name="ФизическоеЛицоДатаРожденияКартинкаКонтекстноеМеню" id="606"/>
+									<ExtendedTooltip name="ФизическоеЛицоДатаРожденияКартинкаРасширеннаяПодсказка" id="642"/>
+								</PictureField>
+								<LabelField name="ФизическоеЛицоДатаРожденияНадпись" id="607">
+									<DataPath>ФизическоеЛицоДатаРожденияНадпись</DataPath>
+									<TitleLocation>None</TitleLocation>
+									<Height>2</Height>
+									<HorizontalStretch>false</HorizontalStretch>
+									<VerticalStretch>false</VerticalStretch>
+									<TextColor>style:ПоясняющийТекст</TextColor>
+									<ContextMenu name="ФизическоеЛицоДатаРожденияНадписьКонтекстноеМеню" id="608"/>
+									<ExtendedTooltip name="ФизическоеЛицоДатаРожденияНадписьРасширеннаяПодсказка" id="643"/>
+								</LabelField>
+							</ChildItems>
+						</UsualGroup>
+						<UsualGroup name="РегистрационныеНомера" id="582">
+							<TitleTextColor>style:ПоясняющийТекст</TitleTextColor>
+							<TitleFont ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+							<VerticalStretch>false</VerticalStretch>
+							<Group>Vertical</Group>
+							<Behavior>Usual</Behavior>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="РегистрационныеНомераРасширеннаяПодсказка" id="644"/>
+							<ChildItems>
+								<UsualGroup name="РегистрационныеНомераГоризонтальная" id="583">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Регистрационные номера горизонтальная</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Реєстраційні номери горизонтальна</v8:content>
+										</v8:item>
+									</Title>
+									<Group>Horizontal</Group>
+									<Behavior>Usual</Behavior>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="РегистрационныеНомераГоризонтальнаяРасширеннаяПодсказка" id="645"/>
+									<ChildItems>
+										<UsualGroup name="РегистрационныеНомераВертикальная" id="584">
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Регистрационные номера вертикальная</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>uk</v8:lang>
+													<v8:content>Реєстраційні номери вертикальна</v8:content>
+												</v8:item>
+											</Title>
+											<Group>Vertical</Group>
+											<Behavior>Usual</Behavior>
+											<Representation>None</Representation>
+											<ShowTitle>false</ShowTitle>
+											<ExtendedTooltip name="РегистрационныеНомераВертикальнаяРасширеннаяПодсказка" id="646"/>
+											<ChildItems>
+												<InputField name="ФизлицоДРФО" id="585">
+													<DataPath>ФизическоеЛицо.КодПоДРФО</DataPath>
+													<HorizontalStretch>false</HorizontalStretch>
+													<ContextMenu name="ФизлицоДРФОКонтекстноеМеню" id="586"/>
+													<ExtendedTooltip name="ФизлицоДРФОРасширеннаяПодсказка" id="647"/>
+													<Events>
+														<Event name="OnChange">ФизлицоДРФОПриИзменении</Event>
+													</Events>
+												</InputField>
+												<InputField name="ФизическоеЛицоУНЗР" id="697">
+													<DataPath>ФизическоеЛицо.УНЗР</DataPath>
+													<ToolTip>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Уникальный номер записи в Едином государственном демографическом реестре в формате 8 цифр тире 5 цифр.</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>uk</v8:lang>
+															<v8:content>Унікальний номер запису в Єдиному державному демографічному реєстрі у форматі 8 цифр тире 5 цифр.</v8:content>
+														</v8:item>
+													</ToolTip>
+													<ToolTipRepresentation>Button</ToolTipRepresentation>
+													<HorizontalStretch>false</HorizontalStretch>
+													<ContextMenu name="ФизическоеЛицоУНЗРКонтекстноеМеню" id="698"/>
+													<ExtendedTooltip name="ФизическоеЛицоУНЗРРасширеннаяПодсказка" id="699"/>
+													<Events>
+														<Event name="OnChange">ФизлицоУНЗРПриИзменении</Event>
+													</Events>
+												</InputField>
+											</ChildItems>
+										</UsualGroup>
+										<UsualGroup name="РегистрационныеНомераПояснения" id="589">
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Регистрационные номера пояснения</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>uk</v8:lang>
+													<v8:content>Реєстраційні номери пояснення</v8:content>
+												</v8:item>
+											</Title>
+											<Group>Vertical</Group>
+											<Behavior>Usual</Behavior>
+											<Representation>None</Representation>
+											<ShowTitle>false</ShowTitle>
+											<ExtendedTooltip name="РегистрационныеНомераПоясненияРасширеннаяПодсказка" id="648"/>
+											<ChildItems>
+												<UsualGroup name="ГруппаФизическоеЛицоДРФО" id="590">
+													<Title>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Группа физическое лицо ДРФО</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>uk</v8:lang>
+															<v8:content>Група фізична особа ДРФО</v8:content>
+														</v8:item>
+													</Title>
+													<ToolTip>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Группа физическое лицо ДРФО</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>uk</v8:lang>
+															<v8:content>Група фізична особа ДРФО</v8:content>
+														</v8:item>
+													</ToolTip>
+													<Width>10</Width>
+													<Group>Horizontal</Group>
+													<Behavior>Usual</Behavior>
+													<Representation>None</Representation>
+													<ShowTitle>false</ShowTitle>
+													<ExtendedTooltip name="ГруппаФизическоеЛицоДРФОРасширеннаяПодсказка" id="649"/>
+													<ChildItems>
+														<PictureField name="ФизическоеЛицоДРФОКартинка" id="591">
+															<DataPath>ФизическоеЛицоДРФОКартинка</DataPath>
+															<TitleLocation>None</TitleLocation>
+															<Width>3</Width>
+															<Height>1</Height>
+															<HorizontalStretch>false</HorizontalStretch>
+															<VerticalStretch>false</VerticalStretch>
+															<Border width="1">
+																<v8ui:style xsi:type="v8ui:ControlBorderType">WithoutBorder</v8ui:style>
+															</Border>
+															<FileDragMode>AsFile</FileDragMode>
+															<ContextMenu name="ФизическоеЛицоДРФОКартинкаКонтекстноеМеню" id="592"/>
+															<ExtendedTooltip name="ФизическоеЛицоДРФОКартинкаРасширеннаяПодсказка" id="650"/>
+														</PictureField>
+														<LabelField name="ФизическоеЛицоДРФОНадпись" id="593">
+															<DataPath>ФизическоеЛицоДРФОНадпись</DataPath>
+															<TitleLocation>None</TitleLocation>
+															<Hiperlink>true</Hiperlink>
+															<ContextMenu name="ФизическоеЛицоДРФОНадписьКонтекстноеМеню" id="594"/>
+															<ExtendedTooltip name="ФизическоеЛицоДРФОНадписьРасширеннаяПодсказка" id="651"/>
+															<Events>
+																<Event name="Click">ФизическоеЛицоДРФОНадписьНажатие</Event>
+															</Events>
+														</LabelField>
+													</ChildItems>
+												</UsualGroup>
+											</ChildItems>
+										</UsualGroup>
+									</ChildItems>
+								</UsualGroup>
+							</ChildItems>
+						</UsualGroup>
+					</ChildItems>
+				</UsualGroup>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="ГруппаДоступаЛиния" id="567">
+			<Group>Horizontal</Group>
+			<Behavior>Usual</Behavior>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаДоступаЛинияРасширеннаяПодсказка" id="652"/>
+			<ChildItems>
+				<PictureField name="ГруппаДоступаКартинка" id="497">
+					<DataPath>ГруппаДоступаКартинка</DataPath>
+					<TitleLocation>None</TitleLocation>
+					<Width>2</Width>
+					<Height>1</Height>
+					<HorizontalStretch>false</HorizontalStretch>
+					<VerticalStretch>false</VerticalStretch>
+					<Border width="1">
+						<v8ui:style xsi:type="v8ui:ControlBorderType">WithoutBorder</v8ui:style>
+					</Border>
+					<FileDragMode>AsFile</FileDragMode>
+					<ContextMenu name="ГруппаДоступаКартинкаКонтекстноеМеню" id="498"/>
+					<ExtendedTooltip name="ГруппаДоступаКартинкаРасширеннаяПодсказка" id="653"/>
+				</PictureField>
+				<LabelField name="ГруппаДоступаИнфо" id="499">
+					<DataPath>ГруппаДоступаИнфо</DataPath>
+					<TitleLocation>None</TitleLocation>
+					<Width>40</Width>
+					<Height>2</Height>
+					<HorizontalStretch>false</HorizontalStretch>
+					<VerticalStretch>false</VerticalStretch>
+					<TextColor>style:ПоясняющийТекст</TextColor>
+					<ContextMenu name="ГруппаДоступаИнфоКонтекстноеМеню" id="500"/>
+					<ExtendedTooltip name="ГруппаДоступаИнфоРасширеннаяПодсказка" id="654"/>
+				</LabelField>
+				<InputField name="ГруппаДоступа" id="501">
+					<DataPath>ФизическоеЛицо.ГруппаДоступа</DataPath>
+					<TitleLocation>None</TitleLocation>
+					<ContextMenu name="ГруппаДоступаКонтекстноеМеню" id="502"/>
+					<ExtendedTooltip name="ГруппаДоступаРасширеннаяПодсказка" id="655"/>
+					<Events>
+						<Event name="OnChange">ГруппаДоступаПриИзменении</Event>
+					</Events>
+				</InputField>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="ГруппаКомандыОформления" id="571">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Группа команды оформления</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Група команди оформлення</v8:content>
+				</v8:item>
+			</Title>
+			<Height>4</Height>
+			<HorizontalStretch>true</HorizontalStretch>
+			<VerticalStretch>false</VerticalStretch>
+			<Group>Horizontal</Group>
+			<Behavior>Usual</Behavior>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаКомандыОформленияРасширеннаяПодсказка" id="656"/>
+			<ChildItems>
+				<Button name="КнопкаНовогоОформитьПриемНаРаботу" id="572">
+					<Type>Hyperlink</Type>
+					<Width>14</Width>
+					<Height>3</Height>
+					<CommandName>Form.Command.ОформитьПриемНаРаботу</CommandName>
+					<ExtendedTooltip name="КнопкаНовогоОформитьПриемНаРаботуРасширеннаяПодсказка" id="657"/>
+				</Button>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="ОсновныеДанные" id="112">
+			<HorizontalStretch>true</HorizontalStretch>
+			<Group>Vertical</Group>
+			<Behavior>Usual</Behavior>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ОсновныеДанныеРасширеннаяПодсказка" id="658"/>
+			<ChildItems>
+				<UsualGroup name="СостояниеСотрудника" id="101">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Состояние сотрудника</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Стан співробітника</v8:content>
+						</v8:item>
+					</Title>
+					<HorizontalStretch>true</HorizontalStretch>
+					<Group>Horizontal</Group>
+					<Behavior>Usual</Behavior>
+					<Representation>None</Representation>
+					<ShowTitle>false</ShowTitle>
+					<ExtendedTooltip name="СостояниеСотрудникаРасширеннаяПодсказка" id="659"/>
+					<ChildItems>
+						<UsualGroup name="ДатыПриемаУвольнения" id="118">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Даты приема увольнения</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Дати прийому звільнення</v8:content>
+								</v8:item>
+							</Title>
+							<Group>Vertical</Group>
+							<Behavior>Usual</Behavior>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="ДатыПриемаУвольненияРасширеннаяПодсказка" id="660"/>
+							<ChildItems>
+								<InputField name="ДатаПриема" id="47">
+									<DataPath>ДатаПриема</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ДатаПриемаКонтекстноеМеню" id="48"/>
+									<ExtendedTooltip name="ДатаПриемаРасширеннаяПодсказка" id="661"/>
+									<Events>
+										<Event name="OnChange">ДатаПриемаПриИзменении</Event>
+									</Events>
+								</InputField>
+								<InputField name="ДатаУвольнения" id="49">
+									<DataPath>ДатаУвольнения</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ДатаУвольненияКонтекстноеМеню" id="50"/>
+									<ExtendedTooltip name="ДатаУвольненияРасширеннаяПодсказка" id="662"/>
+									<Events>
+										<Event name="OnChange">ДатаУвольненияПриИзменении</Event>
+									</Events>
+								</InputField>
+							</ChildItems>
+						</UsualGroup>
+						<UsualGroup name="Инфонадпись" id="198">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Инфонадпись</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Інфонапис</v8:content>
+								</v8:item>
+							</Title>
+							<Group>Horizontal</Group>
+							<Behavior>Usual</Behavior>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="ИнфонадписьРасширеннаяПодсказка" id="663"/>
+							<ChildItems>
+								<PictureField name="СотрудникИнфоКартинка" id="513">
+									<DataPath>СотрудникИнфоКартинка</DataPath>
+									<TitleLocation>None</TitleLocation>
+									<Width>3</Width>
+									<Height>1</Height>
+									<HorizontalStretch>false</HorizontalStretch>
+									<VerticalStretch>false</VerticalStretch>
+									<Border width="1">
+										<v8ui:style xsi:type="v8ui:ControlBorderType">WithoutBorder</v8ui:style>
+									</Border>
+									<FileDragMode>AsFile</FileDragMode>
+									<ContextMenu name="СотрудникИнфоКартинкаКонтекстноеМеню" id="514"/>
+									<ExtendedTooltip name="СотрудникИнфоКартинкаРасширеннаяПодсказка" id="664"/>
+								</PictureField>
+								<LabelField name="СотрудникИнфо" id="211">
+									<DataPath>СотрудникИнфо</DataPath>
+									<TitleLocation>None</TitleLocation>
+									<Height>3</Height>
+									<VerticalStretch>false</VerticalStretch>
+									<TextColor>style:ПоясняющийТекст</TextColor>
+									<ContextMenu name="СотрудникИнфоКонтекстноеМеню" id="212"/>
+									<ExtendedTooltip name="СотрудникИнфоРасширеннаяПодсказка" id="665"/>
+								</LabelField>
+							</ChildItems>
+						</UsualGroup>
+					</ChildItems>
+				</UsualGroup>
+				<UsualGroup name="РабочиеМеста" id="412">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Рабочие места</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Робочі місця</v8:content>
+						</v8:item>
+					</Title>
+					<Group>Vertical</Group>
+					<Behavior>Usual</Behavior>
+					<Representation>NormalSeparation</Representation>
+					<ShowTitle>false</ShowTitle>
+					<ExtendedTooltip name="РабочиеМестаРасширеннаяПодсказка" id="666"/>
+					<ChildItems>
+						<UsualGroup name="РабочиеМестаГоризонтальное" id="471">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Рабочие места горизонтальное</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Робочі місця горизонтальне</v8:content>
+								</v8:item>
+							</Title>
+							<Group>Horizontal</Group>
+							<Behavior>Usual</Behavior>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="РабочиеМестаГоризонтальноеРасширеннаяПодсказка" id="667"/>
+							<ChildItems>
+								<UsualGroup name="ТекущееМестоРаботы" id="119">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Текущее место работы</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Поточне місце роботи</v8:content>
+										</v8:item>
+									</Title>
+									<TitleTextColor>style:ПоясняющийТекст</TitleTextColor>
+									<TitleFont ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+									<Group>Horizontal</Group>
+									<Behavior>Usual</Behavior>
+									<Representation>None</Representation>
+									<ExtendedTooltip name="ТекущееМестоРаботыРасширеннаяПодсказка" id="668"/>
+									<ChildItems>
+										<UsualGroup name="РабочееМесто" id="120">
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Рабочее место</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>uk</v8:lang>
+													<v8:content>Робоче місце</v8:content>
+												</v8:item>
+											</Title>
+											<Group>Vertical</Group>
+											<Behavior>Usual</Behavior>
+											<Representation>None</Representation>
+											<United>false</United>
+											<ShowTitle>false</ShowTitle>
+											<ExtendedTooltip name="РабочееМестоРасширеннаяПодсказка" id="669"/>
+											<ChildItems>
+												<InputField name="ТекущаяОрганизация" id="41">
+													<DataPath>ТекущаяОрганизация</DataPath>
+													<Title>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Организация</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>uk</v8:lang>
+															<v8:content>Організація</v8:content>
+														</v8:item>
+													</Title>
+													<EditMode>EnterOnInput</EditMode>
+													<ContextMenu name="ТекущаяОрганизацияКонтекстноеМеню" id="42"/>
+													<ExtendedTooltip name="ТекущаяОрганизацияРасширеннаяПодсказка" id="670"/>
+													<Events>
+														<Event name="OnChange">ТекущаяОрганизацияПриИзменении</Event>
+													</Events>
+												</InputField>
+												<InputField name="ТекущееПодразделение" id="43">
+													<DataPath>ТекущееПодразделение</DataPath>
+													<Title>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Подразделение</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>uk</v8:lang>
+															<v8:content>Підрозділ</v8:content>
+														</v8:item>
+													</Title>
+													<EditMode>EnterOnInput</EditMode>
+													<ChoiceParameterLinks>
+														<xr:Link>
+															<xr:Name>Отбор.Владелец</xr:Name>
+															<xr:DataPath xsi:type="xs:string">ТекущаяОрганизация</xr:DataPath>
+															<xr:ValueChange>Clear</xr:ValueChange>
+														</xr:Link>
+													</ChoiceParameterLinks>
+													<ContextMenu name="ТекущееПодразделениеКонтекстноеМеню" id="44"/>
+													<ExtendedTooltip name="ТекущееПодразделениеРасширеннаяПодсказка" id="671"/>
+												</InputField>
+												<InputField name="ТекущаяДолжность" id="45">
+													<DataPath>ТекущаяДолжность</DataPath>
+													<Title>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Должность</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>uk</v8:lang>
+															<v8:content>Посада</v8:content>
+														</v8:item>
+													</Title>
+													<EditMode>EnterOnInput</EditMode>
+													<ContextMenu name="ТекущаяДолжностьКонтекстноеМеню" id="46"/>
+													<ExtendedTooltip name="ТекущаяДолжностьРасширеннаяПодсказка" id="672"/>
+												</InputField>
+												<InputField name="ТекущийВидЗанятости" id="206">
+													<DataPath>ТекущийВидЗанятости</DataPath>
+													<HorizontalStretch>false</HorizontalStretch>
+													<ContextMenu name="ТекущийВидЗанятостиКонтекстноеМеню" id="207"/>
+													<ExtendedTooltip name="ТекущийВидЗанятостиРасширеннаяПодсказка" id="673"/>
+													<Events>
+														<Event name="OnChange">ВидЗанятостиПриИзменении</Event>
+													</Events>
+												</InputField>
+											</ChildItems>
+										</UsualGroup>
+										<UsualGroup name="ТекущиеНачисления" id="121">
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Текущие начисления</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>uk</v8:lang>
+													<v8:content>Поточні нарахування</v8:content>
+												</v8:item>
+											</Title>
+											<Group>Vertical</Group>
+											<Behavior>Usual</Behavior>
+											<Representation>None</Representation>
+											<United>false</United>
+											<ShowTitle>false</ShowTitle>
+											<ExtendedTooltip name="ТекущиеНачисленияРасширеннаяПодсказка" id="674"/>
+											<ChildItems>
+												<CheckBoxField name="НачисляетсяИндексация" id="612">
+													<DataPath>НачисляетсяИндексация</DataPath>
+													<CheckBoxType>Auto</CheckBoxType>
+													<ContextMenu name="НачисляетсяИндексацияКонтекстноеМеню" id="613"/>
+													<ExtendedTooltip name="НачисляетсяИндексацияРасширеннаяПодсказка" id="675"/>
+												</CheckBoxField>
+												<InputField name="БазовыйПериодИндексации" id="614">
+													<DataPath>БазовыйПериодИндексации</DataPath>
+													<Title>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Базовый период индексации</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>uk</v8:lang>
+															<v8:content>Базовий період індексації</v8:content>
+														</v8:item>
+													</Title>
+													<ContextMenu name="БазовыйПериодИндексацииКонтекстноеМеню" id="615"/>
+													<ExtendedTooltip name="БазовыйПериодИндексацииРасширеннаяПодсказка" id="676"/>
+												</InputField>
+												<InputField name="ТекущаяТарифнаяСтавка" id="124">
+													<DataPath>ТекущаяТарифнаяСтавка</DataPath>
+													<Title>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Оклад</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>uk</v8:lang>
+															<v8:content>Оклад</v8:content>
+														</v8:item>
+													</Title>
+													<ContextMenu name="ТекущаяТарифнаяСтавкаКонтекстноеМеню" id="125"/>
+													<ExtendedTooltip name="ТекущаяТарифнаяСтавкаРасширеннаяПодсказка" id="677"/>
+													<Events>
+														<Event name="OnChange">ТекущаяТарифнаяСтавкаПриИзменении</Event>
+													</Events>
+												</InputField>
+												<InputField name="ТекущаяКатегорияЕСВ" id="610">
+													<DataPath>ТекущаяКатегорияЕСВ</DataPath>
+													<ContextMenu name="ТекущаяКатегорияЕСВКонтекстноеМеню" id="611"/>
+													<ExtendedTooltip name="ТекущаяКатегорияЕСВРасширеннаяПодсказка" id="678"/>
+												</InputField>
+											</ChildItems>
+										</UsualGroup>
+									</ChildItems>
+								</UsualGroup>
+								<UsualGroup name="ДругиеРабочиеМеста" id="413">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Другие места работы</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Інші місця роботи</v8:content>
+										</v8:item>
+									</Title>
+									<TitleTextColor>style:ПоясняющийТекст</TitleTextColor>
+									<TitleFont ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+									<Width>20</Width>
+									<Group>Vertical</Group>
+									<Behavior>Usual</Behavior>
+									<Representation>None</Representation>
+									<ExtendedTooltip name="ДругиеРабочиеМестаРасширеннаяПодсказка" id="679"/>
+								</UsualGroup>
+							</ChildItems>
+						</UsualGroup>
+					</ChildItems>
+				</UsualGroup>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="ГруппаДополнительнаяИнформация" id="579">
+			<HorizontalStretch>true</HorizontalStretch>
+			<VerticalStretch>true</VerticalStretch>
+			<Group>Vertical</Group>
+			<Behavior>Usual</Behavior>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаДополнительнаяИнформацияРасширеннаяПодсказка" id="680"/>
+			<ChildItems>
+				<UsualGroup name="ГруппаДополнительныеРеквизиты" id="154">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Дополнительные данные</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Додаткові дані</v8:content>
+						</v8:item>
+					</Title>
+					<TitleTextColor>style:ПоясняющийТекст</TitleTextColor>
+					<TitleFont ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+					<Group>Vertical</Group>
+					<Behavior>Usual</Behavior>
+					<Representation>NormalSeparation</Representation>
+					<ExtendedTooltip name="ГруппаДополнительныеРеквизитыРасширеннаяПодсказка" id="681"/>
+				</UsualGroup>
+				<UsualGroup name="ГруппаПредставление" id="172">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Представление сотрудника в отчетах и документах</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Представлення співробітника в звітах і документах</v8:content>
+						</v8:item>
+					</Title>
+					<TitleTextColor>style:ПоясняющийТекст</TitleTextColor>
+					<TitleFont ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+					<Group>Vertical</Group>
+					<Behavior>Usual</Behavior>
+					<Representation>None</Representation>
+					<ExtendedTooltip name="ГруппаПредставлениеРасширеннаяПодсказка" id="682"/>
+					<ChildItems>
+						<LabelField name="СотрудникНаименование" id="517">
+							<DataPath>СотрудникНаименование</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Сотрудник будет представлен в отчетах и документах как</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Співробітник буде представлений в звітах і документах як</v8:content>
+								</v8:item>
+							</Title>
+							<TitleLocation>Top</TitleLocation>
+							<Font ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+							<ContextMenu name="СотрудникНаименованиеКонтекстноеМеню" id="518"/>
+							<ExtendedTooltip name="СотрудникНаименованиеРасширеннаяПодсказка" id="683"/>
+						</LabelField>
+						<CheckBoxField name="ДополнитьПредставление" id="260">
+							<DataPath>ДополнятьПредставление</DataPath>
+							<TitleLocation>Right</TitleLocation>
+							<CheckBoxType>Auto</CheckBoxType>
+							<ContextMenu name="ДополнитьПредставлениеКонтекстноеМеню" id="261"/>
+							<ExtendedTooltip name="ДополнитьПредставлениеРасширеннаяПодсказка" id="684"/>
+							<Events>
+								<Event name="OnChange">ДополнитьПредставлениеПриИзменении</Event>
+							</Events>
+						</CheckBoxField>
+						<InputField name="УточнениеНаименования" id="262">
+							<DataPath>Сотрудник.УточнениеНаименования</DataPath>
+							<TitleLocation>None</TitleLocation>
+							<ContextMenu name="УточнениеНаименованияКонтекстноеМеню" id="263"/>
+							<ExtendedTooltip name="УточнениеНаименованияРасширеннаяПодсказка" id="685"/>
+							<Events>
+								<Event name="OnChange">УточнениеНаименованияПриИзменении</Event>
+							</Events>
+						</InputField>
+					</ChildItems>
+				</UsualGroup>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="ГруппаВАрхиве" id="551">
+			<HorizontalStretch>true</HorizontalStretch>
+			<Group>Vertical</Group>
+			<Behavior>Usual</Behavior>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаВАрхивеРасширеннаяПодсказка" id="686"/>
+			<ChildItems>
+				<CheckBoxField name="ВАрхиве" id="199">
+					<DataPath>Сотрудник.ВАрхиве</DataPath>
+					<Visible>false</Visible>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Не отображать в списках. Все операции по сотруднику завершены</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Не відображати в списках. Всі операції за співробітником завершені</v8:content>
+						</v8:item>
+					</Title>
+					<TitleLocation>Right</TitleLocation>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="ВАрхивеКонтекстноеМеню" id="200"/>
+					<ExtendedTooltip name="ВАрхивеРасширеннаяПодсказка" id="687"/>
+					<Events>
+						<Event name="OnChange">ВАрхивеПриИзменении</Event>
+					</Events>
+				</CheckBoxField>
+			</ChildItems>
+		</UsualGroup>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Сотрудник" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сотрудник</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Співробітник</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogObject.Сотрудники</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="ФизическоеЛицо" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Физическое лицо</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Фізична особа</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogObject.ФизическиеЛица</v8:Type>
+			</Type>
+			<View>
+				<xr:Common>false</xr:Common>
+				<xr:Value name="Role.ДобавлениеИзменениеДанныхФизическихЛицЗарплатаКадры">true</xr:Value>
+				<xr:Value name="Role.ПолныеПрава">true</xr:Value>
+				<xr:Value name="Role.ЧтениеДанныхФизическихЛицЗарплатаКадры">true</xr:Value>
+			</View>
+			<Edit>
+				<xr:Common>false</xr:Common>
+				<xr:Value name="Role.ДобавлениеИзменениеДанныхФизическихЛицЗарплатаКадры">true</xr:Value>
+				<xr:Value name="Role.ПолныеПрава">true</xr:Value>
+			</Edit>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="ФизическоеЛицоСсылка" id="6">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Физическое лицо (ссылка)</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Фізична особа (посилання)</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.ФизическиеЛица</v8:Type>
+			</Type>
+			<View>
+				<xr:Common>false</xr:Common>
+				<xr:Value name="Role.ДобавлениеИзменениеДанныхФизическихЛицЗарплатаКадры">true</xr:Value>
+				<xr:Value name="Role.ПолныеПрава">true</xr:Value>
+				<xr:Value name="Role.ЧтениеДанныхФизическихЛицЗарплатаКадры">true</xr:Value>
+			</View>
+			<Edit>
+				<xr:Common>false</xr:Common>
+				<xr:Value name="Role.ДобавлениеИзменениеДанныхФизическихЛицЗарплатаКадры">true</xr:Value>
+				<xr:Value name="Role.ПолныеПрава">true</xr:Value>
+			</Edit>
+		</Attribute>
+		<Attribute name="СотрудникИнфо" id="13">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сотрудник инфо</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Співробітник інфо</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+			<FunctionalOptions>
+				<Item>FunctionalOption.ИспользоватьНачислениеЗарплаты</Item>
+			</FunctionalOptions>
+		</Attribute>
+		<Attribute name="ФИОФизическихЛиц" id="16">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>ФИОФизических лиц</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>ФИОФизических осіб</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:InformationRegisterRecordManager.ФИОФизическихЛиц</v8:Type>
+			</Type>
+			<View>
+				<xr:Common>false</xr:Common>
+				<xr:Value name="Role.ДобавлениеИзменениеДанныхФизическихЛицЗарплатаКадры">true</xr:Value>
+				<xr:Value name="Role.ПолныеПрава">true</xr:Value>
+				<xr:Value name="Role.ЧтениеДанныхФизическихЛицЗарплатаКадры">true</xr:Value>
+			</View>
+			<Edit>
+				<xr:Common>false</xr:Common>
+				<xr:Value name="Role.ДобавлениеИзменениеДанныхФизическихЛицЗарплатаКадры">true</xr:Value>
+				<xr:Value name="Role.ПолныеПрава">true</xr:Value>
+			</Edit>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="ФИОФизическихЛицПрежняя" id="17">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>ФИОФизических лиц прежняя</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>ФИОФизических осіб колишня</v8:content>
+				</v8:item>
+			</Title>
+			<Type/>
+			<View>
+				<xr:Common>false</xr:Common>
+				<xr:Value name="Role.ДобавлениеИзменениеДанныхФизическихЛицЗарплатаКадры">true</xr:Value>
+				<xr:Value name="Role.ПолныеПрава">true</xr:Value>
+				<xr:Value name="Role.ЧтениеДанныхФизическихЛицЗарплатаКадры">true</xr:Value>
+			</View>
+			<Edit>
+				<xr:Common>false</xr:Common>
+				<xr:Value name="Role.ДобавлениеИзменениеДанныхФизическихЛицЗарплатаКадры">true</xr:Value>
+				<xr:Value name="Role.ПолныеПрава">true</xr:Value>
+				<xr:Value name="Role.ЧтениеДанныхФизическихЛицЗарплатаКадры">true</xr:Value>
+			</Edit>
+		</Attribute>
+		<Attribute name="ФИОФизическихЛицНоваяЗапись" id="20">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>ФИОФизических лиц новая запись</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>ФИОФизических осіб нова запис</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ДополнятьПредставление" id="9">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Дополнять представление</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Доповнювати представлення</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="СотрудникСсылка" id="49">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сотрудник ссылка</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Співробітник посилання</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.Сотрудники</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ФизическоеЛицоВерсияДанных" id="23">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Физическое лицо версия данных</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Фізична особа версія даних</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="СоответствиеКомандСотрудникам" id="12">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Соответствие команд сотрудникам</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Відповідність команд співробітникам</v8:content>
+				</v8:item>
+			</Title>
+			<Type/>
+		</Attribute>
+		<Attribute name="ФизическоеЛицоЗаблокировано" id="24">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Физическое лицо заблокировано</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Фізична особа заблоковано</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ВыполненаКомандаСменыФИО" id="55">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Выполнена команда смены ФИО</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Виконана команда зміни ПІБ</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ГруппаДоступаИнфо" id="60">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Группа доступа инфо</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Група доступу інфо</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+			<FunctionalOptions>
+				<Item>FunctionalOption.ОграничиватьДоступНаУровнеЗаписейФизическиеЛица</Item>
+			</FunctionalOptions>
+		</Attribute>
+		<Attribute name="ГруппаДоступаКартинка" id="61">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Группа доступа картинка</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Група доступу картинка</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8ui:Picture</v8:Type>
+			</Type>
+			<FunctionalOptions>
+				<Item>FunctionalOption.ОграничиватьДоступНаУровнеЗаписейФизическиеЛица</Item>
+			</FunctionalOptions>
+		</Attribute>
+		<Attribute name="СотрудникИнфоКартинка" id="66">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сотрудник инфо картинка</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Співробітник інфо картинка</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8ui:Picture</v8:Type>
+			</Type>
+			<FunctionalOptions>
+				<Item>FunctionalOption.ИспользоватьНачислениеЗарплаты</Item>
+			</FunctionalOptions>
+		</Attribute>
+		<Attribute name="СотрудникНаименование" id="68">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сотрудник наименование</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Співробітник найменування</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ФИОФизическихЛицНаборЗаписей" id="74">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>ФИОФизических лиц набор записей</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>ФИОФизических осіб набір записів</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:InformationRegisterRecordSet.ФИОФизическихЛиц</v8:Type>
+			</Type>
+			<View>
+				<xr:Common>false</xr:Common>
+				<xr:Value name="Role.ДобавлениеИзменениеДанныхФизическихЛицЗарплатаКадры">true</xr:Value>
+				<xr:Value name="Role.ПолныеПрава">true</xr:Value>
+				<xr:Value name="Role.ЧтениеДанныхФизическихЛицЗарплатаКадры">true</xr:Value>
+			</View>
+			<Edit>
+				<xr:Common>false</xr:Common>
+				<xr:Value name="Role.ДобавлениеИзменениеДанныхФизическихЛицЗарплатаКадры">true</xr:Value>
+				<xr:Value name="Role.ПолныеПрава">true</xr:Value>
+				<xr:Value name="Role.ЧтениеДанныхФизическихЛицЗарплатаКадры">true</xr:Value>
+			</Edit>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="ФИОФизическихЛицНаборЗаписейПрочитан" id="75">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>ФИОФизических лиц набор записей прочитан</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>ФИОФизических осіб набір записів прочитаний</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ДоступенПросмотрДанныхФизическихЛиц" id="87">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Доступен просмотр данных физических лиц</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Доступний перегляд даних фізичних осіб</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ТекущаяДолжность" id="25">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Текущая должность</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Поточна посада</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.Должности</v8:Type>
+			</Type>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="ТекущаяОрганизация" id="52">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Текущая организация</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Поточна організація</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.Организации</v8:Type>
+			</Type>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="ТекущаяТарифнаяСтавка" id="88">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Текущая тарифная ставка</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Поточна тарифна ставка</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>15</v8:Digits>
+					<v8:FractionDigits>2</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</Type>
+			<SavedData>true</SavedData>
+			<FunctionalOptions>
+				<Item>FunctionalOption.ИспользоватьНачислениеЗарплаты</Item>
+			</FunctionalOptions>
+		</Attribute>
+		<Attribute name="ТекущееПодразделение" id="89">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Текущее подразделение</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Поточний підрозділ</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.ПодразделенияОрганизаций</v8:Type>
+			</Type>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="ТекущиеДанныеПрежняя" id="90">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Текущие данные прежняя</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Поточні дані колишня</v8:content>
+				</v8:item>
+			</Title>
+			<Type/>
+		</Attribute>
+		<Attribute name="ДатаПриема" id="91">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Дата приема</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Дата прийому</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="ДатаУвольнения" id="92">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Дата увольнения</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Дата звільнення</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="ИзмененПол" id="99">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Изменен пол</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Змінена стать</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ИзмененаДатаРождения" id="100">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Изменена дата рождения</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Змінена дата народження</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ИзмененоМестоРождения" id="101">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Изменено место рождения</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Змінено місце народження</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ИзмененаГруппаДоступа" id="102">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Изменена группа доступа</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Змінена група доступу</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ИзмененоУточнениеНаименования" id="103">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Изменено уточнение наименования</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Змінено уточнення найменування</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ИзмененыЛичныеДанные" id="104">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Изменены личные данные</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Змінені особисті дані</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="КоличествоСотрудников" id="105">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Количество сотрудников</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Кількість співробітників</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>3</v8:Digits>
+					<v8:FractionDigits>0</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ТекущийВидЗанятости" id="107">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Вид занятости</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Вид зайнятості</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:EnumRef.ВидыЗанятости</v8:Type>
+			</Type>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="СозданиеНового" id="110">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Создание нового</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Створення нового</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="КонтактнаяИнформацияФизическогоЛица" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Контактная информация физического лица</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Контактна інформація фізичної особи</v8:content>
+				</v8:item>
+			</Title>
+			<Type/>
+		</Attribute>
+		<Attribute name="ДРФОУказанПравильно" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>ДРФОУказан правильно</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>ДРФОЗазначений правильно</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ФизическоеЛицоДРФОКартинка" id="7">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Физическое лицо ДРФОКартинка</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Фізична особа ДРФОКартинка</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8ui:Picture</v8:Type>
+			</Type>
+			<FunctionalOptions>
+				<Item>FunctionalOption.ИспользоватьНачислениеЗарплаты</Item>
+				<Item>FunctionalOption.ИспользоватьКадровыйУчет</Item>
+			</FunctionalOptions>
+		</Attribute>
+		<Attribute name="ФизическоеЛицоДРФОНадпись" id="8">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Физическое лицо ДРФОНадпись</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Фізична особа ДРФОНадпись</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+			<FunctionalOptions>
+				<Item>FunctionalOption.ИспользоватьНачислениеЗарплаты</Item>
+				<Item>FunctionalOption.ИспользоватьКадровыйУчет</Item>
+			</FunctionalOptions>
+		</Attribute>
+		<Attribute name="ЦветСтиляПоясняющийОшибкуТекст" id="14">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Цвет стиля поясняющий ошибку текст</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Колір стилю пояснювальний помилку текст</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8ui:Color</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ЦветСтиляПоясняющийТекст" id="15">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Цвет стиля поясняющий текст</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Колір стилю пояснювальний текст</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8ui:Color</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ЦветСтиляЦветТекстаПоля" id="18">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Цвет стиля цвет текста поля</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Колір стилю колір тексту поля</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8ui:Color</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ДРФОИзменен" id="21">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>ДРФОИзменен</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>ДРФОЗмінено</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ОформленПриемНаРаботу" id="22">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Оформлен прием на работу</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Оформлений прийом на роботу</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ПриказОПриеме" id="26">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Приказ о приеме</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Наказ про прийом</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:DocumentRef.ПриемНаРаботу</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ИзмененаДатаРегистрации" id="27">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Изменена дата регистрации</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Змінена дата реєстрації</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="КонтактнаяИнформацияОписаниеДополнительныхРеквизитов" id="28">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Контактная информация описание дополнительных реквизитов</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Контактна інформація опис додаткових реквізитів</v8:content>
+				</v8:item>
+			</Title>
+			<Type/>
+		</Attribute>
+		<Attribute name="ФизическоеЛицоДатаРожденияКартинка" id="29">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Физическое лицо дата рождения картинка</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Фізична особа дата народження картинка</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8ui:Picture</v8:Type>
+			</Type>
+			<FunctionalOptions>
+				<Item>FunctionalOption.ИспользоватьНачислениеЗарплаты</Item>
+				<Item>FunctionalOption.ИспользоватьКадровыйУчет</Item>
+			</FunctionalOptions>
+		</Attribute>
+		<Attribute name="ФизическоеЛицоДатаРожденияНадпись" id="30">
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+			<FunctionalOptions>
+				<Item>FunctionalOption.ИспользоватьНачислениеЗарплаты</Item>
+				<Item>FunctionalOption.ИспользоватьКадровыйУчет</Item>
+			</FunctionalOptions>
+		</Attribute>
+		<Attribute name="ГражданствоФизическихЛиц" id="31">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Гражданство физических лиц</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Громадянство фізичних осіб</v8:content>
+				</v8:item>
+			</Title>
+			<Type/>
+		</Attribute>
+		<Attribute name="ДокументыФизическихЛиц" id="32">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Документы физических лиц</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Документи фізичних осіб</v8:content>
+				</v8:item>
+			</Title>
+			<Type/>
+		</Attribute>
+		<Attribute name="РежимРаботыФормы" id="33">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Режим работы формы</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Режим роботи форми</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:EnumRef.РежимыРаботыФормыСотрудника</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ТекущаяКатегорияЕСВ" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Текущая категория ЕСВ</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Поточна категорія ЄСВ</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.КатегорииЗастрахованныхЛицЕСВ</v8:Type>
+			</Type>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="НачисляетсяИндексация" id="10">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Начисляется индексация</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Нараховується індексація</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="БазовыйПериодИндексации" id="11">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Базовый период индексации</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Базовий період індексації</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="ПараметрыПодключаемыхКоманд" id="111">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Параметры подключаемых команд</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Параметри команд, які підключаються</v8:content>
+				</v8:item>
+			</Title>
+			<Type/>
+		</Attribute>
+		<ConditionalAppearance>
+			<dcsset:item>
+				<dcsset:selection>
+					<dcsset:item>
+						<dcsset:field>ТекущийВидЗанятости</dcsset:field>
+					</dcsset:item>
+				</dcsset:selection>
+				<dcsset:filter>
+					<dcsset:item xsi:type="dcsset:FilterItemComparison">
+						<dcsset:left xsi:type="dcscor:Field">ТекущаяОрганизация</dcsset:left>
+						<dcsset:comparisonType>Filled</dcsset:comparisonType>
+					</dcsset:item>
+					<dcsset:item xsi:type="dcsset:FilterItemComparison">
+						<dcsset:left xsi:type="dcscor:Field">ДатаПриема</dcsset:left>
+						<dcsset:comparisonType>Filled</dcsset:comparisonType>
+					</dcsset:item>
+					<dcsset:item xsi:type="dcsset:FilterItemComparison">
+						<dcsset:left xsi:type="dcscor:Field">ТекущийВидЗанятости</dcsset:left>
+						<dcsset:comparisonType>NotFilled</dcsset:comparisonType>
+					</dcsset:item>
+				</dcsset:filter>
+				<dcsset:appearance>
+					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+						<dcscor:parameter>ОтметкаНезаполненного</dcscor:parameter>
+						<dcscor:value xsi:type="xs:boolean">true</dcscor:value>
+					</dcscor:item>
+				</dcsset:appearance>
+			</dcsset:item>
+			<dcsset:item>
+				<dcsset:selection>
+					<dcsset:item>
+						<dcsset:field>ТекущийВидЗанятости</dcsset:field>
+					</dcsset:item>
+				</dcsset:selection>
+				<dcsset:filter>
+					<dcsset:item xsi:type="dcsset:FilterItemGroup">
+						<dcsset:groupType>OrGroup</dcsset:groupType>
+						<dcsset:item xsi:type="dcsset:FilterItemComparison">
+							<dcsset:left xsi:type="dcscor:Field">ТекущийВидЗанятости</dcsset:left>
+							<dcsset:comparisonType>Filled</dcsset:comparisonType>
+						</dcsset:item>
+						<dcsset:item xsi:type="dcsset:FilterItemComparison">
+							<dcsset:left xsi:type="dcscor:Field">ТекущаяОрганизация</dcsset:left>
+							<dcsset:comparisonType>NotFilled</dcsset:comparisonType>
+						</dcsset:item>
+						<dcsset:item xsi:type="dcsset:FilterItemComparison">
+							<dcsset:left xsi:type="dcscor:Field">ДатаПриема</dcsset:left>
+							<dcsset:comparisonType>NotFilled</dcsset:comparisonType>
+						</dcsset:item>
+					</dcsset:item>
+				</dcsset:filter>
+				<dcsset:appearance>
+					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+						<dcscor:parameter>ОтметкаНезаполненного</dcscor:parameter>
+						<dcscor:value xsi:type="xs:boolean">false</dcscor:value>
+					</dcscor:item>
+				</dcsset:appearance>
+			</dcsset:item>
+		</ConditionalAppearance>
+	</Attributes>
+	<Commands>
+		<Command name="ФИОФизическихЛицИстория" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>История ФИО</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Історія ПІБ</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>ФИО история</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>ПІБ історія</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ФИОФизическихЛицИстория</Action>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="ОформитьПриемНаРаботу" id="17">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Оформить прием
+на работу</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Оформити прийом
+на роботу</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Оформить прием на работу</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Оформити прийом на роботу</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Use>
+				<xr:Common>false</xr:Common>
+				<xr:Value name="Role.ДобавлениеИзменениеКадровогоСостояния">true</xr:Value>
+				<xr:Value name="Role.ПолныеПрава">true</xr:Value>
+			</Use>
+			<Action>ОформитьПриемНаРаботу</Action>
+			<FunctionalOptions>
+				<Item>FunctionalOption.ИспользоватьКадровыйУчет</Item>
+			</FunctionalOptions>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="ОформитьКадровыйПеревод" id="18">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Оформить кадровый
+перевод</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Оформити кадрове
+переведення</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Оформить кадровый перевод</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Оформити кадрове переведення</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Use>
+				<xr:Common>false</xr:Common>
+				<xr:Value name="Role.ДобавлениеИзменениеКадровогоСостояния">true</xr:Value>
+				<xr:Value name="Role.ПолныеПрава">true</xr:Value>
+			</Use>
+			<Action>ОформитьКадровыйПеревод</Action>
+			<FunctionalOptions>
+				<Item>FunctionalOption.ИспользоватьКадровыйУчет</Item>
+			</FunctionalOptions>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="ОформитьУвольнение" id="19">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Уволить</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Звільнити</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Оформить увольнение</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Оформити звільнення</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Use>
+				<xr:Common>false</xr:Common>
+				<xr:Value name="Role.ДобавлениеИзменениеКадровогоСостояния">true</xr:Value>
+				<xr:Value name="Role.ПолныеПрава">true</xr:Value>
+			</Use>
+			<Action>ОформитьУвольнение</Action>
+			<FunctionalOptions>
+				<Item>FunctionalOption.ИспользоватьКадровыйУчет</Item>
+			</FunctionalOptions>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="КомандаЗаписать" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Записать</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Записати</v8:content>
+				</v8:item>
+			</Title>
+			<Shortcut>Ctrl+S</Shortcut>
+			<Picture>
+				<xr:Ref>StdPicture.Write</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>КомандаЗаписать</Action>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="КомандаЗаписатьИЗакрыть" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Записать и закрыть</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Записати і закрити</v8:content>
+				</v8:item>
+			</Title>
+			<Picture>
+				<xr:Ref>StdPicture.WriteAndClose</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>КомандаЗаписатьИЗакрыть</Action>
+			<Representation>Text</Representation>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+	</Commands>
+	<CommandInterface>
+		<NavigationPanel>
+			<Item>
+				<Command>0:85bb78fc-9314-442d-8196-1f7ec5eaf389</Command>
+				<Type>Auto</Type>
+				<CommandGroup>FormNavigationPanelImportant</CommandGroup>
+				<Index>1</Index>
+				<Visible>
+					<xr:Common>false</xr:Common>
+				</Visible>
+			</Item>
+			<Item>
+				<Command>0:2bc13050-b204-435e-baea-0638329053ae</Command>
+				<Type>Auto</Type>
+				<CommandGroup>FormNavigationPanelImportant</CommandGroup>
+				<Index>5</Index>
+				<Visible>
+					<xr:Common>false</xr:Common>
+				</Visible>
+			</Item>
+			<Item>
+				<Command>0:e605396a-1d62-4a6e-8a36-e5cea084c440</Command>
+				<Type>Auto</Type>
+				<CommandGroup>FormNavigationPanelImportant</CommandGroup>
+				<Index>4</Index>
+				<Visible>
+					<xr:Common>false</xr:Common>
+				</Visible>
+			</Item>
+			<Item>
+				<Command>0:d388dd77-3657-4f6d-acca-e830dd9e175a</Command>
+				<Type>Auto</Type>
+				<CommandGroup>FormNavigationPanelImportant</CommandGroup>
+				<Visible>
+					<xr:Common>false</xr:Common>
+				</Visible>
+			</Item>
+			<Item>
+				<Command>0:e2cd8757-d279-4337-951b-fea526ee3f0a</Command>
+				<Type>Auto</Type>
+				<CommandGroup>FormNavigationPanelImportant</CommandGroup>
+				<Index>3</Index>
+				<Visible>
+					<xr:Common>false</xr:Common>
+				</Visible>
+			</Item>
+			<Item>
+				<Command>0:80b78e04-478d-4f7e-afeb-ae76d2a7b297</Command>
+				<Type>Auto</Type>
+				<CommandGroup>FormNavigationPanelImportant</CommandGroup>
+				<Index>2</Index>
+				<Visible>
+					<xr:Common>false</xr:Common>
+				</Visible>
+			</Item>
+			<Item>
+				<Command>Catalog.Сотрудники.Command.ИсторияИзмененийЛичныхДанных</Command>
+				<Type>Auto</Type>
+				<DefaultVisible>false</DefaultVisible>
+				<Visible>
+					<xr:Common>false</xr:Common>
+				</Visible>
+			</Item>
+			<Item>
+				<Command>CommonCommand.ИсторияИзменений</Command>
+				<Type>Auto</Type>
+				<DefaultVisible>false</DefaultVisible>
+				<Visible>
+					<xr:Common>false</xr:Common>
+				</Visible>
+			</Item>
+		</NavigationPanel>
+		<CommandBar>
+			<Item>
+				<Command>Document.КадровыйПеревод.StandardCommand.CreateBasedOn</Command>
+				<Type>Auto</Type>
+				<DefaultVisible>false</DefaultVisible>
+				<Visible>
+					<xr:Common>false</xr:Common>
+				</Visible>
+			</Item>
+			<Item>
+				<Command>Document.ПриемНаРаботу.StandardCommand.CreateBasedOn</Command>
+				<Type>Auto</Type>
+				<DefaultVisible>false</DefaultVisible>
+				<Visible>
+					<xr:Common>false</xr:Common>
+				</Visible>
+			</Item>
+			<Item>
+				<Command>CommonCommand.СозданиеСвязанныхОбъектов</Command>
+				<Type>Auto</Type>
+				<DefaultVisible>false</DefaultVisible>
+				<Visible>
+					<xr:Common>false</xr:Common>
+				</Visible>
+			</Item>
+			<Item>
+				<Command>Document.Увольнение.StandardCommand.CreateBasedOn</Command>
+				<Type>Auto</Type>
+				<DefaultVisible>false</DefaultVisible>
+				<Visible>
+					<xr:Common>false</xr:Common>
+				</Visible>
+			</Item>
+			<Item>
+				<Command>0:2baf6d7a-12ed-4f22-ad96-92bb31b747ff</Command>
+				<Type>Auto</Type>
+				<CommandGroup>CommandGroup.Печать</CommandGroup>
+				<DefaultVisible>false</DefaultVisible>
+				<Visible>
+					<xr:Common>false</xr:Common>
+				</Visible>
+			</Item>
+			<Item>
+				<Command>0:c4f02249-8cbc-4b39-bc7f-0bfcb76cfd24</Command>
+				<Type>Auto</Type>
+				<DefaultVisible>false</DefaultVisible>
+				<Visible>
+					<xr:Common>false</xr:Common>
+				</Visible>
+			</Item>
+		</CommandBar>
+	</CommandInterface>
+</Form>
