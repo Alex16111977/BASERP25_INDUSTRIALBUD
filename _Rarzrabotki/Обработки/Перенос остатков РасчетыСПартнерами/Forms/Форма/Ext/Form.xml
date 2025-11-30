@@ -1,29 +1,284 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
-	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1"/>
-	<Attributes>
-		<Attribute name="Объект" id="1">
-			<Type>
-				<v8:Type>cfg:ExternalDataProcessorObject.ВнешняяОбработка2</v8:Type>
-			</Type>
-			<MainAttribute>true</MainAttribute>
-		</Attribute>
-	</Attributes>
-	<Commands>
-		<Command name="ЗаполнитьОтстаткиРасчетыСПартнерами" id="1">
+	<AutoSaveDataInSettings>Use</AutoSaveDataInSettings>
+	<SaveDataInSettings>UseList</SaveDataInSettings>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+		<ChildItems>
+			<Button name="ЗагрузитьОстатки" id="100">
+				<Type>CommandBarButton</Type>
+				<CommandName>Form.Command.ЗагрузитьОстатки</CommandName>
+				<ExtendedTooltip name="ЗагрузитьОстаткиРасширеннаяПодсказка" id="101"/>
+			</Button>
+			<Button name="СоздатьДокументы" id="200">
+				<Type>CommandBarButton</Type>
+				<CommandName>Form.Command.СоздатьДокументы</CommandName>
+				<ExtendedTooltip name="СоздатьДокументыРасширеннаяПодсказка" id="201"/>
+			</Button>
+		</ChildItems>
+	</AutoCommandBar>
+	<ChildItems>
+		<UsualGroup name="ГруппаПараметры" id="1">
 			<Title>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Заполнить отстатки расчеты с партнерами</v8:content>
+					<v8:content>Параметры</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Параметри</v8:content>
+				</v8:item>
+			</Title>
+			<Group>AlwaysHorizontal</Group>
+			<Behavior>Usual</Behavior>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаПараметрыРасширеннаяПодсказка" id="2"/>
+			<ChildItems>
+				<InputField name="Организация" id="3">
+					<DataPath>Объект.Организация</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Организация</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Організація</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="ОрганизацияКонтекстноеМеню" id="4"/>
+					<ExtendedTooltip name="ОрганизацияРасширеннаяПодсказка" id="5"/>
+				</InputField>
+				<InputField name="НачалоПериода" id="6">
+					<DataPath>Объект.НачалоПериода</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Загрузить с</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Завантажити з</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="НачалоПериодаКонтекстноеМеню" id="7"/>
+					<ExtendedTooltip name="НачалоПериодаРасширеннаяПодсказка" id="8"/>
+				</InputField>
+				<InputField name="ОкончаниеПериода" id="9">
+					<DataPath>Объект.ОкончаниеПериода</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>по</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>по</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="ОкончаниеПериодаКонтекстноеМеню" id="10"/>
+					<ExtendedTooltip name="ОкончаниеПериодаРасширеннаяПодсказка" id="11"/>
+				</InputField>
+			</ChildItems>
+		</UsualGroup>
+		<InputField name="СчетаВзаиморасчетов" id="12">
+			<DataPath>Объект.СчетаВзаиморасчетов</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Счета взаиморасчетов (через запятую)</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Рахунки взаєморозрахунків (через кому)</v8:content>
+				</v8:item>
+			</Title>
+			<Width>60</Width>
+			<ContextMenu name="СчетаВзаиморасчетовКонтекстноеМеню" id="13"/>
+			<ExtendedTooltip name="СчетаВзаиморасчетовРасширеннаяПодсказка" id="14">
+				<Title>
+					<v8:item>
+						<v8:lang>ru</v8:lang>
+						<v8:content>Например: 361,362,371,377,631,632,681,682,683</v8:content>
+					</v8:item>
+				</Title>
+			</ExtendedTooltip>
+		</InputField>
+		<Table name="РасчетыСПартнерами" id="20">
+			<AutoInsertNewRow>true</AutoInsertNewRow>
+			<EnableStartDrag>true</EnableStartDrag>
+			<EnableDrag>true</EnableDrag>
+			<DataPath>Объект.РасчетыСПартнерами</DataPath>
+			<RowFilter xsi:nil="true"/>
+			<ContextMenu name="РасчетыСПартнерамиКонтекстноеМеню" id="21"/>
+			<AutoCommandBar name="РасчетыСПартнерамиКоманднаяПанель" id="22"/>
+			<ExtendedTooltip name="РасчетыСПартнерамиРасширеннаяПодсказка" id="23"/>
+			<SearchStringAddition name="РасчетыСПартнерамиСтрокаПоиска" id="24">
+				<AdditionSource>
+					<Item>РасчетыСПартнерами</Item>
+					<Type>SearchStringRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="РасчетыСПартнерамиСтрокаПоискаКонтекстноеМеню" id="25"/>
+				<ExtendedTooltip name="РасчетыСПартнерамиСтрокаПоискаРасширеннаяПодсказка" id="26"/>
+			</SearchStringAddition>
+			<ViewStatusAddition name="РасчетыСПартнерамиСостояниеПросмотра" id="27">
+				<AdditionSource>
+					<Item>РасчетыСПартнерами</Item>
+					<Type>ViewStatusRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="РасчетыСПартнерамиСостояниеПросмотраКонтекстноеМеню" id="28"/>
+				<ExtendedTooltip name="РасчетыСПартнерамиСостояниеПросмотраРасширеннаяПодсказка" id="29"/>
+			</ViewStatusAddition>
+			<SearchControlAddition name="РасчетыСПартнерамиУправлениеПоиском" id="30">
+				<AdditionSource>
+					<Item>РасчетыСПартнерами</Item>
+					<Type>SearchControl</Type>
+				</AdditionSource>
+				<ContextMenu name="РасчетыСПартнерамиУправлениеПоискомКонтекстноеМеню" id="31"/>
+				<ExtendedTooltip name="РасчетыСПартнерамиУправлениеПоискомРасширеннаяПодсказка" id="32"/>
+			</SearchControlAddition>
+			<ChildItems>
+				<LabelField name="РасчетыСПартнерамиНомерСтроки" id="40">
+					<DataPath>Объект.РасчетыСПартнерами.LineNumber</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="РасчетыСПартнерамиНомерСтрокиКонтекстноеМеню" id="41"/>
+					<ExtendedTooltip name="РасчетыСПартнерамиНомерСтрокиРасширеннаяПодсказка" id="42"/>
+				</LabelField>
+				<InputField name="РасчетыСПартнерамиКодСчета" id="43">
+					<DataPath>Объект.РасчетыСПартнерами.КодСчета</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<Width>6</Width>
+					<ContextMenu name="РасчетыСПартнерамиКодСчетаКонтекстноеМеню" id="44"/>
+					<ExtendedTooltip name="РасчетыСПартнерамиКодСчетаРасширеннаяПодсказка" id="45"/>
+				</InputField>
+				<InputField name="РасчетыСПартнерамиХозяйственнаяОперация" id="46">
+					<DataPath>Объект.РасчетыСПартнерами.ХозяйственнаяОперация</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="РасчетыСПартнерамиХозяйственнаяОперацияКонтекстноеМеню" id="47"/>
+					<ExtendedTooltip name="РасчетыСПартнерамиХозяйственнаяОперацияРасширеннаяПодсказка" id="48"/>
+				</InputField>
+				<InputField name="РасчетыСПартнерамиПартнер" id="49">
+					<DataPath>Объект.РасчетыСПартнерами.Партнер</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="РасчетыСПартнерамиПартнерКонтекстноеМеню" id="50"/>
+					<ExtendedTooltip name="РасчетыСПартнерамиПартнерРасширеннаяПодсказка" id="51"/>
+				</InputField>
+				<InputField name="РасчетыСПартнерамиКонтрагент" id="52">
+					<DataPath>Объект.РасчетыСПартнерами.Контрагент</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="РасчетыСПартнерамиКонтрагентКонтекстноеМеню" id="53"/>
+					<ExtendedTooltip name="РасчетыСПартнерамиКонтрагентРасширеннаяПодсказка" id="54"/>
+				</InputField>
+				<InputField name="РасчетыСПартнерамиДоговор" id="55">
+					<DataPath>Объект.РасчетыСПартнерами.Договор</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="РасчетыСПартнерамиДоговорКонтекстноеМеню" id="56"/>
+					<ExtendedTooltip name="РасчетыСПартнерамиДоговорРасширеннаяПодсказка" id="57"/>
+				</InputField>
+				<InputField name="РасчетыСПартнерамиВалютаВзаиморасчетов" id="58">
+					<DataPath>Объект.РасчетыСПартнерами.ВалютаВзаиморасчетов</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="РасчетыСПартнерамиВалютаВзаиморасчетовКонтекстноеМеню" id="59"/>
+					<ExtendedTooltip name="РасчетыСПартнерамиВалютаВзаиморасчетовРасширеннаяПодсказка" id="60"/>
+				</InputField>
+				<InputField name="РасчетыСПартнерамиСумма" id="61">
+					<DataPath>Объект.РасчетыСПартнерами.Сумма</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="РасчетыСПартнерамиСуммаКонтекстноеМеню" id="62"/>
+					<ExtendedTooltip name="РасчетыСПартнерамиСуммаРасширеннаяПодсказка" id="63"/>
+				</InputField>
+				<InputField name="РасчетыСПартнерамиСуммаРегл" id="64">
+					<DataPath>Объект.РасчетыСПартнерами.СуммаРегл</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="РасчетыСПартнерамиСуммаРеглКонтекстноеМеню" id="65"/>
+					<ExtendedTooltip name="РасчетыСПартнерамиСуммаРеглРасширеннаяПодсказка" id="66"/>
+				</InputField>
+				<InputField name="РасчетыСПартнерамиНомерРасчетногоДокумента" id="67">
+					<DataPath>Объект.РасчетыСПартнерами.НомерРасчетногоДокумента</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="РасчетыСПартнерамиНомерРасчетногоДокументаКонтекстноеМеню" id="68"/>
+					<ExtendedTooltip name="РасчетыСПартнерамиНомерРасчетногоДокументаРасширеннаяПодсказка" id="69"/>
+				</InputField>
+				<InputField name="РасчетыСПартнерамиДатаРасчетногоДокумента" id="70">
+					<DataPath>Объект.РасчетыСПартнерами.ДатаРасчетногоДокумента</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="РасчетыСПартнерамиДатаРасчетногоДокументаКонтекстноеМеню" id="71"/>
+					<ExtendedTooltip name="РасчетыСПартнерамиДатаРасчетногоДокументаРасширеннаяПодсказка" id="72"/>
+				</InputField>
+				<InputField name="РасчетыСПартнерамиОбъектРасчетовОтправитель" id="73">
+					<DataPath>Объект.РасчетыСПартнерами.ОбъектРасчетовОтправитель</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="РасчетыСПартнерамиОбъектРасчетовОтправительКонтекстноеМеню" id="74"/>
+					<ExtendedTooltip name="РасчетыСПартнерамиОбъектРасчетовОтправительРасширеннаяПодсказка" id="75"/>
+				</InputField>
+				<InputField name="РасчетыСПартнерамиПримечание" id="76">
+					<DataPath>Объект.РасчетыСПартнерами.Примечание</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="РасчетыСПартнерамиПримечаниеКонтекстноеМеню" id="77"/>
+					<ExtendedTooltip name="РасчетыСПартнерамиПримечаниеРасширеннаяПодсказка" id="78"/>
+				</InputField>
+			</ChildItems>
+		</Table>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Объект" id="1">
+			<Type>
+				<v8:Type>cfg:ExternalDataProcessorObject.А_ПереносОстатковРасчетыСПартнерами</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+			<Save>
+				<Field>Объект.НачалоПериода</Field>
+				<Field>Объект.ОкончаниеПериода</Field>
+				<Field>Объект.Организация</Field>
+				<Field>Объект.СчетаВзаиморасчетов</Field>
+			</Save>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="ЗагрузитьОстатки" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Загрузить остатки</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Завантажити залишки</v8:content>
 				</v8:item>
 			</Title>
 			<ToolTip>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Заполнить отстатки расчеты с партнерами</v8:content>
+					<v8:content>Загрузить остатки взаиморасчетов из BuhBud</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Завантажити залишки взаєморозрахунків з BuhBud</v8:content>
 				</v8:item>
 			</ToolTip>
-			<Action>ЗаполнитьОтстаткиРасчетыСПартнерами</Action>
+			<Action>ЗагрузитьОстатки</Action>
+		</Command>
+		<Command name="СоздатьДокументы" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Создать документы</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Створити документи</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Создать документы ввода остатков взаиморасчетов</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Створити документи введення залишків взаєморозрахунків</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>СоздатьДокументы</Action>
 		</Command>
 	</Commands>
 </Form>
