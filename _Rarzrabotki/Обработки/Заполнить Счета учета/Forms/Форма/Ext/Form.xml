@@ -1,36 +1,293 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
-	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1"/>
+	<AutoSaveDataInSettings>Use</AutoSaveDataInSettings>
+	<SaveDataInSettings>UseList</SaveDataInSettings>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+		<ChildItems>
+			<Button name="ЗаполнитьТаблицу" id="100">
+				<Type>CommandBarButton</Type>
+				<CommandName>Form.Command.ЗаполнитьТаблицу</CommandName>
+				<ExtendedTooltip name="ЗаполнитьТаблицуРасширеннаяПодсказка" id="101"/>
+			</Button>
+			<Button name="ОбновитьКарточки" id="102">
+				<Type>CommandBarButton</Type>
+				<CommandName>Form.Command.ОбновитьКарточки</CommandName>
+				<ExtendedTooltip name="ОбновитьКарточкиРасширеннаяПодсказка" id="103"/>
+			</Button>
+			<Button name="ОчиститьТаблицу" id="104">
+				<Type>CommandBarButton</Type>
+				<CommandName>Form.Command.ОчиститьТаблицу</CommandName>
+				<ExtendedTooltip name="ОчиститьТаблицуРасширеннаяПодсказка" id="105"/>
+			</Button>
+		</ChildItems>
+	</AutoCommandBar>
 	<ChildItems>
-		<Button name="ЗаполнитьСчетУчетаНоменклатурыИзБазыБух" id="1">
-			<Type>UsualButton</Type>
-			<CommandName>Form.Command.ЗаполнитьСчетУчетаНоменклатурыИзБазыБух</CommandName>
-			<ExtendedTooltip name="ЗаполнитьСчетУчетаНоменклатурыИзБазыБухРасширеннаяПодсказка" id="2"/>
-		</Button>
+		<UsualGroup name="ГруппаПараметры" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Параметры</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Параметри</v8:content>
+				</v8:item>
+			</Title>
+			<Group>AlwaysHorizontal</Group>
+			<Behavior>Usual</Behavior>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаПараметрыРасширеннаяПодсказка" id="2"/>
+			<ChildItems>
+				<InputField name="ДатаОкончания" id="3">
+					<DataPath>Объект.ДатаОкончания</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Дата остатков</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Дата залишків</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="ДатаОкончанияКонтекстноеМеню" id="4"/>
+					<ExtendedTooltip name="ДатаОкончанияРасширеннаяПодсказка" id="5"/>
+				</InputField>
+				<InputField name="Организация" id="6">
+					<DataPath>Объект.Организация</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Организация</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Організація</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="ОрганизацияКонтекстноеМеню" id="7"/>
+					<ExtendedTooltip name="ОрганизацияРасширеннаяПодсказка" id="8"/>
+				</InputField>
+				<CheckBoxField name="ТолькоПустые" id="9">
+					<DataPath>Объект.ТолькоПустые</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Только пустые</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Тільки порожні</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="ТолькоПустыеКонтекстноеМеню" id="10"/>
+					<ExtendedTooltip name="ТолькоПустыеРасширеннаяПодсказка" id="11"/>
+				</CheckBoxField>
+			</ChildItems>
+		</UsualGroup>
+		<Table name="Товары" id="20">
+			<AutoInsertNewRow>true</AutoInsertNewRow>
+			<EnableStartDrag>true</EnableStartDrag>
+			<EnableDrag>true</EnableDrag>
+			<DataPath>Объект.Товары</DataPath>
+			<RowFilter xsi:nil="true"/>
+			<ContextMenu name="ТоварыКонтекстноеМеню" id="21"/>
+			<AutoCommandBar name="ТоварыКоманднаяПанель" id="22"/>
+			<ExtendedTooltip name="ТоварыРасширеннаяПодсказка" id="23"/>
+			<SearchStringAddition name="ТоварыСтрокаПоиска" id="24">
+				<AdditionSource>
+					<Item>Товары</Item>
+					<Type>SearchStringRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="ТоварыСтрокаПоискаКонтекстноеМеню" id="25"/>
+				<ExtendedTooltip name="ТоварыСтрокаПоискаРасширеннаяПодсказка" id="26"/>
+			</SearchStringAddition>
+			<ViewStatusAddition name="ТоварыСостояниеПросмотра" id="27">
+				<AdditionSource>
+					<Item>Товары</Item>
+					<Type>ViewStatusRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="ТоварыСостояниеПросмотраКонтекстноеМеню" id="28"/>
+				<ExtendedTooltip name="ТоварыСостояниеПросмотраРасширеннаяПодсказка" id="29"/>
+			</ViewStatusAddition>
+			<SearchControlAddition name="ТоварыУправлениеПоиском" id="30">
+				<AdditionSource>
+					<Item>Товары</Item>
+					<Type>SearchControl</Type>
+				</AdditionSource>
+				<ContextMenu name="ТоварыУправлениеПоискомКонтекстноеМеню" id="31"/>
+				<ExtendedTooltip name="ТоварыУправлениеПоискомРасширеннаяПодсказка" id="32"/>
+			</SearchControlAddition>
+			<ChildItems>
+				<LabelField name="ТоварыНомерСтроки" id="33">
+					<DataPath>Объект.Товары.LineNumber</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ТоварыНомерСтрокиКонтекстноеМеню" id="34"/>
+					<ExtendedTooltip name="ТоварыНомерСтрокиРасширеннаяПодсказка" id="35"/>
+				</LabelField>
+				<InputField name="ТоварыНоменклатура" id="36">
+					<DataPath>Объект.Товары.Номенклатура</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ТоварыНоменклатураКонтекстноеМеню" id="37"/>
+					<ExtendedTooltip name="ТоварыНоменклатураРасширеннаяПодсказка" id="38"/>
+				</InputField>
+				<InputField name="ТоварыСчетУчета" id="39">
+					<DataPath>Объект.Товары.СчетУчета</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Счет (новый)</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Рахунок (новий)</v8:content>
+						</v8:item>
+					</Title>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ТоварыСчетУчетаКонтекстноеМеню" id="40"/>
+					<ExtendedTooltip name="ТоварыСчетУчетаРасширеннаяПодсказка" id="41"/>
+				</InputField>
+				<InputField name="ТоварыОрганизация" id="42">
+					<DataPath>Объект.Товары.Организация</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Организация (новая)</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Організація (нова)</v8:content>
+						</v8:item>
+					</Title>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ТоварыОрганизацияКонтекстноеМеню" id="43"/>
+					<ExtendedTooltip name="ТоварыОрганизацияРасширеннаяПодсказка" id="44"/>
+				</InputField>
+				<InputField name="ТоварыТекущийСчет" id="45">
+					<DataPath>Объект.Товары.ТекущийСчет</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Счет (текущий)</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Рахунок (поточний)</v8:content>
+						</v8:item>
+					</Title>
+					<ReadOnly>true</ReadOnly>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ТоварыТекущийСчетКонтекстноеМеню" id="46"/>
+					<ExtendedTooltip name="ТоварыТекущийСчетРасширеннаяПодсказка" id="47"/>
+				</InputField>
+				<InputField name="ТоварыТекущаяОрганизация" id="48">
+					<DataPath>Объект.Товары.ТекущаяОрганизация</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Организация (текущая)</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Організація (поточна)</v8:content>
+						</v8:item>
+					</Title>
+					<ReadOnly>true</ReadOnly>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ТоварыТекущаяОрганизацияКонтекстноеМеню" id="49"/>
+					<ExtendedTooltip name="ТоварыТекущаяОрганизацияРасширеннаяПодсказка" id="50"/>
+				</InputField>
+				<CheckBoxField name="ТоварыОбработано" id="51">
+					<DataPath>Объект.Товары.Обработано</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ТоварыОбработаноКонтекстноеМеню" id="52"/>
+					<ExtendedTooltip name="ТоварыОбработаноРасширеннаяПодсказка" id="53"/>
+				</CheckBoxField>
+			</ChildItems>
+		</Table>
 	</ChildItems>
 	<Attributes>
 		<Attribute name="Объект" id="1">
 			<Type>
-				<v8:Type>cfg:ExternalDataProcessorObject.ВнешняяОбработка1</v8:Type>
+				<v8:Type>cfg:ExternalDataProcessorObject.А_ЗаполнитьСчетаУчета</v8:Type>
 			</Type>
 			<MainAttribute>true</MainAttribute>
+			<Save>
+				<Field>Объект.ДатаОкончания</Field>
+				<Field>Объект.Организация</Field>
+				<Field>Объект.ТолькоПустые</Field>
+			</Save>
 		</Attribute>
 	</Attributes>
 	<Commands>
-		<Command name="ЗаполнитьСчетУчетаНоменклатурыИзБазыБух" id="1">
+		<Command name="ЗаполнитьТаблицу" id="1">
 			<Title>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Заполнить счет учета номенклатуры из базы бух</v8:content>
+					<v8:content>Заполнить таблицу</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Заповнити таблицю</v8:content>
 				</v8:item>
 			</Title>
 			<ToolTip>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Заполнить счет учета номенклатуры из базы бух</v8:content>
+					<v8:content>Загрузить номенклатуру из регистра бухгалтерии</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Завантажити номенклатуру з регістру бухгалтерії</v8:content>
 				</v8:item>
 			</ToolTip>
-			<Action>ЗаполнитьСчетУчетаНоменклатурыИзБазыБух</Action>
+			<Action>ЗаполнитьТаблицу</Action>
+		</Command>
+		<Command name="ОбновитьКарточки" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Обновить карточки</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Оновити картки</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Обновить поля А_СчетУчетаБух и А_Организация в карточках номенклатуры</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Оновити поля А_СчетУчетаБух та А_Организация в картках номенклатури</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ОбновитьКарточки</Action>
+		</Command>
+		<Command name="ОчиститьТаблицу" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Очистить</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Очистити</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Очистить таблицу</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Очистити таблицю</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ОчиститьТаблицу</Action>
 		</Command>
 	</Commands>
 </Form>
