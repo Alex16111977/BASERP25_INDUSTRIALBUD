@@ -1,0 +1,351 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
+	<AutoTime>CurrentOrLast</AutoTime>
+	<UsePostingMode>Auto</UsePostingMode>
+	<RepostOnWrite>true</RepostOnWrite>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+		<ChildItems>
+			<Button name="ФормаКнопка1" id="136">
+				<Type>CommandBarButton</Type>
+				<CommandName>0</CommandName>
+				<ExtendedTooltip name="ФормаКнопка1РасширеннаяПодсказка" id="137"/>
+			</Button>
+		</ChildItems>
+	</AutoCommandBar>
+	<Events>
+		<Event name="OnReadAtServer">ПриЧтенииНаСервере</Event>
+		<Event name="OnOpen">ПриОткрытии</Event>
+		<Event name="BeforeWriteAtServer">ПередЗаписьюНаСервере</Event>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+	</Events>
+	<ChildItems>
+		<UsualGroup name="Группа2" id="52">
+			<Group>Vertical</Group>
+			<Behavior>Usual</Behavior>
+			<ShowTitle>false</ShowTitle>
+			<ThroughAlign>Use</ThroughAlign>
+			<ExtendedTooltip name="Группа2РасширеннаяПодсказка" id="53"/>
+			<ChildItems>
+				<UsualGroup name="Группа1" id="50">
+					<Group>Horizontal</Group>
+					<Behavior>Usual</Behavior>
+					<ShowTitle>false</ShowTitle>
+					<ThroughAlign>Use</ThroughAlign>
+					<ExtendedTooltip name="Группа1РасширеннаяПодсказка" id="51"/>
+					<ChildItems>
+						<InputField name="Номер" id="1">
+							<DataPath>Объект.Number</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="НомерКонтекстноеМеню" id="2"/>
+							<ExtendedTooltip name="НомерРасширеннаяПодсказка" id="3"/>
+						</InputField>
+						<InputField name="Дата" id="4">
+							<DataPath>Объект.Date</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="ДатаКонтекстноеМеню" id="5"/>
+							<ExtendedTooltip name="ДатаРасширеннаяПодсказка" id="6"/>
+						</InputField>
+					</ChildItems>
+				</UsualGroup>
+				<InputField name="Подразделение" id="7">
+					<DataPath>Объект.Подразделение</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ChoiceParameters>
+						<app:item name="Отбор.НеИспользовать">
+							<app:value xsi:type="FormChoiceListDesTimeValue">
+								<Presentation/>
+								<Value xsi:type="xs:boolean">true</Value>
+							</app:value>
+						</app:item>
+					</ChoiceParameters>
+					<ContextMenu name="ПодразделениеКонтекстноеМеню" id="8"/>
+					<ExtendedTooltip name="ПодразделениеРасширеннаяПодсказка" id="9"/>
+				</InputField>
+				<InputField name="ВерсияБюджета" id="10">
+					<DataPath>Объект.ВерсияБюджета</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ВерсияБюджетаКонтекстноеМеню" id="11"/>
+					<ExtendedTooltip name="ВерсияБюджетаРасширеннаяПодсказка" id="12"/>
+				</InputField>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="Группа3" id="123">
+			<Behavior>Usual</Behavior>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="Группа3РасширеннаяПодсказка" id="124"/>
+			<ChildItems>
+				<InputField name="НачалоБюджета" id="125">
+					<DataPath>Объект.НачалоБюджета</DataPath>
+					<ContextMenu name="НачалоБюджетаКонтекстноеМеню" id="126"/>
+					<ExtendedTooltip name="НачалоБюджетаРасширеннаяПодсказка" id="127"/>
+					<Events>
+						<Event name="OnChange">ПериодБюджетаПриИзменении</Event>
+					</Events>
+				</InputField>
+				<InputField name="КонецБюджета" id="128">
+					<DataPath>Объект.КонецБюджета</DataPath>
+					<ContextMenu name="КонецБюджетаКонтекстноеМеню" id="129"/>
+					<ExtendedTooltip name="КонецБюджетаРасширеннаяПодсказка" id="130"/>
+					<Events>
+						<Event name="OnChange">ПериодБюджетаПриИзменении</Event>
+					</Events>
+				</InputField>
+			</ChildItems>
+		</UsualGroup>
+		<Table name="ДеревоПоказателей" id="91">
+			<Representation>Tree</Representation>
+			<AutoInsertNewRow>true</AutoInsertNewRow>
+			<InitialTreeView>ExpandAllLevels</InitialTreeView>
+			<EnableStartDrag>true</EnableStartDrag>
+			<EnableDrag>true</EnableDrag>
+			<FileDragMode>AsFile</FileDragMode>
+			<DataPath>ДеревоПоказателей</DataPath>
+			<ContextMenu name="ДеревоПоказателейКонтекстноеМеню" id="92"/>
+			<AutoCommandBar name="ДеревоПоказателейКоманднаяПанель" id="93">
+				<Autofill>false</Autofill>
+				<ChildItems>
+					<Button name="ДобавитьПодразделение" id="119">
+						<Type>CommandBarButton</Type>
+						<CommandName>Form.Command.ДобавитьПодразделение</CommandName>
+						<ExtendedTooltip name="ДобавитьПодразделениеРасширеннаяПодсказка" id="120"/>
+					</Button>
+					<Button name="ДеревоПоказателейДобавитьСекцию" id="121">
+						<Type>CommandBarButton</Type>
+						<CommandName>Form.Command.ДобавитьСекцию</CommandName>
+						<ExtendedTooltip name="ДеревоПоказателейДобавитьСекциюРасширеннаяПодсказка" id="122"/>
+					</Button>
+					<Button name="ДеревоПоказателейДобавитьСДДС" id="131">
+						<Type>CommandBarButton</Type>
+						<CommandName>Form.Command.ДобавитьСДДС</CommandName>
+						<ExtendedTooltip name="ДеревоПоказателейДобавитьСДДСРасширеннаяПодсказка" id="132"/>
+					</Button>
+				</ChildItems>
+			</AutoCommandBar>
+			<ExtendedTooltip name="ДеревоПоказателейРасширеннаяПодсказка" id="94"/>
+			<SearchStringAddition name="ДеревоПоказателейСтрокаПоиска" id="95">
+				<AdditionSource>
+					<Item>ДеревоПоказателей</Item>
+					<Type>SearchStringRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="ДеревоПоказателейСтрокаПоискаКонтекстноеМеню" id="96"/>
+				<ExtendedTooltip name="ДеревоПоказателейСтрокаПоискаРасширеннаяПодсказка" id="97"/>
+			</SearchStringAddition>
+			<ViewStatusAddition name="ДеревоПоказателейСостояниеПросмотра" id="98">
+				<AdditionSource>
+					<Item>ДеревоПоказателей</Item>
+					<Type>ViewStatusRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="ДеревоПоказателейСостояниеПросмотраКонтекстноеМеню" id="99"/>
+				<ExtendedTooltip name="ДеревоПоказателейСостояниеПросмотраРасширеннаяПодсказка" id="100"/>
+			</ViewStatusAddition>
+			<SearchControlAddition name="ДеревоПоказателейУправлениеПоиском" id="101">
+				<AdditionSource>
+					<Item>ДеревоПоказателей</Item>
+					<Type>SearchControl</Type>
+				</AdditionSource>
+				<ContextMenu name="ДеревоПоказателейУправлениеПоискомКонтекстноеМеню" id="102"/>
+				<ExtendedTooltip name="ДеревоПоказателейУправлениеПоискомРасширеннаяПодсказка" id="103"/>
+			</SearchControlAddition>
+			<Events>
+				<Event name="OnStartEdit">ДеревоПоказателейПриНачалеРедактирования</Event>
+			</Events>
+			<ChildItems>
+				<InputField name="ДеревоПоказателейПодразделение" id="104">
+					<DataPath>ДеревоПоказателей.Подразделение</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ДеревоПоказателейПодразделениеКонтекстноеМеню" id="105"/>
+					<ExtendedTooltip name="ДеревоПоказателейПодразделениеРасширеннаяПодсказка" id="106"/>
+				</InputField>
+				<InputField name="ДеревоПоказателейСекция" id="116">
+					<DataPath>ДеревоПоказателей.Секция</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ДеревоПоказателейСекцияКонтекстноеМеню" id="117"/>
+					<ExtendedTooltip name="ДеревоПоказателейСекцияРасширеннаяПодсказка" id="118"/>
+				</InputField>
+				<InputField name="ДеревоПоказателейСДДС" id="107">
+					<DataPath>ДеревоПоказателей.СДДС</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ДеревоПоказателейСДДСКонтекстноеМеню" id="108"/>
+					<ExtendedTooltip name="ДеревоПоказателейСДДСРасширеннаяПодсказка" id="109"/>
+				</InputField>
+				<InputField name="ДеревоПоказателейНаправлениеДДС" id="110">
+					<DataPath>ДеревоПоказателей.НаправлениеДДС</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ДеревоПоказателейНаправлениеДДСКонтекстноеМеню" id="111"/>
+					<ExtendedTooltip name="ДеревоПоказателейНаправлениеДДСРасширеннаяПодсказка" id="112"/>
+				</InputField>
+				<InputField name="ДеревоПоказателейУровеньИерархии" id="133">
+					<DataPath>ДеревоПоказателей.УровеньИерархии</DataPath>
+					<Visible>false</Visible>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ДеревоПоказателейУровеньИерархииКонтекстноеМеню" id="134"/>
+					<ExtendedTooltip name="ДеревоПоказателейУровеньИерархииРасширеннаяПодсказка" id="135"/>
+				</InputField>
+			</ChildItems>
+		</Table>
+		<InputField name="Ответственный" id="13">
+			<DataPath>Объект.Ответственный</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<AutoMaxWidth>false</AutoMaxWidth>
+			<ContextMenu name="ОтветственныйКонтекстноеМеню" id="14"/>
+			<ExtendedTooltip name="ОтветственныйРасширеннаяПодсказка" id="15"/>
+		</InputField>
+		<InputField name="Комментарий" id="16">
+			<DataPath>Объект.Комментарий</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<AutoMaxWidth>false</AutoMaxWidth>
+			<ContextMenu name="КомментарийКонтекстноеМеню" id="17"/>
+			<ExtendedTooltip name="КомментарийРасширеннаяПодсказка" id="18"/>
+		</InputField>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Объект" id="1">
+			<Type>
+				<v8:Type>cfg:DocumentObject.Бюджет</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+			<SavedData>true</SavedData>
+			<UseAlways>
+				<Field>Объект.RegisterRecords</Field>
+			</UseAlways>
+		</Attribute>
+		<Attribute name="ДеревоПоказателей" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Дерево показателей</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:ValueTree</v8:Type>
+			</Type>
+			<Columns>
+				<Column name="Подразделение" id="1">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Подразделение</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.Подразделения</v8:Type>
+					</Type>
+				</Column>
+				<Column name="СДДС" id="2">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>СДДС</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.СтатьиДвиженияДенежныхСредств</v8:Type>
+					</Type>
+				</Column>
+				<Column name="НаправлениеДДС" id="3">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Направление ДДС</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:EnumRef.НаправленияДвиженийДенежныхСредств</v8:Type>
+					</Type>
+				</Column>
+				<Column name="Секция" id="5">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Секция</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.Секции</v8:Type>
+					</Type>
+				</Column>
+				<Column name="УровеньИерархии" id="4">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Уровень иерархии</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+							<v8:AllowedSign>Any</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+			</Columns>
+		</Attribute>
+		<Attribute name="АдресХранилищаСтруктурыСоответствийКолонокДат" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Адрес хранилища структуры соответствий колонок дат</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="ДобавитьПодразделение" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Добавить подразделение</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Добавить подразделение</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ДобавитьПодразделение</Action>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="ДобавитьСекцию" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Добавить секцию</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Добавить секцию</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ДобавитьСекцию</Action>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="ДобавитьСДДС" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Добавить СДДС</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Добавить СДДС</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ДобавитьСДДС</Action>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+	</Commands>
+</Form>

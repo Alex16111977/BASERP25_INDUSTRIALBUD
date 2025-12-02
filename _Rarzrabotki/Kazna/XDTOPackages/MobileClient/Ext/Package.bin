@@ -1,0 +1,44 @@
+﻿<package xmlns="http://v8.1c.ru/8.1/xdto" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" targetNamespace="http://www.ah-mobile-app.org">
+	<valueType name="StateOfVisa" base="xs:string" variety="Atomic">
+		<enumeration xsi:type="xs:string">Cancelled</enumeration>
+		<enumeration xsi:type="xs:string">Declined</enumeration>
+		<enumeration xsi:type="xs:string">Draft</enumeration>
+		<enumeration xsi:type="xs:string">AwaitsVisa</enumeration>
+		<enumeration xsi:type="xs:string">Approved</enumeration>
+		<enumeration xsi:type="xs:string">RequestRequired</enumeration>
+		<enumeration xsi:type="xs:string">PaymentRequired</enumeration>
+		<enumeration xsi:type="xs:string">Exported</enumeration>
+		<enumeration xsi:type="xs:string">Paid</enumeration>
+		<enumeration xsi:type="xs:string">PartiallyPaid</enumeration>
+	</valueType>
+	<valueType name="PaymentType" base="xs:string" variety="Atomic">
+		<enumeration xsi:type="xs:string">Cash</enumeration>
+		<enumeration xsi:type="xs:string">Cashless</enumeration>
+	</valueType>
+	<valueType name="TypeSumm" base="xs:decimal" totalDigits="15" fractionDigits="2"/>
+	<objectType name="Object">
+		<property name="Id" type="xs:string"/>
+		<property name="Name" type="xs:string"/>
+	</objectType>
+	<objectType xmlns:d2p1="http://www.ah-mobile-app.org" name="DocBill" base="d2p1:Object">
+		<property name="Date" type="xs:date"/>
+		<property name="DeletionMark" type="xs:boolean"/>
+		<property name="Posted" type="xs:boolean"/>
+		<property name="Comment" type="xs:string" nillable="true"/>
+		<property name="Division" type="xs:string"/>
+		<property name="Item" type="xs:string"/>
+		<property name="Contractor" type="xs:string"/>
+		<property name="ConrtactorAccount" type="xs:string"/>
+		<property name="Organisation" type="xs:string"/>
+		<property name="Summ" type="d2p1:TypeSumm"/>
+		<property name="PaymentDate" type="xs:date"/>
+		<property name="Currency" type="xs:string"/>
+		<property name="Responsible" type="xs:string"/>
+		<property name="PaymentType" type="d2p1:PaymentType"/>
+		<property name="StateOfVisa" type="d2p1:StateOfVisa"/>
+		<property name="Mine" type="xs:boolean"/>
+	</objectType>
+	<objectType xmlns:d2p1="http://www.ah-mobile-app.org" name="Objects" base="d2p1:Object">
+		<property name="objects" type="d2p1:Object" lowerBound="0" upperBound="-1"/>
+	</objectType>
+</package>
