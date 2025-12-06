@@ -6487,6 +6487,20 @@
 					</v8:item>
 				</title>
 			</field>
+			<field xsi:type="DataSetFieldField">
+				<dataPath>СуммаПлана</dataPath>
+				<field>СуммаПлана</field>
+				<title xsi:type="v8:LocalStringType">
+					<v8:item>
+						<v8:lang>ru</v8:lang>
+						<v8:content>Сумма плана</v8:content>
+					</v8:item>
+					<v8:item>
+						<v8:lang>uk</v8:lang>
+						<v8:content>Сума плану</v8:content>
+					</v8:item>
+				</title>
+			</field>
 			<dataSource>ИсточникДанных1</dataSource>
 			<query>ВЫБРАТЬ
 	БюджетОбороты.Регистратор КАК Регистратор,
@@ -6516,15 +6530,17 @@
 	NULL КАК ОбластьПланирования,
 
 	ВЫБОР
-		КОГДА БюджетОбороты.СтатьяДвиженияДенежныхСредств В ИЕРАРХИИ (&amp;ГруппаДоход)
+		КОГДА БюджетОбороты.СтатьяДвиженияДенежныхСредств.А_ТипПоказателя = ЗНАЧЕНИЕ(Перечисление.ТипыЗначенийПоказателейБюджетногоОтчета.Приход)
 			ТОГДА БюджетОбороты.СуммаОборот
 		ИНАЧЕ 0
 	КОНЕЦ КАК СуммаПланПриход,
 	ВЫБОР
-		КОГДА БюджетОбороты.СтатьяДвиженияДенежныхСредств В ИЕРАРХИИ (&amp;ГруппаРасход)
+		КОГДА БюджетОбороты.СтатьяДвиженияДенежныхСредств.А_ТипПоказателя = ЗНАЧЕНИЕ(Перечисление.ТипыЗначенийПоказателейБюджетногоОтчета.Расход)
 			ТОГДА -БюджетОбороты.СуммаОборот
 		ИНАЧЕ 0
 	КОНЕЦ КАК СуммаПланРасход,
+
+	БюджетОбороты.СуммаОборот КАК СуммаПлана,
 
 	NULL КАК ТипДвижения
 
@@ -6550,7 +6566,8 @@
 	НаправлениеДеятельности.*,
 	ОбластьПланирования.*,
 	СуммаПланПриход,
-	СуммаПланРасход
+	СуммаПланРасход,
+	СуммаПлана
 }
 ИЗ
 	РегистрНакопления.А_БюджетыНаМесяц.Обороты(
@@ -7309,13 +7326,25 @@
 	<totalField>
 		<dataPath>СуммаПланРасход</dataPath>
 		<expression>ВЫБОР
-	КОГДА &amp;ДанныеОтчета = 1 
+	КОГДА &amp;ДанныеОтчета = 1
 		И Сумма(СуммаПланРасход) &lt;&gt; 0
 		И КоличествоВалютВсего &gt; 1
 	ТОГДА
 		КомпоновкаДанныхСервер.СтрЗаменитьКомпоновка(СоединитьСтроки(ВычислитьВыражениеСГруппировкойТаблицаЗначений("Формат(Сумма(СуммаПланРасход), ""ЧДЦ=2; ЧН=0,00""), Валюта", "Валюта")), ";", "")
 	ИНАЧЕ
 		Сумма(СуммаПланРасход)
+КОНЕЦ</expression>
+	</totalField>
+	<totalField>
+		<dataPath>СуммаПлана</dataPath>
+		<expression>ВЫБОР
+	КОГДА &amp;ДанныеОтчета = 1
+		И Сумма(СуммаПлана) &lt;&gt; 0
+		И КоличествоВалютВсего &gt; 1
+	ТОГДА
+		КомпоновкаДанныхСервер.СтрЗаменитьКомпоновка(СоединитьСтроки(ВычислитьВыражениеСГруппировкойТаблицаЗначений("Формат(Сумма(СуммаПлана), ""ЧДЦ=2; ЧН=0,00""), Валюта", "Валюта")), ";", "")
+	ИНАЧЕ
+		Сумма(СуммаПлана)
 КОНЕЦ</expression>
 	</totalField>
 	<totalField>
@@ -7743,42 +7772,6 @@
 		<value xsi:type="xs:boolean">true</value>
 		<useRestriction>false</useRestriction>
 		<use>Always</use>
-	</parameter>
-	<parameter>
-		<name>ГруппаДоход</name>
-		<title xsi:type="v8:LocalStringType">
-			<v8:item>
-				<v8:lang>ru</v8:lang>
-				<v8:content>Группа доход</v8:content>
-			</v8:item>
-			<v8:item>
-				<v8:lang>uk</v8:lang>
-				<v8:content>Група дохід</v8:content>
-			</v8:item>
-		</title>
-		<valueType>
-			<v8:Type xmlns:d4p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d4p1:CatalogRef.СтатьиДвиженияДенежныхСредств</v8:Type>
-		</valueType>
-		<value xsi:nil="true"/>
-		<useRestriction>true</useRestriction>
-	</parameter>
-	<parameter>
-		<name>ГруппаРасход</name>
-		<title xsi:type="v8:LocalStringType">
-			<v8:item>
-				<v8:lang>ru</v8:lang>
-				<v8:content>Группа расход</v8:content>
-			</v8:item>
-			<v8:item>
-				<v8:lang>uk</v8:lang>
-				<v8:content>Група витрат</v8:content>
-			</v8:item>
-		</title>
-		<valueType>
-			<v8:Type xmlns:d4p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d4p1:CatalogRef.СтатьиДвиженияДенежныхСредств</v8:Type>
-		</valueType>
-		<value xsi:nil="true"/>
-		<useRestriction>true</useRestriction>
 	</parameter>
 	<settingsVariant>
 		<dcsset:name>ДвиженияДенежныхСредств</dcsset:name>
