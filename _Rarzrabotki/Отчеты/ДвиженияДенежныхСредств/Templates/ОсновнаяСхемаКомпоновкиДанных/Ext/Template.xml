@@ -6370,6 +6370,206 @@
 		КОНЕЦ, ГОД)
 }</query>
 		</item>
+		<item xsi:type="DataSetQuery">
+			<name>А_БюджетыНаМесяц</name>
+			<field xsi:type="DataSetFieldField">
+				<dataPath>СтатьяДвиженияДенежныхСредств</dataPath>
+				<field>СтатьяДвиженияДенежныхСредств</field>
+				<title xsi:type="v8:LocalStringType">
+					<v8:item>
+						<v8:lang>ru</v8:lang>
+						<v8:content>Статья движения денежных средств</v8:content>
+					</v8:item>
+					<v8:item>
+						<v8:lang>uk</v8:lang>
+						<v8:content>Стаття руху грошових коштів</v8:content>
+					</v8:item>
+				</title>
+			</field>
+			<field xsi:type="DataSetFieldField">
+				<dataPath>Подразделение</dataPath>
+				<field>Подразделение</field>
+				<title xsi:type="v8:LocalStringType">
+					<v8:item>
+						<v8:lang>ru</v8:lang>
+						<v8:content>Подразделение</v8:content>
+					</v8:item>
+					<v8:item>
+						<v8:lang>uk</v8:lang>
+						<v8:content>Підрозділ</v8:content>
+					</v8:item>
+				</title>
+			</field>
+			<field xsi:type="DataSetFieldField">
+				<dataPath>НаправлениеДеятельности</dataPath>
+				<field>НаправлениеДеятельности</field>
+				<title xsi:type="v8:LocalStringType">
+					<v8:item>
+						<v8:lang>ru</v8:lang>
+						<v8:content>Направление деятельности</v8:content>
+					</v8:item>
+					<v8:item>
+						<v8:lang>uk</v8:lang>
+						<v8:content>Напрям діяльності</v8:content>
+					</v8:item>
+				</title>
+			</field>
+			<field xsi:type="DataSetFieldField">
+				<dataPath>ТипДенежныхСредств</dataPath>
+				<field>ТипДенежныхСредств</field>
+				<title xsi:type="v8:LocalStringType">
+					<v8:item>
+						<v8:lang>ru</v8:lang>
+						<v8:content>Тип денежных средств</v8:content>
+					</v8:item>
+					<v8:item>
+						<v8:lang>uk</v8:lang>
+						<v8:content>Тип грошових коштів</v8:content>
+					</v8:item>
+				</title>
+			</field>
+			<field xsi:type="DataSetFieldField">
+				<dataPath>ПериодМесяц</dataPath>
+				<field>ПериодМесяц</field>
+				<title xsi:type="v8:LocalStringType">
+					<v8:item>
+						<v8:lang>ru</v8:lang>
+						<v8:content>Период месяц</v8:content>
+					</v8:item>
+					<v8:item>
+						<v8:lang>uk</v8:lang>
+						<v8:content>Період місяць</v8:content>
+					</v8:item>
+				</title>
+			</field>
+			<field xsi:type="DataSetFieldField">
+				<dataPath>Регистратор</dataPath>
+				<field>Регистратор</field>
+				<title xsi:type="v8:LocalStringType">
+					<v8:item>
+						<v8:lang>ru</v8:lang>
+						<v8:content>Регистратор</v8:content>
+					</v8:item>
+					<v8:item>
+						<v8:lang>uk</v8:lang>
+						<v8:content>Реєстратор</v8:content>
+					</v8:item>
+				</title>
+				<role>
+					<dcscom:dimension>true</dcscom:dimension>
+				</role>
+			</field>
+			<field xsi:type="DataSetFieldField">
+				<dataPath>СуммаПланПриход</dataPath>
+				<field>СуммаПланПриход</field>
+				<title xsi:type="v8:LocalStringType">
+					<v8:item>
+						<v8:lang>ru</v8:lang>
+						<v8:content>Приход плановый</v8:content>
+					</v8:item>
+					<v8:item>
+						<v8:lang>uk</v8:lang>
+						<v8:content>Прибуток плановий</v8:content>
+					</v8:item>
+				</title>
+			</field>
+			<field xsi:type="DataSetFieldField">
+				<dataPath>СуммаПланРасход</dataPath>
+				<field>СуммаПланРасход</field>
+				<title xsi:type="v8:LocalStringType">
+					<v8:item>
+						<v8:lang>ru</v8:lang>
+						<v8:content>Расход плановый</v8:content>
+					</v8:item>
+					<v8:item>
+						<v8:lang>uk</v8:lang>
+						<v8:content>Видаток плановий</v8:content>
+					</v8:item>
+				</title>
+			</field>
+			<dataSource>ИсточникДанных1</dataSource>
+			<query>ВЫБРАТЬ
+	БюджетОбороты.Регистратор КАК Регистратор,
+
+	БюджетОбороты.Месяц КАК ПериодСекунда,
+	БюджетОбороты.Месяц КАК ПериодДень,
+	НАЧАЛОПЕРИОДА(БюджетОбороты.Месяц, НЕДЕЛЯ) КАК ПериодНеделя,
+	НАЧАЛОПЕРИОДА(БюджетОбороты.Месяц, ДЕКАДА) КАК ПериодДекада,
+	БюджетОбороты.Месяц КАК ПериодМесяц,
+	НАЧАЛОПЕРИОДА(БюджетОбороты.Месяц, КВАРТАЛ) КАК ПериодКвартал,
+	НАЧАЛОПЕРИОДА(БюджетОбороты.Месяц, ПОЛУГОДИЕ) КАК ПериодПолугодие,
+	НАЧАЛОПЕРИОДА(БюджетОбороты.Месяц, ГОД) КАК ПериодГод,
+
+	NULL КАК ХозяйственнаяОперация,
+	NULL КАК Организация,
+	БюджетОбороты.Подразделение КАК Подразделение,
+	NULL КАК НаправлениеДеятельностиДС,
+	NULL КАК МестоХраненияДенежныхСредств,
+	БюджетОбороты.ВидОплаты КАК ТипДенежныхСредств,
+
+	БюджетОбороты.СтатьяДвиженияДенежныхСредств КАК СтатьяДвиженияДенежныхСредств,
+	NULL КАК Валюта,
+
+	NULL КАК КорАналитика,
+	NULL КАК ОбъектОплаты,
+	БюджетОбороты.Направление КАК НаправлениеДеятельности,
+	NULL КАК ОбластьПланирования,
+
+	ВЫБОР
+		КОГДА БюджетОбороты.СтатьяДвиженияДенежныхСредств В ИЕРАРХИИ (&amp;ГруппаДоход)
+			ТОГДА БюджетОбороты.СуммаОборот
+		ИНАЧЕ 0
+	КОНЕЦ КАК СуммаПланПриход,
+	ВЫБОР
+		КОГДА БюджетОбороты.СтатьяДвиженияДенежныхСредств В ИЕРАРХИИ (&amp;ГруппаРасход)
+			ТОГДА -БюджетОбороты.СуммаОборот
+		ИНАЧЕ 0
+	КОНЕЦ КАК СуммаПланРасход,
+
+	NULL КАК ТипДвижения
+
+{ВЫБРАТЬ
+	Регистратор,
+	ПериодСекунда,
+	ПериодДень,
+	ПериодНеделя,
+	ПериодДекада,
+	ПериодМесяц,
+	ПериодКвартал,
+	ПериодПолугодие,
+	ПериодГод,
+	ХозяйственнаяОперация.*,
+	Организация.*,
+	Подразделение.*,
+	НаправлениеДеятельностиДС.*,
+	МестоХраненияДенежныхСредств.*,
+	ТипДенежныхСредств.*,
+	СтатьяДвиженияДенежныхСредств.*,
+	Валюта.*,
+	КорАналитика.*,
+	НаправлениеДеятельности.*,
+	ОбластьПланирования.*,
+	СуммаПланПриход,
+	СуммаПланРасход
+}
+ИЗ
+	РегистрНакопления.А_БюджетыНаМесяц.Обороты(
+		&amp;НачалоПериода,
+		&amp;КонецПериода,
+		Авто,
+		ВидПериода = ЗНАЧЕНИЕ(Перечисление.А_ВидыПериодовБюджетирования.Месяц)
+	) КАК БюджетОбороты
+
+ГДЕ
+	&amp;ВыводитьПлановыеДвижения
+{ГДЕ
+	БюджетОбороты.Подразделение.*,
+	БюджетОбороты.СтатьяДвиженияДенежныхСредств.*,
+	БюджетОбороты.Направление.* КАК НаправлениеДеятельности,
+	БюджетОбороты.ВидОплаты.* КАК ТипДенежныхСредств,
+	БюджетОбороты.Месяц КАК ПериодМесяц
+}</query>
+		</item>
 	</dataSet>
 	<calculatedField>
 		<dataPath>Показатели.НачальныйОстаток</dataPath>
@@ -7543,6 +7743,42 @@
 		<value xsi:type="xs:boolean">true</value>
 		<useRestriction>false</useRestriction>
 		<use>Always</use>
+	</parameter>
+	<parameter>
+		<name>ГруппаДоход</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Группа доход</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>uk</v8:lang>
+				<v8:content>Група дохід</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type xmlns:d4p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d4p1:CatalogRef.СтатьиДвиженияДенежныхСредств</v8:Type>
+		</valueType>
+		<value xsi:nil="true"/>
+		<useRestriction>true</useRestriction>
+	</parameter>
+	<parameter>
+		<name>ГруппаРасход</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Группа расход</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>uk</v8:lang>
+				<v8:content>Група витрат</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type xmlns:d4p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d4p1:CatalogRef.СтатьиДвиженияДенежныхСредств</v8:Type>
+		</valueType>
+		<value xsi:nil="true"/>
+		<useRestriction>true</useRestriction>
 	</parameter>
 	<settingsVariant>
 		<dcsset:name>ДвиженияДенежныхСредств</dcsset:name>
