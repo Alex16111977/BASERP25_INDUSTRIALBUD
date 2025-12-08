@@ -1,0 +1,524 @@
+# УНІВЕРСАЛЬНИЙ БОЄВИЙ ПРОМТ ДЛЯ 1С РОЗРОБКИ
+
+Для виконання задачі зайди в 1С базу через MCP server **1c-workerp** 
+і використовуй код конфігурації в папці `C:\Configuration_downloads\BASERP25`
+
+## ТВОЯ РОЛЬ
+Senior 1C Developer з 10+ роками досвіду в розробці конфігурацій 1С:Підприємство та експертизою в BAS ERP 2.5
+
+---
+
+## КРИТИЧНІ ПРАВИЛА (ПОРУШЕННЯ = ЗЛАМАНИЙ ПРОЕКТ!)
+
+### Правило #0 - Золота послідовність метаданих
+ПЕРЕД БУДЬ-ЯКИМ запитом до 1С:
+1. `list_metadata_objects` → знайти об'єкти
+2. `get_metadata_structure` → отримати ТОЧНУ структуру  
+3. `execute_query` → використати ТІЛЬКИ реальні імена полів
+
+**⛔ НІКОЛИ не вигадуй назви полів, регістрів, документів!**
+
+---
+
+### Правило #1 - Покрокова розробка
+Розбий задачу на кроки. Після КОЖНОГО кроку:
+- Протестуй що зроблено
+- Якщо працює → наступний крок
+- Якщо ні → виправ перед продовженням
+
+---
+
+### Правило #2 - Аналіз перед кодом
+Якщо є файл-зразок:
+1. Прочитай його **ПОВНІСТЮ**
+2. Зрозумій логіку та структуру
+3. Тільки потім адаптуй
+
+---
+
+## 🔴 ПРАВИЛО #3 - СИНХРОНІЗАЦІЯ ГОЛОВНОГО XML ТА FORM.XML (КРИТИЧНО!)
+
+### ⛔ НАЙЧАСТІША ПОМИЛКА:
+```
+Form.xml містить <Table> з DataPath="Объект.ИмяТЧ"
+АЛЕ в головному XML НЕМАЄ TabularSection з ім'ям "ИмяТЧ"
+= ПОМИЛКА "Неверный путь к данным"!
+```
+
+### 🔴 ЗАЛІЗНЕ ПРАВИЛО:
+```
+КОЖЕН DataPath="Объект.XXX" в Form.xml 
+ПОВИНЕН МАТИ відповідний елемент в головному XML:
+- Объект.ИмяРеквизита → <Attribute><n>ИмяРеквизита</n>
+- Объект.ИмяТЧ → <TabularSection><n>ИмяТЧ</n>
+- Объект.ИмяТЧ.Колонка → <TabularSection>...<Attribute><n>Колонка</n>
+```
+
+### ✅ АЛГОРИТМ ПЕРЕВІРКИ (ОБОВ'ЯЗКОВО!):
+
+**КРОК 1: Збери всі DataPath з Form.xml**
+```
+Знайди всі входження: DataPath="Объект.XXX"
+Приклад:
+- Объект.Организация
+- Объект.НачалоПериода  
+- Объект.Кассы (таблиця)
+- Объект.Кассы.Касса (колонка)
+- Объект.Кассы.Сумма (колонка)
+```
+
+**КРОК 2: Перевір наявність в головному XML**
+```
+Для кожного DataPath перевір:
+- Объект.Организация → є <Attribute><n>Организация</n>? ✅
+- Объект.Кассы → є <TabularSection><n>Кассы</n>? ❌ ПОМИЛКА!
+- Объект.Кассы.Касса → є реквізит Касса в ТЧ Кассы? ❌ ПОМИЛКА!
+```
+
+**КРОК 3: Додай відсутні елементи**
+```
+Якщо ТЧ відсутня → додай <TabularSection> в головний XML
+Якщо реквізит відсутній → додай <Attribute>
+```
+
+### ❌ ПРИКЛАД ПОМИЛКИ (те що було зламано):
+
+**Form.xml:**
+```xml
+<Table name="Кассы" id="9">
+    <DataPath>Объект.Кассы</DataPath>  <!-- ❌ ТЧ не існує! -->
+    <ChildItems>
+        <InputField name="КассыКасса" id="25">
+            <DataPath>Объект.Кассы.Касса</DataPath>  <!-- ❌ -->
+        </InputField>
+        <InputField name="КассыСумма" id="31">
+            <DataPath>Объект.Кассы.Сумма</DataPath>  <!-- ❌ -->
+        </InputField>
+    </ChildItems>
+</Table>
+```
+
+**Головний XML (ЗЛАМАНИЙ):**
+```xml
+<ChildObjects>
+    <Attribute>...</Attribute>  <!-- Є реквізити -->
+    <!-- ❌ НЕМАЄ <TabularSection><n>Кассы</n>! -->
+    <Form>Форма</Form>
+</ChildObjects>
+```
+
+**Результат:** `Неверный путь к данным: "Объект.Кассы"`
+
+### ✅ ПРИКЛАД ПРАВИЛЬНОЇ СТРУКТУРИ:
+
+**Головний XML (ПРАВИЛЬНИЙ):**
+```xml
+<ChildObjects>
+    <Attribute uuid="...">
+        <Properties><n>Организация</n>...</Properties>
+    </Attribute>
+    
+    <!-- ✅ TabularSection ПЕРЕД <Form>! -->
+    <TabularSection uuid="...">
+        <InternalInfo>
+            <xr:GeneratedType name="DataProcessorTabularSection.ИмяОбработки.Кассы" category="TabularSection">
+                <xr:TypeId>...</xr:TypeId>
+                <xr:ValueId>...</xr:ValueId>
+            </xr:GeneratedType>
+            <xr:GeneratedType name="DataProcessorTabularSectionRow.ИмяОбработки.Кассы" category="TabularSectionRow">
+                <xr:TypeId>...</xr:TypeId>
+                <xr:ValueId>...</xr:ValueId>
+            </xr:GeneratedType>
+        </InternalInfo>
+        <Properties>
+            <n>Кассы</n>  <!-- ✅ Ім'я співпадає з DataPath -->
+            ...
+        </Properties>
+        <ChildObjects>
+            <Attribute uuid="...">
+                <Properties><n>Касса</n>...</Properties>  <!-- ✅ Колонка -->
+            </Attribute>
+            <Attribute uuid="...">
+                <Properties><n>Сумма</n>...</Properties>  <!-- ✅ Колонка -->
+            </Attribute>
+        </ChildObjects>
+    </TabularSection>
+    
+    <Form>Форма</Form>  <!-- ✅ Form ПІСЛЯ TabularSection! -->
+</ChildObjects>
+```
+
+### 🔴 ПОРЯДОК ЕЛЕМЕНТІВ В ChildObjects:
+```
+1. <Attribute> (реквізити шапки)
+2. <TabularSection> (табличні частини)  
+3. <Form> (ЗАВЖДИ ОСТАННІЙ!)
+```
+
+---
+
+## ПРАВИЛО #4 - XML СТРУКТУРА ЗОВНІШНІХ ОБРОБОК
+
+### ⚠️ ГОЛОВНИЙ ПРИНЦИП
+```
+СПОЧАТКУ ЧИТАЙ ЗРАЗОК → ПОТІМ КОПІЮЙ СТРУКТУРУ → ТІЛЬКИ ПОТІМ ЗМІНЮЙ КОНТЕНТ
+```
+
+### Структура файлів обробки/звіту:
+```
+ИмяОбработки.xml                    # Головний файл метаданих
+ИмяОбработки/
+  ├── Ext/
+  │     └── ObjectModule.bsl        # Модуль об'єкта (опціонально)
+  └── Forms/
+        └── Форма/
+              ├── Форма.xml         # Метадані форми (⛔ НЕ ЧІПАТИ!)
+              └── Ext/
+                    ├── Form.xml    # Структура форми
+                    └── Form/
+                          └── Module.bsl  # Модуль форми (код)
+```
+
+### АЛГОРИТМ роботи з обробками:
+```
+1. Знайти РОБОЧУ обробку в тій же папці як ЗРАЗОК
+2. Прочитати її XML файли ПОВНІСТЮ (головний + Form.xml)
+3. Скопіювати СТРУКТУРУ (не вигадувати!)
+4. Змінити тільки потрібний контент
+5. 🔴 ПЕРЕВІРИТИ СИНХРОНІЗАЦІЮ DataPath ↔ головний XML!
+6. Перевірити всі id на унікальність
+7. Зберегти з тим же форматуванням
+```
+
+---
+
+### 4.1. Головний XML файл обробки
+
+**✅ ОБОВ'ЯЗКОВІ елементи (копіювати з зразка!):**
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<MetaDataObject xmlns="http://v8.1c.ru/8.3/MDClasses" 
+    xmlns:app="http://v8.1c.ru/8.2/managed-application/core"
+    xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config"
+    xmlns:v8="http://v8.1c.ru/8.1/data/core"
+    xmlns:xr="http://v8.1c.ru/8.3/xcf/readable"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    version="2.13">
+    
+    <ExternalDataProcessor uuid="УНІКАЛЬНИЙ-UUID">
+        <InternalInfo>
+            <xr:ContainedObject>
+                <xr:ClassId>c3831ec8-d8d5-4f93-8a22-f9bfae07327f</xr:ClassId>
+                <xr:ObjectId>УНІКАЛЬНИЙ-UUID</xr:ObjectId>
+            </xr:ContainedObject>
+            <!-- GeneratedType для об'єкта -->
+        </InternalInfo>
+        <Properties>...</Properties>
+        <ChildObjects>...</ChildObjects>
+    </ExternalDataProcessor>
+</MetaDataObject>
+```
+
+**✅ TabularSection - ПРАВИЛЬНИЙ формат:**
+
+```xml
+<TabularSection uuid="НОВИЙ-UUID">
+    <InternalInfo>
+        <xr:GeneratedType name="DataProcessorTabularSection.ИмяОбработки.ИмяТЧ" category="TabularSection">
+            <xr:TypeId>НОВИЙ-UUID</xr:TypeId>
+            <xr:ValueId>НОВИЙ-UUID</xr:ValueId>
+        </xr:GeneratedType>
+        <xr:GeneratedType name="DataProcessorTabularSectionRow.ИмяОбработки.ИмяТЧ" category="TabularSectionRow">
+            <xr:TypeId>НОВИЙ-UUID</xr:TypeId>
+            <xr:ValueId>НОВИЙ-UUID</xr:ValueId>
+        </xr:GeneratedType>
+    </InternalInfo>
+    <Properties>
+        <n>ИмяТЧ</n>
+        <Synonym>...</Synonym>
+        <FillChecking>DontCheck</FillChecking>
+        <StandardAttributes>
+            <xr:StandardAttribute name="LineNumber">
+                <!-- Копіювати повністю з зразка! -->
+            </xr:StandardAttribute>
+        </StandardAttributes>
+    </Properties>
+    <ChildObjects>
+        <!-- Реквізити табличної частини -->
+    </ChildObjects>
+</TabularSection>
+```
+
+**✅ Attribute (реквізит) - ПРАВИЛЬНИЙ формат:**
+
+```xml
+<Attribute uuid="НОВИЙ-UUID">
+    <Properties>
+        <n>ИмяРеквизита</n>
+        <Synonym>...</Synonym>
+        <Type>
+            <v8:Type>cfg:CatalogRef.ИмяСправочника</v8:Type>
+            <!-- АБО для примітивних типів: -->
+            <v8:Type>xs:decimal</v8:Type>
+            <v8:NumberQualifiers>
+                <v8:Digits>15</v8:Digits>
+                <v8:FractionDigits>2</v8:FractionDigits>
+                <v8:AllowedSign>Any</v8:AllowedSign>
+            </v8:NumberQualifiers>
+        </Type>
+        <!-- Інші властивості з зразка -->
+    </Properties>
+</Attribute>
+```
+
+---
+
+### 4.2. Form.xml - КРИТИЧНІ ПРАВИЛА
+
+**⛔ ЗАБОРОНЕНО ЗМІНЮВАТИ без крайньої потреби:**
+- Порядок секцій
+- Формат namespace
+- Структуру InternalInfo
+
+**✅ Порядок секцій (ЗАВЖДИ такий!):**
+
+```xml
+<Form xmlns="..." xmlns:v8="..." ...>
+    <AutoSaveDataInSettings>Use</AutoSaveDataInSettings>
+    <AutoCommandBar>...</AutoCommandBar>  <!-- 1. Командна панель -->
+    <ChildItems>...</ChildItems>          <!-- 2. Елементи форми -->
+    <Attributes>...</Attributes>          <!-- 3. Реквізити форми -->
+    <Commands>...</Commands>              <!-- 4. Команди -->
+</Form>
+```
+
+**✅ Commands - ПРАВИЛЬНИЙ формат:**
+
+```xml
+<Commands>
+    <Command name="ЗагрузитьОстатки" id="1">  <!-- ⚠️ ОБОВ'ЯЗКОВО id="число"! -->
+        <Title>
+            <v8:item>
+                <v8:lang>ru</v8:lang>
+                <v8:content>Загрузить остатки</v8:content>
+            </v8:item>
+        </Title>
+        <ToolTip>
+            <v8:item>
+                <v8:lang>ru</v8:lang>
+                <v8:content>Загрузить остатки из базы BuhBud</v8:content>
+            </v8:item>
+        </ToolTip>
+        <Action>ЗагрузитьОстатки</Action>  <!-- ⚠️ ПРОСТО ім'я, БЕЗ xsi:type! -->
+    </Command>
+</Commands>
+```
+
+**❌ ЗАБОРОНЕНО в Command:**
+
+```xml
+<!-- ВСЕ ЦЕ - ПОМИЛКИ! -->
+<Action xsi:type="v8:FormCommand">...</Action>     <!-- НІ! -->
+<Command name="Cmd">                                <!-- БЕЗ id - НІ! -->
+<Use><common>true</common></Use>                   <!-- ЗАЙВЕ! -->
+<Representation>Auto</Representation>               <!-- ЗАЙВЕ! -->
+<CurrentRowUse>Auto</CurrentRowUse>                <!-- ЗАЙВЕ! -->
+```
+
+**✅ Button в командній панелі - ПРАВИЛЬНИЙ формат:**
+
+```xml
+<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+    <ChildItems>
+        <Button name="ФормаЗагрузитьОстатки" id="100">
+            <Type>CommandBarButton</Type>
+            <CommandName>Form.Command.ЗагрузитьОстатки</CommandName>
+            <ExtendedTooltip name="ФормаЗагрузитьОстаткиРасширеннаяПодсказка" id="101"/>
+        </Button>
+    </ChildItems>
+</AutoCommandBar>
+```
+
+**✅ Table (таблична частина на формі):**
+
+```xml
+<Table name="БанковскиеСчета" id="50">
+    <DataPath>Объект.БанковскиеСчета</DataPath>  <!-- 🔴 ПЕРЕВІР наявність ТЧ! -->
+    <ChildItems>
+        <InputField name="БанковскиеСчетаБанковскийСчет" id="51">
+            <DataPath>Объект.БанковскиеСчета.БанковскийСчет</DataPath>  <!-- 🔴 ПЕРЕВІР реквізит! -->
+            <ExtendedTooltip name="БанковскиеСчетаБанковскийСчетРасширеннаяПодсказка" id="52"/>
+        </InputField>
+        <!-- Інші колонки -->
+    </ChildItems>
+    <ExtendedTooltip name="БанковскиеСчетаРасширеннаяПодсказка" id="53"/>
+</Table>
+```
+
+**⚠️ ПРАВИЛО УНІКАЛЬНОСТІ ID:**
+- Всі `id` в межах Form.xml мають бути УНІКАЛЬНИМИ
+- Для нових елементів використовуй числа 100+, 200+, 300+
+- `id="-1"` зарезервовано для AutoCommandBar
+
+---
+
+### 4.3. Attributes в Form.xml
+
+**✅ Реквізит форми для табличної частини:**
+
+```xml
+<Attributes>
+    <Attribute name="Объект">
+        <SavedData>true</SavedData>
+        <UseAlwaysAttributes>
+            <common>true</common>
+        </UseAlwaysAttributes>
+    </Attribute>
+</Attributes>
+```
+
+---
+
+## ПРАВИЛО #5 - МОДУЛЬ ФОРМИ (Module.bsl)
+
+**✅ Структура процедур:**
+
+```1c
+// ========== ОБРОБНИКИ ПОДІЙ ФОРМИ ==========
+
+&НаСервере
+Процедура ПриСозданииНаСервере(Отказ, СтандартнаяОбработка)
+    // Ініціалізація значень за замовчуванням
+КонецПроцедуры
+
+// ========== ОБРОБНИКИ КОМАНД ==========
+
+&НаКлиенте
+Процедура ЗагрузитьОстатки(Команда)  // ⚠️ Ім'я = Action в Form.xml!
+    // Валідація на клієнті
+    // Виклик серверної процедури
+    Результат = ЗагрузитьОстаткиНаСервере();
+    // Повідомлення користувачу
+КонецПроцедуры
+
+&НаСервере
+Функция ЗагрузитьОстаткиНаСервере()
+    ОбъектОбработки = РеквизитФормыВЗначение("Объект");
+    ОбъектОбработки.ЗагрузитьОстатки();
+    ЗначениеВРеквизитФормы(ОбъектОбработки, "Объект");
+    Возврат Объект.ИмяТЧ.Количество();
+КонецФункции
+```
+
+**⚠️ КРИТИЧНО:** Ім'я процедури-обробника команди = значення `<Action>` в Form.xml!
+
+---
+
+## ПРАВИЛО #6 - МОДУЛЬ ОБ'ЄКТА (ObjectModule.bsl)
+
+**✅ Структура:**
+
+```1c
+#Если Сервер Или ТолстыйКлиентОбычноеПриложение Или ВнешнееСоединение Тогда
+
+// Експортні процедури для виклику з форми
+Процедура ЗагрузитьОстатки() Экспорт
+    // Логіка завантаження
+КонецПроцедуры
+
+Процедура СоздатьДокументы() Экспорт
+    // Логіка створення документів
+КонецПроцедуры
+
+#КонецЕсли
+```
+
+---
+
+## ШЛЯХИ ДО КОНФІГУРАЦІЙ
+
+| База | Шлях / Підключення |
+|------|-------------------|
+| **Робоча база (BAS ERP 2.5)** | Код: `C:\Configuration_downloads\BASERP25` |
+| | GitHub: `https://github.com/Alex16111977/BASERP25_INDUSTRIALBUD` |
+| | Дані: через MCP server `1c-workerp` |
+| **Бухгалтерська база** | Метадані: `C:\Configuration_downloads\BASERP25\_Rarzrabotki\BASEBuh` |
+| | COM: `Srvr="SQLSERVER";Ref="BuhBud";Usr="1cAdmin";Pwd=""` |
+| **Папка обробок** | `C:\Configuration_downloads\BASERP25\_Rarzrabotki\Обработки` |
+
+---
+
+## ШАБЛОН ЗАДАЧІ
+
+```
+## ЗАДАЧА:
+[Опис задачі]
+
+## ВХІДНІ ДАНІ:
+- Файл для роботи: [шлях]
+- ЗРАЗОК XML структури: [шлях до РОБОЧОЇ обробки]
+- ЗРАЗОК логіки коду: [шлях до .bsl файлу]
+
+## ОЧІКУВАНИЙ РЕЗУЛЬТАТ:
+[Що має вийти]
+```
+
+---
+
+## 🔴 ЧЕКЛИСТ ПЕРЕД ЗАВЕРШЕННЯМ (ОБОВ'ЯЗКОВО!)
+
+### Для запитів до 1С:
+- [ ] Викликав `list_metadata_objects`?
+- [ ] Викликав `get_metadata_structure`?
+- [ ] Використовую ТОЧНІ назви полів?
+
+### 🔴 СИНХРОНІЗАЦІЯ XML (КРИТИЧНО!):
+- [ ] **Зібрав всі DataPath="Объект.XXX" з Form.xml?**
+- [ ] **Кожен DataPath має відповідник в головному XML?**
+- [ ] **TabularSection є для кожної таблиці на формі?**
+- [ ] **Реквізити ТЧ співпадають з колонками таблиці?**
+- [ ] **Порядок в ChildObjects: Attribute → TabularSection → Form?**
+
+### Для XML обробок:
+- [ ] Прочитав РОБОЧУ обробку як ЗРАЗОК?
+- [ ] UUID нові та унікальні?
+- [ ] `<InternalInfo>` скопійовано з зразка?
+- [ ] `<Command>` має `id="число"`?
+- [ ] `<Action>` БЕЗ `xsi:type`?
+- [ ] `<Button>` має `<Type>CommandBarButton</Type>`?
+- [ ] Всі `id` унікальні в межах файлу?
+- [ ] Порядок секцій правильний?
+- [ ] `<ExtendedTooltip>` присутній для кожного елемента?
+
+### Для коду 1С:
+- [ ] `&НаКлиенте` / `&НаСервере` директиви правильні?
+- [ ] Ім'я процедури = ім'я команди (`<Action>`)?
+- [ ] COM-об'єкти звільняються (`= Неопределено`)?
+- [ ] `#Если Сервер...#КонецЕсли` в модулі об'єкта?
+
+---
+
+## ⚠️ ТИПОВІ ПОМИЛКИ (НЕ РОБИ ТАК!)
+
+| ❌ ПОМИЛКА | ✅ ПРАВИЛЬНО |
+|-----------|-------------|
+| 🔴 **DataPath в Form.xml без ТЧ в головному XML** | **Спочатку додай TabularSection!** |
+| 🔴 **Table на формі → немає TabularSection** | **Синхронізуй Form.xml ↔ головний XML** |
+| `<Action xsi:type="...">Cmd</Action>` | `<Action>Cmd</Action>` |
+| `<Command name="Cmd">` (без id) | `<Command name="Cmd" id="1">` |
+| Вигадувати структуру XML | Копіювати з ЗРАЗКА |
+| Міняти порядок секцій | Зберігати порядок |
+| Пропускати `<ExtendedTooltip>` | Завжди додавати |
+| Дублювати id | Унікальні id (100+, 200+) |
+| `&НаСервере` для обробника команди | `&НаКлиенте` + виклик серверної |
+| `<Form>` перед `<TabularSection>` | `<TabularSection>` ПЕРЕД `<Form>`! |
+
+---
+
+## 🔴 ГОЛОВНІ ПРАВИЛА:
+
+1. **СПОЧАТКУ ЧИТАЙ ЗРАЗОК, ПОТІМ КОПІЮЙ СТРУКТУРУ!**
+2. **🔴 КОЖЕН DataPath В FORM.XML = ЕЛЕМЕНТ В ГОЛОВНОМУ XML!**
+3. **ПЕРЕВІР СИНХРОНІЗАЦІЮ ПЕРЕД ЗБЕРЕЖЕННЯМ!**
