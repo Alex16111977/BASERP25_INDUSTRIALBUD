@@ -1,36 +1,313 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
-	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1"/>
+	<AutoSaveDataInSettings>Use</AutoSaveDataInSettings>
+	<SaveDataInSettings>UseList</SaveDataInSettings>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+		<ChildItems>
+			<Button name="ЗаполнитьТаблицу" id="100">
+				<Type>CommandBarButton</Type>
+				<CommandName>Form.Command.ЗаполнитьТаблицу</CommandName>
+				<ExtendedTooltip name="ЗаполнитьТаблицуРасширеннаяПодсказка" id="101"/>
+			</Button>
+			<Button name="ОбновитьДоговоры" id="102">
+				<Type>CommandBarButton</Type>
+				<CommandName>Form.Command.ОбновитьДоговоры</CommandName>
+				<ExtendedTooltip name="ОбновитьДоговорыРасширеннаяПодсказка" id="103"/>
+			</Button>
+			<Button name="ОчиститьТаблицу" id="104">
+				<Type>CommandBarButton</Type>
+				<CommandName>Form.Command.ОчиститьТаблицу</CommandName>
+				<ExtendedTooltip name="ОчиститьТаблицуРасширеннаяПодсказка" id="105"/>
+			</Button>
+		</ChildItems>
+	</AutoCommandBar>
 	<ChildItems>
-		<Button name="ЗаполнитьСчетУчетаВДоговоре" id="1">
-			<Type>UsualButton</Type>
-			<CommandName>Form.Command.ЗаполнитьСчетУчетаВДоговоре</CommandName>
-			<ExtendedTooltip name="ЗаполнитьСчетУчетаВДоговореРасширеннаяПодсказка" id="2"/>
-		</Button>
+		<UsualGroup name="ГруппаПараметры" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Параметры</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Параметри</v8:content>
+				</v8:item>
+			</Title>
+			<Group>AlwaysHorizontal</Group>
+			<Behavior>Usual</Behavior>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаПараметрыРасширеннаяПодсказка" id="2"/>
+			<ChildItems>
+				<InputField name="НачалоПериода" id="3">
+					<DataPath>Объект.НачалоПериода</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Період з</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Період з</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="НачалоПериодаКонтекстноеМеню" id="4"/>
+					<ExtendedTooltip name="НачалоПериодаРасширеннаяПодсказка" id="5"/>
+				</InputField>
+				<InputField name="КонецПериода" id="6">
+					<DataPath>Объект.КонецПериода</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>по</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>по</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="КонецПериодаКонтекстноеМеню" id="7"/>
+					<ExtendedTooltip name="КонецПериодаРасширеннаяПодсказка" id="8"/>
+				</InputField>
+				<CheckBoxField name="ТолькоПустые" id="9">
+					<DataPath>Объект.ТолькоПустые</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Только пустые</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Тільки порожні</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="ТолькоПустыеКонтекстноеМеню" id="10"/>
+					<ExtendedTooltip name="ТолькоПустыеРасширеннаяПодсказка" id="11"/>
+				</CheckBoxField>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="ГруппаСчета" id="12">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Счета</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Рахунки</v8:content>
+				</v8:item>
+			</Title>
+			<Group>AlwaysHorizontal</Group>
+			<Behavior>Usual</Behavior>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаСчетаРасширеннаяПодсказка" id="13"/>
+			<ChildItems>
+				<InputField name="СчетаВзаиморасчетов" id="14">
+					<DataPath>Объект.СчетаВзаиморасчетов</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Счета взаиморасчетов</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Рахунки взаєморозрахунків</v8:content>
+						</v8:item>
+					</Title>
+					<Width>60</Width>
+					<ContextMenu name="СчетаВзаиморасчетовКонтекстноеМеню" id="15"/>
+					<ExtendedTooltip name="СчетаВзаиморасчетовРасширеннаяПодсказка" id="16">
+						<Title>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Коди рахунків через кому (361,631,632...)</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>uk</v8:lang>
+								<v8:content>Коди рахунків через кому (361,631,632...)</v8:content>
+							</v8:item>
+						</Title>
+					</ExtendedTooltip>
+				</InputField>
+			</ChildItems>
+		</UsualGroup>
+		<Table name="Договоры" id="20">
+			<AutoInsertNewRow>true</AutoInsertNewRow>
+			<EnableStartDrag>true</EnableStartDrag>
+			<EnableDrag>true</EnableDrag>
+			<DataPath>Объект.Договоры</DataPath>
+			<RowFilter xsi:nil="true"/>
+			<ContextMenu name="ДоговорыКонтекстноеМеню" id="21"/>
+			<AutoCommandBar name="ДоговорыКоманднаяПанель" id="22"/>
+			<ExtendedTooltip name="ДоговорыРасширеннаяПодсказка" id="23"/>
+			<SearchStringAddition name="ДоговорыСтрокаПоиска" id="24">
+				<AdditionSource>
+					<Item>Договоры</Item>
+					<Type>SearchStringRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="ДоговорыСтрокаПоискаКонтекстноеМеню" id="25"/>
+				<ExtendedTooltip name="ДоговорыСтрокаПоискаРасширеннаяПодсказка" id="26"/>
+			</SearchStringAddition>
+			<ViewStatusAddition name="ДоговорыСостояниеПросмотра" id="27">
+				<AdditionSource>
+					<Item>Договоры</Item>
+					<Type>ViewStatusRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="ДоговорыСостояниеПросмотраКонтекстноеМеню" id="28"/>
+				<ExtendedTooltip name="ДоговорыСостояниеПросмотраРасширеннаяПодсказка" id="29"/>
+			</ViewStatusAddition>
+			<SearchControlAddition name="ДоговорыУправлениеПоиском" id="30">
+				<AdditionSource>
+					<Item>Договоры</Item>
+					<Type>SearchControl</Type>
+				</AdditionSource>
+				<ContextMenu name="ДоговорыУправлениеПоискомКонтекстноеМеню" id="31"/>
+				<ExtendedTooltip name="ДоговорыУправлениеПоискомРасширеннаяПодсказка" id="32"/>
+			</SearchControlAddition>
+			<ChildItems>
+				<LabelField name="ДоговорыНомерСтроки" id="33">
+					<DataPath>Объект.Договоры.LineNumber</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ДоговорыНомерСтрокиКонтекстноеМеню" id="34"/>
+					<ExtendedTooltip name="ДоговорыНомерСтрокиРасширеннаяПодсказка" id="35"/>
+				</LabelField>
+				<InputField name="ДоговорыДоговор" id="36">
+					<DataPath>Объект.Договоры.Договор</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ДоговорыДоговорКонтекстноеМеню" id="37"/>
+					<ExtendedTooltip name="ДоговорыДоговорРасширеннаяПодсказка" id="38"/>
+				</InputField>
+				<InputField name="ДоговорыКонтрагент" id="39">
+					<DataPath>Объект.Договоры.Контрагент</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ДоговорыКонтрагентКонтекстноеМеню" id="40"/>
+					<ExtendedTooltip name="ДоговорыКонтрагентРасширеннаяПодсказка" id="41"/>
+				</InputField>
+				<InputField name="ДоговорыСчетУчета" id="42">
+					<DataPath>Объект.Договоры.СчетУчета</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Рахунок (новий)</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Рахунок (новий)</v8:content>
+						</v8:item>
+					</Title>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ДоговорыСчетУчетаКонтекстноеМеню" id="43"/>
+					<ExtendedTooltip name="ДоговорыСчетУчетаРасширеннаяПодсказка" id="44"/>
+				</InputField>
+				<InputField name="ДоговорыТекущийСчет" id="45">
+					<DataPath>Объект.Договоры.ТекущийСчет</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Рахунок (поточний)</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Рахунок (поточний)</v8:content>
+						</v8:item>
+					</Title>
+					<ReadOnly>true</ReadOnly>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ДоговорыТекущийСчетКонтекстноеМеню" id="46"/>
+					<ExtendedTooltip name="ДоговорыТекущийСчетРасширеннаяПодсказка" id="47"/>
+				</InputField>
+				<CheckBoxField name="ДоговорыОбработано" id="48">
+					<DataPath>Объект.Договоры.Обработано</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ДоговорыОбработаноКонтекстноеМеню" id="49"/>
+					<ExtendedTooltip name="ДоговорыОбработаноРасширеннаяПодсказка" id="50"/>
+				</CheckBoxField>
+			</ChildItems>
+		</Table>
 	</ChildItems>
 	<Attributes>
 		<Attribute name="Объект" id="1">
 			<Type>
-				<v8:Type>cfg:ExternalDataProcessorObject.ВнешняяОбработка1</v8:Type>
+				<v8:Type>cfg:ExternalDataProcessorObject.А_ЗаполнитьСчетУчетаВДоговоре</v8:Type>
 			</Type>
 			<MainAttribute>true</MainAttribute>
+			<Save>
+				<Field>Объект.НачалоПериода</Field>
+				<Field>Объект.КонецПериода</Field>
+				<Field>Объект.ТолькоПустые</Field>
+				<Field>Объект.СчетаВзаиморасчетов</Field>
+			</Save>
 		</Attribute>
 	</Attributes>
 	<Commands>
-		<Command name="ЗаполнитьСчетУчетаВДоговоре" id="1">
+		<Command name="ЗаполнитьТаблицу" id="1">
 			<Title>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Заполнить счет учета в договоре</v8:content>
+					<v8:content>Заполнить таблицу</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Заповнити таблицю</v8:content>
 				</v8:item>
 			</Title>
 			<ToolTip>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Заполнить счет учета в договоре</v8:content>
+					<v8:content>Завантажити договори з оборотами з бази BuhBud</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Завантажити договори з оборотами з бази BuhBud</v8:content>
 				</v8:item>
 			</ToolTip>
-			<Action>ЗаполнитьСчетУчетаВДоговоре</Action>
+			<Action>ЗаполнитьТаблицу</Action>
+		</Command>
+		<Command name="ОбновитьДоговоры" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Оновити договори</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Оновити договори</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Оновити поле А_СчетУчетаБух в картках договорів</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Оновити поле А_СчетУчетаБух в картках договорів</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ОбновитьДоговоры</Action>
+		</Command>
+		<Command name="ОчиститьТаблицу" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Очистити</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Очистити</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Очистити таблицю</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Очистити таблицю</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ОчиститьТаблицу</Action>
 		</Command>
 	</Commands>
 </Form>
