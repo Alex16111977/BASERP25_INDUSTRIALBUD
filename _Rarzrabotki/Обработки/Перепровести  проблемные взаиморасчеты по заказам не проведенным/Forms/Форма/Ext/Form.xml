@@ -1,14 +1,43 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
 	<AutoSaveDataInSettings>Use</AutoSaveDataInSettings>
 	<SaveDataInSettings>UseList</SaveDataInSettings>
-	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1"/>
+	<AutoTitle>false</AutoTitle>
+	<Title>
+		<v8:item>
+			<v8:lang>ru</v8:lang>
+			<v8:content>Перепровести проблемні взаєморозрахунки по замовленням не проведеним</v8:content>
+		</v8:item>
+		<v8:item>
+			<v8:lang>uk</v8:lang>
+			<v8:content>Перепровести проблемні взаєморозрахунки по замовленням не проведеним</v8:content>
+		</v8:item>
+	</Title>
+	<Width>120</Width>
+	<Height>30</Height>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+		<ChildItems>
+			<Button name="ЗнайтиПроблемні" id="100">
+				<Type>CommandBarButton</Type>
+				<CommandName>Form.Command.ЗнайтиПроблемні</CommandName>
+				<Representation>PictureAndText</Representation>
+				<ExtendedTooltip name="ЗнайтиПроблемніРасширеннаяПодсказка" id="101"/>
+			</Button>
+			<Button name="ВыполнитьОбработкуДокументов" id="102">
+				<Type>CommandBarButton</Type>
+				<CommandName>Form.Command.ВыполнитьОбработкуДокументов</CommandName>
+				<Representation>PictureAndText</Representation>
+				<DefaultButton>true</DefaultButton>
+				<ExtendedTooltip name="ВыполнитьОбработкуДокументовРасширеннаяПодсказка" id="103"/>
+			</Button>
+		</ChildItems>
+	</AutoCommandBar>
 	<ChildItems>
 		<UsualGroup name="ГруппаПараметры" id="1">
 			<Title>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Параметры</v8:content>
+					<v8:content>Параметри</v8:content>
 				</v8:item>
 				<v8:item>
 					<v8:lang>uk</v8:lang>
@@ -17,7 +46,7 @@
 			</Title>
 			<Group>AlwaysHorizontal</Group>
 			<Behavior>Usual</Behavior>
-			<ShowTitle>false</ShowTitle>
+			<ShowTitle>true</ShowTitle>
 			<ExtendedTooltip name="ГруппаПараметрыРасширеннаяПодсказка" id="2"/>
 			<ChildItems>
 				<InputField name="Организация" id="3">
@@ -25,7 +54,7 @@
 					<Title>
 						<v8:item>
 							<v8:lang>ru</v8:lang>
-							<v8:content>Организация</v8:content>
+							<v8:content>Організація</v8:content>
 						</v8:item>
 						<v8:item>
 							<v8:lang>uk</v8:lang>
@@ -33,18 +62,25 @@
 						</v8:item>
 					</Title>
 					<ContextMenu name="ОрганизацияКонтекстноеМеню" id="4"/>
-					<ExtendedTooltip name="ОрганизацияРасширеннаяПодсказка" id="5"/>
+					<ExtendedTooltip name="ОрганизацияРасширеннаяПодсказка" id="5">
+						<Title formatted="false">
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Якщо не вказана - всі організації</v8:content>
+							</v8:item>
+						</Title>
+					</ExtendedTooltip>
 				</InputField>
 				<InputField name="НачалоПериода" id="6">
 					<DataPath>Объект.НачалоПериода</DataPath>
 					<Title>
 						<v8:item>
 							<v8:lang>ru</v8:lang>
-							<v8:content>Загрузить с</v8:content>
+							<v8:content>Період з</v8:content>
 						</v8:item>
 						<v8:item>
 							<v8:lang>uk</v8:lang>
-							<v8:content>Завантажити з</v8:content>
+							<v8:content>Період з</v8:content>
 						</v8:item>
 					</Title>
 					<ContextMenu name="НачалоПериодаКонтекстноеМеню" id="7"/>
@@ -67,34 +103,123 @@
 				</InputField>
 			</ChildItems>
 		</UsualGroup>
-		<InputField name="СчетаВзаиморасчетов" id="12">
-			<DataPath>1/0:b8c9d0e1-f2a3-4567-89ab-cdef01234567</DataPath>
+		<Table name="ТаблицаРезультатов" id="20">
+			<DataPath>ТаблицаРезультатов</DataPath>
 			<Title>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Счета взаиморасчетов (через запятую)</v8:content>
+					<v8:content>Знайдені непроведені замовлення</v8:content>
 				</v8:item>
 				<v8:item>
 					<v8:lang>uk</v8:lang>
-					<v8:content>Рахунки взаєморозрахунків (через кому)</v8:content>
+					<v8:content>Знайдені непроведені замовлення</v8:content>
 				</v8:item>
 			</Title>
-			<Width>60</Width>
-			<ContextMenu name="СчетаВзаиморасчетовКонтекстноеМеню" id="13"/>
-			<ExtendedTooltip name="СчетаВзаиморасчетовРасширеннаяПодсказка" id="14">
-				<Title formatted="false">
-					<v8:item>
-						<v8:lang>ru</v8:lang>
-						<v8:content>Например: 361,362,371,377,631,632,681,682,683</v8:content>
-					</v8:item>
-				</Title>
-			</ExtendedTooltip>
-		</InputField>
-		<Button name="ВыполнитьОбработкуДокументов" id="15">
-			<Type>UsualButton</Type>
-			<CommandName>Form.Command.ВыполнитьОбработкуДокументов</CommandName>
-			<ExtendedTooltip name="ВыполнитьОбработкуДокументовРасширеннаяПодсказка" id="16"/>
-		</Button>
+			<ContextMenu name="ТаблицаРезультатовКонтекстноеМеню" id="21"/>
+			<ExtendedTooltip name="ТаблицаРезультатовРасширеннаяПодсказка" id="22"/>
+			<CommandBar name="ТаблицаРезультатовКоманднаяПанель" id="23">
+				<ExtendedTooltip name="ТаблицаРезультатовКоманднаяПанельРасширеннаяПодсказка" id="24"/>
+			</CommandBar>
+			<Height>12</Height>
+			<VerticalStretch>true</VerticalStretch>
+			<ChildItems>
+				<InputField name="ТаблицаРезультатовТипЗамовлення" id="25">
+					<DataPath>ТаблицаРезультатов.ТипЗамовлення</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Тип замовлення</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="ТаблицаРезультатовТипЗамовленняКонтекстноеМеню" id="26"/>
+					<ExtendedTooltip name="ТаблицаРезультатовТипЗамовленняРасширеннаяПодсказка" id="27"/>
+				</InputField>
+				<InputField name="ТаблицаРезультатовНомерЗамовлення" id="28">
+					<DataPath>ТаблицаРезультатов.НомерЗамовлення</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Номер</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="ТаблицаРезультатовНомерЗамовленняКонтекстноеМеню" id="29"/>
+					<ExtendedTooltip name="ТаблицаРезультатовНомерЗамовленняРасширеннаяПодсказка" id="30"/>
+				</InputField>
+				<InputField name="ТаблицаРезультатовДатаЗамовлення" id="31">
+					<DataPath>ТаблицаРезультатов.ДатаЗамовлення</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Дата</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="ТаблицаРезультатовДатаЗамовленняКонтекстноеМеню" id="32"/>
+					<ExtendedTooltip name="ТаблицаРезультатовДатаЗамовленняРасширеннаяПодсказка" id="33"/>
+				</InputField>
+				<InputField name="ТаблицаРезультатовКількістьЗалежнихДокументів" id="34">
+					<DataPath>ТаблицаРезультатов.КількістьЗалежнихДокументів</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Залежних док.</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="ТаблицаРезультатовКількістьЗалежнихДокументівКонтекстноеМеню" id="35"/>
+					<ExtendedTooltip name="ТаблицаРезультатовКількістьЗалежнихДокументівРасширеннаяПодсказка" id="36"/>
+				</InputField>
+				<InputField name="ТаблицаРезультатовСтатусПроведення" id="37">
+					<DataPath>ТаблицаРезультатов.СтатусПроведення</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Статус проведення</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="ТаблицаРезультатовСтатусПроведенняКонтекстноеМеню" id="38"/>
+					<ExtendedTooltip name="ТаблицаРезультатовСтатусПроведенняРасширеннаяПодсказка" id="39"/>
+				</InputField>
+				<InputField name="ТаблицаРезультатовСтатусПерепроведення" id="40">
+					<DataPath>ТаблицаРезультатов.СтатусПерепроведення</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Статус перепроведення</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="ТаблицаРезультатовСтатусПерепроведенняКонтекстноеМеню" id="41"/>
+					<ExtendedTooltip name="ТаблицаРезультатовСтатусПерепроведенняРасширеннаяПодсказка" id="42"/>
+				</InputField>
+			</ChildItems>
+		</Table>
+		<UsualGroup name="ГруппаЛог" id="50">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Лог виконання</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Лог виконання</v8:content>
+				</v8:item>
+			</Title>
+			<Behavior>Usual</Behavior>
+			<Collapsed>true</Collapsed>
+			<ShowTitle>true</ShowTitle>
+			<ExtendedTooltip name="ГруппаЛогРасширеннаяПодсказка" id="51"/>
+			<ChildItems>
+				<InputField name="Лог" id="52">
+					<DataPath>Лог</DataPath>
+					<TitleLocation>None</TitleLocation>
+					<Width>100</Width>
+					<Height>8</Height>
+					<VerticalStretch>true</VerticalStretch>
+					<ContextMenu name="ЛогКонтекстноеМеню" id="53"/>
+					<ExtendedTooltip name="ЛогРасширеннаяПодсказка" id="54"/>
+					<MultiLine>true</MultiLine>
+					<ReadOnly>true</ReadOnly>
+				</InputField>
+			</ChildItems>
+		</UsualGroup>
 	</ChildItems>
 	<Attributes>
 		<Attribute name="Объект" id="1">
@@ -103,25 +228,173 @@
 			</Type>
 			<MainAttribute>true</MainAttribute>
 			<Save>
-				<Field>1/0:b8c9d0e1-f2a3-4567-89ab-cdef01234567</Field>
 				<Field>Объект.НачалоПериода</Field>
 				<Field>Объект.ОкончаниеПериода</Field>
 				<Field>Объект.Организация</Field>
 			</Save>
 		</Attribute>
-	</Attributes>
-	<Commands>
-		<Command name="ВыполнитьОбработкуДокументов" id="1">
+		<Attribute name="ТаблицаРезультатов" id="2">
+			<Type>
+				<v8:Type>ValueTable</v8:Type>
+			</Type>
+			<Columns>
+				<Column name="ТипЗамовлення" id="3">
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>50</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Тип замовлення</v8:content>
+						</v8:item>
+					</Title>
+				</Column>
+				<Column name="НомерЗамовлення" id="4">
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>50</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Номер замовлення</v8:content>
+						</v8:item>
+					</Title>
+				</Column>
+				<Column name="ДатаЗамовлення" id="5">
+					<Type>
+						<v8:Type>xs:dateTime</v8:Type>
+						<v8:DateQualifiers>
+							<v8:DateFractions>Date</v8:DateFractions>
+						</v8:DateQualifiers>
+					</Type>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Дата замовлення</v8:content>
+						</v8:item>
+					</Title>
+				</Column>
+				<Column name="Замовлення" id="6">
+					<Type>
+						<v8:Type>cfg:DocumentRef.ЗаказПоставщику</v8:Type>
+						<v8:Type>cfg:DocumentRef.ЗаказКлиента</v8:Type>
+						<v8:Type>cfg:DocumentRef.ЗаказДавальца</v8:Type>
+						<v8:Type>cfg:DocumentRef.ЗаказПереработчику</v8:Type>
+					</Type>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Замовлення</v8:content>
+						</v8:item>
+					</Title>
+				</Column>
+				<Column name="КількістьЗалежнихДокументів" id="7">
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+							<v8:AllowedSign>Nonnegative</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Кількість залежних документів</v8:content>
+						</v8:item>
+					</Title>
+				</Column>
+				<Column name="СтатусПроведення" id="8">
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>50</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Статус проведення</v8:content>
+						</v8:item>
+					</Title>
+				</Column>
+				<Column name="СтатусПерепроведення" id="9">
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>100</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Статус перепроведення</v8:content>
+						</v8:item>
+					</Title>
+				</Column>
+			</Columns>
+		</Attribute>
+		<Attribute name="Лог" id="10">
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
 			<Title>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Выполнить обработку документов</v8:content>
+					<v8:content>Лог</v8:content>
+				</v8:item>
+			</Title>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="ЗнайтиПроблемні" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Знайти проблемні</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Знайти проблемні</v8:content>
 				</v8:item>
 			</Title>
 			<ToolTip>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Выполнить обработку документов</v8:content>
+					<v8:content>Пошук непроведених замовлень на які посилаються проведені документи</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ЗнайтиПроблемні</Action>
+		</Command>
+		<Command name="ВыполнитьОбработкуДокументов" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Виконати обробку</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Виконати обробку</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Провести непроведені замовлення та перепровести залежні документи</v8:content>
 				</v8:item>
 			</ToolTip>
 			<Action>ВыполнитьОбработкуДокументов</Action>
