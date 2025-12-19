@@ -1,0 +1,668 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
+	<Title>
+		<v8:item>
+			<v8:lang>ru</v8:lang>
+			<v8:content>Перепроведение проблемных взаиморасчетов</v8:content>
+		</v8:item>
+		<v8:item>
+			<v8:lang>uk</v8:lang>
+			<v8:content>Перепроведення проблемних взаєморозрахунків</v8:content>
+		</v8:item>
+	</Title>
+	<Width>200</Width>
+	<Height>50</Height>
+	<WindowOpeningMode>LockOwnerWindow</WindowOpeningMode>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1"/>
+	<Events>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+	</Events>
+	<ChildItems>
+		<!-- Группа настроек периода -->
+		<UsualGroup name="ГруппаПериод" id="100">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Период</v8:content>
+				</v8:item>
+			</Title>
+			<Group>HorizontalIfPossible</Group>
+			<Behavior>Usual</Behavior>
+			<Representation>WeakSeparation</Representation>
+			<ShowTitle>true</ShowTitle>
+			<ExtendedTooltip name="ГруппаПериодРасширеннаяПодсказка" id="101"/>
+			<ChildItems>
+				<InputField name="НачалоПериода" id="102">
+					<DataPath>НачалоПериода</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Начало периода</v8:content>
+						</v8:item>
+					</Title>
+					<Width>15</Width>
+					<ContextMenu name="НачалоПериодаКонтекстноеМеню" id="103"/>
+					<ExtendedTooltip name="НачалоПериодаРасширеннаяПодсказка" id="104"/>
+				</InputField>
+				<InputField name="КонецПериода" id="105">
+					<DataPath>КонецПериода</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Конец периода</v8:content>
+						</v8:item>
+					</Title>
+					<Width>15</Width>
+					<ContextMenu name="КонецПериодаКонтекстноеМеню" id="106"/>
+					<ExtendedTooltip name="КонецПериодаРасширеннаяПодсказка" id="107"/>
+				</InputField>
+			</ChildItems>
+		</UsualGroup>
+		<!-- Группа режимов проверки -->
+		<UsualGroup name="ГруппаРежимы" id="110">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Режимы проверки</v8:content>
+				</v8:item>
+			</Title>
+			<Group>Vertical</Group>
+			<Behavior>Usual</Behavior>
+			<Representation>WeakSeparation</Representation>
+			<ShowTitle>true</ShowTitle>
+			<ExtendedTooltip name="ГруппаРежимыРасширеннаяПодсказка" id="111"/>
+			<ChildItems>
+				<CheckBoxField name="ПроверятьНепроведенныеЗаказы" id="112">
+					<DataPath>ПроверятьНепроведенныеЗаказы</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Проверять непроведенные заказы</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Перевіряти непроведені замовлення</v8:content>
+						</v8:item>
+					</Title>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="ПроверятьНепроведенныеЗаказыКонтекстноеМеню" id="113"/>
+					<ExtendedTooltip name="ПроверятьНепроведенныеЗаказыРасширеннаяПодсказка" id="114">
+						<Title>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Поиск документов, ссылающихся на непроведенные заказы</v8:content>
+							</v8:item>
+						</Title>
+					</ExtendedTooltip>
+				</CheckBoxField>
+				<CheckBoxField name="ПроверятьОтсутствующиеДвижения" id="115">
+					<DataPath>ПроверятьОтсутствующиеДвижения</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Проверять отсутствующие движения по заказам</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Перевіряти відсутні рухи по замовленнях</v8:content>
+						</v8:item>
+					</Title>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="ПроверятьОтсутствующиеДвиженияКонтекстноеМеню" id="116"/>
+					<ExtendedTooltip name="ПроверятьОтсутствующиеДвиженияРасширеннаяПодсказка" id="117">
+						<Title>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Поиск документов с проведенными заказами, но без движений по регистрам расчетов</v8:content>
+							</v8:item>
+						</Title>
+					</ExtendedTooltip>
+				</CheckBoxField>
+			</ChildItems>
+		</UsualGroup>
+		<!-- Группа кнопок -->
+		<UsualGroup name="ГруппаКнопки" id="120">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Действия</v8:content>
+				</v8:item>
+			</Title>
+			<Group>HorizontalIfPossible</Group>
+			<Behavior>Usual</Behavior>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаКнопкиРасширеннаяПодсказка" id="121"/>
+			<ChildItems>
+				<Button name="НайтиПроблемы" id="122">
+					<Type>UsualButton</Type>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Найти проблемы</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Знайти проблеми</v8:content>
+						</v8:item>
+					</Title>
+					<CommandName>Form.Command.НайтиПроблемы</CommandName>
+					<Representation>PictureAndText</Representation>
+					<ExtendedTooltip name="НайтиПроблемыРасширеннаяПодсказка" id="123"/>
+				</Button>
+				<Button name="ПерепровестиВыбранные" id="124">
+					<Type>UsualButton</Type>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Перепровести выбранные</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Перепровести вибрані</v8:content>
+						</v8:item>
+					</Title>
+					<CommandName>Form.Command.ПерепровестиВыбранные</CommandName>
+					<Representation>PictureAndText</Representation>
+					<ExtendedTooltip name="ПерепровестиВыбранныеРасширеннаяПодсказка" id="125"/>
+				</Button>
+				<Button name="ПерепровестиВсе" id="126">
+					<Type>UsualButton</Type>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Перепровести все</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Перепровести всі</v8:content>
+						</v8:item>
+					</Title>
+					<CommandName>Form.Command.ПерепровестиВсе</CommandName>
+					<Representation>PictureAndText</Representation>
+					<ExtendedTooltip name="ПерепровестиВсеРасширеннаяПодсказка" id="127"/>
+				</Button>
+			</ChildItems>
+		</UsualGroup>
+		<!-- Таблица результатов -->
+		<Table name="ТаблицаДокументов" id="200">
+			<DataPath>ТаблицаДокументов</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Найденные проблемные документы</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Знайдені проблемні документи</v8:content>
+				</v8:item>
+			</Title>
+			<RowFilter xsi:nil="true"/>
+			<ContextMenu name="ТаблицаДокументовКонтекстноеМеню" id="201"/>
+			<AutoCommandBar name="ТаблицаДокументовКоманднаяПанель" id="202"/>
+			<ExtendedTooltip name="ТаблицаДокументовРасширеннаяПодсказка" id="203"/>
+			<SearchStringAddition name="ТаблицаДокументовСтрокаПоиска" id="204">
+				<AdditionSource>
+					<Item>ТаблицаДокументов</Item>
+					<Type>SearchStringRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="ТаблицаДокументовСтрокаПоискаКонтекстноеМеню" id="205"/>
+				<ExtendedTooltip name="ТаблицаДокументовСтрокаПоискаРасширеннаяПодсказка" id="206"/>
+			</SearchStringAddition>
+			<ViewStatusAddition name="ТаблицаДокументовСостояниеПросмотра" id="207">
+				<AdditionSource>
+					<Item>ТаблицаДокументов</Item>
+					<Type>ViewStatusRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="ТаблицаДокументовСостояниеПросмотраКонтекстноеМеню" id="208"/>
+				<ExtendedTooltip name="ТаблицаДокументовСостояниеПросмотраРасширеннаяПодсказка" id="209"/>
+			</ViewStatusAddition>
+			<ChildItems>
+				<CheckBoxField name="ТаблицаДокументовОтметка" id="210">
+					<DataPath>ТаблицаДокументов.Отметка</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content></v8:content>
+						</v8:item>
+					</Title>
+					<Width>3</Width>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="ТаблицаДокументовОтметкаКонтекстноеМеню" id="211"/>
+					<ExtendedTooltip name="ТаблицаДокументовОтметкаРасширеннаяПодсказка" id="212"/>
+				</CheckBoxField>
+				<InputField name="ТаблицаДокументовТипПроблемы" id="213">
+					<DataPath>ТаблицаДокументов.ТипПроблемы</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Тип проблемы</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Тип проблеми</v8:content>
+						</v8:item>
+					</Title>
+					<ReadOnly>true</ReadOnly>
+					<Width>20</Width>
+					<ContextMenu name="ТаблицаДокументовТипПроблемыКонтекстноеМеню" id="214"/>
+					<ExtendedTooltip name="ТаблицаДокументовТипПроблемыРасширеннаяПодсказка" id="215"/>
+				</InputField>
+				<InputField name="ТаблицаДокументовТипДокумента" id="216">
+					<DataPath>ТаблицаДокументов.ТипДокумента</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Тип документа</v8:content>
+						</v8:item>
+					</Title>
+					<ReadOnly>true</ReadOnly>
+					<Width>25</Width>
+					<ContextMenu name="ТаблицаДокументовТипДокументаКонтекстноеМеню" id="217"/>
+					<ExtendedTooltip name="ТаблицаДокументовТипДокументаРасширеннаяПодсказка" id="218"/>
+				</InputField>
+				<InputField name="ТаблицаДокументовДокумент" id="219">
+					<DataPath>ТаблицаДокументов.Документ</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Документ</v8:content>
+						</v8:item>
+					</Title>
+					<ReadOnly>true</ReadOnly>
+					<Width>30</Width>
+					<ContextMenu name="ТаблицаДокументовДокументКонтекстноеМеню" id="220"/>
+					<ExtendedTooltip name="ТаблицаДокументовДокументРасширеннаяПодсказка" id="221"/>
+				</InputField>
+				<InputField name="ТаблицаДокументовДатаДокумента" id="222">
+					<DataPath>ТаблицаДокументов.ДатаДокумента</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Дата</v8:content>
+						</v8:item>
+					</Title>
+					<ReadOnly>true</ReadOnly>
+					<Width>12</Width>
+					<ContextMenu name="ТаблицаДокументовДатаДокументаКонтекстноеМеню" id="223"/>
+					<ExtendedTooltip name="ТаблицаДокументовДатаДокументаРасширеннаяПодсказка" id="224"/>
+				</InputField>
+				<InputField name="ТаблицаДокументовНомерДокумента" id="225">
+					<DataPath>ТаблицаДокументов.НомерДокумента</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Номер</v8:content>
+						</v8:item>
+					</Title>
+					<ReadOnly>true</ReadOnly>
+					<Width>15</Width>
+					<ContextMenu name="ТаблицаДокументовНомерДокументаКонтекстноеМеню" id="226"/>
+					<ExtendedTooltip name="ТаблицаДокументовНомерДокументаРасширеннаяПодсказка" id="227"/>
+				</InputField>
+				<InputField name="ТаблицаДокументовЗаказ" id="228">
+					<DataPath>ТаблицаДокументов.Заказ</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Заказ</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Замовлення</v8:content>
+						</v8:item>
+					</Title>
+					<ReadOnly>true</ReadOnly>
+					<Width>30</Width>
+					<ContextMenu name="ТаблицаДокументовЗаказКонтекстноеМеню" id="229"/>
+					<ExtendedTooltip name="ТаблицаДокументовЗаказРасширеннаяПодсказка" id="230"/>
+				</InputField>
+				<InputField name="ТаблицаДокументовСтатусЗаказа" id="231">
+					<DataPath>ТаблицаДокументов.СтатусЗаказа</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Статус заказа</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Статус замовлення</v8:content>
+						</v8:item>
+					</Title>
+					<ReadOnly>true</ReadOnly>
+					<Width>15</Width>
+					<ContextMenu name="ТаблицаДокументовСтатусЗаказаКонтекстноеМеню" id="232"/>
+					<ExtendedTooltip name="ТаблицаДокументовСтатусЗаказаРасширеннаяПодсказка" id="233"/>
+				</InputField>
+				<InputField name="ТаблицаДокументовСтатусПерепроведения" id="234">
+					<DataPath>ТаблицаДокументов.СтатусПерепроведения</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Статус</v8:content>
+						</v8:item>
+					</Title>
+					<ReadOnly>true</ReadOnly>
+					<Width>12</Width>
+					<ContextMenu name="ТаблицаДокументовСтатусПерепроведенияКонтекстноеМеню" id="235"/>
+					<ExtendedTooltip name="ТаблицаДокументовСтатусПерепроведенияРасширеннаяПодсказка" id="236"/>
+				</InputField>
+				<InputField name="ТаблицаДокументовОшибка" id="237">
+					<DataPath>ТаблицаДокументов.Ошибка</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Ошибка</v8:content>
+						</v8:item>
+					</Title>
+					<ReadOnly>true</ReadOnly>
+					<Width>40</Width>
+					<ContextMenu name="ТаблицаДокументовОшибкаКонтекстноеМеню" id="238"/>
+					<ExtendedTooltip name="ТаблицаДокументовОшибкаРасширеннаяПодсказка" id="239"/>
+				</InputField>
+			</ChildItems>
+		</Table>
+		<!-- Группа логирования -->
+		<UsualGroup name="ГруппаЛог" id="300">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Лог выполнения</v8:content>
+				</v8:item>
+			</Title>
+			<Group>Vertical</Group>
+			<Behavior>Collapsible</Behavior>
+			<Representation>WeakSeparation</Representation>
+			<ShowTitle>true</ShowTitle>
+			<Collapsed>true</Collapsed>
+			<ExtendedTooltip name="ГруппаЛогРасширеннаяПодсказка" id="301"/>
+			<ChildItems>
+				<FormattedDocumentField name="ЛогВыполнения" id="302">
+					<DataPath>ЛогВыполнения</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Лог</v8:content>
+						</v8:item>
+					</Title>
+					<ReadOnly>true</ReadOnly>
+					<Height>10</Height>
+					<ContextMenu name="ЛогВыполненияКонтекстноеМеню" id="303"/>
+					<ExtendedTooltip name="ЛогВыполненияРасширеннаяПодсказка" id="304"/>
+				</FormattedDocumentField>
+			</ChildItems>
+		</UsualGroup>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="НачалоПериода" id="400">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Начало периода</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="КонецПериода" id="401">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Конец периода</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ПроверятьНепроведенныеЗаказы" id="402">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Проверять непроведенные заказы</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ПроверятьОтсутствующиеДвижения" id="403">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Проверять отсутствующие движения</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ЛогВыполнения" id="404">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Лог выполнения</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:FormattedDocument</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ТаблицаДокументов" id="405">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Найденные документы</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:ValueTable</v8:Type>
+			</Type>
+			<Columns>
+				<Column name="Отметка" id="1">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Отметка</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:boolean</v8:Type>
+					</Type>
+				</Column>
+				<Column name="ТипПроблемы" id="2">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Тип проблемы</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>100</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="ТипДокумента" id="3">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Тип документа</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>150</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="Документ" id="4">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Документ</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:TypeSet>cfg:AnyRef</v8:TypeSet>
+					</Type>
+				</Column>
+				<Column name="ДатаДокумента" id="5">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Дата документа</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:dateTime</v8:Type>
+						<v8:DateQualifiers>
+							<v8:DateFractions>DateTime</v8:DateFractions>
+						</v8:DateQualifiers>
+					</Type>
+				</Column>
+				<Column name="НомерДокумента" id="6">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Номер документа</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>50</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="Заказ" id="7">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Заказ</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:TypeSet>cfg:AnyRef</v8:TypeSet>
+					</Type>
+				</Column>
+				<Column name="СтатусЗаказа" id="8">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Статус заказа</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>50</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="СтатусПерепроведения" id="9">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Статус перепроведения</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>50</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="Ошибка" id="10">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Ошибка</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>500</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+			</Columns>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="НайтиПроблемы" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Найти проблемы</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Знайти проблеми</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Поиск проблемных документов за указанный период</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>НайтиПроблемы</Action>
+		</Command>
+		<Command name="ПерепровестиВыбранные" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Перепровести выбранные</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Перепровести вибрані</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Перепровести отмеченные документы</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ПерепровестиВыбранные</Action>
+		</Command>
+		<Command name="ПерепровестиВсе" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Перепровести все</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Перепровести всі</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Перепровести все найденные документы</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ПерепровестиВсе</Action>
+		</Command>
+	</Commands>
+</Form>
