@@ -129,6 +129,62 @@
 				</InputField>
 			</ChildItems>
 		</UsualGroup>
+		<UsualGroup name="ГруппаПериод" id="365">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Регистрация за период</v8:content>
+				</v8:item>
+			</Title>
+			<Visible>true</Visible>
+			<Enabled>true</Enabled>
+			<EnableContentChange>false</EnableContentChange>
+			<ReadOnly>false</ReadOnly>
+			<Group>HorizontalIfPossible</Group>
+			<Representation>NormalSeparation</Representation>
+			<ShowTitle>true</ShowTitle>
+			<TitleTextColor>Style.FormTextColor</TitleTextColor>
+			<ChildItems>
+				<InputField name="ПериодНачало" id="366">
+					<DataPath>ПериодНачало</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Начало периода</v8:content>
+						</v8:item>
+					</Title>
+					<Width>12</Width>
+					<HorizontalStretch>false</HorizontalStretch>
+					<ExtendedTooltip name="ПериодНачалоРасширеннаяПодсказка" id="367"/>
+					<ContextMenu name="ПериодНачалоКонтекстноеМеню" id="368"/>
+				</InputField>
+				<InputField name="ПериодОкончание" id="369">
+					<DataPath>ПериодОкончание</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Окончание периода</v8:content>
+						</v8:item>
+					</Title>
+					<Width>12</Width>
+					<HorizontalStretch>false</HorizontalStretch>
+					<ExtendedTooltip name="ПериодОкончаниеРасширеннаяПодсказка" id="370"/>
+					<ContextMenu name="ПериодОкончаниеКонтекстноеМеню" id="371"/>
+				</InputField>
+				<Button name="КнопкаЗарегистрироватьЗаПериод" id="372">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Зарегистрировать за период</v8:content>
+						</v8:item>
+					</Title>
+					<CommandName>Form.Command.ЗарегистрироватьЗаПериод</CommandName>
+					<Representation>Auto</Representation>
+					<ExtendedTooltip name="КнопкаЗарегистрироватьЗаПериодРасширеннаяПодсказка" id="373"/>
+				</Button>
+			</ChildItems>
+			<ExtendedTooltip name="ГруппаПериодРасширеннаяПодсказка" id="374"/>
+		</UsualGroup>
 		<UsualGroup name="Группа1" id="5">
 			<EnableContentChange>true</EnableContentChange>
 			<Title>
@@ -2187,6 +2243,65 @@
 				<v8:Type>v8:ValueListType</v8:Type>
 			</Type>
 		</Attribute>
+		<Attribute name="ПериодНачало" id="375">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Период начало</v8:content>
+				</v8:item>
+			</Title>
+			<ValueType>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
+			</ValueType>
+			<View>
+				<common>true</common>
+			</View>
+			<Edit>
+				<common>true</common>
+			</Edit>
+			<FillChecking>ShowError</FillChecking>
+		</Attribute>
+		<Attribute name="ПериодОкончание" id="376">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Период окончание</v8:content>
+				</v8:item>
+			</Title>
+			<ValueType>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
+			</ValueType>
+			<View>
+				<common>true</common>
+			</View>
+			<Edit>
+				<common>true</common>
+			</Edit>
+			<FillChecking>ShowError</FillChecking>
+		</Attribute>
+		<Attribute name="ДоступнаРегистрацияАсинхронно" id="377">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Доступна регистрация асинхронно</v8:content>
+				</v8:item>
+			</Title>
+			<ValueType>
+				<v8:Type>xs:boolean</v8:Type>
+			</ValueType>
+			<View>
+				<common>true</common>
+			</View>
+			<Edit>
+				<common>true</common>
+			</Edit>
+		</Attribute>
 	</Attributes>
 	<Commands>
 		<Command name="ДобавитьРегистрациюСсылки" id="1">
@@ -2681,6 +2796,27 @@
 			</Picture>
 			<Action>ДобавитьРегистрациюСправочниковИзДокумента</Action>
 			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="ЗарегистрироватьЗаПериод" id="364">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Зарегистрировать за период</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Регистрация изменений документов за указанный период</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Use>
+				<common>true</common>
+			</Use>
+			<Representation>Auto</Representation>
+			<ModifiesStoredData>true</ModifiesStoredData>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+			<Action xsi:type="v8:FormStandardCommand">RunCommand</Action>
 		</Command>
 	</Commands>
 	<Parameters>
