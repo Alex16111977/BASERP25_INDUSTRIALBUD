@@ -7,32 +7,6 @@
 	<dataSet xsi:type="DataSetQuery">
 		<name>НаборДанных1</name>
 		<field xsi:type="DataSetFieldField">
-			<dataPath>Подразделение</dataPath>
-			<field>Подразделение</field>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>Аналитика</dataPath>
-			<field>Аналитика</field>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>Статья</dataPath>
-			<field>Статья</field>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>Сумма</dataPath>
-			<field>Сумма</field>
-		</field>
-		<field xsi:type="DataSetFieldField">
-			<dataPath>Сотрудник</dataPath>
-			<field>Сотрудник</field>
-			<title xsi:type="v8:LocalStringType">
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Сотрудник</v8:content>
-				</v8:item>
-			</title>
-		</field>
-		<field xsi:type="DataSetFieldField">
 			<dataPath>Документ</dataPath>
 			<field>Документ</field>
 			<title xsi:type="v8:LocalStringType">
@@ -46,19 +20,80 @@
 				<dcscom:periodType>Main</dcscom:periodType>
 			</role>
 		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Организация</dataPath>
+			<field>Организация</field>
+			<role>
+				<dcscom:dimension>true</dcscom:dimension>
+			</role>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Статья</dataPath>
+			<field>Статья</field>
+			<role>
+				<dcscom:dimension>true</dcscom:dimension>
+			</role>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>СпособОтраженияЗарплатыВБухучете</dataPath>
+			<field>СпособОтраженияЗарплатыВБухучете</field>
+			<role>
+				<dcscom:dimension>true</dcscom:dimension>
+			</role>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ФизическоеЛицо</dataPath>
+			<field>ФизическоеЛицо</field>
+			<role>
+				<dcscom:dimension>true</dcscom:dimension>
+			</role>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Подразделение</dataPath>
+			<field>Подразделение</field>
+			<role>
+				<dcscom:dimension>true</dcscom:dimension>
+			</role>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>СтатьяРасходов</dataPath>
+			<field>СтатьяРасходов</field>
+			<role>
+				<dcscom:dimension>true</dcscom:dimension>
+			</role>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Налог</dataPath>
+			<field>Налог</field>
+			<role>
+				<dcscom:dimension>true</dcscom:dimension>
+			</role>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ТипНалога</dataPath>
+			<field>ТипНалога</field>
+			<role>
+				<dcscom:dimension>true</dcscom:dimension>
+			</role>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Сумма</dataPath>
+			<field>Сумма</field>
+		</field>
 		<dataSource>Информационная база</dataSource>
 		<query>ВЫБРАТЬ
-	ПрочиеАктивыПассивы.А_Сотрудник КАК Сотрудник,
-	ПрочиеАктивыПассивы.Подразделение КАК Подразделение,
-	ПрочиеАктивыПассивы.Статья КАК Статья,
-	ПрочиеАктивыПассивы.Аналитика КАК Аналитика,
-	ПрочиеАктивыПассивы.Сумма КАК Сумма,
-	ПрочиеАктивыПассивы.Регистратор КАК Документ
+	А_НачисленнаяЗарплатаИВзносыПоФизлицамОбороты.Регистратор КАК Документ,
+	А_НачисленнаяЗарплатаИВзносыПоФизлицамОбороты.СуммаОборот КАК Сумма,
+	А_НачисленнаяЗарплатаИВзносыПоФизлицамОбороты.Организация КАК Организация,
+	А_НачисленнаяЗарплатаИВзносыПоФизлицамОбороты.ФизическоеЛицо КАК ФизическоеЛицо,
+	А_НачисленнаяЗарплатаИВзносыПоФизлицамОбороты.Подразделение КАК Подразделение,
+	А_НачисленнаяЗарплатаИВзносыПоФизлицамОбороты.СпособОтраженияЗарплатыВБухучете КАК СпособОтраженияЗарплатыВБухучете,
+	А_НачисленнаяЗарплатаИВзносыПоФизлицамОбороты.Статья КАК Статья,
+	А_НачисленнаяЗарплатаИВзносыПоФизлицамОбороты.СтатьяРасходов КАК СтатьяРасходов,
+	А_НачисленнаяЗарплатаИВзносыПоФизлицамОбороты.Налог КАК Налог,
+	А_НачисленнаяЗарплатаИВзносыПоФизлицамОбороты.ТипНалога КАК ТипНалога
 ИЗ
-	РегистрНакопления.ПрочиеАктивыПассивы КАК ПрочиеАктивыПассивы
-ГДЕ
-	ПрочиеАктивыПассивы.Регистратор ССЫЛКА Документ.ОтражениеЗарплатыВФинансовомУчете
-	И ПрочиеАктивыПассивы.Период МЕЖДУ &amp;НачалоПериода И &amp;КонецПериода</query>
+	РегистрНакопления.А_НачисленнаяЗарплатаИВзносыПоФизлицам.Обороты(&amp;НачалоПериода, &amp;КонецПериода, Авто, ) КАК А_НачисленнаяЗарплатаИВзносыПоФизлицамОбороты</query>
 	</dataSet>
 	<totalField>
 		<dataPath>Сумма</dataPath>
@@ -162,7 +197,7 @@
 				<dcsset:column>
 					<dcsset:groupItems>
 						<dcsset:item xsi:type="dcsset:GroupItemField">
-							<dcsset:field>Статья</dcsset:field>
+							<dcsset:field>СтатьяРасходов</dcsset:field>
 							<dcsset:groupType>Items</dcsset:groupType>
 							<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 							<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -178,7 +213,7 @@
 					<dcsset:item>
 						<dcsset:groupItems>
 							<dcsset:item xsi:type="dcsset:GroupItemField">
-								<dcsset:field>Аналитика</dcsset:field>
+								<dcsset:field>ТипНалога</dcsset:field>
 								<dcsset:groupType>Items</dcsset:groupType>
 								<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 								<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -196,7 +231,7 @@
 				<dcsset:row>
 					<dcsset:groupItems>
 						<dcsset:item xsi:type="dcsset:GroupItemField">
-							<dcsset:field>Сотрудник</dcsset:field>
+							<dcsset:field>ФизическоеЛицо</dcsset:field>
 							<dcsset:groupType>Items</dcsset:groupType>
 							<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 							<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
