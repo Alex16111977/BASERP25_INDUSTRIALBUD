@@ -80,6 +80,56 @@
 			<dataPath>Сумма</dataPath>
 			<field>Сумма</field>
 		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>СуммаАктивПассива</dataPath>
+			<field>СуммаАктивПассива</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сумма актив пассива</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>СуммаНачисленно</dataPath>
+			<field>СуммаНачисленно</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сумма начисленно</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>НаправлениеДеятельности</dataPath>
+			<field>НаправлениеДеятельности</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Аналитика</dataPath>
+			<field>Аналитика</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>СтатьяФинансирования</dataPath>
+			<field>СтатьяФинансирования</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Сотрудник</dataPath>
+			<field>Сотрудник</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ГруппаУчетаНачислений</dataPath>
+			<field>ГруппаУчетаНачислений</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>СуммаНачисленноОтражениеЗП</dataPath>
+			<field>СуммаНачисленноОтражениеЗП</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сумма начисленно отражение ЗП</v8:content>
+				</v8:item>
+			</title>
+		</field>
 		<dataSource>Информационная база</dataSource>
 		<query>ВЫБРАТЬ
 	А_НачисленнаяЗарплатаИВзносыПоФизлицамОбороты.Регистратор КАК Документ,
@@ -91,13 +141,103 @@
 	А_НачисленнаяЗарплатаИВзносыПоФизлицамОбороты.Статья КАК Статья,
 	А_НачисленнаяЗарплатаИВзносыПоФизлицамОбороты.СтатьяРасходов КАК СтатьяРасходов,
 	А_НачисленнаяЗарплатаИВзносыПоФизлицамОбороты.Налог КАК Налог,
-	А_НачисленнаяЗарплатаИВзносыПоФизлицамОбороты.ТипНалога КАК ТипНалога
+	А_НачисленнаяЗарплатаИВзносыПоФизлицамОбороты.ТипНалога КАК ТипНалога,
+	0 КАК СуммаАктивПассива,
+	0 КАК СуммаНачисленно,
+	ВЫБОР
+		КОГДА А_НачисленнаяЗарплатаИВзносыПоФизлицамОбороты.Статья = ЗНАЧЕНИЕ(ПланВидовХарактеристик.СтатьиАктивовПассивов.ОплатаТруда)
+			ТОГДА А_НачисленнаяЗарплатаИВзносыПоФизлицамОбороты.СуммаОборот
+		ИНАЧЕ 0
+	КОНЕЦ КАК СуммаНачисленноОтражениеЗП
 ИЗ
-	РегистрНакопления.А_НачисленнаяЗарплатаИВзносыПоФизлицам.Обороты(&amp;НачалоПериода, &amp;КонецПериода, Авто, ) КАК А_НачисленнаяЗарплатаИВзносыПоФизлицамОбороты</query>
+	РегистрНакопления.А_НачисленнаяЗарплатаИВзносыПоФизлицам.Обороты(&amp;НачалоПериода, &amp;КонецПериода, Авто, ) КАК А_НачисленнаяЗарплатаИВзносыПоФизлицамОбороты
+
+ОБЪЕДИНИТЬ ВСЕ
+
+ВЫБРАТЬ
+	ПрочиеАктивыПассивыОстаткиИОбороты.Регистратор,
+	0,
+	ПрочиеАктивыПассивыОстаткиИОбороты.Организация,
+	NULL,
+	ПрочиеАктивыПассивыОстаткиИОбороты.Подразделение,
+	NULL,
+	ПрочиеАктивыПассивыОстаткиИОбороты.Статья,
+	NULL,
+	NULL,
+	ПрочиеАктивыПассивыОстаткиИОбороты.Аналитика,
+	ПрочиеАктивыПассивыОстаткиИОбороты.СуммаРасход - ПрочиеАктивыПассивыОстаткиИОбороты.СуммаПриход,
+	0,
+	0
+ИЗ
+	РегистрНакопления.ПрочиеАктивыПассивы.ОстаткиИОбороты(&amp;НачалоПериода, &amp;КонецПериода, Авто, , ) КАК ПрочиеАктивыПассивыОстаткиИОбороты
+ГДЕ
+	ПрочиеАктивыПассивыОстаткиИОбороты.Регистратор ССЫЛКА Документ.ОтражениеЗарплатыВФинансовомУчете
+	И ПрочиеАктивыПассивыОстаткиИОбороты.Статья &lt;&gt; ЗНАЧЕНИЕ(ПланВидовХарактеристик.СтатьиАктивовПассивов.РасходыТекущегоПериода)
+
+ОБЪЕДИНИТЬ ВСЕ
+
+ВЫБРАТЬ
+	ВзаиморасчетыССотрудникамиОстаткиИОбороты.Регистратор,
+	0,
+	ВзаиморасчетыССотрудникамиОстаткиИОбороты.Организация,
+	ВзаиморасчетыССотрудникамиОстаткиИОбороты.ФизическоеЛицо,
+	NULL,
+	NULL,
+	ЗНАЧЕНИЕ(ПланВидовХарактеристик.СтатьиАктивовПассивов.ОплатаТруда),
+	NULL,
+	NULL,
+	NULL,
+	0,
+	ВзаиморасчетыССотрудникамиОстаткиИОбороты.СуммаВзаиморасчетовПриход - ВзаиморасчетыССотрудникамиОстаткиИОбороты.СуммаВзаиморасчетовРасход,
+	0
+ИЗ
+	РегистрНакопления.ВзаиморасчетыССотрудниками.ОстаткиИОбороты(, , Авто, , ) КАК ВзаиморасчетыССотрудникамиОстаткиИОбороты
+ГДЕ
+	ВзаиморасчетыССотрудникамиОстаткиИОбороты.Регистратор ССЫЛКА Документ.НачислениеЗарплаты</query>
 	</dataSet>
+	<calculatedField>
+		<dataPath>РасхождениеНачисленно</dataPath>
+		<expression>СуммаНачисленноОтражениеЗП-СуммаНачисленно</expression>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Расхождение начисленно</v8:content>
+			</v8:item>
+		</title>
+	</calculatedField>
+	<calculatedField>
+		<dataPath>РасхождениеАктивПасив</dataPath>
+		<expression>Сумма-СуммаАктивПассива</expression>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Расхождение актив пасив</v8:content>
+			</v8:item>
+		</title>
+	</calculatedField>
 	<totalField>
 		<dataPath>Сумма</dataPath>
 		<expression>Сумма(Сумма)</expression>
+	</totalField>
+	<totalField>
+		<dataPath>СуммаНачисленно</dataPath>
+		<expression>Сумма(СуммаНачисленно)</expression>
+	</totalField>
+	<totalField>
+		<dataPath>СуммаАктивПассива</dataPath>
+		<expression>Сумма(СуммаАктивПассива)</expression>
+	</totalField>
+	<totalField>
+		<dataPath>СуммаНачисленноОтражениеЗП</dataPath>
+		<expression>Сумма(СуммаНачисленноОтражениеЗП)</expression>
+	</totalField>
+	<totalField>
+		<dataPath>РасхождениеНачисленно</dataPath>
+		<expression>Сумма(РасхождениеНачисленно)</expression>
+	</totalField>
+	<totalField>
+		<dataPath>РасхождениеАктивПасив</dataPath>
+		<expression>Сумма(РасхождениеАктивПасив)</expression>
 	</totalField>
 	<parameter>
 		<name>Период</name>
@@ -197,7 +337,7 @@
 				<dcsset:column>
 					<dcsset:groupItems>
 						<dcsset:item xsi:type="dcsset:GroupItemField">
-							<dcsset:field>СтатьяРасходов</dcsset:field>
+							<dcsset:field>Статья</dcsset:field>
 							<dcsset:groupType>Items</dcsset:groupType>
 							<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 							<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -210,23 +350,6 @@
 					<dcsset:selection>
 						<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
 					</dcsset:selection>
-					<dcsset:item>
-						<dcsset:groupItems>
-							<dcsset:item xsi:type="dcsset:GroupItemField">
-								<dcsset:field>ТипНалога</dcsset:field>
-								<dcsset:groupType>Items</dcsset:groupType>
-								<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
-								<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
-								<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
-							</dcsset:item>
-						</dcsset:groupItems>
-						<dcsset:order>
-							<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
-						</dcsset:order>
-						<dcsset:selection>
-							<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
-						</dcsset:selection>
-					</dcsset:item>
 				</dcsset:column>
 				<dcsset:row>
 					<dcsset:groupItems>
