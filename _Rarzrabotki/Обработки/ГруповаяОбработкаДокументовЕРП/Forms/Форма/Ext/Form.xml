@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
 	<Title>
 		<v8:item>
@@ -16,14 +16,14 @@
 		<ChildItems>
 			<Button name="ФормаОтобрать" id="100">
 				<Type>CommandBarButton</Type>
-				<CommandName>Form.Command.Отобрать</CommandName>
 				<Representation>PictureAndText</Representation>
+				<CommandName>Form.Command.Отобрать</CommandName>
 				<ExtendedTooltip name="ФормаОтобратьExtendedTooltip" id="101"/>
 			</Button>
 			<Button name="ФормаВыполнитьДействие" id="102">
 				<Type>CommandBarButton</Type>
-				<CommandName>Form.Command.ВыполнитьДействие</CommandName>
 				<Representation>PictureAndText</Representation>
+				<CommandName>Form.Command.ВыполнитьДействие</CommandName>
 				<ExtendedTooltip name="ФормаВыполнитьДействиеExtendedTooltip" id="103"/>
 			</Button>
 			<Button name="ФормаПечатьРеестра" id="104">
@@ -77,7 +77,6 @@
 								</v8:item>
 							</Title>
 							<Behavior>Usual</Behavior>
-							<Representation>WeakSeparation</Representation>
 							<ExtendedTooltip name="ГруппаТипОбъектаExtendedTooltip" id="6"/>
 							<ChildItems>
 								<RadioButtonField name="ТипОбъекта" id="7">
@@ -160,8 +159,6 @@
 								</v8:item>
 							</Title>
 							<Behavior>Usual</Behavior>
-							<Representation>WeakSeparation</Representation>
-							<Group>HorizontalIfPossible</Group>
 							<ExtendedTooltip name="ГруппаПериодExtendedTooltip" id="14"/>
 							<ChildItems>
 								<InputField name="ДатаНачала" id="15">
@@ -227,8 +224,6 @@
 								</v8:item>
 							</Title>
 							<Behavior>Usual</Behavior>
-							<Representation>WeakSeparation</Representation>
-							<Group>HorizontalIfPossible</Group>
 							<ExtendedTooltip name="ГруппаДействиеExtendedTooltip" id="24"/>
 							<ChildItems>
 								<InputField name="Действие" id="25">
@@ -269,6 +264,8 @@
 							</ChildItems>
 						</UsualGroup>
 						<Table name="СписокОбъектов" id="31">
+							<ChangeRowSet>false</ChangeRowSet>
+							<ChangeRowOrder>false</ChangeRowOrder>
 							<DataPath>СписокОбъектов</DataPath>
 							<Title>
 								<v8:item>
@@ -280,9 +277,7 @@
 									<v8:content>Список об'єктів</v8:content>
 								</v8:item>
 							</Title>
-							<TitleLocation>None</TitleLocation>
-							<ChangeRowSet>false</ChangeRowSet>
-							<ChangeRowOrder>false</ChangeRowOrder>
+							<RowFilter xsi:nil="true"/>
 							<ContextMenu name="СписокОбъектовКонтекстноеМеню" id="32"/>
 							<AutoCommandBar name="СписокОбъектовКоманднаяПанель" id="33">
 								<Autofill>false</Autofill>
@@ -300,15 +295,30 @@
 								</ChildItems>
 							</AutoCommandBar>
 							<ExtendedTooltip name="СписокОбъектовExtendedTooltip" id="38"/>
-							<SearchControlAddition name="СписокОбъектовСтрокаПоиска" id="39">
-								<ExtendedTooltip name="СписокОбъектовСтрокаПоискаExtendedTooltip" id="40"/>
-							</SearchControlAddition>
-							<ViewStatusAddition name="СписокОбъектовСостояниеПросмотра" id="41">
-								<ExtendedTooltip name="СписокОбъектовСостояниеПросмотраExtendedTooltip" id="42"/>
-							</ViewStatusAddition>
 							<SearchStringAddition name="СписокОбъектовСтрокаПоискаТаблицы" id="43">
+								<AdditionSource>
+									<Item>СписокОбъектов</Item>
+									<Type>SearchStringRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="СписокОбъектовСтрокаПоискаТаблицыКонтекстноеМеню" id="106"/>
 								<ExtendedTooltip name="СписокОбъектовСтрокаПоискаТаблицыExtendedTooltip" id="44"/>
 							</SearchStringAddition>
+							<ViewStatusAddition name="СписокОбъектовСостояниеПросмотра" id="41">
+								<AdditionSource>
+									<Item>СписокОбъектов</Item>
+									<Type>ViewStatusRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="СписокОбъектовСостояниеПросмотраКонтекстноеМеню" id="107"/>
+								<ExtendedTooltip name="СписокОбъектовСостояниеПросмотраExtendedTooltip" id="42"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="СписокОбъектовСтрокаПоиска" id="39">
+								<AdditionSource>
+									<Item>СписокОбъектов</Item>
+									<Type>SearchControl</Type>
+								</AdditionSource>
+								<ContextMenu name="СписокОбъектовСтрокаПоискаКонтекстноеМеню" id="108"/>
+								<ExtendedTooltip name="СписокОбъектовСтрокаПоискаExtendedTooltip" id="40"/>
+							</SearchControlAddition>
 							<ChildItems>
 								<CheckBoxField name="СписокОбъектовПометка" id="45">
 									<DataPath>СписокОбъектов.Пометка</DataPath>
@@ -318,7 +328,6 @@
 											<v8:content>П</v8:content>
 										</v8:item>
 									</Title>
-									<Width>3</Width>
 									<CheckBoxType>Auto</CheckBoxType>
 									<ContextMenu name="СписокОбъектовПометкаКонтекстноеМеню" id="46"/>
 									<ExtendedTooltip name="СписокОбъектовПометкаExtendedTooltip" id="47"/>
