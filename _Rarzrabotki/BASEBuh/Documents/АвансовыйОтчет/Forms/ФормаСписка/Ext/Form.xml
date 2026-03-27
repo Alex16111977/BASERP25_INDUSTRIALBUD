@@ -108,6 +108,7 @@
 				<ExtendedTooltip name="СписокУправлениеПоискомРасширеннаяПодсказка" id="66"/>
 			</SearchControlAddition>
 			<Events>
+				<Event name="Selection">СписокВыбор</Event>
 				<Event name="OnActivateRow">СписокПриАктивизацииСтроки</Event>
 				<Event name="BeforeLoadUserSettingsAtServer">СписокПередЗагрузкойПользовательскихНастроекНаСервере</Event>
 			</Events>
@@ -127,6 +128,60 @@
 					<ContextMenu name="ЕстьФайлыКонтекстноеМеню" id="71"/>
 					<ExtendedTooltip name="ЕстьФайлыРасширеннаяПодсказка" id="72"/>
 				</PictureField>
+				<CheckBoxField name="Отправлены" id="73">
+					<DataPath>Список.Отправлены</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Відправлено</v8:content>
+						</v8:item>
+					</Title>
+					<TitleLocation>None</TitleLocation>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Відправлено на підпис підзвітній особі</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Відправлено на підпис підзвітній особі</v8:content>
+						</v8:item>
+					</ToolTip>
+					<HeaderPicture>
+						<xr:Ref>StdPicture.SendMessage</xr:Ref>
+						<xr:LoadTransparent>true</xr:LoadTransparent>
+					</HeaderPicture>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="ОтправленыКонтекстноеМеню" id="74"/>
+					<ExtendedTooltip name="ОтправленыРасширеннаяПодсказка" id="75"/>
+				</CheckBoxField>
+				<CheckBoxField name="Получены" id="76">
+					<DataPath>Список.Получены</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Повернено</v8:content>
+						</v8:item>
+					</Title>
+					<TitleLocation>None</TitleLocation>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Повернено з підписами підзвітної особи</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Повернено з підписами підзвітної особи</v8:content>
+						</v8:item>
+					</ToolTip>
+					<HeaderPicture>
+						<xr:Ref>CommonPicture.ПодписанЭП</xr:Ref>
+						<xr:LoadTransparent>true</xr:LoadTransparent>
+					</HeaderPicture>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="ПолученыКонтекстноеМеню" id="77"/>
+					<ExtendedTooltip name="ПолученыРасширеннаяПодсказка" id="78"/>
+				</CheckBoxField>
 				<LabelField name="Дата" id="6">
 					<DataPath>Список.Дата</DataPath>
 					<DefaultItem>true</DefaultItem>
@@ -242,11 +297,15 @@
 		КОГДА НаличиеФайлов.ЕстьФайлы
 			ТОГДА 0
 		ИНАЧЕ 1
-	КОНЕЦ КАК ЕстьФайлы
+	КОНЕЦ КАК ЕстьФайлы,
+	ОтправкаПолучениеДокументов.ДокументыОтправлены КАК Отправлены,
+	ОтправкаПолучениеДокументов.ДокументыПолучены КАК Получены
 ИЗ
 	Документ.АвансовыйОтчет КАК ДокументАвансовыйОтчет
 		{ЛЕВОЕ СОЕДИНЕНИЕ РегистрСведений.НаличиеФайлов КАК НаличиеФайлов
-		ПО ДокументАвансовыйОтчет.Ссылка = НаличиеФайлов.ОбъектСФайлами}</QueryText>
+		ПО ДокументАвансовыйОтчет.Ссылка = НаличиеФайлов.ОбъектСФайлами}
+		ЛЕВОЕ СОЕДИНЕНИЕ РегистрСведений.ОтправкаПолучениеДокументов КАК ОтправкаПолучениеДокументов
+		ПО ДокументАвансовыйОтчет.Ссылка = ОтправкаПолучениеДокументов.Документ</QueryText>
 				<MainTable>Document.АвансовыйОтчет</MainTable>
 				<ListSettings>
 					<dcsset:filter>
