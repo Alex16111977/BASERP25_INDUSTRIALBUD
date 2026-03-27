@@ -1,0 +1,629 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
+	<AutoSaveDataInSettings>Use</AutoSaveDataInSettings>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+		<Autofill>false</Autofill>
+		<ChildItems>
+			<Button name="КнопкаСформировать" id="130">
+				<Type>CommandBarButton</Type>
+				<Representation>PictureAndText</Representation>
+				<CommandName>Form.Command.Сформировать</CommandName>
+				<ExtendedTooltip name="КнопкаСформироватьExtendedTooltip" id="135"/>
+			</Button>
+			<Button name="КнопкаАнализДокументов" id="131">
+				<Type>CommandBarButton</Type>
+				<Representation>PictureAndText</Representation>
+				<CommandName>Form.Command.АнализДокументов</CommandName>
+				<ExtendedTooltip name="КнопкаАнализДокументовExtendedTooltip" id="136"/>
+			</Button>
+			<Button name="КнопкаСинхронизировать" id="132">
+				<Type>CommandBarButton</Type>
+				<Representation>PictureAndText</Representation>
+				<CommandName>Form.Command.Синхронизировать</CommandName>
+				<ExtendedTooltip name="КнопкаСинхронизироватьExtendedTooltip" id="137"/>
+			</Button>
+		</ChildItems>
+	</AutoCommandBar>
+	<Events>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+	</Events>
+	<ChildItems>
+		<UsualGroup name="ГруппаПериод" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Період</v8:content>
+				</v8:item>
+			</Title>
+			<Group>AlwaysHorizontal</Group>
+			<Behavior>Usual</Behavior>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаПериодExtendedTooltip" id="2"/>
+			<ChildItems>
+				<InputField name="НачалоПериода" id="6">
+					<DataPath>Объект.НачалоПериода</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Період з</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="НачалоПериодаКонтекстноеМеню" id="7"/>
+					<ExtendedTooltip name="НачалоПериодаExtendedTooltip" id="8"/>
+				</InputField>
+				<InputField name="ОкончаниеПериода" id="9">
+					<DataPath>Объект.ОкончаниеПериода</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>по</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="ОкончаниеПериодаКонтекстноеМеню" id="10"/>
+					<ExtendedTooltip name="ОкончаниеПериодаExtendedTooltip" id="11"/>
+				</InputField>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="ГруппаРазделы" id="12">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Розділи перевірки</v8:content>
+				</v8:item>
+			</Title>
+			<Group>AlwaysHorizontal</Group>
+			<Behavior>Usual</Behavior>
+			<ExtendedTooltip name="ГруппаРазделыExtendedTooltip" id="13"/>
+			<ChildItems>
+				<CheckBoxField name="РазделТовары" id="20">
+					<DataPath>Объект.РазделТовары</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Товари</v8:content>
+						</v8:item>
+					</Title>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="РазделТоварыКонтекстноеМеню" id="21"/>
+					<ExtendedTooltip name="РазделТоварыExtendedTooltip" id="22"/>
+					<Events>
+						<Event name="OnChange">РазделТоварыПриИзменении</Event>
+					</Events>
+				</CheckBoxField>
+				<CheckBoxField name="РазделДеньги" id="23">
+					<DataPath>Объект.РазделДеньги</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Грошові кошти</v8:content>
+						</v8:item>
+					</Title>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="РазделДеньгиКонтекстноеМеню" id="24"/>
+					<ExtendedTooltip name="РазделДеньгиExtendedTooltip" id="25"/>
+				</CheckBoxField>
+				<CheckBoxField name="РазделВзаиморасчеты" id="26">
+					<DataPath>Объект.РазделВзаиморасчеты</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Взаєморозрахунки</v8:content>
+						</v8:item>
+					</Title>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="РазделВзаиморасчетыКонтекстноеМеню" id="27"/>
+					<ExtendedTooltip name="РазделВзаиморасчетыExtendedTooltip" id="28"/>
+				</CheckBoxField>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="ГруппаФильтрыТоваров" id="14">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Фільтри товарів</v8:content>
+				</v8:item>
+			</Title>
+			<Group>AlwaysHorizontal</Group>
+			<Behavior>Usual</Behavior>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаФильтрыТоваровExtendedTooltip" id="15"/>
+			<ChildItems>
+				<InputField name="Номенклатура" id="30">
+					<DataPath>Объект.Номенклатура</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Номенклатура</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="НоменклатураКонтекстноеМеню" id="31"/>
+					<ExtendedTooltip name="НоменклатураExtendedTooltip" id="32"/>
+				</InputField>
+				<InputField name="Склад" id="33">
+					<DataPath>Объект.Склад</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Склад</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="СкладКонтекстноеМеню" id="34"/>
+					<ExtendedTooltip name="СкладExtendedTooltip" id="35"/>
+				</InputField>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="ГруппаКнопкиРасхождений" id="16">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Розбіжності залишків</v8:content>
+				</v8:item>
+			</Title>
+			<Group>AlwaysHorizontal</Group>
+			<Behavior>Usual</Behavior>
+			<ExtendedTooltip name="ГруппаКнопкиРасхожденийExtendedTooltip" id="17"/>
+			<ChildItems>
+				<Button name="КнопкаВыбратьВсе" id="133">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Command.ВыбратьВсе</CommandName>
+					<ExtendedTooltip name="КнопкаВыбратьВсеExtendedTooltip" id="138"/>
+				</Button>
+				<Button name="КнопкаСнятьВыделение" id="134">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Command.СнятьВыделение</CommandName>
+					<ExtendedTooltip name="КнопкаСнятьВыделениеExtendedTooltip" id="139"/>
+				</Button>
+			</ChildItems>
+		</UsualGroup>
+		<Table name="ТаблицаРасхожденийФорма" id="40">
+			<ChangeRowSet>false</ChangeRowSet>
+			<ChangeRowOrder>false</ChangeRowOrder>
+			<Footer>true</Footer>
+			<DataPath>Объект.ТаблицаРасхождений</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Розбіжності залишків</v8:content>
+				</v8:item>
+			</Title>
+			<RowFilter xsi:nil="true"/>
+			<ContextMenu name="ТаблицаРасхожденийФормаКонтекстноеМеню" id="41"/>
+			<AutoCommandBar name="ТаблицаРасхожденийФормаКоманднаяПанель" id="43"/>
+			<ExtendedTooltip name="ТаблицаРасхожденийФормаExtendedTooltip" id="42"/>
+			<SearchStringAddition name="ТаблицаРасхожденийФормаСтрокаПоиска" id="140">
+				<AdditionSource>
+					<Item>ТаблицаРасхожденийФорма</Item>
+					<Type>SearchStringRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="ТаблицаРасхожденийФормаСтрокаПоискаКонтекстноеМеню" id="141"/>
+				<ExtendedTooltip name="ТаблицаРасхожденийФормаСтрокаПоискаРасширеннаяПодсказка" id="142"/>
+			</SearchStringAddition>
+			<ViewStatusAddition name="ТаблицаРасхожденийФормаСостояниеПросмотра" id="143">
+				<AdditionSource>
+					<Item>ТаблицаРасхожденийФорма</Item>
+					<Type>ViewStatusRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="ТаблицаРасхожденийФормаСостояниеПросмотраКонтекстноеМеню" id="144"/>
+				<ExtendedTooltip name="ТаблицаРасхожденийФормаСостояниеПросмотраРасширеннаяПодсказка" id="145"/>
+			</ViewStatusAddition>
+			<SearchControlAddition name="ТаблицаРасхожденийФормаУправлениеПоиском" id="146">
+				<AdditionSource>
+					<Item>ТаблицаРасхожденийФорма</Item>
+					<Type>SearchControl</Type>
+				</AdditionSource>
+				<ContextMenu name="ТаблицаРасхожденийФормаУправлениеПоискомКонтекстноеМеню" id="147"/>
+				<ExtendedTooltip name="ТаблицаРасхожденийФормаУправлениеПоискомРасширеннаяПодсказка" id="148"/>
+			</SearchControlAddition>
+			<ChildItems>
+				<CheckBoxField name="ТРСинхронизировать" id="44">
+					<DataPath>Объект.ТаблицаРасхождений.Синхронизировать</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>V</v8:content>
+						</v8:item>
+					</Title>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="ТРСинхронизироватьКонтекстноеМеню" id="45"/>
+					<ExtendedTooltip name="ТРСинхронизироватьExtendedTooltip" id="46"/>
+				</CheckBoxField>
+				<InputField name="ТРРаздел" id="47">
+					<DataPath>Объект.ТаблицаРасхождений.Раздел</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Розділ</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="ТРРазделКонтекстноеМеню" id="48"/>
+					<ExtendedTooltip name="ТРРазделExtendedTooltip" id="49"/>
+				</InputField>
+				<InputField name="ТРИзмерение1" id="50">
+					<DataPath>Объект.ТаблицаРасхождений.Измерение1</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Вимір 1</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="ТРИзмерение1КонтекстноеМеню" id="51"/>
+					<ExtendedTooltip name="ТРИзмерение1ExtendedTooltip" id="52"/>
+				</InputField>
+				<InputField name="ТРИзмерение2" id="53">
+					<DataPath>Объект.ТаблицаРасхождений.Измерение2</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Вимір 2</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="ТРИзмерение2КонтекстноеМеню" id="54"/>
+					<ExtendedTooltip name="ТРИзмерение2ExtendedTooltip" id="55"/>
+				</InputField>
+				<InputField name="ТРНачОстатокЕРП" id="56">
+					<DataPath>Объект.ТаблицаРасхождений.НачОстатокЕРП</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Поч.ЕРП</v8:content>
+						</v8:item>
+					</Title>
+					<FooterDataPath>Объект.ТаблицаРасхождений.TotalНачОстатокЕРП</FooterDataPath>
+					<ContextMenu name="ТРНачОстатокЕРПКонтекстноеМеню" id="57"/>
+					<ExtendedTooltip name="ТРНачОстатокЕРПExtendedTooltip" id="58"/>
+				</InputField>
+				<InputField name="ТРНачОстатокБух" id="59">
+					<DataPath>Объект.ТаблицаРасхождений.НачОстатокБух</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Поч.Бух</v8:content>
+						</v8:item>
+					</Title>
+					<FooterDataPath>Объект.ТаблицаРасхождений.TotalНачОстатокБух</FooterDataPath>
+					<ContextMenu name="ТРНачОстатокБухКонтекстноеМеню" id="60"/>
+					<ExtendedTooltip name="ТРНачОстатокБухExtendedTooltip" id="61"/>
+				</InputField>
+				<InputField name="ТРПриходЕРП" id="62">
+					<DataPath>Объект.ТаблицаРасхождений.ПриходЕРП</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Прих.ЕРП</v8:content>
+						</v8:item>
+					</Title>
+					<FooterDataPath>Объект.ТаблицаРасхождений.TotalПриходЕРП</FooterDataPath>
+					<ContextMenu name="ТРПриходЕРПКонтекстноеМеню" id="63"/>
+					<ExtendedTooltip name="ТРПриходЕРПExtendedTooltip" id="64"/>
+				</InputField>
+				<InputField name="ТРПриходБух" id="65">
+					<DataPath>Объект.ТаблицаРасхождений.ПриходБух</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Прих.Бух</v8:content>
+						</v8:item>
+					</Title>
+					<FooterDataPath>Объект.ТаблицаРасхождений.TotalПриходБух</FooterDataPath>
+					<ContextMenu name="ТРПриходБухКонтекстноеМеню" id="66"/>
+					<ExtendedTooltip name="ТРПриходБухExtendedTooltip" id="67"/>
+				</InputField>
+				<InputField name="ТРРасходЕРП" id="68">
+					<DataPath>Объект.ТаблицаРасхождений.РасходЕРП</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Расх.ЕРП</v8:content>
+						</v8:item>
+					</Title>
+					<FooterDataPath>Объект.ТаблицаРасхождений.TotalРасходЕРП</FooterDataPath>
+					<ContextMenu name="ТРРасходЕРПКонтекстноеМеню" id="69"/>
+					<ExtendedTooltip name="ТРРасходЕРПExtendedTooltip" id="70"/>
+				</InputField>
+				<InputField name="ТРРасходБух" id="71">
+					<DataPath>Объект.ТаблицаРасхождений.РасходБух</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Расх.Бух</v8:content>
+						</v8:item>
+					</Title>
+					<FooterDataPath>Объект.ТаблицаРасхождений.TotalРасходБух</FooterDataPath>
+					<ContextMenu name="ТРРасходБухКонтекстноеМеню" id="72"/>
+					<ExtendedTooltip name="ТРРасходБухExtendedTooltip" id="73"/>
+				</InputField>
+				<InputField name="ТРОстатокЕРП" id="74">
+					<DataPath>Объект.ТаблицаРасхождений.ОстатокЕРП</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Кін.ЕРП</v8:content>
+						</v8:item>
+					</Title>
+					<FooterDataPath>Объект.ТаблицаРасхождений.TotalОстатокЕРП</FooterDataPath>
+					<ContextMenu name="ТРОстатокЕРПКонтекстноеМеню" id="75"/>
+					<ExtendedTooltip name="ТРОстатокЕРПExtendedTooltip" id="76"/>
+				</InputField>
+				<InputField name="ТРОстатокБух" id="77">
+					<DataPath>Объект.ТаблицаРасхождений.ОстатокБух</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Кін.Бух</v8:content>
+						</v8:item>
+					</Title>
+					<FooterDataPath>Объект.ТаблицаРасхождений.TotalОстатокБух</FooterDataPath>
+					<ContextMenu name="ТРОстатокБухКонтекстноеМеню" id="78"/>
+					<ExtendedTooltip name="ТРОстатокБухExtendedTooltip" id="79"/>
+				</InputField>
+				<InputField name="ТРРазница" id="80">
+					<DataPath>Объект.ТаблицаРасхождений.Разница</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Різниця</v8:content>
+						</v8:item>
+					</Title>
+					<FooterDataPath>Объект.ТаблицаРасхождений.TotalРазница</FooterDataPath>
+					<ContextMenu name="ТРРазницаКонтекстноеМеню" id="81"/>
+					<ExtendedTooltip name="ТРРазницаExtendedTooltip" id="82"/>
+				</InputField>
+			</ChildItems>
+		</Table>
+		<Table name="ТаблицаДокументовФорма" id="90">
+			<ChangeRowSet>false</ChangeRowSet>
+			<ChangeRowOrder>false</ChangeRowOrder>
+			<DataPath>Объект.ТаблицаДокументов</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Документи для синхронізації</v8:content>
+				</v8:item>
+			</Title>
+			<RowFilter xsi:nil="true"/>
+			<ContextMenu name="ТаблицаДокументовФормаКонтекстноеМеню" id="91"/>
+			<AutoCommandBar name="ТаблицаДокументовФормаКоманднаяПанель" id="93"/>
+			<ExtendedTooltip name="ТаблицаДокументовФормаExtendedTooltip" id="92"/>
+			<SearchStringAddition name="ТаблицаДокументовФормаСтрокаПоиска" id="149">
+				<AdditionSource>
+					<Item>ТаблицаДокументовФорма</Item>
+					<Type>SearchStringRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="ТаблицаДокументовФормаСтрокаПоискаКонтекстноеМеню" id="150"/>
+				<ExtendedTooltip name="ТаблицаДокументовФормаСтрокаПоискаРасширеннаяПодсказка" id="151"/>
+			</SearchStringAddition>
+			<ViewStatusAddition name="ТаблицаДокументовФормаСостояниеПросмотра" id="152">
+				<AdditionSource>
+					<Item>ТаблицаДокументовФорма</Item>
+					<Type>ViewStatusRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="ТаблицаДокументовФормаСостояниеПросмотраКонтекстноеМеню" id="153"/>
+				<ExtendedTooltip name="ТаблицаДокументовФормаСостояниеПросмотраРасширеннаяПодсказка" id="154"/>
+			</ViewStatusAddition>
+			<SearchControlAddition name="ТаблицаДокументовФормаУправлениеПоиском" id="155">
+				<AdditionSource>
+					<Item>ТаблицаДокументовФорма</Item>
+					<Type>SearchControl</Type>
+				</AdditionSource>
+				<ContextMenu name="ТаблицаДокументовФормаУправлениеПоискомКонтекстноеМеню" id="156"/>
+				<ExtendedTooltip name="ТаблицаДокументовФормаУправлениеПоискомРасширеннаяПодсказка" id="157"/>
+			</SearchControlAddition>
+			<ChildItems>
+				<CheckBoxField name="ТДСинхронизировать" id="94">
+					<DataPath>Объект.ТаблицаДокументов.Синхронизировать</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>V</v8:content>
+						</v8:item>
+					</Title>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="ТДСинхронизироватьКонтекстноеМеню" id="95"/>
+					<ExtendedTooltip name="ТДСинхронизироватьExtendedTooltip" id="96"/>
+				</CheckBoxField>
+				<InputField name="ТДРаздел" id="97">
+					<DataPath>Объект.ТаблицаДокументов.Раздел</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Розділ</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="ТДРазделКонтекстноеМеню" id="98"/>
+					<ExtendedTooltip name="ТДРазделExtendedTooltip" id="99"/>
+				</InputField>
+				<InputField name="ТДИзмерение1" id="100">
+					<DataPath>Объект.ТаблицаДокументов.Измерение1</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Вимір 1</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="ТДИзмерение1КонтекстноеМеню" id="101"/>
+					<ExtendedTooltip name="ТДИзмерение1ExtendedTooltip" id="102"/>
+				</InputField>
+				<InputField name="ТДТипДокумента" id="103">
+					<DataPath>Объект.ТаблицаДокументов.ТипДокумента</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Тип документу</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="ТДТипДокументаКонтекстноеМеню" id="104"/>
+					<ExtendedTooltip name="ТДТипДокументаExtendedTooltip" id="105"/>
+				</InputField>
+				<InputField name="ТДДокументЕРП" id="106">
+					<DataPath>Объект.ТаблицаДокументов.ДокументЕРП</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Документ ЕРП</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="ТДДокументЕРПКонтекстноеМеню" id="107"/>
+					<ExtendedTooltip name="ТДДокументЕРПExtendedTooltip" id="108"/>
+				</InputField>
+				<InputField name="ТДДокументБух" id="109">
+					<DataPath>Объект.ТаблицаДокументов.ДокументБух</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Документ Бух</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="ТДДокументБухКонтекстноеМеню" id="110"/>
+					<ExtendedTooltip name="ТДДокументБухExtendedTooltip" id="111"/>
+				</InputField>
+				<InputField name="ТДКоличествоЕРП" id="112">
+					<DataPath>Объект.ТаблицаДокументов.КоличествоЕРП</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>К-ть ЕРП</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="ТДКоличествоЕРПКонтекстноеМеню" id="113"/>
+					<ExtendedTooltip name="ТДКоличествоЕРПExtendedTooltip" id="114"/>
+				</InputField>
+				<InputField name="ТДКоличествоБух" id="115">
+					<DataPath>Объект.ТаблицаДокументов.КоличествоБух</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>К-ть Бух</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="ТДКоличествоБухКонтекстноеМеню" id="116"/>
+					<ExtendedTooltip name="ТДКоличествоБухExtendedTooltip" id="117"/>
+				</InputField>
+				<InputField name="ТДДействие" id="118">
+					<DataPath>Объект.ТаблицаДокументов.Действие</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Дія</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="ТДДействиеКонтекстноеМеню" id="119"/>
+					<ExtendedTooltip name="ТДДействиеExtendedTooltip" id="120"/>
+				</InputField>
+				<InputField name="ТДСтатус" id="121">
+					<DataPath>Объект.ТаблицаДокументов.Статус</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Статус</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="ТДСтатусКонтекстноеМеню" id="122"/>
+					<ExtendedTooltip name="ТДСтатусExtendedTooltip" id="123"/>
+				</InputField>
+			</ChildItems>
+		</Table>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Объект" id="1">
+			<Type>
+				<v8:Type>cfg:ExternalDataProcessorObject.СинхронизироватьТовары</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+			<Save>
+				<Field>Объект.НачалоПериода</Field>
+				<Field>Объект.Номенклатура</Field>
+				<Field>Объект.ОкончаниеПериода</Field>
+				<Field>Объект.РазделВзаиморасчеты</Field>
+				<Field>Объект.РазделДеньги</Field>
+				<Field>Объект.РазделТовары</Field>
+				<Field>Объект.Склад</Field>
+			</Save>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="Сформировать" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сформувати</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Порівняти залишки ERP та BuhBud</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>Сформировать</Action>
+		</Command>
+		<Command name="АнализДокументов" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Аналіз документів</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Проаналізувати документи для вибраних розбіжностей</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>АнализДокументов</Action>
+		</Command>
+		<Command name="Синхронизировать" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Синхронізувати</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Виконати синхронізацію вибраних документів</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>Синхронизировать</Action>
+		</Command>
+		<Command name="ВыбратьВсе" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Вибрати всі</v8:content>
+				</v8:item>
+			</Title>
+			<Action>ВыбратьВсе</Action>
+		</Command>
+		<Command name="СнятьВыделение" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Зняти виділення</v8:content>
+				</v8:item>
+			</Title>
+			<Action>СнятьВыделение</Action>
+		</Command>
+	</Commands>
+</Form>

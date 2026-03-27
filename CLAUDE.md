@@ -25,6 +25,29 @@ All 1C queries use Russian field names. Example:
 SELECT Ref, Date, Number FROM Document.ПоступлениеТоваровУслуг
 ```
 
+### Rule #4 - Python COM Testing First
+BEFORE writing code into 1C processors/modules:
+1. Create a Python test in `_Rarzrabotki/Python/test/` (examples already there)
+2. Test queries and logic via COM connection (`V83.COMConnector`)
+3. Use `mcp__python-runner__run_command` to execute tests
+4. Only after successful test — write code into the 1C processor
+
+**Database connections (for Python tests):**
+```python
+import win32com.client
+v8 = win32com.client.Dispatch("V83.COMConnector")
+
+# ERP (BaseERP)
+CONN_ERP = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+conn_erp = v8.Connect(CONN_ERP)
+
+# BAS Бухгалтерія (BuhBud)
+CONN_BUH = 'Srvr="SQLSERVER";Ref="BuhBud";Usr="cfo";Pwd="2442"'
+conn_buh = v8.Connect(CONN_BUH)
+```
+
+**Workflow:** Python test → verify results → write into .bsl module
+
 ---
 
 ## PROJECT STRUCTURE
@@ -235,6 +258,58 @@ WHERE Recorder = &DocumentRef
 - `update_document(post=false)` to unpost document
 - Inventing field names without checking metadata
 - Modifying posted document without unposting first
+
+---
+
+## CRITICAL: Programmatic Document Creation (Settlements / Взаиморасчёты)
+
+### Problem
+When creating documents programmatically (via external processors or form modules), settlement registers (`РасчетыСКлиентамиПоСрокам`, `РасчетыСКлиентами`) may have **Сумма = 0** or empty movements if required fields are not filled.
+
+### Root Cause
+The settlement mechanism `ВзаиморасчетыСервер.ПередЗаписью()` calculates `СуммаВзаиморасчетов` using formula: `Сумма * Курс / Кратность`. If `Курс = 0` or `Кратность = 0` (default for unfilled Number fields), the result is **0**.
+
+### MANDATORY Fields When Creating Documents Programmatically
+
+**For `РеализацияТоваровУслуг`, `ПриобретениеТоваровУслуг`, and similar settlement documents:**
+
+```bsl
+// === ОБЯЗАТЕЛЬНЫЕ реквизиты для взаиморасчётов ===
+ДокОбъект.Курс = 1;                    // Без этого СуммаВзаиморасчетов = 0!
+ДокОбъект.Кратность = 1;               // Без этого СуммаВзаиморасчетов = 0!
+ДокОбъект.СуммаВзаиморасчетов = Сумма; // Сумма взаиморасчётов в шапке
+ДокОбъект.ФормаОплаты = Перечисления.ФормыОплаты.Безналичная;
+// Для Реализации также:
+ДокОбъект.Статус = Перечисления.СтатусыРеализацийТоваровУслуг.Отгружено;
+```
+
+**В табличной части Товары:**
+```bsl
+СтрокаТовары.СуммаСНДС = Сумма;           // Используется для расчёта СуммаВзаиморасчетов
+СтрокаТовары.СуммаВзаиморасчетов = Сумма;  // Сумма взаиморасчётов строки
+```
+
+### Settlement Architecture (НоваяАрхитектураВзаиморасчетов = TRUE)
+
+| Concept | Details |
+|---------|---------|
+| **Report register** | `РасчетыСКлиентамиПоСрокам` (NOT `РасчетыСКлиентами`) |
+| **Report fields** | `ДолгРегл`, `ПредоплатаРегл` (NOT `Сумма`, `КОплате`) |
+| **Registrar** | `Документ.РегистраторРасчетов` (service document, NOT the source document) |
+| **Entry point** | `ВзаиморасчетыСервер.ПередЗаписью()` → `ОперативныеВзаиморасчетыСервер.ЗаполнитьОперативныеВзаиморасчеты()` |
+| **РасшифровкаПлатежа** | Auto-filled by `ВзаиморасчетыСервер`, but requires non-zero `СуммаДокумента` and `СуммаВзаиморасчетов` |
+| **Settlement report** | `ВедомостьРасчетовСПартнерами` uses `РасчетыСКлиентамиПоСрокам` |
+
+### Checklist for Programmatic Document Creation
+- [ ] `Курс = 1` set? (CRITICAL!)
+- [ ] `Кратность = 1` set? (CRITICAL!)
+- [ ] `СуммаВзаиморасчетов` in header filled?
+- [ ] `СуммаСНДС` in Товары rows filled?
+- [ ] `СуммаВзаиморасчетов` in Товары rows filled?
+- [ ] `Валюта` and `ВалютаВзаиморасчетов` set?
+- [ ] `Договор` set? (needed for ОбъектРасчетов auto-creation)
+- [ ] `ПорядокРасчетов` set?
+- [ ] `ГруппаФинансовогоУчета` set?
 
 ---
 

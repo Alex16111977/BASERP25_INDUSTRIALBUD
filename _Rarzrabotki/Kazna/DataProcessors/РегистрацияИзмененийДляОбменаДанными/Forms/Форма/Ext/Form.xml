@@ -125,6 +125,56 @@
 				</InputField>
 			</ChildItems>
 		</UsualGroup>
+		<UsualGroup name="ГруппаПериод" id="365">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Регистрация за период</v8:content>
+				</v8:item>
+			</Title>
+			<Behavior>Usual</Behavior>
+			<Representation>NormalSeparation</Representation>
+			<ExtendedTooltip name="ГруппаПериодРасширеннаяПодсказка" id="374"/>
+			<ChildItems>
+				<InputField name="ПериодНачало" id="366">
+					<DataPath>ПериодНачало</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Начало периода</v8:content>
+						</v8:item>
+					</Title>
+					<Width>12</Width>
+					<HorizontalStretch>false</HorizontalStretch>
+					<ContextMenu name="ПериодНачалоКонтекстноеМеню" id="368"/>
+					<ExtendedTooltip name="ПериодНачалоРасширеннаяПодсказка" id="367"/>
+				</InputField>
+				<InputField name="ПериодОкончание" id="369">
+					<DataPath>ПериодОкончание</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Окончание периода</v8:content>
+						</v8:item>
+					</Title>
+					<Width>12</Width>
+					<HorizontalStretch>false</HorizontalStretch>
+					<ContextMenu name="ПериодОкончаниеКонтекстноеМеню" id="371"/>
+					<ExtendedTooltip name="ПериодОкончаниеРасширеннаяПодсказка" id="370"/>
+				</InputField>
+				<Button name="КнопкаЗарегистрироватьЗаПериод" id="372">
+					<Type>UsualButton</Type>
+					<CommandName>Form.Command.ЗарегистрироватьЗаПериод</CommandName>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Зарегистрировать за период</v8:content>
+						</v8:item>
+					</Title>
+					<ExtendedTooltip name="КнопкаЗарегистрироватьЗаПериодРасширеннаяПодсказка" id="373"/>
+				</Button>
+			</ChildItems>
+		</UsualGroup>
 		<UsualGroup name="Группа1" id="5">
 			<EnableContentChange>true</EnableContentChange>
 			<Title>
@@ -2183,6 +2233,55 @@
 				<v8:Type>v8:ValueListType</v8:Type>
 			</Type>
 		</Attribute>
+		<Attribute name="ПериодНачало" id="375">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Период начало</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ПериодОкончание" id="376">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Период окончание</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ДоступнаРегистрацияАсинхронно" id="377">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Доступна регистрация асинхронно</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+			<View>
+				<xr:Common>false</xr:Common>
+			</View>
+			<Edit>
+				<xr:Common>false</xr:Common>
+			</Edit>
+		</Attribute>
 	</Attributes>
 	<Commands>
 		<Command name="ДобавитьРегистрациюСсылки" id="1">
@@ -2676,6 +2775,22 @@
 				<xr:LoadTransparent>true</xr:LoadTransparent>
 			</Picture>
 			<Action>ДобавитьРегистрациюСправочниковИзДокумента</Action>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="ЗарегистрироватьЗаПериод" id="364">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Зарегистрировать за период</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Регистрация изменений документов за указанный период</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ЗарегистрироватьЗаПериод</Action>
 			<CurrentRowUse>DontUse</CurrentRowUse>
 		</Command>
 	</Commands>
