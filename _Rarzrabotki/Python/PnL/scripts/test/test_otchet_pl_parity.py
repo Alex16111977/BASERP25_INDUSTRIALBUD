@@ -1,15 +1,16 @@
 """
-Запускає функцію Отчет.А_ОтчетPL.ПолучитьОбъединенныеДанные за лютий 2026
-через COM-конект до ЕРП.
+Інтеграційний тест Reports.А_ОтчетPL за лютий 2026.
 
-Перевіряє:
-  1. Жоден Документ-Регістратор не = РасчетСебестоимостиТоваров
-     (drill-down Виручки чистий від службових агрегацій).
-  2. Друкує підсумок по підрозділах: PL-сума, ЕРП-сума, Δ.
+Перевіряє (до копійки):
+  1. drill-down не містить РасчетСебестоимостиТоваров.
+  2. (Глобино-2 / PL "Будівельні матеріали" / СтатьяPL.Группа) сума ЕРП
+     містить наш CoGS = 13 687 175.04 ₴ (за умови що ДДС
+     "Себестоимость реализации" має прапор А_ПриёмникСебестоимостиПродажPL
+     і додана в ТЧ Статьи PL "Будівельні матеріали").
+  3. Виручка по Глобино-2 = 38 432 968.66 ₴ (с НДС).
 
-CoGS перевірка: інформаційна. Якщо у системі є ДДС з прапором
-А_ПриёмникСебестоимостиПродажPL і ця ДДС додана у ТЧ Статьи однієї з
-PL-статей — CoGS з'явиться у звіті.
+Запуск:
+  C:\\Python313\\python.exe scripts/test/test_otchet_pl_parity.py
 """
 import datetime
 import sys
@@ -23,6 +24,14 @@ from utils.com_connect import connect_erp  # noqa: E402
 PERIOD_START = pywintypes.Time(datetime.datetime(2026, 2, 1, 0, 0, 0))
 PERIOD_END = pywintypes.Time(datetime.datetime(2026, 2, 28, 23, 59, 59))
 
+GLOBINO_2 = "Глобино-2"
+PL_BUILDING = "Строительные материалы"
+# У ТЧ Статьи PL "Будівельні матеріали" дві ДДС:
+#   - "Строительные материалы" (через ПрочиеРасходы) → +7 176 926.64
+#   - "Себестоимость реализации" (наш CoGS, прапор) → +13 687 175.04
+# Разом = 20 864 101.68 ₴ (за рішенням фінансиста — обидві суми реальні витрати).
+ETALON_PL_BUILDING_GLOBINO = 20_864_101.68
+ETALON_REVENUE = 38_432_968.66
 FORBIDDEN_DOC_TYPE = "РасчетСебестоимостиТоваров"
 
 
@@ -51,27 +60,41 @@ def main():
             "Документ": str(r.Документ),
         })
 
-    print(f"Усього рядків: {len(rows)}")
-    print()
+    print(f"Усього рядків у звіті: {len(rows)}")
 
+    # === Assertion 1: drill-down не містить РасчетСеб ===
     bad = [r for r in rows if FORBIDDEN_DOC_TYPE in r["Документ"]]
     if bad:
-        print(f"FAIL: знайдено {len(bad)} документів {FORBIDDEN_DOC_TYPE}")
-        for r in bad[:5]:
-            print(f"  {r['Подразделение']} / {r['СтатьяPL']} / ЕРП {r['СуммаЕРП']:,.2f} / {r['Документ']}")
+        print(f"FAIL #1: знайдено {len(bad)} {FORBIDDEN_DOC_TYPE}")
         sys.exit(1)
-    print(f"OK: drill-down чистий, немає {FORBIDDEN_DOC_TYPE}")
+    print(f"OK #1: drill-down чистий, немає {FORBIDDEN_DOC_TYPE}")
 
-    by_pod = defaultdict(lambda: {"PL": 0.0, "ЕРП": 0.0})
-    for r in rows:
-        by_pod[r["Подразделение"]]["PL"] += r["СуммаPL"]
-        by_pod[r["Подразделение"]]["ЕРП"] += r["СуммаЕРП"]
+    # === Assertion 2: PL "Будівельні матеріали" Глобино-2 = 20 864 101.68 ===
+    # (включає ПрочиеРасходы 7.2M + наш CoGS 13.7M через дві ДДС у ТЧ Статьи)
+    pl_sum = sum(r["СуммаЕРП"] for r in rows
+                 if r["Подразделение"] == GLOBINO_2
+                 and r["СтатьяPL"] == PL_BUILDING)
+    delta_pl = abs(pl_sum - ETALON_PL_BUILDING_GLOBINO)
+    print(f"#2 PL {PL_BUILDING} Глобино-2: {pl_sum:,.2f} ₴ vs еталон {ETALON_PL_BUILDING_GLOBINO:,.2f} ₴ → Δ {delta_pl:,.2f}")
+    if delta_pl > 0.01:
+        print(f"FAIL #2: розбіжність {delta_pl:,.2f} ₴ > 0.01.")
+        sys.exit(1)
+    print("OK #2: PL «Будівельні матеріали» до копійки")
+
+    # === Assertion 3: Виручка Глобино-2 = 38 432 968.66 ===
+    # Виручка лежить у PL-статтях через СтатьяДоходов = "Выручка от продаж"
+    revenue = sum(r["СуммаЕРП"] for r in rows
+                  if r["Подразделение"] == GLOBINO_2
+                  and "Выручка" in r["СтатьяPL"])
+    delta_rev = abs(revenue - ETALON_REVENUE)
+    print(f"#3 Виручка Глобино-2: {revenue:,.2f} ₴ vs еталон {ETALON_REVENUE:,.2f} ₴ → Δ {delta_rev:,.2f}")
+    if delta_rev > 0.01:
+        print(f"FAIL #3: розбіжність {delta_rev:,.2f} ₴ > 0.01.")
+        sys.exit(1)
+    print("OK #3: Виручка до копійки")
+
     print()
-    print(f"{'Подразделение':<40} {'PL':>15} {'ЕРП':>15} {'delta':>15}")
-    for name in sorted(by_pod):
-        v = by_pod[name]
-        d = v["ЕРП"] - v["PL"]
-        print(f"{name[:40]:<40} {v['PL']:>15,.2f} {v['ЕРП']:>15,.2f} {d:>15,.2f}")
+    print("ALL ASSERTIONS PASS (до копійки)")
 
 
 if __name__ == "__main__":
