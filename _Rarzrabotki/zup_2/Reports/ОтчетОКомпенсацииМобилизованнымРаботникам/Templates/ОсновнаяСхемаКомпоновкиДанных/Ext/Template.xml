@@ -1,0 +1,272 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<DataCompositionSchema xmlns="http://v8.1c.ru/8.1/data-composition-system/schema" xmlns:dcscom="http://v8.1c.ru/8.1/data-composition-system/common" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<dataSource>
+		<name>ИсточникДанных1</name>
+		<dataSourceType>Local</dataSourceType>
+	</dataSource>
+	<dataSet xsi:type="DataSetQuery">
+		<name>НаборДанных</name>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Должность</dataPath>
+			<field>Должность</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Организация</dataPath>
+			<field>Организация</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Физлицо</dataPath>
+			<field>Физлицо</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Начислено</dataPath>
+			<field>Начислено</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ВоенкоматДатаИНомерПриказаОПризыве</dataPath>
+			<field>ВоенкоматДатаИНомерПриказаОПризыве</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Военкомат</dataPath>
+			<field>Военкомат</field>
+		</field>
+		<dataSource>ИсточникДанных1</dataSource>
+		<query>ВЫБРАТЬ РАЗРЕШЕННЫЕ
+	РаботникиОрганизаций.Организация КАК Организация,
+	РаботникиОрганизаций.Сотрудник КАК Сотрудник,
+	РаботникиОрганизаций.Должность КАК Должность
+ПОМЕСТИТЬ ВТРаботникиОрганизаций
+ИЗ
+	РегистрСведений.РаботникиОрганизаций.СрезПоследних(КОНЕЦПЕРИОДА(&amp;Период, МЕСЯЦ), ) КАК РаботникиОрганизаций
+ГДЕ
+	РаботникиОрганизаций.Сотрудник.ВидЗанятости &lt;&gt; ЗНАЧЕНИЕ(Перечисление.ВидыЗанятостиВОрганизации.ВнутреннееСовместительство)
+	И (РаботникиОрганизаций.ПричинаИзмененияСостояния &lt;&gt; ЗНАЧЕНИЕ(Перечисление.ПричиныИзмененияСостояния.Увольнение)
+			ИЛИ РаботникиОрганизаций.ПричинаИзмененияСостояния = ЗНАЧЕНИЕ(Перечисление.ПричиныИзмененияСостояния.Увольнение)
+				И РаботникиОрганизаций.Сотрудник.ДатаУвольнения &gt;= НАЧАЛОПЕРИОДА(&amp;Период, МЕСЯЦ))
+;
+
+////////////////////////////////////////////////////////////////////////////////
+ВЫБРАТЬ РАЗРЕШЕННЫЕ РАЗЛИЧНЫЕ
+	ВоинскийУчет.Период КАК ПериодУчета,
+	ВоинскийУчет.Физлицо КАК Физлицо,
+	ВоинскийУчет.Военкомат КАК Военкомат,
+	ВоинскийУчет.ДатаИНомерПриказаОПризыве КАК ДатаИНомерПриказаОПризыве
+ПОМЕСТИТЬ ВТВоинскийУчет
+ИЗ
+	РегистрСведений.ВоинскийУчет.СрезПоследних(
+			НАЧАЛОПЕРИОДА(&amp;Период, МЕСЯЦ),
+			Физлицо В
+				(ВЫБРАТЬ
+					РаботникиОрганизаций.Сотрудник.Физлицо
+				ИЗ
+					ВТРаботникиОрганизаций КАК РаботникиОрганизаций)) КАК ВоинскийУчет
+ГДЕ
+	(ВоинскийУчет.ОтношениеКВоинскомуУчету = ЗНАЧЕНИЕ(Перечисление.ОтношениеКВоинскомуУчету.СлужбаПоКонтракту)
+			ИЛИ ВоинскийУчет.ОтношениеКВоинскомуУчету = ЗНАЧЕНИЕ(Перечисление.ОтношениеКВоинскомуУчету.ПризванНаВоинскуюСлужбу))
+	И (&amp;Период &lt;= НАЧАЛОПЕРИОДА(ВоинскийУчет.СрокКонтракта, МЕСЯЦ)
+			ИЛИ ВоинскийУчет.СрокКонтракта = ДАТАВРЕМЯ(1, 1, 1))
+
+ОБЪЕДИНИТЬ
+
+ВЫБРАТЬ
+	ВоинскийУчет.Период,
+	ВоинскийУчет.Физлицо,
+	ВоинскийУчет.Военкомат,
+	ВоинскийУчет.ДатаИНомерПриказаОПризыве
+ИЗ
+	РегистрСведений.ВоинскийУчет.СрезПоследних(
+			КОНЕЦПЕРИОДА(&amp;Период, МЕСЯЦ),
+			Физлицо В
+				(ВЫБРАТЬ
+					РаботникиОрганизаций.Сотрудник.Физлицо
+				ИЗ
+					ВТРаботникиОрганизаций КАК РаботникиОрганизаций)) КАК ВоинскийУчет
+ГДЕ
+	(ВоинскийУчет.ОтношениеКВоинскомуУчету = ЗНАЧЕНИЕ(Перечисление.ОтношениеКВоинскомуУчету.СлужбаПоКонтракту)
+			ИЛИ ВоинскийУчет.ОтношениеКВоинскомуУчету = ЗНАЧЕНИЕ(Перечисление.ОтношениеКВоинскомуУчету.ПризванНаВоинскуюСлужбу))
+	И (&amp;Период &lt;= НАЧАЛОПЕРИОДА(ВоинскийУчет.СрокКонтракта, МЕСЯЦ)
+			ИЛИ ВоинскийУчет.СрокКонтракта = ДАТАВРЕМЯ(1, 1, 1))
+;
+
+////////////////////////////////////////////////////////////////////////////////
+ВЫБРАТЬ РАЗРЕШЕННЫЕ
+	ОсновныеНачисленияРаботниковОрганизации.Сотрудник.Физлицо КАК Физлицо,
+	СУММА(ОсновныеНачисленияРаботниковОрганизации.Результат) КАК Результат,
+	ОсновныеНачисленияРаботниковОрганизации.Организация КАК Организация
+ПОМЕСТИТЬ ВТНачисления
+ИЗ
+	РегистрРасчета.ОсновныеНачисленияРаботниковОрганизаций КАК ОсновныеНачисленияРаботниковОрганизации
+ГДЕ
+	ОсновныеНачисленияРаботниковОрганизации.Результат &lt;&gt; 0
+	И ОсновныеНачисленияРаботниковОрганизации.ПериодДействия = НАЧАЛОПЕРИОДА(&amp;Период, МЕСЯЦ)
+	И ОсновныеНачисленияРаботниковОрганизации.ВидРасчета.ЭтоЗарплатаМобилизованным = ИСТИНА
+	И ОсновныеНачисленияРаботниковОрганизации.Сотрудник.Физлицо В
+			(ВЫБРАТЬ
+				ВоинскийУчет.Физлицо
+			ИЗ
+				ВТВоинскийУчет КАК ВоинскийУчет)
+
+СГРУППИРОВАТЬ ПО
+	ОсновныеНачисленияРаботниковОрганизации.Сотрудник.Физлицо,
+	ОсновныеНачисленияРаботниковОрганизации.Организация
+;
+
+////////////////////////////////////////////////////////////////////////////////
+ВЫБРАТЬ
+	ВоинскийУчет.Военкомат.Наименование + ", " + ВоинскийУчет.ДатаИНомерПриказаОПризыве КАК ВоенкоматДатаИНомерПриказаОПризыве,
+	РаботникиОрганизаций.Организация,
+	РаботникиОрганизаций.Должность,
+	СУММА(Начисления.Результат) КАК Начислено,
+	ВоинскийУчет.Военкомат,
+	ФИОФизлицСрезПоследних.Фамилия + " " + ФИОФизлицСрезПоследних.Имя + " " + ФИОФизлицСрезПоследних.Отчество КАК Физлицо
+ИЗ
+	ВТВоинскийУчет КАК ВоинскийУчет
+		ЛЕВОЕ СОЕДИНЕНИЕ ВТРаботникиОрганизаций КАК РаботникиОрганизаций
+		ПО ВоинскийУчет.Физлицо = РаботникиОрганизаций.Сотрудник.Физлицо
+		ЛЕВОЕ СОЕДИНЕНИЕ ВТНачисления КАК Начисления
+		ПО ВоинскийУчет.Физлицо = Начисления.Физлицо
+		ЛЕВОЕ СОЕДИНЕНИЕ РегистрСведений.ФИОФизЛиц.СрезПоследних(&amp;Период, ) КАК ФИОФизлицСрезПоследних
+		ПО ВоинскийУчет.Физлицо = ФИОФизлицСрезПоследних.ФизЛицо
+ГДЕ
+	ЕСТЬNULL(Начисления.Результат, 0) &lt;&gt; 0
+
+СГРУППИРОВАТЬ ПО
+	РаботникиОрганизаций.Организация,
+	ВоинскийУчет.Военкомат.Наименование + ", " + ВоинскийУчет.ДатаИНомерПриказаОПризыве,
+	РаботникиОрганизаций.Должность,
+	ВоинскийУчет.Военкомат,
+	ФИОФизлицСрезПоследних.Фамилия + " " + ФИОФизлицСрезПоследних.Имя + " " + ФИОФизлицСрезПоследних.Отчество</query>
+	</dataSet>
+	<parameter>
+		<name>Период</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Период</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>DateTime</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
+		<useRestriction>false</useRestriction>
+		<availableAsField>false</availableAsField>
+	</parameter>
+	<settingsVariant>
+		<dcsset:name>Основной</dcsset:name>
+		<dcsset:presentation xsi:type="xs:string">Основной</dcsset:presentation>
+		<dcsset:settings xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows">
+			<dcsset:selection>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Военкомат</dcsset:field>
+					<dcsset:lwsTitle>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Военкомат или ВЧ</v8:content>
+						</v8:item>
+					</dcsset:lwsTitle>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>ВоенкоматДатаИНомерПриказаОПризыве</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Должность</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Начислено</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Организация</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Физлицо</dcsset:field>
+				</dcsset:item>
+			</dcsset:selection>
+			<dcsset:filter>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Организация</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:right xsi:type="dcscor:DesignTimeValue">Справочник.Организации.ПустаяСсылка</dcsset:right>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Физлицо</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:right xsi:type="dcscor:DesignTimeValue">Справочник.ФизическиеЛица.ПустаяСсылка</dcsset:right>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Военкомат</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:right xsi:type="dcscor:DesignTimeValue">Справочник.Военкоматы.ПустаяСсылка</dcsset:right>
+				</dcsset:item>
+			</dcsset:filter>
+			<dcsset:dataParameters>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>Период</dcscor:parameter>
+					<dcscor:value xsi:type="xs:dateTime">0001-01-01T00:00:00</dcscor:value>
+					<dcsset:userSettingID>7841c2f7-20d4-4f67-a9b8-381784a9e276</dcsset:userSettingID>
+				</dcscor:item>
+			</dcsset:dataParameters>
+			<dcsset:order>
+				<dcsset:item xsi:type="dcsset:OrderItemField">
+					<dcsset:field>Организация</dcsset:field>
+					<dcsset:orderType>Asc</dcsset:orderType>
+				</dcsset:item>
+			</dcsset:order>
+			<dcsset:outputParameters>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>МакетОформления</dcscor:parameter>
+					<dcscor:value xsi:type="xs:string">БезОформления</dcscor:value>
+				</dcscor:item>
+			</dcsset:outputParameters>
+			<dcsset:item xsi:type="dcsset:StructureItemGroup">
+				<dcsset:groupItems>
+					<dcsset:item xsi:type="dcsset:GroupItemField">
+						<dcsset:field>Организация</dcsset:field>
+						<dcsset:groupType>Items</dcsset:groupType>
+						<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+						<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+						<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+					</dcsset:item>
+				</dcsset:groupItems>
+				<dcsset:order>
+					<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+				</dcsset:order>
+				<dcsset:selection>
+					<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+				</dcsset:selection>
+				<dcsset:item xsi:type="dcsset:StructureItemGroup">
+					<dcsset:groupItems>
+						<dcsset:item xsi:type="dcsset:GroupItemField">
+							<dcsset:field>Военкомат</dcsset:field>
+							<dcsset:groupType>Items</dcsset:groupType>
+							<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+							<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+							<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+						</dcsset:item>
+					</dcsset:groupItems>
+					<dcsset:order>
+						<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+					</dcsset:order>
+					<dcsset:selection>
+						<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+					</dcsset:selection>
+					<dcsset:item xsi:type="dcsset:StructureItemGroup">
+						<dcsset:order>
+							<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+						</dcsset:order>
+						<dcsset:selection>
+							<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+						</dcsset:selection>
+					</dcsset:item>
+				</dcsset:item>
+			</dcsset:item>
+		</dcsset:settings>
+	</settingsVariant>
+</DataCompositionSchema>

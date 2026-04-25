@@ -1,0 +1,458 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<DataCompositionSchema xmlns="http://v8.1c.ru/8.1/data-composition-system/schema" xmlns:dcscom="http://v8.1c.ru/8.1/data-composition-system/common" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<dataSource>
+		<name>ИсточникДанных1</name>
+		<dataSourceType>Local</dataSourceType>
+	</dataSource>
+	<dataSet xsi:type="DataSetQuery">
+		<name>ИсполнениеКадровогоПлана</name>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Должность</dataPath>
+			<field>Должность</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Должность</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Подразделение</dataPath>
+			<field>Подразделение</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Подразделение</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Процент</dataPath>
+			<field>Процент</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Исполнение плана (%)</v8:content>
+				</v8:item>
+			</title>
+			<appearance>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>Формат</dcscor:parameter>
+					<dcscor:value xsi:type="xs:string">ЧЦ=15; ЧДЦ=2</dcscor:value>
+				</dcscor:item>
+			</appearance>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Организация</dataPath>
+			<field>Организация</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Организация</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<dataSource>ИсточникДанных1</dataSource>
+		<query>ВЫБРАТЬ РАЗРЕШЕННЫЕ
+	ВЫБОР
+		КОГДА ЕСТЬNULL(Данные.ПланТрудодни, 0) = 0
+			ТОГДА 0
+		ИНАЧЕ ВЫРАЗИТЬ(Данные.ТрудоДниРеальные / Данные.ПланТрудодни * 100 КАК ЧИСЛО(3, 0))
+	КОНЕЦ КАК Процент,
+	Данные.ПланТрудодни,
+	Данные.ТрудоДниРеальные,
+	Данные.Подразделение КАК Подразделение,
+	ПРЕДСТАВЛЕНИЕ(Данные.Подразделение),
+	Данные.Должность КАК Должность,
+	ПРЕДСТАВЛЕНИЕ(Данные.Должность),
+	Данные.Подразделение.Владелец КАК Организация
+{ВЫБРАТЬ
+	Процент,
+	Подразделение.*,
+	Должность.*,
+	Организация.*}
+ИЗ
+	(ВЫБРАТЬ
+		КадровыйПлан.Подразделение КАК Подразделение,
+		КадровыйПлан.Должность КАК Должность,
+		КадровыйПлан.ПланТрудодни КАК ПланТрудодни,
+		РеальнаяШтатка.ТрудоДниРеальные КАК ТрудоДниРеальные
+	ИЗ
+		(ВЫБРАТЬ
+			ПлановаяШтатка.Подразделение КАК Подразделение,
+			ПлановаяШтатка.Должность КАК Должность,
+			СУММА(ПлановаяШтатка.ПланТрудодни) КАК ПланТрудодни
+		ИЗ
+			(ВЫБРАТЬ
+				ПлановаШтатка.Подразделение КАК Подразделение,
+				ПлановаШтатка.Должность КАК Должность,
+				ПлановаШтатка.Количество * РАЗНОСТЬДАТ(ПлановаШтатка.датаС, ПлановаШтатка.датаПо, ДЕНЬ) КАК ПланТрудодни,
+				РАЗНОСТЬДАТ(ПлановаШтатка.датаС, ПлановаШтатка.датаПо, ДЕНЬ) КАК ДниКоличествоДней
+			ИЗ
+				(ВЫБРАТЬ
+					Штатка.Подразделение КАК Подразделение,
+					Штатка.Должность КАК Должность,
+					Штатка.Количество КАК Количество,
+					Штатка.Период КАК датаС,
+					ЕСТЬNULL(МИНИМУМ(ДлиннаяШтатка.Период), &amp;КонецПериода) КАК датаПо
+				ИЗ
+					(ВЫБРАТЬ
+						КадровыйПлан.ПодразделениеОрганизации КАК Подразделение,
+						КадровыйПлан.Должность КАК Должность,
+						КадровыйПлан.Количество КАК Количество,
+						&amp;НачалоПериода КАК Период
+					ИЗ
+						РегистрСведений.КадровыйПлан.СрезПоследних(&amp;НачалоПериода, ) КАК КадровыйПлан
+					ГДЕ
+						КадровыйПлан.ПодразделениеОрганизации &lt;&gt; ЗНАЧЕНИЕ(Справочник.ПодразделенияОрганизаций.ПустаяСсылка)
+					{ГДЕ
+						КадровыйПлан.ПодразделениеОрганизации КАК Подразделение,
+						КадровыйПлан.Должность}
+					
+					ОБЪЕДИНИТЬ
+					
+					ВЫБРАТЬ
+						КадровыйПлан.ПодразделениеОрганизации,
+						КадровыйПлан.Должность,
+						КадровыйПлан.Количество,
+						КадровыйПлан.Период
+					ИЗ
+						РегистрСведений.КадровыйПлан КАК КадровыйПлан
+					ГДЕ
+						КадровыйПлан.Период &gt;= &amp;НачалоПериода
+						И КадровыйПлан.Период &lt;= &amp;КонецПериода
+						И КадровыйПлан.ПодразделениеОрганизации &lt;&gt; ЗНАЧЕНИЕ(Справочник.ПодразделенияОрганизаций.ПустаяСсылка)
+					{ГДЕ
+						КадровыйПлан.ПодразделениеОрганизации КАК Подразделение,
+						КадровыйПлан.Должность}) КАК Штатка
+						ЛЕВОЕ СОЕДИНЕНИЕ (ВЫБРАТЬ
+							КадровыйПлан.ПодразделениеОрганизации КАК Подразделение,
+							КадровыйПлан.Должность КАК Должность,
+							КадровыйПлан.Количество КАК Количество,
+							&amp;НачалоПериода КАК Период
+						ИЗ
+							РегистрСведений.КадровыйПлан.СрезПоследних(&amp;НачалоПериода, ) КАК КадровыйПлан
+						ГДЕ
+							КадровыйПлан.ПодразделениеОрганизации &lt;&gt; ЗНАЧЕНИЕ(Справочник.ПодразделенияОрганизаций.ПустаяСсылка)
+						{ГДЕ
+							КадровыйПлан.ПодразделениеОрганизации КАК Подразделение,
+							КадровыйПлан.Должность}
+						
+						ОБЪЕДИНИТЬ
+						
+						ВЫБРАТЬ
+							КадровыйПлан.ПодразделениеОрганизации,
+							КадровыйПлан.Должность,
+							КадровыйПлан.Количество,
+							КадровыйПлан.Период
+						ИЗ
+							РегистрСведений.КадровыйПлан КАК КадровыйПлан
+						ГДЕ
+							КадровыйПлан.Период &gt;= &amp;НачалоПериода
+							И КадровыйПлан.Период &lt;= &amp;КонецПериода
+							И КадровыйПлан.ПодразделениеОрганизации &lt;&gt; ЗНАЧЕНИЕ(Справочник.ПодразделенияОрганизаций.ПустаяСсылка)
+						{ГДЕ
+							КадровыйПлан.ПодразделениеОрганизации КАК Подразделение,
+							КадровыйПлан.Должность}
+						
+						ОБЪЕДИНИТЬ
+						
+						ВЫБРАТЬ
+							КадровыйПлан.ПодразделениеОрганизации,
+							КадровыйПлан.Должность,
+							NULL,
+							&amp;КонецПериода
+						ИЗ
+							РегистрСведений.КадровыйПлан КАК КадровыйПлан
+						ГДЕ
+							КадровыйПлан.Период &gt; &amp;НачалоПериода
+							И КадровыйПлан.Период &lt;= &amp;КонецПериода
+							И КадровыйПлан.ПодразделениеОрганизации &lt;&gt; ЗНАЧЕНИЕ(Справочник.ПодразделенияОрганизаций.ПустаяСсылка)
+						{ГДЕ
+							КадровыйПлан.ПодразделениеОрганизации КАК Подразделение,
+							КадровыйПлан.Должность}) КАК ДлиннаяШтатка
+						ПО Штатка.Период &lt; ДлиннаяШтатка.Период
+							И Штатка.Подразделение = ДлиннаяШтатка.Подразделение
+							И Штатка.Должность = ДлиннаяШтатка.Должность
+				
+				СГРУППИРОВАТЬ ПО
+					Штатка.Подразделение,
+					Штатка.Должность,
+					Штатка.Количество,
+					Штатка.Период) КАК ПлановаШтатка) КАК ПлановаяШтатка
+		
+		СГРУППИРОВАТЬ ПО
+			ПлановаяШтатка.Подразделение,
+			ПлановаяШтатка.Должность) КАК КадровыйПлан
+			ЛЕВОЕ СОЕДИНЕНИЕ (ВЫБРАТЬ
+				РеальныеШтатныеТрудодни.Подразделение КАК Подразделение,
+				РеальныеШтатныеТрудодни.Должность КАК Должность,
+				РеальныеШтатныеТрудодни.ТрудоДниРеальные КАК ТрудоДниРеальные
+			ИЗ
+				(ВЫБРАТЬ
+					ЗанятыеРабочиеМеста.Подразделение КАК Подразделение,
+					ЗанятыеРабочиеМеста.Должность КАК Должность,
+					СУММА(ЗанятыеРабочиеМеста.ТрудоДниРеальные) КАК ТрудоДниРеальные
+				ИЗ
+					(ВЫБРАТЬ
+						ЗанятыеШтатныеЕдиницыОрганизаций.ПодразделениеОрганизации КАК Подразделение,
+						ЗанятыеШтатныеЕдиницыОрганизаций.Должность.Должность КАК Должность,
+						ЗанятыеШтатныеЕдиницыОрганизаций.КоличествоСтавокОстаток * РАЗНОСТЬДАТ(&amp;НачалоПериода, &amp;КонецПериода, ДЕНЬ) КАК ТрудоДниРеальные
+					ИЗ
+						РегистрНакопления.ЗанятыеШтатныеЕдиницыОрганизаций.Остатки(&amp;НачалоПериода, ) КАК ЗанятыеШтатныеЕдиницыОрганизаций
+					{ГДЕ
+						ЗанятыеШтатныеЕдиницыОрганизаций.ПодразделениеОрганизации КАК Подразделение,
+						ЗанятыеШтатныеЕдиницыОрганизаций.Должность}
+					
+					ОБЪЕДИНИТЬ
+					
+					ВЫБРАТЬ
+						ЗанятыеШтатныеЕдиницыОрганизаций.ПодразделениеОрганизации,
+						ЗанятыеШтатныеЕдиницыОрганизаций.Должность.Должность,
+						ЗанятыеШтатныеЕдиницыОрганизаций.КоличествоСтавок * ВЫБОР
+							КОГДА ЗанятыеШтатныеЕдиницыОрганизаций.ВидДвижения = &amp;Движение
+								ТОГДА -1
+							ИНАЧЕ 1
+						КОНЕЦ * ((ГОД(&amp;КонецПериода) - ГОД(ЗанятыеШтатныеЕдиницыОрганизаций.Период)) * 365.25 + (МЕСЯЦ(&amp;КонецПериода) - МЕСЯЦ(ЗанятыеШтатныеЕдиницыОрганизаций.Период)) * 30.44 + (ДЕНЬ(&amp;КонецПериода) - ДЕНЬ(ЗанятыеШтатныеЕдиницыОрганизаций.Период)))
+					ИЗ
+						РегистрНакопления.ЗанятыеШтатныеЕдиницыОрганизаций КАК ЗанятыеШтатныеЕдиницыОрганизаций
+					ГДЕ
+						ЗанятыеШтатныеЕдиницыОрганизаций.Период &gt; &amp;НачалоПериода
+						И ЗанятыеШтатныеЕдиницыОрганизаций.Период &lt;= &amp;КонецПериода
+					{ГДЕ
+						ЗанятыеШтатныеЕдиницыОрганизаций.ПодразделениеОрганизации КАК Подразделение,
+						ЗанятыеШтатныеЕдиницыОрганизаций.Должность}) КАК ЗанятыеРабочиеМеста
+				
+				СГРУППИРОВАТЬ ПО
+					ЗанятыеРабочиеМеста.Подразделение,
+					ЗанятыеРабочиеМеста.Должность) КАК РеальныеШтатныеТрудодни) КАК РеальнаяШтатка
+			ПО КадровыйПлан.Подразделение = РеальнаяШтатка.Подразделение
+				И КадровыйПлан.Должность = РеальнаяШтатка.Должность) КАК Данные
+{ГДЕ
+	Данные.Подразделение.*,
+	Данные.Должность.*,
+	Данные.Подразделение.Владелец.* КАК Организация}
+{ХАРАКТЕРИСТИКИ
+	ТИП(Справочник.ПодразделенияОрганизаций)
+	СПИСОК (ВЫБРАТЬ
+							СвойстваОбъектов.Ссылка,
+							СвойстваОбъектов.Наименование,
+							СвойстваОбъектов.ТипЗначения
+						ИЗ
+							ПланВидовХарактеристик.СвойстваОбъектов КАК СвойстваОбъектов
+						ГДЕ
+							СвойстваОбъектов.НазначениеСвойства = ЗНАЧЕНИЕ(ПланВидовХарактеристик.НазначенияСвойствКатегорийОбъектов.Справочник_ПодразделенияОрганизаций))
+	ИДЕНТИФИКАТОР Ссылка
+	ИМЯ Наименование
+	ТИПЗНАЧЕНИЯ ТипЗначения
+	ЗНАЧЕНИЯ РегистрСведений.ЗначенияСвойствОбъектов
+	ОБЪЕКТ Объект
+	ХАРАКТЕРИСТИКА Свойство
+	ЗНАЧЕНИЕ Значение }
+{ХАРАКТЕРИСТИКИ
+	ТИП(Справочник.ПодразделенияОрганизаций)
+	СПИСОК (ВЫБРАТЬ
+							КатегорииОбъектов.Ссылка,
+							КатегорииОбъектов.Наименование
+						ИЗ
+							Справочник.КатегорииОбъектов КАК КатегорииОбъектов
+						ГДЕ
+							КатегорииОбъектов.НазначениеКатегории = ЗНАЧЕНИЕ(ПланВидовХарактеристик.НазначенияСвойствКатегорийОбъектов.Справочник_ПодразделенияОрганизаций))
+	ИДЕНТИФИКАТОР Ссылка
+	ИМЯ Наименование
+	ЗНАЧЕНИЯ РегистрСведений.КатегорииОбъектов
+	ОБЪЕКТ Объект
+	ХАРАКТЕРИСТИКА Категория }
+{ХАРАКТЕРИСТИКИ
+	ТИП(Справочник.ДолжностиОрганизаций)
+	СПИСОК (ВЫБРАТЬ
+							СвойстваОбъектов.Ссылка,
+							СвойстваОбъектов.Наименование,
+							СвойстваОбъектов.ТипЗначения
+						ИЗ
+							ПланВидовХарактеристик.СвойстваОбъектов КАК СвойстваОбъектов
+						ГДЕ
+							СвойстваОбъектов.НазначениеСвойства = ЗНАЧЕНИЕ(ПланВидовХарактеристик.НазначенияСвойствКатегорийОбъектов.Справочник_ДолжностиОрганизаций))
+	ИДЕНТИФИКАТОР Ссылка
+	ИМЯ Наименование
+	ТИПЗНАЧЕНИЯ ТипЗначения
+	ЗНАЧЕНИЯ РегистрСведений.ЗначенияСвойствОбъектов
+	ОБЪЕКТ Объект
+	ХАРАКТЕРИСТИКА Свойство
+	ЗНАЧЕНИЕ Значение }
+{ХАРАКТЕРИСТИКИ
+	ТИП(Справочник.ДолжностиОрганизаций)
+	СПИСОК (ВЫБРАТЬ
+							КатегорииОбъектов.Ссылка,
+							КатегорииОбъектов.Наименование
+						ИЗ
+							Справочник.КатегорииОбъектов КАК КатегорииОбъектов
+						ГДЕ
+							КатегорииОбъектов.НазначениеКатегории = ЗНАЧЕНИЕ(ПланВидовХарактеристик.НазначенияСвойствКатегорийОбъектов.Справочник_ДолжностиОрганизаций))
+	ИДЕНТИФИКАТОР Ссылка
+	ИМЯ Наименование
+	ЗНАЧЕНИЯ РегистрСведений.КатегорииОбъектов
+	ОБЪЕКТ Объект
+	ХАРАКТЕРИСТИКА Категория }</query>
+		<autoFillFields>false</autoFillFields>
+	</dataSet>
+	<totalField>
+		<dataPath>Процент</dataPath>
+		<expression>Сумма(Процент)</expression>
+		<group>Должность</group>
+		<group>Организация</group>
+		<group>Подразделение</group>
+		<group>ОбщийИтог</group>
+	</totalField>
+	<parameter>
+		<name>Движение</name>
+		<title xsi:type="xs:string">Движение</title>
+		<valueType>
+			<v8:Type xmlns:d4p1="http://v8.1c.ru/8.1/data/enterprise">d4p1:AccumulationRecordType</v8:Type>
+		</valueType>
+		<value xmlns:d3p1="http://v8.1c.ru/8.1/data/enterprise" xsi:type="d3p1:AccumulationRecordType">Expense</value>
+		<useRestriction>true</useRestriction>
+	</parameter>
+	<parameter>
+		<name>КонецПериода</name>
+		<title xsi:type="xs:string">Конец периода</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>DateTime</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:nil="true"/>
+		<useRestriction>false</useRestriction>
+	</parameter>
+	<parameter>
+		<name>НачалоПериода</name>
+		<title xsi:type="xs:string">Начало периода</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>DateTime</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:nil="true"/>
+		<useRestriction>false</useRestriction>
+	</parameter>
+	<settingsVariant>
+		<dcsset:name>Основной</dcsset:name>
+		<dcsset:presentation xsi:type="xs:string">Основной</dcsset:presentation>
+		<dcsset:settings xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows">
+			<dcsset:selection>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Процент</dcsset:field>
+				</dcsset:item>
+			</dcsset:selection>
+			<dcsset:filter>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Подразделение</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:right xsi:type="dcscor:DesignTimeValue">Справочник.ПодразделенияОрганизаций.</dcsset:right>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Должность</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+				</dcsset:item>
+			</dcsset:filter>
+			<dcsset:dataParameters>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>КонецПериода</dcscor:parameter>
+					<dcscor:value xsi:type="xs:dateTime">0001-01-01T00:00:00</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>НачалоПериода</dcscor:parameter>
+					<dcscor:value xsi:type="xs:dateTime">0001-01-01T00:00:00</dcscor:value>
+				</dcscor:item>
+			</dcsset:dataParameters>
+			<dcsset:outputParameters>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>ВертикальноеРасположениеОбщихИтогов</dcscor:parameter>
+					<dcscor:value xsi:type="dcscor:DataCompositionTotalPlacement">None</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>ВыводитьЗаголовок</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">Output</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>Заголовок</dcscor:parameter>
+					<dcscor:value xsi:type="v8:LocalStringType">
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Исполнение кадрового плана</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Виконання кадрового плану</v8:content>
+						</v8:item>
+					</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>ВыводитьПараметрыДанных</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">DontOutput</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>ВыводитьОтбор</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">DontOutput</dcscor:value>
+				</dcscor:item>
+			</dcsset:outputParameters>
+			<dcsset:item xsi:type="dcsset:StructureItemTable">
+				<dcsset:column>
+					<dcsset:groupItems>
+						<dcsset:item xsi:type="dcsset:GroupItemField">
+							<dcsset:field>Должность</dcsset:field>
+							<dcsset:groupType>Items</dcsset:groupType>
+							<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+							<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+							<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+						</dcsset:item>
+					</dcsset:groupItems>
+					<dcsset:order>
+						<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+					</dcsset:order>
+					<dcsset:selection>
+						<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+					</dcsset:selection>
+				</dcsset:column>
+				<dcsset:row>
+					<dcsset:groupItems>
+						<dcsset:item xsi:type="dcsset:GroupItemField">
+							<dcsset:field>Организация</dcsset:field>
+							<dcsset:groupType>Items</dcsset:groupType>
+							<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+							<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+							<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+						</dcsset:item>
+					</dcsset:groupItems>
+					<dcsset:order>
+						<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+					</dcsset:order>
+					<dcsset:selection>
+						<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+					</dcsset:selection>
+					<dcsset:item>
+						<dcsset:groupItems>
+							<dcsset:item xsi:type="dcsset:GroupItemField">
+								<dcsset:field>Подразделение</dcsset:field>
+								<dcsset:groupType>Items</dcsset:groupType>
+								<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+								<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+								<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+							</dcsset:item>
+						</dcsset:groupItems>
+						<dcsset:order>
+							<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+						</dcsset:order>
+						<dcsset:selection>
+							<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+						</dcsset:selection>
+					</dcsset:item>
+				</dcsset:row>
+			</dcsset:item>
+		</dcsset:settings>
+	</settingsVariant>
+</DataCompositionSchema>

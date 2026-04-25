@@ -1,0 +1,319 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<DataCompositionSchema xmlns="http://v8.1c.ru/8.1/data-composition-system/schema" xmlns:dcscom="http://v8.1c.ru/8.1/data-composition-system/common" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<dataSource>
+		<name>ИсточникДанных1</name>
+		<dataSourceType>Local</dataSourceType>
+	</dataSource>
+	<dataSet xsi:type="DataSetQuery">
+		<name>РезультатыАнкетирования</name>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>АбсолютнаяОценка</dataPath>
+			<field>АбсолютнаяОценка</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Абсолютная оценка (%)</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Анкета</dataPath>
+			<field>Анкета</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Анкета</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ВесВопроса</dataPath>
+			<field>ВесВопроса</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Вес вопроса</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Вопрос</dataPath>
+			<field>Вопрос</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Вопрос</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Ответ</dataPath>
+			<field>Ответ</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Ответ</v8:content>
+				</v8:item>
+			</title>
+			<attributeUseRestriction>
+				<group>true</group>
+			</attributeUseRestriction>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДатаОпроса</dataPath>
+			<field>ДатаОпроса</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Дата опроса</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ОпрашиваемоеЛицо</dataPath>
+			<field>ОпрашиваемоеЛицо</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Опрашиваемое лицо</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Оценка</dataPath>
+			<field>Оценка</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Оценка</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>РазвернутыйОтвет</dataPath>
+			<field>РазвернутыйОтвет</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Развернутый ответ</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ТипКонтактнойИнформации</dataPath>
+			<field>ТипКонтактнойИнформации</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Тип контактной информации</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<dataSource>ИсточникДанных1</dataSource>
+		<query>ВЫБРАТЬ РАЗРЕШЕННЫЕ
+	РезультатыАнкетирования.ОпрашиваемоеЛицо КАК ОпрашиваемоеЛицо,
+	РезультатыАнкетирования.Анкета КАК Анкета,
+	РезультатыАнкетирования.ДатаОпроса КАК ДатаОпроса,       
+	РезультатыАнкетирования.Вопрос КАК Вопрос,
+	ВариантыОтветовОпросов.Владелец.ВесВопроса КАК ВесВопроса,
+	РезультатыАнкетирования.Ответ КАК Ответ,
+	РезультатыАнкетирования.РазвернутыйОтвет КАК РазвернутыйОтвет,
+	РезультатыАнкетирования.Вопрос.ТипВидКонтакнойИнформации.Тип КАК ТипКонтактнойИнформации,
+	ВариантыОтветовОпросов.ОценкаОтвета КАК Оценка,
+	ВариантыОтветовОпросов.Владелец.ВесВопроса * ВариантыОтветовОпросов.ОценкаОтвета КАК АбсолютнаяОценка
+{ВЫБРАТЬ
+	ОпрашиваемоеЛицо.*,
+	Анкета.*,
+	ДатаОпроса,
+	Вопрос.*,
+	ВесВопроса,
+	Ответ.*,
+	РазвернутыйОтвет,
+	Оценка,
+	АбсолютнаяОценка}
+ИЗ
+	(ВЫБРАТЬ
+		ОпросВопросы.Ссылка.ОпрашиваемоеЛицо КАК ОпрашиваемоеЛицо,
+		ОпросВопросы.Ссылка.Дата КАК ДатаОпроса,
+		ОпросВопросы.Ссылка.ТиповаяАнкета КАК Анкета,
+		ОпросВопросы.Вопрос КАК Вопрос,
+		ОпросВопросы.ТиповойОтвет КАК Ответ,
+		ОпросВопросы.Ответ КАК РазвернутыйОтвет
+	{ВЫБРАТЬ
+		ОпрашиваемоеЛицо.*,
+		ДатаОпроса,
+		Анкета.*,
+		Вопрос.*,
+		Ответ.*,
+		РазвернутыйОтвет}
+	ИЗ
+		Документ.Опрос.Вопросы КАК ОпросВопросы
+	ГДЕ
+		ОпросВопросы.Вопрос.ТипВопроса &lt;&gt; ЗНАЧЕНИЕ(Перечисление.ТипВопросаАнкеты.Табличный)
+		И ОпросВопросы.Вопрос.ТипВопроса &lt;&gt; ЗНАЧЕНИЕ(Перечисление.ТипВопросаАнкеты.СправочникСсылка_ВариантыОтветов_Несколько)
+	{ГДЕ
+		ОпросВопросы.Ссылка.ОпрашиваемоеЛицо.*,
+		ОпросВопросы.Ссылка.Дата КАК ДатаОпроса,
+		ОпросВопросы.Ссылка.ТиповаяАнкета.* КАК Анкета,
+		ОпросВопросы.Вопрос.*,
+		ОпросВопросы.ТиповойОтвет.* КАК Ответ,
+		ОпросВопросы.Ответ КАК РазвернутыйОтвет}
+	
+	ОБЪЕДИНИТЬ ВСЕ
+	
+	ВЫБРАТЬ
+		ОпросСоставнойОтвет.Ссылка.ОпрашиваемоеЛицо,
+		ОпросСоставнойОтвет.Ссылка.Дата,
+		ОпросСоставнойОтвет.Ссылка.ТиповаяАнкета,
+		ОпросСоставнойОтвет.ВопросВладелец,
+		ОпросСоставнойОтвет.ТиповойОтвет,
+		ОпросСоставнойОтвет.Ответ
+	ИЗ
+		Документ.Опрос.СоставнойОтвет КАК ОпросСоставнойОтвет
+	{ГДЕ
+		ОпросСоставнойОтвет.Ссылка.ОпрашиваемоеЛицо.*,
+		ОпросСоставнойОтвет.Ссылка.Дата КАК ДатаОпроса,
+		ОпросСоставнойОтвет.Ссылка.ТиповаяАнкета.* КАК Анкета,
+		ОпросСоставнойОтвет.ВопросВладелец.* КАК Вопрос,
+		ОпросСоставнойОтвет.ТиповойОтвет.* КАК Ответ,
+		ОпросСоставнойОтвет.Ответ КАК РазвернутыйОтвет}) КАК РезультатыАнкетирования
+		{ЛЕВОЕ СОЕДИНЕНИЕ Справочник.ВариантыОтветовОпросов КАК ВариантыОтветовОпросов
+		ПО РезультатыАнкетирования.Ответ = ВариантыОтветовОпросов.Ссылка}
+{ХАРАКТЕРИСТИКИ
+	ТИП(Справочник.ФизическиеЛица)
+	СПИСОК (ВЫБРАТЬ
+				СвойстваОбъектов.Ссылка,
+				СвойстваОбъектов.Наименование,
+				СвойстваОбъектов.ТипЗначения
+			ИЗ
+				ПланВидовХарактеристик.СвойстваОбъектов КАК СвойстваОбъектов
+			ГДЕ
+				СвойстваОбъектов.НазначениеСвойства = ЗНАЧЕНИЕ(ПланВидовХарактеристик.НазначенияСвойствКатегорийОбъектов.Справочник_ФизическиеЛица))
+	ИДЕНТИФИКАТОР Ссылка
+	ИМЯ Наименование
+	ТИПЗНАЧЕНИЯ ТипЗначения
+	ЗНАЧЕНИЯ РегистрСведений.ЗначенияСвойствОбъектов
+	ОБЪЕКТ Объект
+	ХАРАКТЕРИСТИКА Свойство
+	ЗНАЧЕНИЕ Значение }
+{ХАРАКТЕРИСТИКИ
+	ТИП(Справочник.ФизическиеЛица)
+	СПИСОК (ВЫБРАТЬ
+				КатегорииОбъектов.Ссылка,
+				КатегорииОбъектов.Наименование
+			ИЗ
+				Справочник.КатегорииОбъектов КАК КатегорииОбъектов
+			ГДЕ
+				КатегорииОбъектов.НазначениеКатегории = ЗНАЧЕНИЕ(ПланВидовХарактеристик.НазначенияСвойствКатегорийОбъектов.Справочник_ФизическиеЛица))
+	ИДЕНТИФИКАТОР Ссылка
+	ИМЯ Наименование
+	ЗНАЧЕНИЯ РегистрСведений.КатегорииОбъектов
+	ОБЪЕКТ Объект
+	ХАРАКТЕРИСТИКА Категория }</query>
+	</dataSet>
+	<calculatedField>
+		<dataPath>Ответ</dataPath>
+		<expression>ВЫБОР КОГДА НЕ ТипКонтактнойИнформации ЕСТЬ NULL ТОГДА УправлениеКонтактнойИнформацией.ПолучитьПредставлениеКИ(ТипКонтактнойИнформации, Ответ) ИНАЧЕ СТРОКА(Ответ) КОНЕЦ </expression>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Ответ</v8:content>
+			</v8:item>
+		</title>
+		<useRestriction>
+			<field>true</field>
+			<condition>true</condition>
+			<group>true</group>
+			<order>true</order>
+		</useRestriction>
+		<valueType>
+			<v8:Type>xs:string</v8:Type>
+			<v8:StringQualifiers>
+				<v8:Length>0</v8:Length>
+				<v8:AllowedLength>Variable</v8:AllowedLength>
+			</v8:StringQualifiers>
+		</valueType>
+	</calculatedField>
+	<totalField>
+		<dataPath>АбсолютнаяОценка</dataPath>
+		<expression>Сумма(АбсолютнаяОценка)</expression>
+	</totalField>
+	<settingsVariant>
+		<dcsset:name>Основной</dcsset:name>
+		<dcsset:presentation xsi:type="xs:string">Основной</dcsset:presentation>
+		<dcsset:settings xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows">
+			<dcsset:selection>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Вопрос</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Ответ</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>РазвернутыйОтвет</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>АбсолютнаяОценка</dcsset:field>
+				</dcsset:item>
+			</dcsset:selection>
+			<dcsset:order>
+				<dcsset:item xsi:type="dcsset:OrderItemField">
+					<dcsset:field>Вопрос</dcsset:field>
+					<dcsset:orderType>Asc</dcsset:orderType>
+				</dcsset:item>
+			</dcsset:order>
+			<dcsset:outputParameters>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>ВыводитьЗаголовок</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">Output</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>Заголовок</dcscor:parameter>
+					<dcscor:value xsi:type="v8:LocalStringType">
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Результаты анкетирования</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Результати анкетування</v8:content>
+						</v8:item>
+					</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>ВыводитьПараметрыДанных</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">DontOutput</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>ВыводитьОтбор</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">DontOutput</dcscor:value>
+				</dcscor:item>
+			</dcsset:outputParameters>
+			<dcsset:item xsi:type="dcsset:StructureItemGroup">
+				<dcsset:groupItems>
+					<dcsset:item xsi:type="dcsset:GroupItemField">
+						<dcsset:field>ОпрашиваемоеЛицо</dcsset:field>
+						<dcsset:groupType>Items</dcsset:groupType>
+						<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+						<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+						<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+					</dcsset:item>
+				</dcsset:groupItems>
+				<dcsset:order>
+					<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+				</dcsset:order>
+				<dcsset:selection>
+					<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+				</dcsset:selection>
+				<dcsset:item xsi:type="dcsset:StructureItemGroup">
+					<dcsset:order>
+						<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+					</dcsset:order>
+					<dcsset:selection>
+						<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+					</dcsset:selection>
+				</dcsset:item>
+			</dcsset:item>
+		</dcsset:settings>
+	</settingsVariant>
+</DataCompositionSchema>

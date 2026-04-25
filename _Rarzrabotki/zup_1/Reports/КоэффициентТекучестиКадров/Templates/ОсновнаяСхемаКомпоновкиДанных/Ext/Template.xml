@@ -1,0 +1,544 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<DataCompositionSchema xmlns="http://v8.1c.ru/8.1/data-composition-system/schema" xmlns:dcscom="http://v8.1c.ru/8.1/data-composition-system/common" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<dataSource>
+		<name>ИнформационнаяБаза</name>
+		<dataSourceType>Local</dataSourceType>
+	</dataSource>
+	<dataSet xsi:type="DataSetQuery">
+		<name>КоэффициентТекучестиКадров</name>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Должность</dataPath>
+			<field>Должность</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Должность</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Подразделение</dataPath>
+			<field>Подразделение</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Подразделение</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>КоличествоУволенных</dataPath>
+			<field>КоличествоУволенных</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Количество уволенных</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ТрудДни</dataPath>
+			<field>ТрудДни</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Труд дни</v8:content>
+				</v8:item>
+			</title>
+			<useRestriction>
+				<field>true</field>
+				<group>true</group>
+				<order>true</order>
+			</useRestriction>
+		</field>
+		<dataSource>ИнформационнаяБаза</dataSource>
+		<query>ВЫБРАТЬ РАЗРЕШЕННЫЕ
+	ВложенныйЗапрос.Подразделение КАК Подразделение,
+	ВложенныйЗапрос.Должность КАК Должность,
+	ВложенныйЗапрос.КоличествоУволенных КАК КоличествоУволенных,
+	ВложенныйЗапрос.ТрудДни КАК ТрудДни
+{ВЫБРАТЬ
+	Подразделение.*,
+	Должность.*,
+	КоличествоУволенных,
+	ТрудДни}
+ИЗ
+	(ВЫБРАТЬ
+		РеальныеШтатныеТрудодни.Подразделение КАК Подразделение,
+		РеальныеШтатныеТрудодни.Должность КАК Должность,
+		Уволенные.КоличествоУволенных КАК КоличествоУволенных,
+		РеальныеШтатныеТрудодни.ТрудДни КАК ТрудДни
+	ИЗ
+		(ВЫБРАТЬ
+			СпиокТрудодней.Подразделение КАК Подразделение,
+			СпиокТрудодней.Должность КАК Должность,
+			СУММА(СпиокТрудодней.ТрудДни) КАК ТрудДни
+		ИЗ
+			(ВЫБРАТЬ
+				РаботникиСрезПоследних.Подразделение КАК Подразделение,
+				РаботникиСрезПоследних.Должность КАК Должность,
+				СУММА(РаботникиСрезПоследних.ЗанимаемыхСтавок * (РАЗНОСТЬДАТ(&amp;НачалоПериода, &amp;КонецПериода, ДЕНЬ) + 1)) КАК ТрудДни
+			ИЗ
+				РегистрСведений.Работники.СрезПоследних(&amp;НачалоПериода, ) КАК РаботникиСрезПоследних
+			ГДЕ
+				РаботникиСрезПоследних.ПричинаИзмененияСостояния &lt;&gt; ЗНАЧЕНИЕ(Перечисление.ПричиныИзмененияСостояния.Увольнение)
+			
+			СГРУППИРОВАТЬ ПО
+				РаботникиСрезПоследних.Подразделение,
+				РаботникиСрезПоследних.Должность
+			
+			ОБЪЕДИНИТЬ ВСЕ
+			
+			ВЫБРАТЬ
+				Работники.Подразделение,
+				Работники.Должность,
+				СУММА(Работники.ЗанимаемыхСтавок * (РАЗНОСТЬДАТ(Работники.Период, &amp;КонецПериода, ДЕНЬ) + 1))
+			ИЗ
+				РегистрСведений.Работники КАК Работники
+			ГДЕ
+				Работники.Период МЕЖДУ &amp;НачалоПериода И &amp;КонецПериода
+				И (Работники.ПричинаИзмененияСостояния = ЗНАЧЕНИЕ(Перечисление.ПричиныИзмененияСостояния.Перемещение)
+						ИЛИ Работники.ПричинаИзмененияСостояния = ЗНАЧЕНИЕ(Перечисление.ПричиныИзмененияСостояния.ПриемНаРаботу))
+			
+			СГРУППИРОВАТЬ ПО
+				Работники.Подразделение,
+				Работники.Должность
+			
+			ОБЪЕДИНИТЬ ВСЕ
+			
+			ВЫБРАТЬ
+				Работники.Подразделение,
+				Работники.Должность,
+				СУММА(-Работники.ЗанимаемыхСтавок * (РАЗНОСТЬДАТ(ДатыПоследнийДвижений.ПериодПеремещения, &amp;КонецПериода, ДЕНЬ) + 1))
+			ИЗ
+				(ВЫБРАТЬ РАЗЛИЧНЫЕ
+					МАКСИМУМ(Работники.Период) КАК Период,
+					ДатыПеремещения.Период КАК ПериодПеремещения,
+					ДатыПеремещения.ФизЛицо КАК ФизЛицо
+				ИЗ
+					(ВЫБРАТЬ
+						Работники.ФизЛицо КАК ФизЛицо,
+						Работники.Период КАК Период
+					ИЗ
+						РегистрСведений.Работники КАК Работники
+					ГДЕ
+						Работники.Период МЕЖДУ &amp;НачалоПериода И &amp;КонецПериода
+						И Работники.ПричинаИзмененияСостояния = ЗНАЧЕНИЕ(Перечисление.ПричиныИзмененияСостояния.Перемещение)) КАК ДатыПеремещения
+						ЛЕВОЕ СОЕДИНЕНИЕ РегистрСведений.Работники КАК Работники
+						ПО ДатыПеремещения.ФизЛицо = Работники.ФизЛицо
+							И ДатыПеремещения.Период &gt; Работники.Период
+				
+				СГРУППИРОВАТЬ ПО
+					ДатыПеремещения.ФизЛицо,
+					ДатыПеремещения.Период) КАК ДатыПоследнийДвижений
+					ЛЕВОЕ СОЕДИНЕНИЕ РегистрСведений.Работники КАК Работники
+					ПО ДатыПоследнийДвижений.ФизЛицо = Работники.ФизЛицо
+						И ДатыПоследнийДвижений.Период = Работники.Период
+			
+			СГРУППИРОВАТЬ ПО
+				Работники.Подразделение,
+				Работники.Должность
+			
+			ОБЪЕДИНИТЬ ВСЕ
+			
+			ВЫБРАТЬ
+				Работники.Подразделение,
+				Работники.Должность,
+				СУММА(-Работники.ЗанимаемыхСтавок * (РАЗНОСТЬДАТ(ДатыПоследнийДвижений.ПериодПеремещения, &amp;КонецПериода, ДЕНЬ) + 1))
+			ИЗ
+				(ВЫБРАТЬ РАЗЛИЧНЫЕ
+					МАКСИМУМ(Работники.Период) КАК Период,
+					ДатыПеремещения.Период КАК ПериодПеремещения,
+					ДатыПеремещения.ФизЛицо КАК ФизЛицо
+				ИЗ
+					(ВЫБРАТЬ
+						Работники.ФизЛицо КАК ФизЛицо,
+						Работники.Период КАК Период
+					ИЗ
+						РегистрСведений.Работники КАК Работники
+					ГДЕ
+						Работники.Период МЕЖДУ &amp;ДатаНачУвольнений И &amp;ДатаКонУвольнений
+						И Работники.ПричинаИзмененияСостояния = ЗНАЧЕНИЕ(Перечисление.ПричиныИзмененияСостояния.Увольнение)) КАК ДатыПеремещения
+						ЛЕВОЕ СОЕДИНЕНИЕ РегистрСведений.Работники КАК Работники
+						ПО ДатыПеремещения.ФизЛицо = Работники.ФизЛицо
+							И ДатыПеремещения.Период &gt; Работники.Период
+				
+				СГРУППИРОВАТЬ ПО
+					ДатыПеремещения.ФизЛицо,
+					ДатыПеремещения.Период) КАК ДатыПоследнийДвижений
+					ЛЕВОЕ СОЕДИНЕНИЕ РегистрСведений.Работники КАК Работники
+					ПО ДатыПоследнийДвижений.ФизЛицо = Работники.ФизЛицо
+						И ДатыПоследнийДвижений.Период = Работники.Период
+			
+			СГРУППИРОВАТЬ ПО
+				Работники.Подразделение,
+				Работники.Должность) КАК СпиокТрудодней
+		
+		СГРУППИРОВАТЬ ПО
+			СпиокТрудодней.Подразделение,
+			СпиокТрудодней.Должность) КАК РеальныеШтатныеТрудодни
+			ЛЕВОЕ СОЕДИНЕНИЕ (ВЫБРАТЬ
+				СУММА(ДанныеПоУволенным.ЗанимаемыхСтавок) КАК КоличествоУволенных,
+				ДанныеПоУволенным.Подразделение КАК Подразделение,
+				ДанныеПоУволенным.Должность КАК Должность
+			ИЗ
+				(ВЫБРАТЬ
+					Уволенные.ФизЛицо КАК ФизЛицо,
+					МАКСИМУМ(ВсеРаботники.Период) КАК Период
+				ИЗ
+					(ВЫБРАТЬ
+						Работники.ФизЛицо КАК ФизЛицо,
+						Работники.Период КАК Период
+					ИЗ
+						РегистрСведений.Работники КАК Работники
+					ГДЕ
+						Работники.ПричинаИзмененияСостояния = ЗНАЧЕНИЕ(Перечисление.ПричиныИзмененияСостояния.Увольнение)
+						И Работники.Период МЕЖДУ &amp;ДатаНачУвольнений И &amp;ДатаКонУвольнений) КАК Уволенные
+						ЛЕВОЕ СОЕДИНЕНИЕ РегистрСведений.Работники КАК ВсеРаботники
+						ПО Уволенные.ФизЛицо = ВсеРаботники.ФизЛицо
+							И Уволенные.Период &gt; ВсеРаботники.Период
+				
+				СГРУППИРОВАТЬ ПО
+					Уволенные.ФизЛицо) КАК Уволенные
+					ЛЕВОЕ СОЕДИНЕНИЕ РегистрСведений.Работники КАК ДанныеПоУволенным
+					ПО Уволенные.ФизЛицо = ДанныеПоУволенным.ФизЛицо
+						И Уволенные.Период = ДанныеПоУволенным.Период
+			
+			СГРУППИРОВАТЬ ПО
+				ДанныеПоУволенным.Подразделение,
+				ДанныеПоУволенным.Должность) КАК Уволенные
+			ПО РеальныеШтатныеТрудодни.Подразделение = Уволенные.Подразделение
+				И РеальныеШтатныеТрудодни.Должность = Уволенные.Должность
+	
+	СГРУППИРОВАТЬ ПО
+		РеальныеШтатныеТрудодни.Подразделение,
+		РеальныеШтатныеТрудодни.Должность,
+		Уволенные.КоличествоУволенных,
+		РеальныеШтатныеТрудодни.ТрудДни) КАК ВложенныйЗапрос
+{ГДЕ
+	ВложенныйЗапрос.Подразделение.*,
+	ВложенныйЗапрос.Должность.*}
+
+СГРУППИРОВАТЬ ПО
+	ВложенныйЗапрос.Подразделение,
+	ВложенныйЗапрос.Должность,
+	ВложенныйЗапрос.КоличествоУволенных,
+	ВложенныйЗапрос.ТрудДни
+{ХАРАКТЕРИСТИКИ
+	ТИП(Справочник.Подразделения)
+	СПИСОК (SELECT
+			СвойстваОбъектов.Ref,
+			" Дополнительное свойство: " + СвойстваОбъектов.Description AS Наименование,
+			СвойстваОбъектов.ValueType
+		FROM
+			ChartOfCharacteristicTypes.СвойстваОбъектов AS СвойстваОбъектов
+		WHERE
+			СвойстваОбъектов.НазначениеСвойства = VALUE(ПланВидовХарактеристик.НазначенияСвойствКатегорийОбъектов.Справочник_Подразделения)
+			AND (NOT СвойстваОбъектов.DeletionMark))
+	ИДЕНТИФИКАТОР Ссылка
+	ИМЯ Наименование
+	ТИПЗНАЧЕНИЯ ТипЗначения
+	ЗНАЧЕНИЯ РегистрСведений.ЗначенияСвойствОбъектов
+	ОБЪЕКТ Объект
+	ХАРАКТЕРИСТИКА Свойство
+	ЗНАЧЕНИЕ Значение }
+{ХАРАКТЕРИСТИКИ
+	ТИП(Справочник.Подразделения)
+	СПИСОК (SELECT
+			КатегорииОбъектов.Ref,
+			" Дополнительная категория: " + КатегорииОбъектов.Description AS Наименование
+		FROM
+			Catalog.КатегорииОбъектов AS КатегорииОбъектов
+		WHERE
+			КатегорииОбъектов.НазначениеКатегории = VALUE(ПланВидовХарактеристик.НазначенияСвойствКатегорийОбъектов.Справочник_Подразделения)
+			AND (NOT КатегорииОбъектов.DeletionMark))
+	ИДЕНТИФИКАТОР Ссылка
+	ИМЯ Наименование
+	ЗНАЧЕНИЯ РегистрСведений.КатегорииОбъектов
+	ОБЪЕКТ Объект
+	ХАРАКТЕРИСТИКА Категория }
+{ХАРАКТЕРИСТИКИ
+	ТИП(Справочник.ДолжностиОрганизаций)
+	СПИСОК (SELECT
+			СвойстваОбъектов.Ref,
+			" Дополнительное свойство: " + СвойстваОбъектов.Description AS Наименование,
+			СвойстваОбъектов.ValueType
+		FROM
+			ChartOfCharacteristicTypes.СвойстваОбъектов AS СвойстваОбъектов
+		WHERE
+			СвойстваОбъектов.НазначениеСвойства = VALUE(ПланВидовХарактеристик.НазначенияСвойствКатегорийОбъектов.Справочник_ДолжностиОрганизаций)
+			AND (NOT СвойстваОбъектов.DeletionMark))
+	ИДЕНТИФИКАТОР Ссылка
+	ИМЯ Наименование
+	ТИПЗНАЧЕНИЯ ТипЗначения
+	ЗНАЧЕНИЯ РегистрСведений.ЗначенияСвойствОбъектов
+	ОБЪЕКТ Объект
+	ХАРАКТЕРИСТИКА Свойство
+	ЗНАЧЕНИЕ Значение }
+{ХАРАКТЕРИСТИКИ
+	ТИП(Справочник.ДолжностиОрганизаций)
+	СПИСОК (SELECT
+			КатегорииОбъектов.Ref,
+			" Дополнительная категория: " + КатегорииОбъектов.Description AS Наименование
+		FROM
+			Catalog.КатегорииОбъектов AS КатегорииОбъектов
+		WHERE
+			КатегорииОбъектов.НазначениеКатегории = VALUE(ПланВидовХарактеристик.НазначенияСвойствКатегорийОбъектов.Справочник_ДолжностиОрганизаций)
+			AND (NOT КатегорииОбъектов.DeletionMark))
+	ИДЕНТИФИКАТОР Ссылка
+	ИМЯ Наименование
+	ЗНАЧЕНИЯ РегистрСведений.КатегорииОбъектов
+	ОБЪЕКТ Объект
+	ХАРАКТЕРИСТИКА Категория }</query>
+		<autoFillFields>false</autoFillFields>
+	</dataSet>
+	<calculatedField>
+		<dataPath>Процент</dataPath>
+		<expression>КоличествоУволенных / ТрудДни * 100 * &amp;ДнейВПериоде</expression>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>% текучести кадров</v8:content>
+			</v8:item>
+		</title>
+		<useRestriction>
+			<condition>true</condition>
+			<group>true</group>
+		</useRestriction>
+		<appearance>
+			<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+				<dcscor:parameter>Формат</dcscor:parameter>
+				<dcscor:value xsi:type="xs:string">ЧЦ=5; ЧДЦ=2</dcscor:value>
+			</dcscor:item>
+		</appearance>
+		<valueType>
+			<v8:Type>xs:decimal</v8:Type>
+			<v8:NumberQualifiers>
+				<v8:Digits>5</v8:Digits>
+				<v8:FractionDigits>2</v8:FractionDigits>
+				<v8:AllowedSign>Any</v8:AllowedSign>
+			</v8:NumberQualifiers>
+		</valueType>
+	</calculatedField>
+	<calculatedField>
+		<dataPath>СредняяЧисленость</dataPath>
+		<expression>ТрудДни / &amp;ДнейВПериоде</expression>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Средняя численость</v8:content>
+			</v8:item>
+		</title>
+		<useRestriction>
+			<condition>true</condition>
+			<group>true</group>
+		</useRestriction>
+		<appearance>
+			<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+				<dcscor:parameter>Формат</dcscor:parameter>
+				<dcscor:value xsi:type="xs:string">ЧЦ=15; ЧДЦ=2</dcscor:value>
+			</dcscor:item>
+		</appearance>
+		<valueType>
+			<v8:Type>xs:decimal</v8:Type>
+			<v8:NumberQualifiers>
+				<v8:Digits>15</v8:Digits>
+				<v8:FractionDigits>2</v8:FractionDigits>
+				<v8:AllowedSign>Any</v8:AllowedSign>
+			</v8:NumberQualifiers>
+		</valueType>
+	</calculatedField>
+	<totalField>
+		<dataPath>КоличествоУволенных</dataPath>
+		<expression>Сумма(КоличествоУволенных)</expression>
+	</totalField>
+	<totalField>
+		<dataPath>СредняяЧисленость</dataPath>
+		<expression>Сумма(ТрудДни) / &amp;ДнейВПериоде</expression>
+	</totalField>
+	<totalField>
+		<dataPath>Процент</dataPath>
+		<expression>Сумма(КоличествоУволенных) / Сумма(ТрудДни) * &amp;ДнейВПериоде *100</expression>
+	</totalField>
+	<parameter>
+		<name>ДатаКонУвольнений</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Дата конца увольнений</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>Date</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:nil="true"/>
+		<useRestriction>true</useRestriction>
+		<expression>ДОБАВИТЬКДАТЕ(&amp;КонецПериода, "СЕКУНДА", 1)</expression>
+		<availableAsField>false</availableAsField>
+	</parameter>
+	<parameter>
+		<name>ДатаНачУвольнений</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Дата начала увольнений</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>Date</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:nil="true"/>
+		<useRestriction>true</useRestriction>
+		<expression>ДОБАВИТЬКДАТЕ(КОНЕЦПЕРИОДА(&amp;НачалоПериода, "ДЕНЬ"), "СЕКУНДА", 1)</expression>
+		<availableAsField>false</availableAsField>
+	</parameter>
+	<parameter>
+		<name>КонецПериода</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Конец периода</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>DateTime</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:nil="true"/>
+		<useRestriction>false</useRestriction>
+		<availableAsField>false</availableAsField>
+	</parameter>
+	<parameter>
+		<name>НачалоПериода</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Начало периода</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>DateTime</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:nil="true"/>
+		<useRestriction>false</useRestriction>
+		<availableAsField>false</availableAsField>
+	</parameter>
+	<parameter>
+		<name>ДнейВПериоде</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Дней в периоде</v8:content>
+			</v8:item>
+		</title>
+		<value xsi:nil="true"/>
+		<useRestriction>true</useRestriction>
+		<expression>РАЗНОСТЬДАТ(&amp;НачалоПериода, &amp;КонецПериода, "ДЕНЬ")+1</expression>
+		<availableAsField>false</availableAsField>
+	</parameter>
+	<settingsVariant>
+		<dcsset:name>Основной</dcsset:name>
+		<dcsset:presentation xsi:type="xs:string">Основной</dcsset:presentation>
+		<dcsset:settings xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows">
+			<dcsset:selection>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Подразделение</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Должность</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Процент</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>СредняяЧисленость</dcsset:field>
+				</dcsset:item>
+			</dcsset:selection>
+			<dcsset:filter>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Подразделение</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:right xsi:type="dcscor:DesignTimeValue">Справочник.Подразделения.</dcsset:right>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Должность</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:right xsi:type="dcscor:DesignTimeValue">Справочник.ДолжностиОрганизаций.</dcsset:right>
+				</dcsset:item>
+			</dcsset:filter>
+			<dcsset:dataParameters>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>КонецПериода</dcscor:parameter>
+					<dcscor:value xsi:type="xs:dateTime">0001-01-01T00:00:00</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>НачалоПериода</dcscor:parameter>
+					<dcscor:value xsi:type="xs:dateTime">0001-01-01T00:00:00</dcscor:value>
+				</dcscor:item>
+			</dcsset:dataParameters>
+			<dcsset:order>
+				<dcsset:item xsi:type="dcsset:OrderItemField">
+					<dcsset:field>Подразделение</dcsset:field>
+					<dcsset:orderType>Asc</dcsset:orderType>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:OrderItemField">
+					<dcsset:field>Должность</dcsset:field>
+					<dcsset:orderType>Asc</dcsset:orderType>
+				</dcsset:item>
+			</dcsset:order>
+			<dcsset:outputParameters>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>ВертикальноеРасположениеОбщихИтогов</dcscor:parameter>
+					<dcscor:value xsi:type="dcscor:DataCompositionTotalPlacement">None</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>ВыводитьЗаголовок</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">Output</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>Заголовок</dcscor:parameter>
+					<dcscor:value xsi:type="v8:LocalStringType">
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Коэффициент текучести кадров</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Коефіцієнт плинності кадрів</v8:content>
+						</v8:item>
+					</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>ВыводитьПараметрыДанных</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">DontOutput</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>ВыводитьОтбор</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">DontOutput</dcscor:value>
+				</dcscor:item>
+			</dcsset:outputParameters>
+			<dcsset:item xsi:type="dcsset:StructureItemGroup">
+				<dcsset:order>
+					<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+				</dcsset:order>
+				<dcsset:selection>
+					<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+				</dcsset:selection>
+			</dcsset:item>
+		</dcsset:settings>
+	</settingsVariant>
+</DataCompositionSchema>

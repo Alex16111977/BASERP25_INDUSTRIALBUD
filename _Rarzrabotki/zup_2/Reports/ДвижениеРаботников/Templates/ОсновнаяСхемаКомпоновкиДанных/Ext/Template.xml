@@ -1,0 +1,1677 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<DataCompositionSchema xmlns="http://v8.1c.ru/8.1/data-composition-system/schema" xmlns:dcscom="http://v8.1c.ru/8.1/data-composition-system/common" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<dataSource>
+		<name>ИнформационнаяБаза</name>
+		<dataSourceType>Local</dataSourceType>
+	</dataSource>
+	<dataSet xsi:type="DataSetQuery">
+		<name>ДвиженияРаботника</name>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОРаботнике.ГрафикРаботы</dataPath>
+			<field>ГрафикРаботы</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>График работы</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДатаСобытия</dataPath>
+			<field>ДатаСобытия</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Дата события</v8:content>
+				</v8:item>
+			</title>
+			<presentationExpression>Формат(ДатаСобытия, "ДФ = 'дд.ММ.гггг'")</presentationExpression>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОРаботнике.Должность</dataPath>
+			<field>Должность</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Должность</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОРаботнике.ЗанимаемыхСтавок</dataPath>
+			<field>ЗанимаемыхСтавок</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Ставка</v8:content>
+				</v8:item>
+			</title>
+			<valueType>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>10</v8:Digits>
+					<v8:FractionDigits>2</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</valueType>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Количество</dataPath>
+			<field>Количество</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Количество</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОРаботнике.Подразделение</dataPath>
+			<field>Подразделение</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Подразделение</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОРаботнике.ПричинаУвольнения</dataPath>
+			<field>ПричинаУвольнения</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Причина увольнения</v8:content>
+				</v8:item>
+			</title>
+			<attributeUseRestriction>
+				<field>true</field>
+				<condition>true</condition>
+				<group>true</group>
+				<order>true</order>
+			</attributeUseRestriction>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Событие</dataPath>
+			<field>Событие</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Событие</v8:content>
+				</v8:item>
+			</title>
+			<attributeUseRestriction>
+				<field>true</field>
+				<condition>true</condition>
+				<group>true</group>
+				<order>true</order>
+			</attributeUseRestriction>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ФизЛицо</dataPath>
+			<field>ФизЛицо</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Физическое лицо</v8:content>
+				</v8:item>
+			</title>
+			<useRestriction>
+				<field>true</field>
+				<condition>true</condition>
+				<group>true</group>
+				<order>true</order>
+			</useRestriction>
+			<attributeUseRestriction>
+				<field>true</field>
+				<condition>true</condition>
+				<group>true</group>
+				<order>true</order>
+			</attributeUseRestriction>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОФизЛице.Образование.ФизЛицоВидОбразования</dataPath>
+			<field>ФизЛицоВидОбразования</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Вид образования</v8:content>
+				</v8:item>
+			</title>
+			<attributeUseRestriction>
+				<field>true</field>
+				<condition>true</condition>
+				<group>true</group>
+				<order>true</order>
+			</attributeUseRestriction>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОФизЛице.ФизЛицоВозраст</dataPath>
+			<field>ФизЛицоВозраст</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Возраст</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОФизЛице.СоставСемьи.ФизЛицоВозрастРодственника</dataPath>
+			<field>ФизЛицоВозрастРодственника</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Возраст родственника</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОФизЛице.Образование.ФизЛицоГодОкончания</dataPath>
+			<field>ФизЛицоГодОкончания</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Год окончания учебного заведения</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОФизЛице.СоставСемьи.ФизЛицоГодРожденияРодственника</dataPath>
+			<field>ФизЛицоГодРожденияРодственника</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Год рождения</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОФизЛице.ФизЛицоДатаРождения</dataPath>
+			<field>ФизЛицоДатаРождения</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Дата рождения</v8:content>
+				</v8:item>
+			</title>
+			<presentationExpression>ФОРМАТ(ДанныеОФизЛице.ФизЛицоДатаРождения, "ДФ = 'дд.ММ.гггг'")</presentationExpression>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОФизЛице.Образование.ФизЛицоДиплом</dataPath>
+			<field>ФизЛицоДиплом</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Диплом</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОФизЛице.ПаспортныеДанные.ФизЛицоДокументВид</dataPath>
+			<field>ФизЛицоДокументВид</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Вид документа</v8:content>
+				</v8:item>
+			</title>
+			<attributeUseRestriction>
+				<field>true</field>
+				<condition>true</condition>
+				<group>true</group>
+				<order>true</order>
+			</attributeUseRestriction>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОФизЛице.ПаспортныеДанные.ФизЛицоДокументДатаВыдачи</dataPath>
+			<field>ФизЛицоДокументДатаВыдачи</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Дата выдачи</v8:content>
+				</v8:item>
+			</title>
+			<presentationExpression>ФОРМАТ(ДанныеОФизЛице.ПаспортныеДанные.ФизЛицоДокументДатаВыдачи, "ДФ = 'дд.ММ.гггг'")</presentationExpression>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОФизЛице.ПаспортныеДанные.ФизЛицоДокументКемВыдан</dataPath>
+			<field>ФизЛицоДокументКемВыдан</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Кем выдан</v8:content>
+				</v8:item>
+			</title>
+			<attributeUseRestriction>
+				<field>true</field>
+				<condition>true</condition>
+				<group>true</group>
+				<order>true</order>
+			</attributeUseRestriction>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОФизЛице.ПаспортныеДанные.ФизЛицоДокументНомер</dataPath>
+			<field>ФизЛицоДокументНомер</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Номер</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОФизЛице.ПаспортныеДанные.ФизЛицоДокументСерия</dataPath>
+			<field>ФизЛицоДокументСерия</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Серия</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОФизЛице.СоставСемьи.ФизЛицоИмяРодственника</dataPath>
+			<field>ФизЛицоИмяРодственника</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Имя родственника</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОФизЛице.Образование.ФизЛицоКвалификация</dataPath>
+			<field>ФизЛицоКвалификация</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Квалификация</v8:content>
+				</v8:item>
+			</title>
+			<attributeUseRestriction>
+				<field>true</field>
+				<condition>true</condition>
+				<group>true</group>
+				<order>true</order>
+			</attributeUseRestriction>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОФизЛице.ФизЛицоКомментарий</dataPath>
+			<field>ФизЛицоКомментарий</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Комментарий</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОФизЛице.ФизЛицоМестоРождения</dataPath>
+			<field>ФизЛицоМестоРождения</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Место рождения</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОФизЛице.Гражданство.ФизЛицоНеИмеетПравоНаПенсию</dataPath>
+			<field>ФизЛицоНеИмеетПравоНаПенсию</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Не имеет право на пенсию</v8:content>
+				</v8:item>
+			</title>
+			<useRestriction>
+				<field>true</field>
+				<condition>true</condition>
+				<group>true</group>
+				<order>true</order>
+			</useRestriction>
+			<attributeUseRestriction>
+				<field>true</field>
+				<condition>true</condition>
+				<group>true</group>
+				<order>true</order>
+			</attributeUseRestriction>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОФизЛице.ФизЛицоПол</dataPath>
+			<field>ФизЛицоПол</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Пол</v8:content>
+				</v8:item>
+			</title>
+			<attributeUseRestriction>
+				<field>true</field>
+				<condition>true</condition>
+				<group>true</group>
+				<order>true</order>
+			</attributeUseRestriction>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОФизЛице.ФизЛицоСемейноеПоложение</dataPath>
+			<field>ФизЛицоСемейноеПоложение</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Семейное положение</v8:content>
+				</v8:item>
+			</title>
+			<attributeUseRestriction>
+				<field>true</field>
+				<condition>true</condition>
+				<group>true</group>
+				<order>true</order>
+			</attributeUseRestriction>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОФизЛице.Образование.ФизЛицоСпециальность</dataPath>
+			<field>ФизЛицоСпециальность</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Специальность</v8:content>
+				</v8:item>
+			</title>
+			<attributeUseRestriction>
+				<field>true</field>
+				<condition>true</condition>
+				<group>true</group>
+				<order>true</order>
+			</attributeUseRestriction>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОФизЛице.Языки.ФизЛицоСтепеньЗнанияЯзыка</dataPath>
+			<field>ФизЛицоСтепеньЗнанияЯзыка</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Степень знания языка</v8:content>
+				</v8:item>
+			</title>
+			<attributeUseRestriction>
+				<field>true</field>
+				<condition>true</condition>
+				<group>true</group>
+				<order>true</order>
+			</attributeUseRestriction>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОФизЛице.СоставСемьи.ФизЛицоСтепеньРодства</dataPath>
+			<field>ФизЛицоСтепеньРодства</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Степень родства</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОФизЛице.Гражданство.ФизЛицоСтрана</dataPath>
+			<field>ФизЛицоСтрана</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Страна</v8:content>
+				</v8:item>
+			</title>
+			<attributeUseRestriction>
+				<field>true</field>
+				<condition>true</condition>
+				<group>true</group>
+				<order>true</order>
+			</attributeUseRestriction>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОФизЛице.ТрудоваяДеятельность.ФизЛицоТД_ДатаНачала</dataPath>
+			<field>ФизЛицоТД_ДатаНачала</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Начало работы</v8:content>
+				</v8:item>
+			</title>
+			<presentationExpression>ФОРМАТ(ДанныеОФизЛице.ТрудоваяДеятельность.ФизЛицоТД_ДатаНачала, "ДФ = 'дд.ММ.гггг'")</presentationExpression>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОФизЛице.ТрудоваяДеятельность.ФизЛицоТД_ДатаОкончания</dataPath>
+			<field>ФизЛицоТД_ДатаОкончания</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Окончание работы</v8:content>
+				</v8:item>
+			</title>
+			<presentationExpression>ФОРМАТ(ДанныеОФизЛице.ТрудоваяДеятельность.ФизЛицоТД_ДатаОкончания, "ДФ = 'дд.ММ.гггг'")</presentationExpression>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОФизЛице.ТрудоваяДеятельность.ФизЛицоТД_Должность</dataPath>
+			<field>ФизЛицоТД_Должность</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Должность по предшествующему месту работы</v8:content>
+				</v8:item>
+			</title>
+			<attributeUseRestriction>
+				<field>true</field>
+				<condition>true</condition>
+				<group>true</group>
+				<order>true</order>
+			</attributeUseRestriction>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОФизЛице.ТрудоваяДеятельность.ФизЛицоТД_Организация</dataPath>
+			<field>ФизЛицоТД_Организация</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Предшествующие место работы</v8:content>
+				</v8:item>
+			</title>
+			<attributeUseRestriction>
+				<field>true</field>
+				<condition>true</condition>
+				<group>true</group>
+				<order>true</order>
+			</attributeUseRestriction>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОФизЛице.Образование.ФизЛицоУчебноеЗаведение</dataPath>
+			<field>ФизЛицоУчебноеЗаведение</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Учебное заведение</v8:content>
+				</v8:item>
+			</title>
+			<attributeUseRestriction>
+				<field>true</field>
+				<condition>true</condition>
+				<group>true</group>
+				<order>true</order>
+			</attributeUseRestriction>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОФизЛице.ФизЛицоФиоКраткое</dataPath>
+			<field>ФизЛицоФиоКраткое</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>ФИО (краткое)</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОФизЛице.ФизЛицоФиоПолное</dataPath>
+			<field>ФизЛицоФиоПолное</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>ФИО (полное)</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОФизЛице.Языки.ФизЛицоЯзык</dataPath>
+			<field>ФизЛицоЯзык</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Язык</v8:content>
+				</v8:item>
+			</title>
+			<attributeUseRestriction>
+				<field>true</field>
+				<condition>true</condition>
+				<group>true</group>
+				<order>true</order>
+			</attributeUseRestriction>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Документ</dataPath>
+			<field>Документ</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Документ</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОРаботнике.СтароеПодразделение</dataPath>
+			<field>СтароеПодразделение</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Старое подразделение</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ДанныеОРаботнике.СтараяДолжность</dataPath>
+			<field>СтараяДолжность</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Старая должность</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldFolder">
+			<dataPath>ДанныеОФизЛице</dataPath>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content> Данные о работнике</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldFolder">
+			<dataPath>ДанныеОРаботнике</dataPath>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content> Данные о рабочем месте</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldFolder">
+			<dataPath>ДанныеОФизЛице.Образование</dataPath>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content> Образование</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldFolder">
+			<dataPath>ДанныеОФизЛице.СоставСемьи</dataPath>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content> Состав семьи</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldFolder">
+			<dataPath>ДанныеОФизЛице.ВоинскийУчет</dataPath>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content> Воинский учет</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldFolder">
+			<dataPath>ДанныеОФизЛице.ПаспортныеДанные</dataPath>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content> Паспортные данные</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldFolder">
+			<dataPath>ДанныеОФизЛице.Гражданство</dataPath>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content> Гражданство</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldFolder">
+			<dataPath>ДанныеОФизЛице.Языки</dataPath>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content> Языки</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldFolder">
+			<dataPath>ДанныеОФизЛице.ТрудоваяДеятельность</dataPath>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content> Трудовая деятельность</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ФизЛицоКодПоДРФО</dataPath>
+			<field>ФизЛицоКодПоДРФО</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Физ лицо код по ДРФО</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ФизЛицоНеЯвляетсяНалоговымРезидентом</dataPath>
+			<field>ФизЛицоНеЯвляетсяНалоговымРезидентом</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Физ лицо не является налоговым резидентом</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ФизЛицоУНЗР</dataPath>
+			<field>ФизЛицоУНЗР</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Физ лицо УНЗР</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<dataSource>ИнформационнаяБаза</dataSource>
+		<query>ВЫБРАТЬ РАЗРЕШЕННЫЕ
+	Работники.ФизЛицо КАК ФизЛицо,
+	Работники.Подразделение КАК Подразделение,
+	Работники.Должность КАК Должность,
+	Работники.ГрафикРаботы КАК ГрафикРаботы,
+	Работники.ЗанимаемыхСтавок КАК ЗанимаемыхСтавок,
+	Работники.ПричинаУвольнения КАК ПричинаУвольнения,
+	ВЫБОР
+		КОГДА Работники.ПричинаИзмененияСостояния = ЗНАЧЕНИЕ(Перечисление.ПричиныИзмененияСостояния.Увольнение)
+			ТОГДА ДОБАВИТЬКДАТЕ(Работники.Период, ДЕНЬ, -1)
+		ИНАЧЕ Работники.Период
+	КОНЕЦ КАК ДатаСобытия,
+	Работники.ПричинаИзмененияСостояния КАК Событие,
+	0 КАК Количество,
+	Работники.ФизЛицо.ДатаРождения КАК ФизЛицоДатаРождения,
+	Работники.ФизЛицо.КодПоДРФО КАК ФизЛицоКодПоДРФО,
+	Работники.ФизЛицо.УНЗР КАК ФизЛицоУНЗР,
+	Работники.ФизЛицо.Комментарий КАК ФизЛицоКомментарий,
+	Работники.ФизЛицо.Пол КАК ФизЛицоПол,
+	Работники.ФизЛицо.МестоРождения КАК ФизЛицоМестоРождения,
+	ВЫБОР
+		КОГДА ФИОФизЛиц.Фамилия ЕСТЬ NULL 
+			ТОГДА Работники.ФизЛицо.Наименование
+		ИНАЧЕ ФИОФизЛиц.Фамилия + " " + ФИОФизЛиц.Имя + " " + ФИОФизЛиц.Отчество
+	КОНЕЦ КАК ФизЛицоФиоПолное,
+	ВЫБОР
+		КОГДА ФИОФизЛиц.ФизЛицо ЕСТЬ NULL 
+			ТОГДА Работники.ФизЛицо.Наименование
+		ИНАЧЕ ФИОФизЛиц.Фамилия + ВЫБОР
+				КОГДА ПОДСТРОКА(ФИОФизЛиц.Имя, 1, 1) &lt;&gt; ""
+					ТОГДА " " + ПОДСТРОКА(ФИОФизЛиц.Имя, 1, 1) + "."
+				ИНАЧЕ ""
+			КОНЕЦ + ВЫБОР
+				КОГДА ПОДСТРОКА(ФИОФизЛиц.Отчество, 1, 1) &lt;&gt; ""
+					ТОГДА " " + ПОДСТРОКА(ФИОФизЛиц.Отчество, 1, 1) + "."
+				ИНАЧЕ ""
+			КОНЕЦ
+	КОНЕЦ КАК ФизЛицоФиоКраткое,
+	ВЫБОР
+		КОГДА ГОД(Работники.ФизЛицо.ДатаРождения) = 1
+			ТОГДА 0
+		ИНАЧЕ ГОД(&amp;КонецПериода) - ГОД(Работники.ФизЛицо.ДатаРождения) + ВЫБОР
+				КОГДА МЕСЯЦ(Работники.ФизЛицо.ДатаРождения) * 100 + ДЕНЬ(Работники.ФизЛицо.ДатаРождения) &gt; МЕСЯЦ(&amp;КонецПериода) * 100 + ДЕНЬ(&amp;КонецПериода)
+					ТОГДА -1
+				ИНАЧЕ 0
+			КОНЕЦ
+	КОНЕЦ КАК ФизЛицоВозраст,
+	СоставСемьиФизлица.СтепеньРодства КАК ФизЛицоСтепеньРодства,
+	СоставСемьиФизлица.ФизЛицо КАК ФизЛицоИмяРодственника,
+	СоставСемьиФизлица.ГодРождения КАК ФизЛицоГодРожденияРодственника,
+	ВЫБОР
+		КОГДА СоставСемьиФизлица.ГодРождения = 0
+			ТОГДА 0
+		ИНАЧЕ ГОД(&amp;КонецПериода) - СоставСемьиФизлица.ГодРождения
+	КОНЕЦ КАК ФизЛицоВозрастРодственника,
+	ОбразованиеФизлица.ВидОбразования КАК ФизЛицоВидОбразования,
+	ОбразованиеФизлица.УчебноеЗаведение КАК ФизЛицоУчебноеЗаведение,
+	ОбразованиеФизлица.Специальность КАК ФизЛицоСпециальность,
+	ОбразованиеФизлица.Диплом КАК ФизЛицоДиплом,
+	ОбразованиеФизлица.ГодОкончания КАК ФизЛицоГодОкончания,
+	ОбразованиеФизлица.Квалификация КАК ФизЛицоКвалификация,
+	ТрудоваяДеятельностьФизлица.Организация КАК ФизЛицоТД_Организация,
+	ТрудоваяДеятельностьФизлица.ДатаНачала КАК ФизЛицоТД_ДатаНачала,
+	ТрудоваяДеятельностьФизлица.ДатаОкончания КАК ФизЛицоТД_ДатаОкончания,
+	ТрудоваяДеятельностьФизлица.Должность КАК ФизЛицоТД_Должность,
+	ЗнаниеЯзыковФизлица.Язык КАК ФизЛицоЯзык,
+	ЗнаниеЯзыковФизлица.СтепеньЗнанияЯзыка КАК ФизЛицоСтепеньЗнанияЯзыка,
+	ПаспортныеДанныеФизЛиц.ДокументВид КАК ФизЛицоДокументВид,
+	ПаспортныеДанныеФизЛиц.ДокументСерия КАК ФизЛицоДокументСерия,
+	ПаспортныеДанныеФизЛиц.ДокументНомер КАК ФизЛицоДокументНомер,
+	ПаспортныеДанныеФизЛиц.ДокументДатаВыдачи КАК ФизЛицоДокументДатаВыдачи,
+	ПаспортныеДанныеФизЛиц.ДокументКемВыдан КАК ФизЛицоДокументКемВыдан,
+	ГражданствоФизЛиц.Страна КАК ФизЛицоСтрана,
+	ГражданствоФизЛиц.НеИмеетПравоНаПенсию КАК ФизЛицоНеИмеетПравоНаПенсию,
+	ГражданствоФизЛиц.НеЯвляетсяНалоговымРезидентом КАК ФизЛицоНеЯвляетсяНалоговымРезидентом,
+	СемейноеПоложениеФизЛиц.СемейноеПоложение КАК ФизЛицоСемейноеПоложение,
+	Работники.Регистратор КАК Документ,
+	ПриведущееМестоРаботы.СтароеПодразделение КАК СтароеПодразделение,
+	ПриведущееМестоРаботы.СтараяДолжность КАК СтараяДолжность
+{ВЫБРАТЬ
+	ФизЛицо.*,
+	Подразделение.*,
+	Должность.*,
+	ГрафикРаботы.*,
+	ЗанимаемыхСтавок,
+	ПричинаУвольнения.*,
+	ДатаСобытия,
+	Событие.*,
+	Количество,
+	ФизЛицоДатаРождения,
+	ФизЛицоКодПоДРФО,
+	ФизЛицоУНЗР,
+	ФизЛицоКомментарий,
+	ФизЛицоПол.*,
+	ФизЛицоМестоРождения,
+	ФизЛицоФиоПолное,
+	ФизЛицоФиоКраткое,
+	ФизЛицоВозраст,
+	ФизЛицоСтепеньРодства.*,
+	ФизЛицоИмяРодственника,
+	ФизЛицоГодРожденияРодственника,
+	ФизЛицоВозрастРодственника,
+	ФизЛицоВидОбразования.*,
+	ФизЛицоУчебноеЗаведение.*,
+	ФизЛицоСпециальность.*,
+	ФизЛицоДиплом,
+	ФизЛицоГодОкончания,
+	ФизЛицоКвалификация,
+	ФизЛицоТД_Организация,
+	ФизЛицоТД_ДатаНачала,
+	ФизЛицоТД_ДатаОкончания,
+	ФизЛицоТД_Должность,
+	ФизЛицоЯзык.*,
+	ФизЛицоСтепеньЗнанияЯзыка.*,
+	ФизЛицоДокументВид.*,
+	ФизЛицоДокументСерия,
+	ФизЛицоДокументНомер,
+	ФизЛицоДокументДатаВыдачи,
+	ФизЛицоДокументКемВыдан,
+	ФизЛицоСтрана.*,
+	ФизЛицоНеИмеетПравоНаПенсию,
+	ФизЛицоНеЯвляетсяНалоговымРезидентом,
+	ФизЛицоСемейноеПоложение.*,
+	Документ.*,
+	СтароеПодразделение.*,
+	СтараяДолжность.*}
+ИЗ
+	РегистрСведений.Работники КАК Работники
+		{ЛЕВОЕ СОЕДИНЕНИЕ РегистрСведений.ПаспортныеДанныеФизЛиц.СрезПоследних(&amp;КонецПериода, ) КАК ПаспортныеДанныеФизЛиц
+		ПО Работники.ФизЛицо = ПаспортныеДанныеФизЛиц.ФизЛицо}
+		{ЛЕВОЕ СОЕДИНЕНИЕ РегистрСведений.ГражданствоФизЛиц.СрезПоследних(&amp;КонецПериода, ) КАК ГражданствоФизЛиц
+		ПО Работники.ФизЛицо = ГражданствоФизЛиц.ФизЛицо}
+		{ЛЕВОЕ СОЕДИНЕНИЕ РегистрСведений.СемейноеПоложениеФизЛиц.СрезПоследних(&amp;КонецПериода, ) КАК СемейноеПоложениеФизЛиц
+		ПО Работники.ФизЛицо = СемейноеПоложениеФизЛиц.ФизЛицо}
+		{ЛЕВОЕ СОЕДИНЕНИЕ РегистрСведений.ФИОФизЛиц.СрезПоследних(&amp;КонецПериода, ) КАК ФИОФизЛиц
+		ПО Работники.ФизЛицо = ФИОФизЛиц.ФизЛицо}
+		{ЛЕВОЕ СОЕДИНЕНИЕ Справочник.ФизическиеЛица.СоставСемьи КАК СоставСемьиФизлица
+		ПО Работники.ФизЛицо = СоставСемьиФизлица.Ссылка}
+		{ЛЕВОЕ СОЕДИНЕНИЕ Справочник.ФизическиеЛица.Образование КАК ОбразованиеФизлица
+		ПО Работники.ФизЛицо = ОбразованиеФизлица.Ссылка}
+		{ЛЕВОЕ СОЕДИНЕНИЕ Справочник.ФизическиеЛица.ТрудоваяДеятельность КАК ТрудоваяДеятельностьФизлица
+		ПО Работники.ФизЛицо = ТрудоваяДеятельностьФизлица.Ссылка}
+		{ЛЕВОЕ СОЕДИНЕНИЕ Справочник.ФизическиеЛица.ЗнаниеЯзыков КАК ЗнаниеЯзыковФизлица
+		ПО Работники.ФизЛицо = ЗнаниеЯзыковФизлица.Ссылка}
+		{ЛЕВОЕ СОЕДИНЕНИЕ (ВЫБРАТЬ
+			Работники.Подразделение КАК СтароеПодразделение,
+			Работники.Должность КАК СтараяДолжность,
+			ДатыПриведущихДвижений.Период КАК Период,
+			ДатыПриведущихДвижений.ФизЛицо КАК ФизЛицо
+		ИЗ
+			(ВЫБРАТЬ РАЗЛИЧНЫЕ
+				Работники.Период КАК Период,
+				Работники.ФизЛицо КАК ФизЛицо,
+				МАКСИМУМ(РаботникиСрез.Период) КАК ПериодСтарый
+			ИЗ
+				РегистрСведений.Работники КАК Работники
+					ВНУТРЕННЕЕ СОЕДИНЕНИЕ РегистрСведений.Работники КАК РаботникиСрез
+					ПО Работники.ФизЛицо = РаботникиСрез.ФизЛицо
+						И Работники.Период &gt; РаботникиСрез.Период
+			ГДЕ
+				Работники.Период МЕЖДУ &amp;НачалоПериода И &amp;КонецПериода
+				И Работники.ПричинаИзмененияСостояния = ЗНАЧЕНИЕ(Перечисление.ПричиныИзмененияСостояния.Перемещение)
+			
+			СГРУППИРОВАТЬ ПО
+				Работники.Период,
+				Работники.ФизЛицо) КАК ДатыПриведущихДвижений
+				ЛЕВОЕ СОЕДИНЕНИЕ РегистрСведений.Работники КАК Работники
+				ПО ДатыПриведущихДвижений.ПериодСтарый = Работники.Период
+					И ДатыПриведущихДвижений.ФизЛицо = Работники.ФизЛицо) КАК ПриведущееМестоРаботы
+		ПО Работники.Период = ПриведущееМестоРаботы.Период
+			И Работники.ФизЛицо = ПриведущееМестоРаботы.ФизЛицо}
+ГДЕ
+	(Работники.Период МЕЖДУ &amp;НачалоПериода И &amp;КонецПериода
+				И Работники.ПричинаИзмененияСостояния &lt;&gt; ЗНАЧЕНИЕ(Перечисление.ПричиныИзмененияСостояния.Увольнение)
+			ИЛИ Работники.Период МЕЖДУ &amp;ДатаНачУвольнений И &amp;ДатаКонУвольнений
+				И Работники.ПричинаИзмененияСостояния = ЗНАЧЕНИЕ(Перечисление.ПричиныИзмененияСостояния.Увольнение))
+{ГДЕ
+	Работники.ФизЛицо.* КАК Физлицо,
+	Работники.Подразделение.* КАК Подразделение,
+	Работники.Должность.* КАК Должность,
+	Работники.ГрафикРаботы.* КАК ГрафикРаботы,
+	Работники.ЗанимаемыхСтавок КАК ЗанимаемыхСтавок,
+	Работники.ПричинаУвольнения.* КАК ПричинаУвольнения,
+	(ВЫБОР
+			КОГДА Работники.ПричинаИзмененияСостояния = ЗНАЧЕНИЕ(Перечисление.ПричиныИзмененияСостояния.Увольнение)
+				ТОГДА ДОБАВИТЬКДАТЕ(Работники.Период, ДЕНЬ, -1)
+			ИНАЧЕ Работники.Период
+		КОНЕЦ) КАК ДатаСобытия,
+	Работники.ПричинаИзмененияСостояния.* КАК Событие,
+	(0) КАК Количество,
+	Работники.ФизЛицо.ДатаРождения КАК ФизЛицоДатаРождения,
+	Работники.ФизЛицо.КодПоДРФО КАК ФизЛицоКодПоДРФО,
+	Работники.ФизЛицо.УНЗР КАК ФизЛицоУНЗР,
+	Работники.ФизЛицо.Комментарий КАК ФизЛицоКомментарий,
+	Работники.ФизЛицо.Пол.* КАК ФизЛицоПол,
+	Работники.ФизЛицо.МестоРождения КАК ФизЛицоМестоРождения,
+	(ВЫБОР
+			КОГДА ФИОФизЛиц.Фамилия ЕСТЬ NULL 
+				ТОГДА Работники.ФизЛицо.Наименование
+			ИНАЧЕ ФИОФизЛиц.Фамилия + " " + ФИОФизЛиц.Имя + " " + ФИОФизЛиц.Отчество
+		КОНЕЦ) КАК ФизЛицоФиоПолное,
+	(ВЫБОР
+			КОГДА ФИОФизЛиц.ФизЛицо ЕСТЬ NULL 
+				ТОГДА Работники.ФизЛицо.Наименование
+			ИНАЧЕ ФИОФизЛиц.Фамилия + ВЫБОР
+					КОГДА ПОДСТРОКА(ФИОФизЛиц.Имя, 1, 1) &lt;&gt; ""
+						ТОГДА " " + ПОДСТРОКА(ФИОФизЛиц.Имя, 1, 1) + "."
+					ИНАЧЕ ""
+				КОНЕЦ + ВЫБОР
+					КОГДА ПОДСТРОКА(ФИОФизЛиц.Отчество, 1, 1) &lt;&gt; ""
+						ТОГДА " " + ПОДСТРОКА(ФИОФизЛиц.Отчество, 1, 1) + "."
+					ИНАЧЕ ""
+				КОНЕЦ
+		КОНЕЦ) КАК ФизЛицоФиоКраткое,
+	(ВЫБОР
+			КОГДА ГОД(Работники.ФизЛицо.ДатаРождения) = 1
+				ТОГДА 0
+			ИНАЧЕ ГОД(&amp;КонецПериода) - ГОД(Работники.ФизЛицо.ДатаРождения) + ВЫБОР
+					КОГДА МЕСЯЦ(Работники.ФизЛицо.ДатаРождения) * 100 + ДЕНЬ(Работники.ФизЛицо.ДатаРождения) &gt; МЕСЯЦ(&amp;КонецПериода) * 100 + ДЕНЬ(&amp;КонецПериода)
+						ТОГДА -1
+					ИНАЧЕ 0
+				КОНЕЦ
+		КОНЕЦ) КАК ФизЛицоВозраст,
+	СоставСемьиФизлица.СтепеньРодства.* КАК ФизЛицоСтепеньРодства,
+	СоставСемьиФизлица.ФизЛицо КАК ФизЛицоИмяРодственника,
+	СоставСемьиФизлица.ГодРождения КАК ФизЛицоГодРожденияРодственника,
+	(ВЫБОР
+			КОГДА СоставСемьиФизлица.ГодРождения = 0
+				ТОГДА 0
+			ИНАЧЕ ГОД(&amp;КонецПериода) - СоставСемьиФизлица.ГодРождения
+		КОНЕЦ) КАК ФизЛицоВозрастРодственника,
+	ОбразованиеФизлица.ВидОбразования.* КАК ФизЛицоВидОбразования,
+	ОбразованиеФизлица.УчебноеЗаведение.* КАК ФизЛицоУчебноеЗаведение,
+	ОбразованиеФизлица.Специальность.* КАК ФизЛицоСпециальность,
+	ОбразованиеФизлица.Диплом КАК ФизЛицоДиплом,
+	ОбразованиеФизлица.ГодОкончания КАК ФизЛицоГодОкончания,
+	ОбразованиеФизлица.Квалификация КАК ФизЛицоКвалификация,
+	ТрудоваяДеятельностьФизлица.Организация КАК ФизЛицоТД_Организация,
+	ТрудоваяДеятельностьФизлица.ДатаНачала КАК ФизЛицоТД_ДатаНачала,
+	ТрудоваяДеятельностьФизлица.ДатаОкончания КАК ФизЛицоТД_ДатаОкончания,
+	ТрудоваяДеятельностьФизлица.Должность КАК ФизЛицоТД_Должность,
+	ЗнаниеЯзыковФизлица.Язык.* КАК ФизЛицоЯзык,
+	ЗнаниеЯзыковФизлица.СтепеньЗнанияЯзыка.* КАК ФизЛицоСтепеньЗнанияЯзыка,
+	ПаспортныеДанныеФизЛиц.ДокументВид.* КАК ФизЛицоДокументВид,
+	ПаспортныеДанныеФизЛиц.ДокументСерия КАК ФизЛицоДокументСерия,
+	ПаспортныеДанныеФизЛиц.ДокументНомер КАК ФизЛицоДокументНомер,
+	ПаспортныеДанныеФизЛиц.ДокументДатаВыдачи КАК ФизЛицоДокументДатаВыдачи,
+	ПаспортныеДанныеФизЛиц.ДокументКемВыдан КАК ФизЛицоДокументКемВыдан,
+	ГражданствоФизЛиц.Страна.* КАК ФизЛицоСтрана,
+	ГражданствоФизЛиц.НеИмеетПравоНаПенсию КАК ФизЛицоНеИмеетПравоНаПенсию,
+	ГражданствоФизЛиц.НеЯвляетсяНалоговымРезидентом КАК ФизЛицоНеЯвляетсяНалоговымРезидентом,
+	СемейноеПоложениеФизЛиц.СемейноеПоложение.* КАК ФизЛицоСемейноеПоложение,
+	Работники.Регистратор.* КАК Документ,
+	ПриведущееМестоРаботы.СтароеПодразделение.*,
+	ПриведущееМестоРаботы.СтараяДолжность.*}</query>
+		<autoFillFields>false</autoFillFields>
+	</dataSet>
+	<dataSet xsi:type="DataSetQuery">
+		<name>Сотрудники</name>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Сотрудник</dataPath>
+			<field>Сотрудник</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Работник</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Физлицо</dataPath>
+			<field>Физлицо</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Физлицо</v8:content>
+				</v8:item>
+			</title>
+			<useRestriction>
+				<field>true</field>
+				<condition>true</condition>
+				<group>true</group>
+				<order>true</order>
+			</useRestriction>
+			<attributeUseRestriction>
+				<field>true</field>
+				<condition>true</condition>
+				<group>true</group>
+				<order>true</order>
+			</attributeUseRestriction>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Период</dataPath>
+			<field>Период</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Период</v8:content>
+				</v8:item>
+			</title>
+			<useRestriction>
+				<field>true</field>
+				<condition>true</condition>
+				<group>true</group>
+				<order>true</order>
+			</useRestriction>
+			<attributeUseRestriction>
+				<field>true</field>
+				<condition>true</condition>
+				<group>true</group>
+				<order>true</order>
+			</attributeUseRestriction>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ТабельныйНомер</dataPath>
+			<field>ТабельныйНомер</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Таб. №</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<dataSource>ИнформационнаяБаза</dataSource>
+		<query>ВЫБРАТЬ РАЗРЕШЕННЫЕ
+	СписокСотрудников.Сотрудник КАК Сотрудник,
+	СписокСотрудников.Сотрудник.Код КАК ТабельныйНомер,
+	СписокСотрудников.Физлицо КАК Физлицо,
+	СписокСотрудников.Период КАК Период
+{ВЫБРАТЬ
+	Сотрудник.*,
+	Физлицо.*,
+	Период}
+ИЗ
+	(ВЫБРАТЬ
+		МАКСИМУМ(РаботникиОрганизаций.Сотрудник) КАК Сотрудник,
+		РаботникиОрганизаций.Сотрудник.Физлицо КАК Физлицо,
+		1 КАК Приоритет,
+		ПериодыРаботников.Период КАК Период
+	ИЗ
+		(ВЫБРАТЬ
+			Работники.Период КАК Период,
+			МАКСИМУМ(РаботникиОрганизаций.Период) КАК ПериодРаботниковОрганизации,
+			Работники.ФизЛицо КАК ФизЛицо
+		ИЗ
+			РегистрСведений.Работники КАК Работники
+				ВНУТРЕННЕЕ СОЕДИНЕНИЕ РегистрСведений.РаботникиОрганизаций КАК РаботникиОрганизаций
+				ПО Работники.ФизЛицо = РаботникиОрганизаций.Сотрудник.Физлицо
+					И Работники.Период &gt;= РаботникиОрганизаций.Период
+		ГДЕ
+			(Работники.Период МЕЖДУ &amp;НачалоПериода И &amp;КонецПериода
+						И Работники.ПричинаИзмененияСостояния &lt;&gt; ЗНАЧЕНИЕ(Перечисление.ПричиныИзмененияСостояния.Увольнение)
+					ИЛИ Работники.Период МЕЖДУ &amp;ДатаНачУвольнений И &amp;ДатаКонУвольнений
+						И Работники.ПричинаИзмененияСостояния = ЗНАЧЕНИЕ(Перечисление.ПричиныИзмененияСостояния.Увольнение))
+			И РаботникиОрганизаций.Сотрудник.ВидДоговора = ЗНАЧЕНИЕ(Перечисление.ВидыДоговоровСФизЛицами.ТрудовойДоговор)
+			И РаботникиОрганизаций.Сотрудник.ВидЗанятости = ЗНАЧЕНИЕ(Перечисление.ВидыЗанятостиВОрганизации.ОсновноеМестоРаботы)
+		
+		СГРУППИРОВАТЬ ПО
+			Работники.Период,
+			Работники.ФизЛицо) КАК ПериодыРаботников
+			ВНУТРЕННЕЕ СОЕДИНЕНИЕ РегистрСведений.РаботникиОрганизаций КАК РаботникиОрганизаций
+			ПО ПериодыРаботников.ПериодРаботниковОрганизации = РаботникиОрганизаций.Период
+				И ПериодыРаботников.ФизЛицо = РаботникиОрганизаций.Сотрудник.Физлицо
+	
+	СГРУППИРОВАТЬ ПО
+		РаботникиОрганизаций.Сотрудник.Физлицо,
+		ПериодыРаботников.Период
+	
+	ОБЪЕДИНИТЬ
+	
+	ВЫБРАТЬ
+		МАКСИМУМ(РаботникиОрганизаций.Сотрудник),
+		РаботникиОрганизаций.Сотрудник.Физлицо,
+		2,
+		ПериодыРаботников.Период
+	ИЗ
+		(ВЫБРАТЬ
+			Работники.Период КАК Период,
+			МАКСИМУМ(РаботникиОрганизаций.Период) КАК ПериодРаботниковОрганизации,
+			Работники.ФизЛицо КАК ФизЛицо
+		ИЗ
+			РегистрСведений.Работники КАК Работники
+				ВНУТРЕННЕЕ СОЕДИНЕНИЕ РегистрСведений.РаботникиОрганизаций КАК РаботникиОрганизаций
+				ПО Работники.ФизЛицо = РаботникиОрганизаций.Сотрудник.Физлицо
+					И Работники.Период &gt;= РаботникиОрганизаций.Период
+		ГДЕ
+			(Работники.Период МЕЖДУ &amp;НачалоПериода И &amp;КонецПериода
+						И Работники.ПричинаИзмененияСостояния &lt;&gt; ЗНАЧЕНИЕ(Перечисление.ПричиныИзмененияСостояния.Увольнение)
+					ИЛИ Работники.Период МЕЖДУ &amp;ДатаНачУвольнений И &amp;ДатаКонУвольнений
+						И Работники.ПричинаИзмененияСостояния = ЗНАЧЕНИЕ(Перечисление.ПричиныИзмененияСостояния.Увольнение))
+			И РаботникиОрганизаций.ПричинаИзмененияСостояния &lt;&gt; ЗНАЧЕНИЕ(Перечисление.ПричиныИзмененияСостояния.Увольнение)
+			И РаботникиОрганизаций.Сотрудник.ВидДоговора = ЗНАЧЕНИЕ(Перечисление.ВидыДоговоровСФизЛицами.ТрудовойДоговор)
+			И РаботникиОрганизаций.Сотрудник.ВидЗанятости = ЗНАЧЕНИЕ(Перечисление.ВидыЗанятостиВОрганизации.Совместительство)
+		
+		СГРУППИРОВАТЬ ПО
+			Работники.Период,
+			Работники.ФизЛицо) КАК ПериодыРаботников
+			ВНУТРЕННЕЕ СОЕДИНЕНИЕ РегистрСведений.РаботникиОрганизаций КАК РаботникиОрганизаций
+			ПО ПериодыРаботников.ПериодРаботниковОрганизации = РаботникиОрганизаций.Период
+				И ПериодыРаботников.ФизЛицо = РаботникиОрганизаций.Сотрудник.Физлицо
+	
+	СГРУППИРОВАТЬ ПО
+		РаботникиОрганизаций.Сотрудник.Физлицо,
+		ПериодыРаботников.Период
+	
+	ОБЪЕДИНИТЬ
+	
+	ВЫБРАТЬ
+		МАКСИМУМ(СотрудникиДУ.Ссылка),
+		СотрудникиДУ.Физлицо,
+		3,
+		ПериодыРаботников.Период
+	ИЗ
+		(ВЫБРАТЬ
+			Работники.Период КАК Период,
+			Работники.ФизЛицо КАК ФизЛицо
+		ИЗ
+			РегистрСведений.Работники КАК Работники
+		ГДЕ
+			(Работники.Период МЕЖДУ &amp;НачалоПериода И &amp;КонецПериода
+						И Работники.ПричинаИзмененияСостояния &lt;&gt; ЗНАЧЕНИЕ(Перечисление.ПричиныИзмененияСостояния.Увольнение)
+					ИЛИ Работники.Период МЕЖДУ &amp;ДатаНачУвольнений И &amp;ДатаКонУвольнений
+						И Работники.ПричинаИзмененияСостояния = ЗНАЧЕНИЕ(Перечисление.ПричиныИзмененияСостояния.Увольнение))) КАК ПериодыРаботников
+			ЛЕВОЕ СОЕДИНЕНИЕ Справочник.СотрудникиОрганизаций КАК СотрудникиДУ
+			ПО ПериодыРаботников.ФизЛицо = СотрудникиДУ.Физлицо
+	ГДЕ
+		(СотрудникиДУ.ВидДоговора = ЗНАЧЕНИЕ(Перечисление.ВидыДоговоровСФизЛицами.ДоговорУправленческий)
+				ИЛИ СотрудникиДУ.ВидДоговора = ЗНАЧЕНИЕ(Перечисление.ВидыДоговоровСФизЛицами.ТрудовойДоговор))
+	
+	СГРУППИРОВАТЬ ПО
+		СотрудникиДУ.Физлицо,
+		ПериодыРаботников.Период) КАК СписокСотрудников
+		ВНУТРЕННЕЕ СОЕДИНЕНИЕ (ВЫБРАТЬ
+			СписокФизическихЛиц.Физлицо КАК Физлицо,
+			МИНИМУМ(СписокФизическихЛиц.Приоритет) КАК Приоритет,
+			СписокФизическихЛиц.Период КАК Период
+		ИЗ
+			(ВЫБРАТЬ
+				РаботникиОрганизаций.Сотрудник.Физлицо КАК Физлицо,
+				1 КАК Приоритет,
+				ПериодыРаботников.Период КАК Период
+			ИЗ
+				(ВЫБРАТЬ
+					Работники.Период КАК Период,
+					МАКСИМУМ(РаботникиОрганизаций.Период) КАК ПериодРаботниковОрганизации,
+					Работники.ФизЛицо КАК ФизЛицо
+				ИЗ
+					РегистрСведений.Работники КАК Работники
+						ВНУТРЕННЕЕ СОЕДИНЕНИЕ РегистрСведений.РаботникиОрганизаций КАК РаботникиОрганизаций
+						ПО Работники.ФизЛицо = РаботникиОрганизаций.Сотрудник.Физлицо
+							И Работники.Период &gt;= РаботникиОрганизаций.Период
+				ГДЕ
+					(Работники.Период МЕЖДУ &amp;НачалоПериода И &amp;КонецПериода
+								И Работники.ПричинаИзмененияСостояния &lt;&gt; ЗНАЧЕНИЕ(Перечисление.ПричиныИзмененияСостояния.Увольнение)
+							ИЛИ Работники.Период МЕЖДУ &amp;ДатаНачУвольнений И &amp;ДатаКонУвольнений
+								И Работники.ПричинаИзмененияСостояния = ЗНАЧЕНИЕ(Перечисление.ПричиныИзмененияСостояния.Увольнение))
+					И РаботникиОрганизаций.Сотрудник.ВидДоговора = ЗНАЧЕНИЕ(Перечисление.ВидыДоговоровСФизЛицами.ТрудовойДоговор)
+					И РаботникиОрганизаций.Сотрудник.ВидЗанятости = ЗНАЧЕНИЕ(Перечисление.ВидыЗанятостиВОрганизации.ОсновноеМестоРаботы)
+					И РаботникиОрганизаций.ПричинаИзмененияСостояния &lt;&gt; ЗНАЧЕНИЕ(Перечисление.ПричиныИзмененияСостояния.Увольнение)
+				
+				СГРУППИРОВАТЬ ПО
+					Работники.Период,
+					Работники.ФизЛицо) КАК ПериодыРаботников
+					ВНУТРЕННЕЕ СОЕДИНЕНИЕ РегистрСведений.РаботникиОрганизаций КАК РаботникиОрганизаций
+					ПО ПериодыРаботников.ПериодРаботниковОрганизации = РаботникиОрганизаций.Период
+						И ПериодыРаботников.ФизЛицо = РаботникиОрганизаций.Сотрудник.Физлицо
+			
+			СГРУППИРОВАТЬ ПО
+				РаботникиОрганизаций.Сотрудник.Физлицо,
+				ПериодыРаботников.Период
+			
+			ОБЪЕДИНИТЬ
+			
+			ВЫБРАТЬ
+				РаботникиОрганизаций.Сотрудник.Физлицо,
+				2,
+				ПериодыРаботников.Период
+			ИЗ
+				(ВЫБРАТЬ
+					Работники.Период КАК Период,
+					МАКСИМУМ(РаботникиОрганизаций.Период) КАК ПериодРаботниковОрганизации,
+					Работники.ФизЛицо КАК ФизЛицо
+				ИЗ
+					РегистрСведений.Работники КАК Работники
+						ВНУТРЕННЕЕ СОЕДИНЕНИЕ РегистрСведений.РаботникиОрганизаций КАК РаботникиОрганизаций
+						ПО Работники.ФизЛицо = РаботникиОрганизаций.Сотрудник.Физлицо
+							И Работники.Период &gt;= РаботникиОрганизаций.Период
+				ГДЕ
+					(Работники.Период МЕЖДУ &amp;НачалоПериода И &amp;КонецПериода
+								И Работники.ПричинаИзмененияСостояния &lt;&gt; ЗНАЧЕНИЕ(Перечисление.ПричиныИзмененияСостояния.Увольнение)
+							ИЛИ Работники.Период МЕЖДУ &amp;ДатаНачУвольнений И &amp;ДатаКонУвольнений
+								И Работники.ПричинаИзмененияСостояния = ЗНАЧЕНИЕ(Перечисление.ПричиныИзмененияСостояния.Увольнение))
+				
+				СГРУППИРОВАТЬ ПО
+					Работники.Период,
+					Работники.ФизЛицо) КАК ПериодыРаботников
+					ВНУТРЕННЕЕ СОЕДИНЕНИЕ РегистрСведений.РаботникиОрганизаций КАК РаботникиОрганизаций
+					ПО ПериодыРаботников.ПериодРаботниковОрганизации = РаботникиОрганизаций.Период
+						И ПериодыРаботников.ФизЛицо = РаботникиОрганизаций.Сотрудник.Физлицо
+			ГДЕ
+				РаботникиОрганизаций.ПричинаИзмененияСостояния &lt;&gt; ЗНАЧЕНИЕ(Перечисление.ПричиныИзмененияСостояния.Увольнение)
+				И РаботникиОрганизаций.Сотрудник.ВидДоговора = ЗНАЧЕНИЕ(Перечисление.ВидыДоговоровСФизЛицами.ТрудовойДоговор)
+				И РаботникиОрганизаций.Сотрудник.ВидЗанятости = ЗНАЧЕНИЕ(Перечисление.ВидыЗанятостиВОрганизации.Совместительство)
+			
+			СГРУППИРОВАТЬ ПО
+				РаботникиОрганизаций.Сотрудник.Физлицо,
+				ПериодыРаботников.Период
+			
+			ОБЪЕДИНИТЬ
+			
+			ВЫБРАТЬ
+				СотрудникиДУ.Физлицо,
+				3,
+				ПериодыРаботников.Период
+			ИЗ
+				(ВЫБРАТЬ
+					Работники.Период КАК Период,
+					Работники.ФизЛицо КАК ФизЛицо
+				ИЗ
+					РегистрСведений.Работники КАК Работники
+				ГДЕ
+					(Работники.Период МЕЖДУ &amp;НачалоПериода И &amp;КонецПериода
+								И Работники.ПричинаИзмененияСостояния &lt;&gt; ЗНАЧЕНИЕ(Перечисление.ПричиныИзмененияСостояния.Увольнение)
+							ИЛИ Работники.Период МЕЖДУ &amp;ДатаНачУвольнений И &amp;ДатаКонУвольнений
+								И Работники.ПричинаИзмененияСостояния = ЗНАЧЕНИЕ(Перечисление.ПричиныИзмененияСостояния.Увольнение))) КАК ПериодыРаботников
+					ЛЕВОЕ СОЕДИНЕНИЕ Справочник.СотрудникиОрганизаций КАК СотрудникиДУ
+					ПО ПериодыРаботников.ФизЛицо = СотрудникиДУ.Физлицо
+			ГДЕ
+				(СотрудникиДУ.ВидДоговора = ЗНАЧЕНИЕ(Перечисление.ВидыДоговоровСФизЛицами.ДоговорУправленческий)
+						ИЛИ СотрудникиДУ.ВидДоговора = ЗНАЧЕНИЕ(Перечисление.ВидыДоговоровСФизЛицами.ТрудовойДоговор))
+			
+			СГРУППИРОВАТЬ ПО
+				СотрудникиДУ.Физлицо,
+				ПериодыРаботников.Период) КАК СписокФизическихЛиц
+		
+		СГРУППИРОВАТЬ ПО
+			СписокФизическихЛиц.Физлицо,
+			СписокФизическихЛиц.Период) КАК СписокФизическихЛиц
+		ПО СписокСотрудников.Приоритет = СписокФизическихЛиц.Приоритет
+			И СписокСотрудников.Физлицо = СписокФизическихЛиц.Физлицо
+			И СписокСотрудников.Период = СписокФизическихЛиц.Период
+{ГДЕ
+	СписокСотрудников.Сотрудник.*,
+	СписокСотрудников.Физлицо.*,
+	СписокСотрудников.Период}
+</query>
+	</dataSet>
+	<dataSetLink>
+		<sourceDataSet>ДвиженияРаботника</sourceDataSet>
+		<destinationDataSet>Сотрудники</destinationDataSet>
+		<sourceExpression>ФизЛицо</sourceExpression>
+		<destinationExpression>ФизЛицо</destinationExpression>
+	</dataSetLink>
+	<dataSetLink>
+		<sourceDataSet>ДвиженияРаботника</sourceDataSet>
+		<destinationDataSet>Сотрудники</destinationDataSet>
+		<sourceExpression>ДатаСобытия</sourceExpression>
+		<destinationExpression>Период</destinationExpression>
+	</dataSetLink>
+	<calculatedField>
+		<dataPath>ДанныеОФизЛице.ВоинскийУчет.НаличиеМобпредписания</dataPath>
+		<expression>ВЫБОР 
+КОГДА ДанныеОФизЛице.ВоинскийУчет.ФизЛицоНаличиеМобпредписания ЕСТЬ NULL
+ ТОГДА "Нет"
+ИНАЧЕ Формат(ДанныеОФизЛице.ВоинскийУчет.ФизЛицоНаличиеМобпредписания,"БЛ=Нет; БИ=Да")
+КОНЕЦ</expression>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Наличие моб. предписания</v8:content>
+			</v8:item>
+		</title>
+		<availableValue>
+			<value xsi:type="xs:string">Да</value>
+			<presentation xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Да</v8:content>
+				</v8:item>
+			</presentation>
+		</availableValue>
+		<availableValue>
+			<value xsi:type="xs:string">Нет</value>
+			<presentation xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Нет</v8:content>
+				</v8:item>
+			</presentation>
+		</availableValue>
+	</calculatedField>
+	<calculatedField>
+		<dataPath>ДанныеОФизЛице.Гражданство.ФизЛицоИмеетПравоНаПенсию</dataPath>
+		<expression>ВЫБОР 
+КОГДА ДанныеОФизЛице.Гражданство.ФизЛицоНеИмеетПравоНаПенсию ЕСТЬ NULL
+ ТОГДА "Да"
+ИНАЧЕ Формат(ДанныеОФизЛице.Гражданство.ФизЛицоНеИмеетПравоНаПенсию,"БЛ=Да; БИ=Нет")
+КОНЕЦ</expression>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Имеет право на пенсию</v8:content>
+			</v8:item>
+		</title>
+		<availableValue>
+			<value xsi:type="xs:string">Да</value>
+			<presentation xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Да</v8:content>
+				</v8:item>
+			</presentation>
+		</availableValue>
+		<availableValue>
+			<value xsi:type="xs:string">Нет</value>
+			<presentation xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Нет</v8:content>
+				</v8:item>
+			</presentation>
+		</availableValue>
+	</calculatedField>
+	<calculatedField>
+		<dataPath>ДанныеОФизЛице.Гражданство.ФизЛицоЯвляетсяНалоговымРезидентом</dataPath>
+		<expression>ВЫБОР 
+КОГДА ДанныеОФизЛице.Гражданство.ФизЛицоНеЯвляетсяНалоговымРезидентом ЕСТЬ NULL
+ ТОГДА "Да"
+ИНАЧЕ Формат(ДанныеОФизЛице.Гражданство.ФизЛицоНеЯвляетсяНалоговымРезидентом,"БЛ=Да; БИ=Нет")
+КОНЕЦ</expression>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Является налоговым резидентом</v8:content>
+			</v8:item>
+		</title>
+		<availableValue>
+			<value xsi:type="xs:string">Да</value>
+			<presentation xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Да</v8:content>
+				</v8:item>
+			</presentation>
+		</availableValue>
+		<availableValue>
+			<value xsi:type="xs:string">Нет</value>
+			<presentation xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Нет</v8:content>
+				</v8:item>
+			</presentation>
+		</availableValue>
+	</calculatedField>
+	<totalField>
+		<dataPath>Количество</dataPath>
+		<expression>Количество(Количество)</expression>
+	</totalField>
+	<parameter>
+		<name>ДатаКонУвольнений</name>
+		<title xsi:type="xs:string">Дата кон увольнений</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>Date</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:nil="true"/>
+		<useRestriction>true</useRestriction>
+		<expression>ДОБАВИТЬКДАТЕ(&amp;КонецПериода, "СЕКУНДА", 1)</expression>
+		<availableAsField>false</availableAsField>
+	</parameter>
+	<parameter>
+		<name>ДатаНачУвольнений</name>
+		<title xsi:type="xs:string">Дата нач увольнений</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>Date</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:nil="true"/>
+		<useRestriction>true</useRestriction>
+		<expression>ДОБАВИТЬКДАТЕ(КОНЕЦПЕРИОДА(&amp;НачалоПериода, "ДЕНЬ"), "СЕКУНДА", 1)</expression>
+		<availableAsField>false</availableAsField>
+	</parameter>
+	<parameter>
+		<name>КонецПериода</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Конец периода</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>Date</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
+		<useRestriction>false</useRestriction>
+		<availableAsField>false</availableAsField>
+	</parameter>
+	<parameter>
+		<name>НачалоПериода</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Начало периода</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>Date</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:nil="true"/>
+		<useRestriction>false</useRestriction>
+		<availableAsField>false</availableAsField>
+	</parameter>
+	<settingsVariant>
+		<dcsset:name>Основной</dcsset:name>
+		<dcsset:presentation xsi:type="xs:string">Основной</dcsset:presentation>
+		<dcsset:settings xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows">
+			<dcsset:userFields>
+				<dcsset:item xsi:type="dcsset:UserFieldCase">
+					<dcsset:dataPath>UserFields.field1</dcsset:dataPath>
+					<dcsset:title>Возраст интервалами</dcsset:title>
+					<dcsset:cases>
+						<dcsset:item>
+							<dcsset:filter>
+								<dcsset:item xsi:type="dcsset:FilterItemGroup">
+									<dcsset:groupType>AndGroup</dcsset:groupType>
+									<dcsset:item xsi:type="dcsset:FilterItemComparison">
+										<dcsset:left xsi:type="dcscor:Field">ДанныеОФизЛице.ФизЛицоВозраст</dcsset:left>
+										<dcsset:comparisonType>LessOrEqual</dcsset:comparisonType>
+										<dcsset:right xsi:type="xs:decimal">20</dcsset:right>
+									</dcsset:item>
+								</dcsset:item>
+							</dcsset:filter>
+							<dcsset:value xsi:type="xs:string">0ИГ</dcsset:value>
+							<dcsset:presentationValue>до 20</dcsset:presentationValue>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:filter>
+								<dcsset:item xsi:type="dcsset:FilterItemGroup">
+									<dcsset:groupType>AndGroup</dcsset:groupType>
+									<dcsset:item xsi:type="dcsset:FilterItemComparison">
+										<dcsset:left xsi:type="dcscor:Field">ДанныеОФизЛице.ФизЛицоВозраст</dcsset:left>
+										<dcsset:comparisonType>GreaterOrEqual</dcsset:comparisonType>
+										<dcsset:right xsi:type="xs:decimal">20</dcsset:right>
+									</dcsset:item>
+									<dcsset:item xsi:type="dcsset:FilterItemComparison">
+										<dcsset:left xsi:type="dcscor:Field">ДанныеОФизЛице.ФизЛицоВозраст</dcsset:left>
+										<dcsset:comparisonType>Less</dcsset:comparisonType>
+										<dcsset:right xsi:type="xs:decimal">30</dcsset:right>
+									</dcsset:item>
+								</dcsset:item>
+							</dcsset:filter>
+							<dcsset:value xsi:type="xs:string">1ИГ</dcsset:value>
+							<dcsset:presentationValue>от 21 до 30</dcsset:presentationValue>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:filter>
+								<dcsset:item xsi:type="dcsset:FilterItemGroup">
+									<dcsset:groupType>AndGroup</dcsset:groupType>
+									<dcsset:item xsi:type="dcsset:FilterItemComparison">
+										<dcsset:left xsi:type="dcscor:Field">ДанныеОФизЛице.ФизЛицоВозраст</dcsset:left>
+										<dcsset:comparisonType>GreaterOrEqual</dcsset:comparisonType>
+										<dcsset:right xsi:type="xs:decimal">30</dcsset:right>
+									</dcsset:item>
+									<dcsset:item xsi:type="dcsset:FilterItemComparison">
+										<dcsset:left xsi:type="dcscor:Field">ДанныеОФизЛице.ФизЛицоВозраст</dcsset:left>
+										<dcsset:comparisonType>Less</dcsset:comparisonType>
+										<dcsset:right xsi:type="xs:decimal">40</dcsset:right>
+									</dcsset:item>
+								</dcsset:item>
+							</dcsset:filter>
+							<dcsset:value xsi:type="xs:string">2ИГ</dcsset:value>
+							<dcsset:presentationValue>от 31 до 40</dcsset:presentationValue>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:filter>
+								<dcsset:item xsi:type="dcsset:FilterItemGroup">
+									<dcsset:groupType>AndGroup</dcsset:groupType>
+									<dcsset:item xsi:type="dcsset:FilterItemComparison">
+										<dcsset:left xsi:type="dcscor:Field">ДанныеОФизЛице.ФизЛицоВозраст</dcsset:left>
+										<dcsset:comparisonType>GreaterOrEqual</dcsset:comparisonType>
+										<dcsset:right xsi:type="xs:decimal">40</dcsset:right>
+									</dcsset:item>
+									<dcsset:item xsi:type="dcsset:FilterItemComparison">
+										<dcsset:left xsi:type="dcscor:Field">ДанныеОФизЛице.ФизЛицоВозраст</dcsset:left>
+										<dcsset:comparisonType>Less</dcsset:comparisonType>
+										<dcsset:right xsi:type="xs:decimal">50</dcsset:right>
+									</dcsset:item>
+								</dcsset:item>
+							</dcsset:filter>
+							<dcsset:value xsi:type="xs:string">3ИГ</dcsset:value>
+							<dcsset:presentationValue>от 41 до 50</dcsset:presentationValue>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:filter>
+								<dcsset:item xsi:type="dcsset:FilterItemGroup">
+									<dcsset:groupType>AndGroup</dcsset:groupType>
+									<dcsset:item xsi:type="dcsset:FilterItemComparison">
+										<dcsset:left xsi:type="dcscor:Field">ДанныеОФизЛице.ФизЛицоВозраст</dcsset:left>
+										<dcsset:comparisonType>GreaterOrEqual</dcsset:comparisonType>
+										<dcsset:right xsi:type="xs:decimal">50</dcsset:right>
+									</dcsset:item>
+									<dcsset:item xsi:type="dcsset:FilterItemComparison">
+										<dcsset:left xsi:type="dcscor:Field">ДанныеОФизЛице.ФизЛицоВозраст</dcsset:left>
+										<dcsset:comparisonType>Less</dcsset:comparisonType>
+										<dcsset:right xsi:type="xs:decimal">60</dcsset:right>
+									</dcsset:item>
+								</dcsset:item>
+							</dcsset:filter>
+							<dcsset:value xsi:type="xs:string">4ИГ</dcsset:value>
+							<dcsset:presentationValue>от 51 до 60</dcsset:presentationValue>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:filter>
+								<dcsset:item xsi:type="dcsset:FilterItemGroup">
+									<dcsset:groupType>AndGroup</dcsset:groupType>
+									<dcsset:item xsi:type="dcsset:FilterItemComparison">
+										<dcsset:left xsi:type="dcscor:Field">ДанныеОФизЛице.ФизЛицоВозраст</dcsset:left>
+										<dcsset:comparisonType>GreaterOrEqual</dcsset:comparisonType>
+										<dcsset:right xsi:type="xs:decimal">60</dcsset:right>
+									</dcsset:item>
+									<dcsset:item xsi:type="dcsset:FilterItemComparison">
+										<dcsset:left xsi:type="dcscor:Field">ДанныеОФизЛице.ФизЛицоВозраст</dcsset:left>
+										<dcsset:comparisonType>Less</dcsset:comparisonType>
+										<dcsset:right xsi:type="xs:decimal">120</dcsset:right>
+									</dcsset:item>
+								</dcsset:item>
+							</dcsset:filter>
+							<dcsset:value xsi:type="xs:string">5ИГ</dcsset:value>
+							<dcsset:presentationValue>старше 60</dcsset:presentationValue>
+						</dcsset:item>
+					</dcsset:cases>
+				</dcsset:item>
+			</dcsset:userFields>
+			<dcsset:selection>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Количество</dcsset:field>
+				</dcsset:item>
+			</dcsset:selection>
+			<dcsset:filter>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">ДанныеОРаботнике.Подразделение</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:right xsi:type="dcscor:DesignTimeValue">Справочник.Подразделения.</dcsset:right>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">ДанныеОРаботнике.Должность</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:right xsi:type="dcscor:DesignTimeValue">Справочник.ДолжностиОрганизаций.</dcsset:right>
+					<dcsset:viewMode>Normal</dcsset:viewMode>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">ДанныеОРаботнике.Должность.КатегорияСтатистическогоУчета</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:viewMode>Normal</dcsset:viewMode>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Сотрудник.ВидДоговора</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:viewMode>Normal</dcsset:viewMode>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">ДанныеОРаботнике.ПричинаУвольнения</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:right xsi:type="dcscor:DesignTimeValue">Справочник.ОснованияУвольнения.</dcsset:right>
+					<dcsset:viewMode>Normal</dcsset:viewMode>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">ДанныеОРаботнике.ЗанимаемыхСтавок</dcsset:left>
+					<dcsset:comparisonType>Less</dcsset:comparisonType>
+					<dcsset:right xsi:type="xs:decimal">1</dcsset:right>
+					<dcsset:presentation xsi:type="xs:string">Неполная ставка</dcsset:presentation>
+					<dcsset:viewMode>Normal</dcsset:viewMode>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Событие</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:right xsi:type="dcscor:DesignTimeValue">Перечисление.ПричиныИзмененияСостояния.ПриемНаРаботу</dcsset:right>
+					<dcsset:presentation xsi:type="xs:string">Только приемы</dcsset:presentation>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Событие</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:right xsi:type="dcscor:DesignTimeValue">Перечисление.ПричиныИзмененияСостояния.Перемещение</dcsset:right>
+					<dcsset:presentation xsi:type="xs:string">Только перемещения</dcsset:presentation>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Событие</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:right xsi:type="dcscor:DesignTimeValue">Перечисление.ПричиныИзмененияСостояния.Увольнение</dcsset:right>
+					<dcsset:presentation xsi:type="xs:string">Только увольнения</dcsset:presentation>
+				</dcsset:item>
+			</dcsset:filter>
+			<dcsset:dataParameters>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>КонецПериода</dcscor:parameter>
+					<dcscor:value xsi:type="xs:dateTime">0001-01-01T00:00:00</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>НачалоПериода</dcscor:parameter>
+					<dcscor:value xsi:type="xs:dateTime">0001-01-01T00:00:00</dcscor:value>
+				</dcscor:item>
+			</dcsset:dataParameters>
+			<dcsset:order>
+				<dcsset:item xsi:type="dcsset:OrderItemField">
+					<dcsset:field>Сотрудник.Description</dcsset:field>
+					<dcsset:orderType>Asc</dcsset:orderType>
+				</dcsset:item>
+			</dcsset:order>
+			<dcsset:outputParameters>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>ВертикальноеРасположениеОбщихИтогов</dcscor:parameter>
+					<dcscor:value xsi:type="dcscor:DataCompositionTotalPlacement">None</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>ВыводитьЗаголовок</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">Output</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>Заголовок</dcscor:parameter>
+					<dcscor:value xsi:type="v8:LocalStringType">
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Перемещения работников</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Рух працівників</v8:content>
+						</v8:item>
+					</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>ВыводитьПараметрыДанных</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">DontOutput</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>ВыводитьОтбор</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">DontOutput</dcscor:value>
+				</dcscor:item>
+			</dcsset:outputParameters>
+			<dcsset:item xsi:type="dcsset:StructureItemTable">
+				<dcsset:column>
+					<dcsset:groupItems>
+						<dcsset:item xsi:type="dcsset:GroupItemField">
+							<dcsset:field>Событие</dcsset:field>
+							<dcsset:groupType>Items</dcsset:groupType>
+							<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+							<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+							<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+						</dcsset:item>
+					</dcsset:groupItems>
+					<dcsset:order>
+						<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+					</dcsset:order>
+					<dcsset:selection>
+						<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+					</dcsset:selection>
+				</dcsset:column>
+				<dcsset:row>
+					<dcsset:groupItems>
+						<dcsset:item xsi:type="dcsset:GroupItemField">
+							<dcsset:field>ДанныеОРаботнике.Подразделение</dcsset:field>
+							<dcsset:groupType>Hierarchy</dcsset:groupType>
+							<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+							<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+							<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+						</dcsset:item>
+					</dcsset:groupItems>
+					<dcsset:order>
+						<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+					</dcsset:order>
+					<dcsset:selection>
+						<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+					</dcsset:selection>
+				</dcsset:row>
+			</dcsset:item>
+		</dcsset:settings>
+	</settingsVariant>
+</DataCompositionSchema>
