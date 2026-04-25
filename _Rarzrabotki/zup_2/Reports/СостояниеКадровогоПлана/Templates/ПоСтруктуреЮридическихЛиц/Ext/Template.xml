@@ -1,0 +1,476 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<DataCompositionSchema xmlns="http://v8.1c.ru/8.1/data-composition-system/schema" xmlns:dcscom="http://v8.1c.ru/8.1/data-composition-system/common" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<dataSource>
+		<name>ИсточникДанных1</name>
+		<dataSourceType>Local</dataSourceType>
+	</dataSource>
+	<dataSet xsi:type="DataSetQuery">
+		<name>СостояниеКадровогоПлана</name>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Должность</dataPath>
+			<field>Должность</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Должность</v8:content>
+				</v8:item>
+			</title>
+			<role>
+				<dcscom:dimension>true</dcscom:dimension>
+			</role>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Подразделение</dataPath>
+			<field>Подразделение</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Подразделение</v8:content>
+				</v8:item>
+			</title>
+			<role>
+				<dcscom:dimension>true</dcscom:dimension>
+			</role>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>СтавокВсего</dataPath>
+			<field>СтавокВсего</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Всего</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>СтавокЗанято</dataPath>
+			<field>СтавокЗанято</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Занято</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ВакансияЗакрыта</dataPath>
+			<field>ВакансияЗакрыта</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Вакансия закрыта</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Обязанности</dataPath>
+			<field>Обязанности</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Обязанности</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Требования</dataPath>
+			<field>Требования</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Требования</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Условия</dataPath>
+			<field>Условия</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Условия</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>СтавокВакантно</dataPath>
+			<field>СтавокВакантно</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Вакантно</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Организация</dataPath>
+			<field>Организация</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Организация</v8:content>
+				</v8:item>
+			</title>
+			<role>
+				<dcscom:dimension>true</dcscom:dimension>
+			</role>
+		</field>
+		<dataSource>ИсточникДанных1</dataSource>
+		<query>ВЫБРАТЬ РАЗРЕШЕННЫЕ
+	СостояниеКадровогоПлана.Организация КАК Организация,
+	СостояниеКадровогоПлана.Подразделение КАК Подразделение,
+	СостояниеКадровогоПлана.Должность КАК Должность,
+	СостояниеКадровогоПлана.СтавокВсего КАК СтавокВсего,
+	СостояниеКадровогоПлана.СтавокЗанято КАК СтавокЗанято,
+	СостояниеКадровогоПлана.СтавокВсего - СостояниеКадровогоПлана.СтавокЗанято КАК СтавокВакантно,
+	СостояниеКадровогоПлана.Требования КАК Требования,
+	СостояниеКадровогоПлана.Обязанности КАК Обязанности,
+	СостояниеКадровогоПлана.Условия КАК Условия
+{ВЫБРАТЬ
+	Организация.*,
+	Подразделение.*,
+	Должность.*,
+	СтавокВсего,
+	СтавокЗанято,
+	СтавокВакантно,
+	Требования,
+	Обязанности,
+	Условия}
+ИЗ
+	(ВЫБРАТЬ
+		КадровыйПланИВакансии.Организация КАК Организация,
+		КадровыйПланИВакансии.Подразделение КАК Подразделение,
+		КадровыйПланИВакансии.Должность КАК Должность,
+		СУММА(КадровыйПланИВакансии.СтавокВсего) КАК СтавокВсего,
+		СУММА(КадровыйПланИВакансии.СтавокЗанято) КАК СтавокЗанято,
+		КадровыйПланИВакансии.Требования КАК Требования,
+		КадровыйПланИВакансии.Обязанности КАК Обязанности,
+		КадровыйПланИВакансии.Условия КАК Условия
+	{ВЫБРАТЬ
+		Организация.*,
+		Подразделение.*,
+		Должность.*,
+		СтавокВсего,
+		СтавокЗанято,
+		Требования,
+		Обязанности,
+		Условия}
+	ИЗ
+		(ВЫБРАТЬ
+			ЗанятыеРабочиеМеста.Организация КАК Организация,
+			ЗанятыеРабочиеМеста.Подразделение КАК Подразделение,
+			ЗанятыеРабочиеМеста.Должность КАК Должность,
+			0 КАК СтавокВсего,
+			ЗанятыеРабочиеМеста.СтавокЗанято КАК СтавокЗанято,
+			ПОДСТРОКА(ЕСТЬNULL(СведенияОРабочихМестах.Требования, ЗанятыеРабочиеМеста.Должность.Требования), 1, 1000) КАК Требования,
+			ПОДСТРОКА(ЕСТЬNULL(СведенияОРабочихМестах.Обязанности, ЗанятыеРабочиеМеста.Должность.Обязанности), 1, 1000) КАК Обязанности,
+			ПОДСТРОКА(ЕСТЬNULL(СведенияОРабочихМестах.Условия, ЗанятыеРабочиеМеста.Должность.Условия), 1, 1000) КАК Условия
+		{ВЫБРАТЬ
+			Организация.*,
+			Подразделение.*,
+			Должность.*,
+			СтавокВсего,
+			СтавокЗанято,
+			Требования,
+			Обязанности,
+			Условия}
+		ИЗ
+			(ВЫБРАТЬ РАЗЛИЧНЫЕ
+				ЗанятыеРабочиеМестаОстатки.ПодразделениеОрганизации.Владелец КАК Организация,
+				ЗанятыеРабочиеМестаОстатки.ПодразделениеОрганизации КАК Подразделение,
+				ЗанятыеРабочиеМестаОстатки.Должность.Должность КАК Должность,
+				ЗанятыеРабочиеМестаОстатки.КоличествоСтавокОстаток КАК СтавокЗанято
+			{ВЫБРАТЬ
+				Организация.*,
+				Подразделение.*,
+				Должность.*,
+				СтавокЗанято}
+			ИЗ
+				РегистрНакопления.ЗанятыеШтатныеЕдиницыОрганизаций.Остатки(&amp;Период, Должность.Должность &lt;&gt; ЗНАЧЕНИЕ(Справочник.Должности.ПустаяСсылка) {(ПодразделениеОрганизации.Владелец).* КАК Организация}) КАК ЗанятыеРабочиеМестаОстатки) КАК ЗанятыеРабочиеМеста
+				ЛЕВОЕ СОЕДИНЕНИЕ РегистрСведений.СведенияОРабочихМестах КАК СведенияОРабочихМестах
+				ПО ЗанятыеРабочиеМеста.Подразделение = СведенияОРабочихМестах.Подразделение
+					И ЗанятыеРабочиеМеста.Должность = СведенияОРабочихМестах.Должность
+		{ГДЕ
+			ЗанятыеРабочиеМеста.Организация.*,
+			ЗанятыеРабочиеМеста.Подразделение.*,
+			ЗанятыеРабочиеМеста.Должность.*}
+		
+		ОБЪЕДИНИТЬ ВСЕ
+		
+		ВЫБРАТЬ
+			КадровыйПланИВакансии.Организация,
+			КадровыйПланИВакансии.Подразделение,
+			КадровыйПланИВакансии.Должность,
+			КадровыйПланИВакансии.СтавокВсего,
+			0,
+			КадровыйПланИВакансии.Требования,
+			КадровыйПланИВакансии.Обязанности,
+			КадровыйПланИВакансии.Условия
+		ИЗ
+			(ВЫБРАТЬ
+				КадровыйПланИВакансии.Организация КАК Организация,
+				КадровыйПланИВакансии.Подразделение КАК Подразделение,
+				КадровыйПланИВакансии.Должность КАК Должность,
+				СУММА(КадровыйПланИВакансии.СтавокВсего) КАК СтавокВсего,
+				КадровыйПланИВакансии.Требования КАК Требования,
+				КадровыйПланИВакансии.Обязанности КАК Обязанности,
+				КадровыйПланИВакансии.Условия КАК Условия
+			{ВЫБРАТЬ
+				Подразделение.*,
+				Должность.*,
+				СтавокВсего,
+				Требования,
+				Обязанности,
+				Условия}
+			ИЗ
+				(ВЫБРАТЬ
+					КадровыйПлан.ПодразделениеОрганизации.Владелец КАК Организация,
+					КадровыйПлан.ПодразделениеОрганизации КАК Подразделение,
+					КадровыйПлан.Должность КАК Должность,
+					ЕСТЬNULL(КадровыйПлан.Количество, 0) КАК СтавокВсего,
+					ПОДСТРОКА(ЕСТЬNULL(СведенияОРабочихМестах.Требования, КадровыйПлан.Должность.Требования), 1, 1000) КАК Требования,
+					ПОДСТРОКА(ЕСТЬNULL(СведенияОРабочихМестах.Обязанности, КадровыйПлан.Должность.Обязанности), 1, 1000) КАК Обязанности,
+					ПОДСТРОКА(ЕСТЬNULL(СведенияОРабочихМестах.Условия, КадровыйПлан.Должность.Условия), 1, 1000) КАК Условия
+				{ВЫБРАТЬ
+					Организация.*,
+					Подразделение.*,
+					Должность.*,
+					СтавокВсего,
+					Требования,
+					Обязанности,
+					Условия}
+				ИЗ
+					РегистрСведений.КадровыйПлан.СрезПоследних(&amp;Период, ПодразделениеОрганизации &lt;&gt; ЗНАЧЕНИЕ(Справочник.ПодразделенияОрганизаций.ПустаяСсылка) {(ПодразделениеОрганизации.Владелец).* КАК Организация}) КАК КадровыйПлан
+						ЛЕВОЕ СОЕДИНЕНИЕ РегистрСведений.СведенияОРабочихМестах КАК СведенияОРабочихМестах
+						ПО КадровыйПлан.ПодразделениеОрганизации = СведенияОРабочихМестах.ПодразделениеОрганизации
+							И КадровыйПлан.Должность = СведенияОРабочихМестах.Должность
+				
+				ОБЪЕДИНИТЬ ВСЕ
+				
+				ВЫБРАТЬ
+					Вакансии.Организация,
+					ВЫРАЗИТЬ(Вакансии.Подразделение КАК Справочник.ПодразделенияОрганизаций),
+					Вакансии.Должность,
+					1,
+					ВЫБОР
+						КОГДА ПОДСТРОКА(Вакансии.Требования, 1, 1000) ПОДОБНО ""
+							ТОГДА ПОДСТРОКА(ЕСТЬNULL(СведенияОРабочихМестах.Требования, Вакансии.Должность.Требования), 1, 1000)
+						ИНАЧЕ ПОДСТРОКА(Вакансии.Требования, 1, 1000)
+					КОНЕЦ,
+					ВЫБОР
+						КОГДА ПОДСТРОКА(Вакансии.Обязанности, 1, 1000) ПОДОБНО ""
+							ТОГДА ПОДСТРОКА(ЕСТЬNULL(СведенияОРабочихМестах.Обязанности, Вакансии.Должность.Обязанности), 1, 1000)
+						ИНАЧЕ ПОДСТРОКА(Вакансии.Обязанности, 1, 1000)
+					КОНЕЦ,
+					ВЫБОР
+						КОГДА ПОДСТРОКА(Вакансии.Условия, 1, 1000) ПОДОБНО ""
+							ТОГДА ПОДСТРОКА(ЕСТЬNULL(СведенияОРабочихМестах.Условия, Вакансии.Должность.Условия), 1, 1000)
+						ИНАЧЕ ПОДСТРОКА(Вакансии.Условия, 1, 1000)
+					КОНЕЦ
+				ИЗ
+					Справочник.Вакансии КАК Вакансии
+						ЛЕВОЕ СОЕДИНЕНИЕ РегистрСведений.СведенияОРабочихМестах КАК СведенияОРабочихМестах
+						ПО Вакансии.Подразделение = СведенияОРабочихМестах.Подразделение
+							И Вакансии.Должность = СведенияОРабочихМестах.Должность
+				ГДЕ
+					Вакансии.Подразделение ССЫЛКА Справочник.ПодразделенияОрганизаций
+				{ГДЕ
+					Вакансии.Организация.*,
+					(ВЫРАЗИТЬ(Вакансии.Подразделение КАК Справочник.ПодразделенияОрганизаций)).* КАК Подразделение,
+					Вакансии.Должность.*,
+					Вакансии.Закрыта КАК ВакансияЗакрыта}) КАК КадровыйПланИВакансии
+			{ГДЕ
+				КадровыйПланИВакансии.Подразделение.*,
+				КадровыйПланИВакансии.Должность.*}
+			
+			СГРУППИРОВАТЬ ПО
+				КадровыйПланИВакансии.Подразделение,
+				КадровыйПланИВакансии.Должность,
+				КадровыйПланИВакансии.Требования,
+				КадровыйПланИВакансии.Обязанности,
+				КадровыйПланИВакансии.Условия,
+				КадровыйПланИВакансии.Организация) КАК КадровыйПланИВакансии
+		{ГДЕ
+			КадровыйПланИВакансии.Организация.*,
+			КадровыйПланИВакансии.Подразделение.*,
+			КадровыйПланИВакансии.Должность.*}) КАК КадровыйПланИВакансии
+	{ГДЕ
+		КадровыйПланИВакансии.Организация.*,
+		КадровыйПланИВакансии.Подразделение.*,
+		КадровыйПланИВакансии.Должность.*}
+	
+	СГРУППИРОВАТЬ ПО
+		КадровыйПланИВакансии.Подразделение,
+		КадровыйПланИВакансии.Должность,
+		КадровыйПланИВакансии.Требования,
+		КадровыйПланИВакансии.Обязанности,
+		КадровыйПланИВакансии.Условия,
+		КадровыйПланИВакансии.Организация) КАК СостояниеКадровогоПлана
+{ГДЕ
+	СостояниеКадровогоПлана.Организация.*,
+	СостояниеКадровогоПлана.Подразделение.*,
+	СостояниеКадровогоПлана.Должность.*}</query>
+		<autoFillFields>false</autoFillFields>
+	</dataSet>
+	<totalField>
+		<dataPath>СтавокВсего</dataPath>
+		<expression>Сумма(СтавокВсего)</expression>
+		<group>Должность</group>
+		<group>Организация</group>
+		<group>Подразделение</group>
+		<group>ОбщийИтог</group>
+	</totalField>
+	<totalField>
+		<dataPath>СтавокЗанято</dataPath>
+		<expression>Сумма(СтавокЗанято)</expression>
+		<group>Должность</group>
+		<group>Организация</group>
+		<group>Подразделение</group>
+		<group>ОбщийИтог</group>
+	</totalField>
+	<totalField>
+		<dataPath>СтавокВакантно</dataPath>
+		<expression>Сумма(СтавокВакантно)</expression>
+		<group>Должность</group>
+		<group>Организация</group>
+		<group>Подразделение</group>
+		<group>ОбщийИтог</group>
+	</totalField>
+	<parameter>
+		<name>Период</name>
+		<title xsi:type="xs:string">Период</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>DateTime</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:nil="true"/>
+		<useRestriction>false</useRestriction>
+	</parameter>
+	<settingsVariant>
+		<dcsset:name>Основной</dcsset:name>
+		<dcsset:presentation xsi:type="xs:string">Основной</dcsset:presentation>
+		<dcsset:settings xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows">
+			<dcsset:selection>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Должность</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>СтавокВсего</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>СтавокЗанято</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>СтавокВакантно</dcsset:field>
+				</dcsset:item>
+			</dcsset:selection>
+			<dcsset:filter>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Организация</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Подразделение</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Должность</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:left xsi:type="dcscor:Field">ВакансияЗакрыта</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:right xsi:type="xs:boolean">false</dcsset:right>
+					<dcsset:presentation xsi:type="xs:string">Только открытые вакансии</dcsset:presentation>
+				</dcsset:item>
+			</dcsset:filter>
+			<dcsset:dataParameters>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>Период</dcscor:parameter>
+					<dcscor:value xsi:type="xs:dateTime">0001-01-01T00:00:00</dcscor:value>
+				</dcscor:item>
+			</dcsset:dataParameters>
+			<dcsset:outputParameters>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>ВыводитьЗаголовок</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">Output</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>Заголовок</dcscor:parameter>
+					<dcscor:value xsi:type="v8:LocalStringType">
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Состояние кадрового плана</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Стан кадрового плану</v8:content>
+						</v8:item>
+					</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>ВыводитьПараметрыДанных</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">DontOutput</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>ВыводитьОтбор</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">DontOutput</dcscor:value>
+				</dcscor:item>
+			</dcsset:outputParameters>
+			<dcsset:item xsi:type="dcsset:StructureItemGroup">
+				<dcsset:groupItems>
+					<dcsset:item xsi:type="dcsset:GroupItemField">
+						<dcsset:field>Организация</dcsset:field>
+						<dcsset:groupType>Items</dcsset:groupType>
+						<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+						<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+						<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+					</dcsset:item>
+				</dcsset:groupItems>
+				<dcsset:order>
+					<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+				</dcsset:order>
+				<dcsset:selection>
+					<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+				</dcsset:selection>
+				<dcsset:item xsi:type="dcsset:StructureItemGroup">
+					<dcsset:groupItems>
+						<dcsset:item xsi:type="dcsset:GroupItemField">
+							<dcsset:field>Подразделение</dcsset:field>
+							<dcsset:groupType>Hierarchy</dcsset:groupType>
+							<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+							<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+							<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+						</dcsset:item>
+					</dcsset:groupItems>
+					<dcsset:order>
+						<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+					</dcsset:order>
+					<dcsset:selection>
+						<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+					</dcsset:selection>
+					<dcsset:outputParameters>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:use>false</dcscor:use>
+							<dcscor:parameter>Заголовок</dcscor:parameter>
+							<dcscor:value xsi:type="v8:LocalStringType"/>
+						</dcscor:item>
+					</dcsset:outputParameters>
+					<dcsset:item xsi:type="dcsset:StructureItemGroup">
+						<dcsset:order>
+							<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+						</dcsset:order>
+						<dcsset:selection>
+							<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+						</dcsset:selection>
+					</dcsset:item>
+				</dcsset:item>
+			</dcsset:item>
+		</dcsset:settings>
+	</settingsVariant>
+</DataCompositionSchema>

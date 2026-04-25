@@ -90,6 +90,11 @@
 							<CommandName>Form.Command.Провести</CommandName>
 							<ExtendedTooltip name="ПровестиExtendedTooltip" id="465"/>
 						</Button>
+						<Button name="ФормаА_ЗаполнитьНачисленияИзЗП" id="1527">
+							<Type>CommandBarButton</Type>
+							<CommandName>Form.Command.А_ЗаполнитьНачисленияИзЗП</CommandName>
+							<ExtendedTooltip name="ФормаА_ЗаполнитьНачисленияИзЗПРасширеннаяПодсказка" id="1528"/>
+						</Button>
 					</ChildItems>
 				</CommandBar>
 				<CommandBar name="КоманднаяПанельФормы" id="397">
@@ -3391,7 +3396,7 @@
 					<Title>
 						<v8:item>
 							<v8:lang>ru</v8:lang>
-							<v8:content>Группа ЕРП</v8:content>
+							<v8:content>ЕРП</v8:content>
 						</v8:item>
 					</Title>
 					<ToolTip>
@@ -3402,14 +3407,9 @@
 					</ToolTip>
 					<ExtendedTooltip name="ГруппаЕРПРасширеннаяПодсказка" id="1436"/>
 					<ChildItems>
-						<CheckBoxField name="А_Обработан" id="1487">
-							<DataPath>Объект.А_Обработан</DataPath>
-							<CheckBoxType>Auto</CheckBoxType>
-							<ContextMenu name="А_ОбработанКонтекстноеМеню" id="1488"/>
-							<ExtendedTooltip name="А_ОбработанРасширеннаяПодсказка" id="1489"/>
-						</CheckBoxField>
 						<Table name="А_Начисления" id="1437">
 							<Height>4</Height>
+							<Footer>true</Footer>
 							<AutoInsertNewRow>true</AutoInsertNewRow>
 							<EnableStartDrag>true</EnableStartDrag>
 							<EnableDrag>true</EnableDrag>
@@ -3458,6 +3458,7 @@
 								<InputField name="А_НачисленияСумма" id="1456">
 									<DataPath>Объект.А_Начисления.Сумма</DataPath>
 									<EditMode>EnterOnInput</EditMode>
+									<FooterDataPath>Объект.А_Начисления.TotalСумма</FooterDataPath>
 									<ContextMenu name="А_НачисленияСуммаКонтекстноеМеню" id="1457"/>
 									<ExtendedTooltip name="А_НачисленияСуммаРасширеннаяПодсказка" id="1458"/>
 								</InputField>
@@ -3477,6 +3478,7 @@
 						</Table>
 						<Table name="А_Удержания" id="1462">
 							<Height>4</Height>
+							<Footer>true</Footer>
 							<AutoInsertNewRow>true</AutoInsertNewRow>
 							<EnableStartDrag>true</EnableStartDrag>
 							<EnableDrag>true</EnableDrag>
@@ -3525,6 +3527,7 @@
 								<InputField name="А_УдержанияСумма" id="1481">
 									<DataPath>Объект.А_Удержания.Сумма</DataPath>
 									<EditMode>EnterOnInput</EditMode>
+									<FooterDataPath>Объект.А_Удержания.TotalСумма</FooterDataPath>
 									<ContextMenu name="А_УдержанияСуммаКонтекстноеМеню" id="1482"/>
 									<ExtendedTooltip name="А_УдержанияСуммаРасширеннаяПодсказка" id="1483"/>
 								</InputField>
@@ -3544,6 +3547,7 @@
 						</Table>
 						<Table name="А_НачисленияБух" id="1496">
 							<Height>4</Height>
+							<Footer>true</Footer>
 							<AutoInsertNewRow>true</AutoInsertNewRow>
 							<EnableStartDrag>true</EnableStartDrag>
 							<EnableDrag>true</EnableDrag>
@@ -3592,6 +3596,7 @@
 								<InputField name="А_НачисленияБухСумма" id="1515">
 									<DataPath>Объект.А_НачисленияБух.Сумма</DataPath>
 									<EditMode>EnterOnInput</EditMode>
+									<FooterDataPath>Объект.А_НачисленияБух.TotalСумма</FooterDataPath>
 									<ContextMenu name="А_НачисленияБухСуммаКонтекстноеМеню" id="1516"/>
 									<ExtendedTooltip name="А_НачисленияБухСуммаРасширеннаяПодсказка" id="1517"/>
 								</InputField>
@@ -11492,6 +11497,21 @@
 			<Action>ПособияПерерасчетПодробно</Action>
 			<Representation>Picture</Representation>
 			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="А_ЗаполнитьНачисленияИзЗП" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Заполнить начисления из ЗП</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>А заполнить начисления из ЗП</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>А_ЗаполнитьНачисленияИзЗП</Action>
 		</Command>
 	</Commands>
 	<Parameters>

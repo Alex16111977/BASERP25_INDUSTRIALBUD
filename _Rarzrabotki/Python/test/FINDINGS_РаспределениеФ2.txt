@@ -1,0 +1,259 @@
+================================================================================
+INVESTIGATION FINDINGS: РаспределениеФ2 Document Structure in BuhKazn
+================================================================================
+Date: April 10, 2026
+Database: BuhKazn
+Document: Документ.РаспределениеФ2 (Distribution Form 2)
+
+================================================================================
+1. DOCUMENT STRUCTURE
+================================================================================
+
+STANDARD ATTRIBUTES (5):
+  • Проведен          (Posted/Processed status)
+  • Ссылка            (Reference/ID)
+  • ПометкаУдаления   (Deletion mark)
+  • Дата              (Document creation date)
+  • Номер             (Document number)
+
+HEADER ATTRIBUTES/REQUISITES (9):
+  • Организация                         (Organization)
+  • Комментарий                         (Comment)
+  • Ответственный                       (Responsible person)
+  • КассаДатаС                          (PERIOD START) ← KEY FIELD
+  • КассаДатаПо                         (PERIOD END)   ← KEY FIELD
+  • ОтбиратьТабельПоОрганизации         (Select by organization)
+  • Направление                         (Direction/Department)
+  • ОпределятьНаправлениеПоТабелю       (Determine direction by table)
+  • УчитыватьАванс                      (Include advance payments)
+
+TABULAR SECTIONS (2):
+
+  1. Сотрудники (Employees) - 2 columns
+     • Сотрудник          (Employee reference)
+     • СуммаНачисления    (Salary amount)
+
+  2. Распределение (Distribution Details) - 6 columns
+     • Сотрудник          (Employee reference)
+     • Подразделение      (Department/subdivision)
+     • ОтработаноЧасов    (Hours worked)
+     • СуммаЗатрат        (Cost amount)
+     • СуммаНачисления    (Salary amount)
+     • Направление        (Direction/Department)
+
+================================================================================
+2. SALARY PERIOD IDENTIFICATION - CRITICAL FINDING
+================================================================================
+
+The salary period for a РаспределениеФ2 document is NOT determined by:
+  ✗ Document.Дата (the date field)
+  ✗ Document.Номер (the document number)
+
+The salary period IS determined by:
+  ✓ КассаДатаС    (Salary period start date - 1st of month)
+  ✓ КассаДатаПо   (Salary period end date - last of month)
+
+EXAMPLE - December 2025 Analysis:
+  Document 033 (created 30.12.2025):
+    • Document.Дата = 2025-12-30
+    • КассаДатаС = 2025-12-01
+    • КассаДатаПо = 2025-12-31
+    → DECEMBER salary distribution (month 12)
+
+  Document 028 (created 10.12.2025):
+    • Document.Дата = 2025-12-10
+    • КассаДатаС = 2025-11-01
+    • КассаДатаПо = 2025-11-30
+    → NOVEMBER salary distribution (month 11)
+
+EXPLANATION:
+Both documents have December dates, but they refer to different salary periods:
+- Doc 033 was created late in December to process December payroll
+- Doc 028 was created early in December to process November payroll
+
+================================================================================
+3. COMPLETE DOCUMENT LIST (54 total documents)
+================================================================================
+
+Documents are grouped by their salary periods (КассаДатаС to КассаДатаПо):
+
+JULY 2025 (1 doc):
+  000000002 - 43 employees, sum 1,313,400 (created 08.08.2025)
+
+AUGUST 2025 (1 doc):
+  000000003 - 60 employees, sum 1,551,700 (created 10.09.2025)
+
+AUGUST-SEPTEMBER 2025 (1 doc):
+  000000005 - 1 employee, sum 72,500 (created 17.10.2025)
+
+SEPTEMBER 2025 (4 docs):
+  000000004 - 63 employees, sum 1,484,900 (created 10.10.2025)
+  000000006 - 1 employee, sum 69,800 (created 17.10.2025)
+  000000007 - 14 employees, sum 373,635 (created 20.10.2025)
+  000000009 - 1 employee, sum 20,500 (created 31.10.2025)
+
+OCTOBER 2025 (First half: 1 doc, Second half: 1 doc, Full month: 11 docs):
+  000000008 - 53 employees, sum 1,051,900 (10/1-10/15 period, created 15.10.2025)
+  000000010 to 000000022 - Various (10/1-10/31 period, created 07.11-28.11.2025)
+  000000012 - 53 employees, sum 1,057,200 (10/16-10/31 period, created 13.11.2025)
+
+NOVEMBER 2025 (First half: 1 doc, Full month: 6 docs, Second half: 1 doc):
+  000000024 - 52 employees, sum 976,300 (11/1-11/15, created 15.11.2025)
+  000000023, 000000026, 000000027, 000000028, 000000029, 000000032
+    (11/1-11/30, created 05.12-19.12.2025)
+  000000025 - 50 employees, sum 716,000 (11/16-11/30, created 05.12.2025)
+
+DECEMBER 2025 (First half: 1 doc, Full month: 3 docs, Second half: 1 doc):
+  000000030 - 54 employees, sum 1,094,800 (12/1-12/20, created 15.12.2025)
+  000000033, 000000034, 000000036
+    (12/1-12/31, created 30.12.2025-15.01.2026)
+  000000031 - 50 employees, sum 447,300 (12/21-12/31, created 09.01.2026)
+
+JANUARY 2026 (First half: 1 doc, Full month: 2 docs, Second half: 1 doc):
+  000000035 - 49 employees, sum 547,600 (1/1-1/15, created 16.01.2026)
+  000000038, 000000040 (1/1-1/31, created 10.02-12.02.2026)
+  000000037 - 49 employees, sum 704,700 (1/16-1/31, created 09.02.2026)
+
+FEBRUARY 2026 (First half: 1 doc, Full month: 8 docs, Second half: 1 doc):
+  000000041 - 41 employees, sum 406,500 (2/1-2/15, created 18.02.2026)
+  000000043, 000000044, 000000045, 000000046, 000000047, 000000048, 000000049, 000000050, 000000051
+    (2/1-2/28, created 04.03-17.03.2026)
+
+MARCH 2026 (First half: 1 doc, Full month: 3 docs):
+  000000052 - 48 employees, sum 754,000 (3/1-3/15, created 27.03.2026)
+  000000053, 000000054, 000000055 (3/1-3/31, created 27.03-07.04.2026)
+
+SPECIAL PERIODS (with non-standard date ranges): 3 docs
+  000000021 - 3 employees, sum 31,000
+  000000039 - 1 employee, sum 8,000
+  000000042 - 2 employees, sum 85,800
+  (Dates shown as 0100-01-01 to 0100-01-01 - likely NULL/uninitialized)
+
+================================================================================
+4. БДДС (CASH FLOW) REGISTER INTEGRATION
+================================================================================
+
+The БДДС (Cash Flow) register records salary distributions:
+
+REGISTER STRUCTURE:
+  Dimensions (9):
+    • Подразделение                (Department/Subdivision)
+    • СтатьяДвиженияДенежныхСредств (Cash flow category)
+    • ПланФакт                      (Plan/Fact indicator)
+    • ВидОплаты                     (Payment type)
+    • ДокументОснование             (Source document - can be РаспределениеФ2)
+    • Секция                        (Section)
+    • Этаж                          (Floor)
+    • НаправлениеДДС                (Cash flow direction)
+    • Направление                   (Direction/Department)
+
+  Resources (4):
+    • Сумма                         (Amount)
+    • СуммаПриход                   (Income amount)
+    • СуммаРасход                   (Expense amount)
+    • СтараяСумма                   (Old amount)
+
+  Attributes (5):
+    • Комментарий                   (Comment)
+    • Сотрудник                     (Employee - key for salary tracking)
+    • СуммаНачисления               (Salary amount)
+    • СуммаФОТ                      (Payroll tax amount)
+    • СуммаНалогов                  (Tax amount)
+
+EXAMPLE БДДС RECORDS from РаспределениеФ2:
+  Регистратор = "Распределение ф2 000000055 от 07.04.2026 16:17:29"
+  Период = 2026-04-07 16:17:29
+  Сотрудник = Bутko Ігор Володимирович
+  Подразділення = МАЗ 264
+  СтатьяДвиженияДенежныхСредств = Зарплата механизаторів
+  Сумма = 388.35 and 4,611.65
+  
+  (Multiple records created for same document - salary + tax split)
+
+================================================================================
+5. KEY INSIGHTS FOR SALARY TRACKING
+================================================================================
+
+1. PERIOD DETERMINATION:
+   When querying РаспределениеФ2, always filter by КассаДатаС/КассаДатаПо,
+   NOT by Document.Дата. The creation date may be days or weeks after the
+   salary period ends.
+
+2. DOCUMENT PURPOSE:
+   РаспределениеФ2 distributes salary amounts to employees/departments.
+   It processes:
+   - Full month salary
+   - Partial period salary (e.g., 10/1-10/15, 10/16-10/31)
+   - Salary adjustments and corrections
+
+3. EMPLOYEES & AMOUNTS:
+   - Сотрудники section: basic salary by employee
+   - Распределение section: detailed distribution by employee & department
+
+4. CASH FLOW TRACKING:
+   - БДДС register has РаспределениеФ2 as Регистратор (registrar)
+   - Each salary entry creates БДДС records
+   - Tracks salary by СтатьяДвиженияДенежныхСредств (salary categories)
+
+5. TIMING CONSIDERATIONS:
+   - Documents can be created multiple times per salary period (adjustments)
+   - Documents can be created after the salary period ends (corrections)
+   - Always use КассаДатаС/КассаДатаПо to identify the actual period
+
+6. PARTIAL PERIODS:
+   Some documents cover partial months (e.g., 10/1-10/15 vs 10/16-10/31)
+   This allows for:
+   - Advance/installment salary payments
+   - Period-specific calculations
+   - Flexible payroll scheduling
+
+================================================================================
+6. QUERY PATTERNS
+================================================================================
+
+GET ALL DOCUMENTS FOR A SALARY PERIOD:
+  ВЫБРАТИ
+      Док.Номер КАК НомерДокумента,
+      Док.Дата КАК ДатаДокумента,
+      Док.КассаДатаС КАК ПериодС,
+      Док.КассаДатаПо КАК ПериодПо
+  ІЗ Документ.РаспределениеФ2 КАК Док
+  ГДЕ Док.КассаДатаС >= '2025-12-01'
+    И Док.КассаДатаПо <= '2025-12-31'
+    И НЕ Док.ПометкаУдаления
+
+GET SALARY DETAILS FOR DOCUMENT:
+  Use document reference → GetObject() → iterate:
+  - Сотрудники table (simple salary list)
+  - Распределение table (detailed distribution by department)
+
+TRACK SALARY IN CASH FLOW:
+  SELECT from БДДС WHERE Регистратор = <РаспределениеФ2 ref>
+  - Gets all cash flow records created by this distribution
+  - Includes salary amounts by category
+  - Links to employees and departments
+
+================================================================================
+7. RECOMMENDATIONS
+================================================================================
+
+1. When analyzing salary by date:
+   - Use КассаДатаС/КассаДатаПо for period identification
+   - Use Document.Дата for audit/creation tracking only
+
+2. When correlating with payroll:
+   - Match periods by КассаДатаС/КассаДатаПо dates
+   - Document 028 (Dec 10) = November period
+   - Document 033 (Dec 30) = December period
+
+3. When checking cash flow impact:
+   - Query БДДС register with Регистратор = РаспределениеФ2
+   - All salary expenses flow through БДДС
+   - Tracks by employee and department
+
+4. Data quality checks:
+   - Verify КассаДатаС ≤ КассаДатаПо (period validity)
+   - Check for overlapping periods (multiple salaries in same period)
+   - Ensure all salary employees are in both Сотрудники and Распределение
+
+================================================================================
