@@ -1,25 +1,36 @@
 """Ai_Olap CLI — entry point for ETL runs.
 
 Usage:
+    python main.py
+        Default: повний прогон за ВСІ проведені документи (без period filter) —
+        validate -> dim_catalogs -> fact_pnl -> fact_cashflow.
+        Fact-таблиці перезавантажуються повністю (TRUNCATE + INSERT).
+        Зупиняється на першій помилці.
+
+    python main.py --period 2026-02
+        Той самий ланцюжок, але Fact-pipelines обмежуються одним місяцем
+        (idempotent: DELETE WHERE Period_Month=? + INSERT).
+
     python main.py --validate
-        Validate every pipelines/*.json file.
+        Валідує всі pipelines/*.json і виходить.
 
     python main.py --run-once <pipeline_id> [--period YYYY-MM]
-        Run a single pipeline by id (filename stem). For Fact pipelines
-        --period selects the month being loaded.
+        Запуск одного pipeline за file stem.
 
     python main.py --scheduled
-        Start the APScheduler daemon (BlockingScheduler).
+        APScheduler daemon (BlockingScheduler) — для production (зараз НЕ
+        використовуємо, поки йде ручне тестування).
 
     python main.py --refresh-mapping
-        Drop the mapping_resolver cache so the next call reads
-        mapping/baserp_storage.json fresh.
+        Скидає кеш mapping_resolver (НЕ регенерує JSON!).
+        Регенерація mapping: `python mapping/refresh_mapping.py`.
 
 Examples:
+    python main.py                           # full reload всіх періодів
+    python main.py --period 2026-02          # per-month reload лютого
     python main.py --validate
     python main.py --run-once dim_catalogs
     python main.py --run-once fact_pnl --period 2026-02
-    python main.py --scheduled
 """
 from __future__ import annotations
 
@@ -41,6 +52,13 @@ from ai_olap.utils.mapping_resolver import reload_cache  # noqa: E402
 
 PIPELINES_DIR = PROJECT_ROOT / "pipelines"
 
+# Pipeline id-и які виконує `--all` режим, у порядку.
+ALL_DEFAULT_PIPELINES: list[str] = [
+    "dim_catalogs",   # 16 Dim + 1 Bridge full reload (period не потрібен)
+    "fact_pnl",       # idempotent per period
+    "fact_cashflow",  # idempotent per period
+]
+
 
 def _parse_period(s: str | None) -> dt.date | None:
     if not s:
@@ -52,6 +70,23 @@ def _parse_period(s: str | None) -> dt.date | None:
         return dt.date.fromisoformat(s)
     except Exception as exc:
         raise ValidationError(f"Invalid --period {s!r}; use YYYY-MM or YYYY-MM-DD") from exc
+
+
+def _run_one(pid: str, period: dt.date | None) -> int:
+    target = PIPELINES_DIR / f"{pid}.json"
+    if not target.exists():
+        print(f"Pipeline file {target} not found.", file=sys.stderr)
+        print("Available:", ", ".join(p.stem for p in discover_pipelines(PIPELINES_DIR)))
+        return 2
+    cfg = load_pipeline_config(target)
+    validate_pipeline(cfg, source=target.name)
+    needs_period = any(
+        step.get("loader", {}).get("mode") == "idempotent_period"
+        for step in cfg.get("steps", [])
+    )
+    total = run_pipeline(cfg, period=period if needs_period else None, script=pid)
+    print(f"  {pid}: {total} rows loaded.")
+    return 0
 
 
 def cmd_validate(_args) -> int:
@@ -68,17 +103,35 @@ def cmd_validate(_args) -> int:
 
 
 def cmd_run_once(args) -> int:
-    pid = args.run_once
     period = _parse_period(args.period)
-    target = PIPELINES_DIR / f"{pid}.json"
-    if not target.exists():
-        print(f"Pipeline file {target} not found.", file=sys.stderr)
-        print("Available:", ", ".join(p.stem for p in discover_pipelines(PIPELINES_DIR)))
-        return 2
-    cfg = load_pipeline_config(target)
-    validate_pipeline(cfg, source=target.name)
-    total = run_pipeline(cfg, period=period, script=pid)
-    print(f"\n{pid}: {total} rows loaded.")
+    rc = _run_one(args.run_once, period)
+    return rc
+
+
+def cmd_all(args) -> int:
+    """Default mode: validate + dim_catalogs + fact_pnl + fact_cashflow.
+
+    --period не передано → full reload (TRUNCATE + INSERT всі періоди).
+    --period YYYY-MM   → per-month idempotent reload (DELETE WHERE + INSERT).
+    """
+    period = _parse_period(args.period)
+    label = f"period={period:%Y-%m}" if period else "ALL periods (full reload)"
+    print(f"=== Ai_Olap full update — {label} ===\n")
+
+    print("[1/4] validate")
+    rc = cmd_validate(args)
+    if rc != 0:
+        print("validate failed — aborting", file=sys.stderr)
+        return rc
+
+    for n, pid in enumerate(ALL_DEFAULT_PIPELINES, start=2):
+        print(f"\n[{n}/{1 + len(ALL_DEFAULT_PIPELINES)}] {pid}")
+        rc = _run_one(pid, period)
+        if rc != 0:
+            print(f"{pid} failed (rc={rc}) — aborting", file=sys.stderr)
+            return rc
+
+    print(f"\n=== Ai_Olap full update — DONE ({label}) ===")
     return 0
 
 
@@ -106,14 +159,15 @@ def cmd_refresh_mapping(_args) -> int:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         prog="ai_olap",
-        description="ETL orchestrator: BaseERP -> OlapBASERP.",
+        description="ETL orchestrator: BaseERP -> OlapBASERP. "
+                    "Default (no flags): full update for previous month.",
     )
-    g = parser.add_mutually_exclusive_group(required=True)
+    g = parser.add_mutually_exclusive_group(required=False)
     g.add_argument("--validate", action="store_true", help="Validate all pipelines/*.json")
     g.add_argument("--run-once", metavar="PIPELINE_ID", help="Run one pipeline by file stem")
     g.add_argument("--scheduled", action="store_true", help="Start APScheduler daemon")
     g.add_argument("--refresh-mapping", action="store_true", help="Drop mapping cache")
-    parser.add_argument("--period", metavar="YYYY-MM", help="Period for Fact pipelines (1st of month)")
+    parser.add_argument("--period", metavar="YYYY-MM", help="Period (defaults to previous month for --all)")
     args = parser.parse_args(argv)
 
     setup_logging()
@@ -127,10 +181,10 @@ def main(argv: list[str] | None = None) -> int:
             return cmd_scheduled(args)
         if args.refresh_mapping:
             return cmd_refresh_mapping(args)
+        return cmd_all(args)
     except ETLException as exc:
         print(f"ETL error: {exc}", file=sys.stderr)
         return 3
-    return 0
 
 
 if __name__ == "__main__":

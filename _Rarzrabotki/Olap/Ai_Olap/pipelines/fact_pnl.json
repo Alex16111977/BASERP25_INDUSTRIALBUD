@@ -11,15 +11,16 @@
         "raw_sql": "SELECT r._RecorderRRef AS Recorder_PL_ID, r._Fld55984RRef AS Source, d._Date_Time AS Period, r._Fld55971RRef AS Organization_ID, r._Fld55972RRef AS Department_ID, r._Fld55973RRef AS Direction_ID, r._Fld55974RRef AS PL_Article_ID, r._Fld55975RRef AS PL_Group_ID, r._Fld55976RRef AS DDS_Article_ID, r._Fld55977RRef AS Counterparty_ID, r._Fld55985RRef AS Income_Article_ID, r._Fld55986RRef AS Expense_Article_ID, r._Fld55987RRef AS Currency_ID, r._Fld55988 AS Exchange_Rate, r._Fld55979 AS Sum_Plan_Grn, r._Fld55980 AS Sum_Plan_F1_Grn, r._Fld55981 AS Sum_Plan_F2_Grn, r._Fld55982 AS Sum_ERP_Grn, r._Fld55983 AS Sum_Kazna_Grn, r._Fld55978_RRRef AS Source_Recorder_ID FROM _InfoRg55970 r INNER JOIN _Document56011 d ON d._IDRRef = r._RecorderRRef WHERE r._Active = 0x01 AND r._Fld55971RRef = 0x80D3000C29BBAC2311E653F06BEE36B2 AND d._Date_Time >= ? AND d._Date_Time < ?"
       },
       "transformer": {
-        "steps": ["varbinary_to_uuid", "enum_resolver", "onec_date", "column_mapper"],
+        "steps": ["varbinary_to_uuid", "enum_resolver", "period_offset_fix", "column_mapper"],
         "options": {
           "enum_resolver": {"column_to_enum": {"Source": "Перечисление.А_ИсточникPL"}},
-          "onec_date": {"columns": ["Period_Month"], "mode": "month"},
+          "period_offset_fix": {"source_column": "Period", "period_month_column": "Period_Month"},
           "column_mapper": {
             "column_map": {
               "Recorder_PL_ID": "Recorder_PL_ID",
               "Source": "Source",
               "Period": "Period",
+              "Period_Month": "Period_Month",
               "Organization_ID": "Organization_ID",
               "Department_ID": "Department_ID",
               "Direction_ID": "Direction_ID",

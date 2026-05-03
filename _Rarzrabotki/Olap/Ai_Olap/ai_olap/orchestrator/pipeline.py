@@ -36,13 +36,18 @@ class Pipeline:
             log.info("step start", pipeline=self.pipeline_id, step=sid)
 
             extractor_cfg = dict(step["extractor"])
-            if extractor_cfg.get("auto_period_params") and self.period:
-                p = self.period
-                next_month = dt.date(p.year + (p.month == 12), (p.month % 12) + 1, 1)
+            if extractor_cfg.get("auto_period_params"):
                 # BaseERP cluster backend stores _Date_Time with +2000 year offset.
                 offset = int(extractor_cfg.get("period_offset_years", 2000))
-                p_db = dt.date(p.year + offset, p.month, p.day)
-                n_db = dt.date(next_month.year + offset, next_month.month, next_month.day)
+                if self.period:
+                    p = self.period
+                    next_month = dt.date(p.year + (p.month == 12), (p.month % 12) + 1, 1)
+                    p_db = dt.date(p.year + offset, p.month, p.day)
+                    n_db = dt.date(next_month.year + offset, next_month.month, next_month.day)
+                else:
+                    # Full reload: широкий діапазон, що покриває всі документи у БД.
+                    p_db = dt.date(1 + offset, 1, 1)  # 2001-01-01 при offset=2000
+                    n_db = dt.date(9999, 1, 1)
                 extractor_cfg["params"] = [p_db, n_db]
             extractor = make_extractor(extractor_cfg)
             rows = extractor.extract()
@@ -57,8 +62,12 @@ class Pipeline:
                 rows = tpipe.apply(rows, steps_list, options)
 
             loader_cfg = dict(step["loader"])
-            if loader_cfg.get("mode") == "idempotent_period" and self.period:
-                loader_cfg["period"] = self.period.isoformat()
+            if loader_cfg.get("mode") == "idempotent_period":
+                if self.period:
+                    loader_cfg["period"] = self.period.isoformat()
+                else:
+                    # No period -> Fact-таблиця повністю перезавантажується.
+                    loader_cfg["mode"] = "full_reload"
             loader = make_loader(loader_cfg)
             inserted = loader.load(rows)
 
