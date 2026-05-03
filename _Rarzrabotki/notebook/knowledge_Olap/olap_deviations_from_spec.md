@@ -21,8 +21,9 @@
 | 11 | Bridge PLArticle_DDS = 0 рядків | 3.7 | §4.2 | Реквізит не заповнений у даних | Pending фінансист |
 | 12 | Fact_Cashflow.BankAccount_ID NOT NULL — placeholder для Каси | 3.9 | §3.7 | Schema constraint workaround | Schema review |
 | 13 | _Date_Time +2000 рік-офсет у BaseERP backend | 3.9 | — | 1С platform behavior (cluster mode) | Постійно (handled у Pipeline) |
+| 14 | `python main.py` без прапорців = full reload всіх періодів | 3.post | §4.5 | UX adaptation для dev-режиму | Постійно (commit 8d5ebf3a1) |
 
-**Загальна оцінка:** усі 13 deviations — або (a) workarounds для платформенних обмежень 1С, або (b) виправлення помилок specа які виявились при тестуванні з реальними даними. Жодне відхилення не змінює бізнес-логіку. Ключове Stage 3 deviation (#8) — архітектурне: SQL-first замість COM-first, обґрунтоване продуктивністю (~10× швидше) і наявністю exposed mapping.
+**Загальна оцінка:** усі 14 deviations — або (a) workarounds для платформенних обмежень 1С, або (b) виправлення помилок specа які виявились при тестуванні з реальними даними. Жодне відхилення не змінює бізнес-логіку. Ключове Stage 3 deviation (#8) — архітектурне: SQL-first замість COM-first, обґрунтоване продуктивністю (~10× швидше) і наявністю exposed mapping.
 
 ---
 
@@ -372,19 +373,63 @@ Period_Month у Fact_PnL/Fact_Cashflow тепер має правильний р
 
 ---
 
+## 14. `python main.py` без прапорців = full reload всіх періодів
+
+### Що
+Spec v3 §4.5 описує оркестратор як "одну команду з обов'язковими прапорцями":
+- `python main.py --validate`
+- `python main.py --run-once <pipeline> --period YYYY-MM`
+- `python main.py --scheduled`
+
+Обов'язковість прапорців гарантована `argparse.add_mutually_exclusive_group(required=True)`.
+
+### Deviation
+Користувач (CFO/dev) попросив **одну простішу команду** для ручного тестування у режимі розробки. Реалізовано:
+
+- `argparse` група тепер `required=False`
+- Без жодних прапорців → виконується новий `cmd_all`:
+  1. `validate`
+  2. `dim_catalogs` (full reload 16 Dim + 1 Bridge)
+  3. `fact_pnl` (full reload без period filter — всі дати з документів)
+  4. `fact_cashflow` (full reload)
+- З `--period YYYY-MM` без іншого прапорця → той самий ланцюжок, але Fact-pipelines обмежуються одним місяцем (idempotent)
+
+### Технічні зміни (commit 8d5ebf3a1)
+1. **`Pipeline.auto_period_params`** без `period` тепер підставляє широкий діапазон `[date(2001-01-01), date(9999-01-01)]` (з +2000 offset урахованим) — щоб raw_sql `WHERE _Date_Time >= ? AND < ?` повернув усі рядки.
+2. **`Pipeline.run()`** автоматично перетворює `loader_cfg["mode"]=idempotent_period` на `full_reload` коли period відсутній (бо per-period DELETE WHERE безглуздий при full extract).
+3. **Новий transformer `period_offset_fix`** (`ai_olap/transformers/period_offset_fix.py`) — знімає +2000-рік-офсет із `Period` (4026 → 2026) і деривує `Period_Month`. Замінив `onec_date` у `pipelines/fact_pnl.json` і `pipelines/fact_cashflow.json` бо у full-reload режимі FactLoader більше не форсує Period_Month з orchestrator.period — Period_Month має бути derived із даних.
+
+### Чому
+- **Простота для dev-режиму**: одна команда `python main.py` оновлює все за ~2 секунди.
+- **Idempotency зберігається**: за необхідності `--period 2026-02` робить per-month reload.
+- **Daemon-режим (`--scheduled`) не використовуємо** під час розробки — це для production Stage 5.
+
+### Trade-off
+- Лог пише `dim full reload component=dim_loader rows=N table=Fact_PnL` для Fact-таблиць у full-reload режимі (бо factory повертає `DimLoader` для `full_reload`). Косметична неточність — поведінка правильна.
+- Якщо хтось додасть нову Fact-pipeline — мусить пам'ятати про `period_offset_fix` (не `onec_date`).
+
+### Where
+- `_Rarzrabotki/Olap/Ai_Olap/main.py` (`cmd_all`)
+- `_Rarzrabotki/Olap/Ai_Olap/ai_olap/orchestrator/pipeline.py` (period None handling)
+- `_Rarzrabotki/Olap/Ai_Olap/ai_olap/transformers/period_offset_fix.py` (новий)
+- `_Rarzrabotki/Olap/Ai_Olap/pipelines/fact_pnl.json`, `fact_cashflow.json`
+
+---
+
 ## Загальна оцінка
 
-Усі 13 deviations:
+Усі 14 deviations:
 - **3 з них** (1, 5, 13) — workarounds для конкретних обмежень платформи 1С
 - **5 з них** (2, 3, 4, 8, 12) — виправлення помилок specа / архітектурні корекції які виявились при тестуванні з реальними даними
 - **1** (6) — корекція оцінки кількості рядків (spec мав груба estimate)
 - **2** (7, 11) — pending manual work, не код-зміна
 - **1** (9) — pragmatic alternative до BSL EPF (Python COM equivalent)
 - **1** (10) — метадані 1С не мають реквізиту, який очікував DDL
+- **1** (14) — UX adaptation для dev-режиму (одна команда без прапорців)
 
-**Жодне deviation не змінює бізнес-логіку** проекту. Всі — або necesssary fixes, або corrections of spec inaccuracies, або architectural improvements (#8 SQL-first).
+**Жодне deviation не змінює бізнес-логіку** проекту. Всі — або necesssary fixes, або corrections of spec inaccuracies, або architectural improvements (#8 SQL-first), або UX adaptations (#14).
 
-**Дія:** при наступній ревізії specа (v4) внести deviations 2, 3, 4, 6, 8, 12 у текст specа щоб вирівняти документацію з реальною реалізацією.
+**Дія:** при наступній ревізії specа (v4) внести deviations 2, 3, 4, 6, 8, 12, 14 у текст specа щоб вирівняти документацію з реальною реалізацією.
 
 ---
 

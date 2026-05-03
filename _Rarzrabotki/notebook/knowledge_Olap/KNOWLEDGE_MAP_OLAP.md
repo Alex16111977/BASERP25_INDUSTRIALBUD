@@ -26,16 +26,40 @@
 |---|---|---|---|---|
 | **Stage 1** | 8 нових об'єктів метаданих 1С + ОбработкаПроведения | ✅ DONE | `075d0ea08` | 2026-05-01 → 02 |
 | **Stage 2** | SQL DDL OlapBASERP — 24 таблиці | ✅ DONE | `df732a73f` | 2026-05-02 → 03 |
-| **Stage 3** | Python ETL Ai_Olap (SQL-first; 16 Dim + Bridge + 2 Fact + scheduler) | ✅ DONE | `952c46db7` | 2026-05-03 |
+| **Stage 3** | Python ETL Ai_Olap (SQL-first; 16 Dim + Bridge + 2 Fact + scheduler) | ✅ DONE | `8d5ebf3a1` | 2026-05-03 |
 | **Stage 4** | Power BI PBIX × 2 (PnL + Cashflow) + DAX | ⏳ PLANNED | — | — |
 | **Stage 5** | Windows Task Scheduler 02:00 щоночі | ⏳ PLANNED | — | — |
 
-**Acceptance verified end-to-end (Stage 1+2+3)**: 🎯 **Глобино-2 / Source=ERP_Income / Period=2026-02-01 / Sum_ERP_Grn = 38 432 968.66 ₴** (точно ± 0.01) — pytest `tests/test_etl_acceptance_globyno2.py` PASS після `python main.py --run-once dim_catalogs && python main.py --run-once fact_pnl --period 2026-02`.
+**Acceptance verified end-to-end (Stage 1+2+3)**: 🎯 **Глобино-2 / Source=ERP_Income / Period=2026-02-01 / Sum_ERP_Grn = 38 432 968.66 ₴** (точно ± 0.01) — pytest `tests/test_etl_acceptance_globyno2.py` PASS після `python main.py` (одна команда, без аргументів).
 
-**Stage 3 row counts (Feb 2026):**
-- Dim таблиці заповнено через `dim_catalogs`: 55 934 рядки у 17 кроках
-- Fact_PnL: 3 937 рядків (7 distinct Source)
-- Fact_Cashflow: 4 652 рядки
+**Stage 3 default mode** (commit `8d5ebf3a1`): `python main.py` без прапорців виконує повний прогон **всіх Dim + всіх періодів Fact** (TRUNCATE + INSERT). Для пер-місячного режиму — `--period YYYY-MM` (idempotent DELETE WHERE + INSERT). Daemon-режим `--scheduled` поки **не** використовуємо — йде ручне тестування.
+
+**Stage 3 row counts (live, Feb 2026):**
+
+| таблиця | rows | джерело |
+|---------|------|---------|
+| Dim_Organizations | 1 | тільки ТОВ ІНДАСТРІАЛБУД |
+| Dim_Departments | 385 | СтруктураПредприятия |
+| Dim_Directions | 9 | НаправленияДеятельности |
+| Dim_Counterparties | 4 874 | Контрагенты |
+| Dim_Contracts | 8 152 | ДоговорыКонтрагентов |
+| Dim_Items | 40 745 | Номенклатура |
+| Dim_ItemGroups | 14 | ГруппыФинансовогоУчетаНоменклатуры |
+| Dim_Individuals | 725 | ФизическиеЛица |
+| Dim_Users | 63 | Пользователи |
+| Dim_BankAccounts | 99 | БанковскиеСчетаОрганизаций |
+| Dim_Currencies | 4 | Валюты |
+| Dim_DDS_Articles | 425 | СтатьиДвиженияДенежныхСредств |
+| Dim_Expense_Articles | 344 | СтатьиРасходов (план характ.) |
+| Dim_Income_Articles | 15 | СтатьиДоходов (план характ.) |
+| Dim_PL_Articles | 71 | А_Статьи_PL |
+| Dim_PL_ArticleGroups | 8 | А_ГруппаСтатей_PL |
+| Bridge_PLArticle_DDS | **0** | Реквізит не заповнений (pending фінансист) |
+| Fact_PnL | 3 937 | А_ОтчетPL_Свод (7 distinct Source) |
+| Fact_Cashflow | 4 652 | А_ОтчетDDS_Свод |
+| **Σ dim_catalogs** | **55 934** | у 17 кроках |
+
+**Час повного `python main.py`:** ~2 секунди end-to-end (BaseERP backend через pyodbc).
 
 ---
 

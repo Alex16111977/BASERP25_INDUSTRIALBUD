@@ -3,7 +3,7 @@
 > **STATUS:** ✅ Stage 3 реалізовано 2026-05-03. Архітектура SQL-first, не COM-first як попередній чорновик плану. Acceptance gate (Глобино-2 / ERP_Income / Feb 2026 = 38 432 968.66 ₴ exact) проходить — 10/10 pytest.
 >
 > **Live код:** [`_Rarzrabotki/Olap/Ai_Olap/`](../../Olap/Ai_Olap/)
-> **Final commit:** `952c46db7` (Stage 10: README); merged into main.
+> **Останній commit:** `8d5ebf3a1` (default mode: full reload без прапорців); merged into main.
 
 ---
 
@@ -288,7 +288,8 @@ def resolve(meta_full: str) -> tuple[str, dict[str, str]]:
 | name | що робить |
 |------|-----------|
 | `varbinary_to_uuid` | `bytes(16) → hex(32 chars)`. 1-byte → bool. Null UUID (b"\\x00"\*16) → None. |
-| `onec_date`         | datetime → `dt.datetime(y, m, 1)` (Period_Month) або `.date()`. |
+| `onec_date`         | datetime → `dt.datetime(y, m, 1)` (Period_Month) або `.date()` — in-place на listed columns. |
+| `period_offset_fix` | **NEW (commit 8d5ebf3a1).** Знімає +2000 рік-офсет з `_Date_Time` (4026 → 2026) та деривує `Period_Month = date(year, month, 1)`. Threshold-based — безпечно для дат що вже без офсету. Опції: `source_column`, `period_month_column`, `offset_years` (default 2000), `epoch_threshold` (default 3000). |
 | `enum_resolver`     | UUID → frozen string. Hardcoded списки `FROZEN_ENUMS` (8/3/4 значення); SQL-lookup `_Enum*._EnumOrder`, lru_cache. |
 | `drill_down`        | `(meta, uuid_hex) → "e1cib/data/<meta>?ref=<hex>"`. |
 | `column_mapper`     | `{src: dst}` rename + drop unmapped + `defaults={dst: value}` (працює і коли src відсутнє у row, і коли value у row = None). |
@@ -302,8 +303,10 @@ Pipeline крок викликає їх через `tpipe.apply(rows, steps_list
 | mode | semantics | таблиці |
 |------|-----------|---------|
 | `full_reload`         | `TRUNCATE TABLE` + `INSERT` | усі Dim_* + Bridge_* |
-| `idempotent_period`   | `DELETE WHERE Period_Month = ?` + `INSERT` | Fact_PnL, Fact_Cashflow, Fact_CF_Balance |
+| `idempotent_period`   | `DELETE WHERE Period_Month = ?` + `INSERT` | Fact_PnL, Fact_Cashflow, Fact_CF_Balance (коли передано `--period`) |
 | `append`              | `INSERT` без DELETE | ETL_Runs (через окремі helpers `open_run`/`close_run`) |
+
+**Auto-degrade (commit 8d5ebf3a1):** якщо у `Pipeline.run()` `self.period is None` і loader.mode = `idempotent_period`, режим **автоматично перетворюється на `full_reload`**. Тобто `python main.py` без `--period` робить TRUNCATE+INSERT для Fact-таблиць замість DELETE WHERE. Це необхідно бо raw_sql тоді витягує всі дати, і per-period DELETE не має сенсу. У логах буде `dim full reload component=dim_loader rows=N table=Fact_PnL` — це правильно (factory повертає `DimLoader` для `full_reload` mode незалежно від таблиці).
 
 `get_table_columns(table)` introspect-ить `sys.tables`/`sys.columns` і виключає IDENTITY (`Fact_ID`, `Run_ID`) та DEFAULT-заповнені (`Loaded_At = sysdatetime()`). `bulk_insert(table, rows)` використовує `fast_executemany=True` + batches по 1000.
 
@@ -311,15 +314,29 @@ Pipeline крок викликає їх через `tpipe.apply(rows, steps_list
 
 ## Orchestrator
 
-### main.py — 4 режими
+### main.py — режими CLI
 
 ```bash
+python main.py                                           # DEFAULT: повний прогон (validate + dim_catalogs + fact_pnl + fact_cashflow), TRUNCATE+INSERT всіх дат
+python main.py --period 2026-02                          # Той самий ланцюжок, але Fact-pipelines обмежуються одним місяцем (idempotent DELETE WHERE + INSERT)
 python main.py --validate                                # перевіряє всі pipelines/*.json по schema
 python main.py --run-once dim_catalogs                   # один pipeline (Dim — без --period)
-python main.py --run-once fact_pnl --period 2026-02      # Fact — з --period YYYY-MM
-python main.py --scheduled                               # APScheduler BlockingScheduler daemon
-python main.py --refresh-mapping                         # скинути кеш mapping_resolver
+python main.py --run-once fact_pnl --period 2026-02      # один Fact — з --period YYYY-MM (idempotent)
+python main.py --run-once fact_pnl                       # один Fact без --period (full reload Fact_PnL)
+python main.py --scheduled                               # APScheduler BlockingScheduler daemon (поки НЕ використовуємо)
+python main.py --refresh-mapping                         # скинути кеш mapping_resolver (не регенерує JSON!)
 ```
+
+### Default mode (без прапорців) — `cmd_all`
+
+Коли не передано жодного режим-flag, виконуються **3 pipeline'и підряд** з `ALL_DEFAULT_PIPELINES = ["dim_catalogs", "fact_pnl", "fact_cashflow"]`:
+
+1. `validate` — перевірка JSON-конфігів
+2. `dim_catalogs` — full reload 16 Dim + 1 Bridge (~55 934 рядків)
+3. `fact_pnl` — full reload `_InfoRg55970` (~3 937 рядків зараз; всі періоди коли проведуть інші місяці)
+4. `fact_cashflow` — full reload `_InfoRg55992` (~4 652 рядки)
+
+Зупиняється на першій помилці. Час end-to-end ~2 секунди при чистій localhost інстансі. **`fact_cf_balance`** і `etl_runs_keepalive` НЕ входять у дефолт; запускати окремо через `--run-once`.
 
 ### ai_olap/orchestrator/pipeline.py
 
@@ -344,7 +361,13 @@ Excepton у будь-якому кроці бульбашить вгору; runn
 
 ### 1. BaseERP cluster backend зберігає `_Date_Time` з +2000 річним офсетом
 
-Документ за 2026-02-15 у MSSQL зберігається як `4026-02-15`. Це специфіка cluster-mode 1С (file-mode без офсету). `Pipeline.auto_period_params` додає `period_offset_years: 2000` (default) до Period перед SQL `?`-bind. Якщо пишете кастомний raw_sql — додавайте 2000 самостійно або запозичте логіку.
+Документ за 2026-02-15 у MSSQL зберігається як `4026-02-15`. Це специфіка cluster-mode 1С (file-mode без офсету). `Pipeline.auto_period_params` додає `period_offset_years: 2000` (default) до Period перед SQL `?`-bind. Якщо `--period` не передано — підставляє широкий діапазон `[date(2001,1,1), date(9999,1,1)]` що покриває всі дати. Якщо пишете кастомний raw_sql — додавайте 2000 самостійно або запозичте логіку.
+
+Для **колонок у row** використовуй transformer **`period_offset_fix`** — він знімає 2000 років з `Period` та деривує `Period_Month` (без офсету). Конфіг в JSON:
+```json
+"period_offset_fix": {"source_column": "Period", "period_month_column": "Period_Month"}
+```
+Це дозволяє Power BI бачити правильні роки 2026 у Fact-таблицях, а не 4026.
 
 ### 2. `ПолучитьСтруктуруХраненияБазыДанных()` не повертає системні поля
 
