@@ -11,7 +11,7 @@
         "raw_sql": "SELECT r._RecorderRRef AS Recorder_DDS_ID, d._Date_Time AS Period, r._Fld56003RRef AS Source, r._Fld56004RRef AS CFS_Section, r._Fld55993RRef AS Organization_ID, r._Fld55994RRef AS Department_ID, r._Fld55995RRef AS Direction_ID, r._Fld55996_RRRef AS BankAccount_ID, r._Fld55997RRef AS DDS_Article_ID, r._Fld55998RRef AS Counterparty_ID, r._Fld55999RRef AS Contract_ID, r._Fld56005RRef AS Movement_Direction_Id, r._Fld56006RRef AS Currency_ID, r._Fld56007 AS Exchange_Rate, r._Fld56001 AS Sum_Grn, r._Fld56002 AS Sum_Original, r._Fld56000_RRRef AS Source_Recorder_ID FROM _InfoRg55992 r INNER JOIN _Document56017 d ON d._IDRRef = r._RecorderRRef WHERE r._Active = 0x01 AND r._Fld55993RRef = 0x80D3000C29BBAC2311E653F06BEE36B2 AND d._Date_Time >= ? AND d._Date_Time < ?"
       },
       "transformer": {
-        "steps": ["varbinary_to_uuid", "enum_resolver", "onec_date", "column_mapper"],
+        "steps": ["varbinary_to_uuid", "enum_resolver", "period_offset_fix", "column_mapper"],
         "options": {
           "enum_resolver": {
             "column_to_enum": {
@@ -19,11 +19,12 @@
               "CFS_Section": "Перечисление.А_РазделыCFS"
             }
           },
-          "onec_date": {"columns": ["Period_Month"], "mode": "month"},
+          "period_offset_fix": {"source_column": "Period", "period_month_column": "Period_Month"},
           "column_mapper": {
             "column_map": {
               "Recorder_DDS_ID": "Recorder_DDS_ID",
               "Period": "Period",
+              "Period_Month": "Period_Month",
               "Source": "Source",
               "CFS_Section": "CFS_Section",
               "Organization_ID": "Organization_ID",

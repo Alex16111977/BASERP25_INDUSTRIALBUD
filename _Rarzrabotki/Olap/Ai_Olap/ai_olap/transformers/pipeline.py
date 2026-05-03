@@ -26,6 +26,7 @@ from ..core.exceptions import TransformError
 REGISTRY: dict[str, str] = {
     "varbinary_to_uuid": "ai_olap.transformers.varbinary_to_uuid",
     "onec_date": "ai_olap.transformers.onec_date",
+    "period_offset_fix": "ai_olap.transformers.period_offset_fix",
     "enum_resolver": "ai_olap.transformers.enum_resolver",
     "drill_down": "ai_olap.transformers.drill_down",
     "column_mapper": "ai_olap.transformers.column_mapper",
