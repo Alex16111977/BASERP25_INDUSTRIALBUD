@@ -27,7 +27,7 @@
 | **Stage 1** | 8 нових об'єктів метаданих 1С + ОбработкаПроведения | ✅ DONE | `075d0ea08` | 2026-05-01 → 02 |
 | **Stage 2** | SQL DDL OlapBASERP — 24 таблиці | ✅ DONE | `df732a73f` | 2026-05-02 → 03 |
 | **Stage 3** | Python ETL Ai_Olap (SQL-first; 16 Dim + Bridge + 2 Fact + scheduler) | ✅ DONE | `8d5ebf3a1` | 2026-05-03 |
-| **Stage 4** | Power BI PBIX × 2 (PnL + Cashflow) + DAX | ⏳ PLANNED | — | — |
+| **Stage 4** | Power BI PBIX × 2 (PnL + Cashflow) + DAX | 🔄 IN PROGRESS | — | 2026-05-03 PL.pbix модельна частина зібрана |
 | **Stage 5** | Windows Task Scheduler 02:00 щоночі | ⏳ PLANNED | — | — |
 
 **Acceptance verified end-to-end (Stage 1+2+3)**: 🎯 **Глобино-2 / Source=ERP_Income / Period=2026-02-01 / Sum_ERP_Grn = 38 432 968.66 ₴** (точно ± 0.01) — pytest `tests/test_etl_acceptance_globyno2.py` PASS після `python main.py` (одна команда, без аргументів).
@@ -113,11 +113,13 @@
 └────────────┬──────────────────────────────────────────────────┘
              │ Sql.Database("localhost","OlapBASERP") — sa auth
              ▼
-┌─ ШАР 4: POWER BI (Stage 4, ⏳) ──────────────────────────────┐
-│ PnL.pbix      — 14 таблиць, ~70 DAX, 6 сторінок,             │
-│                 слайсер Source (8) + 5 рівнів маржі          │
-│ Cashflow.pbix —  9 таблиць, ~25 DAX, 5 сторінок,             │
-│                  слайсери Source (3) + CFS_Section (4)       │
+┌─ ШАР 4: POWER BI (Stage 4, 🔄 IN PROGRESS) ──────────────────┐
+│ PL.pbix       — 18 видимих таблиць (15 Dim 1С-нотація + Fact_PnL│
+│                 + Calendar + Table_Measures), 11 зв'язків     │
+│                 Fact→Dim, 0 DAX-мір (TODO).                   │
+│                 Live: _Rarzrabotki/Olap/PowerBi/PL.pbix       │
+│                 Деталі: knowledge_Olap/olap_powerbi_pl_pbix.md │
+│ Cashflow.pbix — TODO; не починали                            │
 └──────────────────────────────────────────────────────────────┘
 ```
 
@@ -134,9 +136,10 @@
 | 5 | [olap_data_sources_erp.md](olap_data_sources_erp.md) | ПОСТІЙНИЙ | DONE | джерела з ERP (регістри/документи/справочники) |
 | 6 | [olap_sql_schema.md](olap_sql_schema.md) | ПОСТІЙНИЙ | DONE | 24 таблиці OlapBASERP, DDL |
 | 7 | [olap_etl_pipeline.md](olap_etl_pipeline.md) | ПОСТІЙНИЙ | DONE | Python ETL Ai_Olap (Stage 3, SQL-first архітектура) |
-| 8 | [olap_powerbi_model.md](olap_powerbi_model.md) | ПОСТІЙНИЙ | PLANNED | DAX-міри, сторінки PBIX (Stage 4) |
-| 9 | [olap_acceptance_etalons.md](olap_acceptance_etalons.md) | ЗМІННИЙ | DONE | еталони verification (оновлюється помісячно) |
-| 10 | [olap_deviations_from_spec.md](olap_deviations_from_spec.md) | ЗМІННИЙ | DONE | фактичні зміни vs spec v3 final |
+| 8 | [olap_powerbi_model.md](olap_powerbi_model.md) | ПОСТІЙНИЙ | PLANNED | DAX-міри, сторінки PBIX (загальна архітектура Stage 4) |
+| 9 | [olap_powerbi_pl_pbix.md](olap_powerbi_pl_pbix.md) | ЗМІННИЙ | IN PROGRESS | реалізація PL.pbix — таблиці, зв'язки, partition'и, TODO |
+| 10 | [olap_acceptance_etalons.md](olap_acceptance_etalons.md) | ЗМІННИЙ | DONE | еталони verification (оновлюється помісячно) |
+| 11 | [olap_deviations_from_spec.md](olap_deviations_from_spec.md) | ЗМІННИЙ | DONE | фактичні зміни vs spec v3 final |
 
 **Тип файлу:**
 - **ПОСТІЙНИЙ** — змінюється рідко (тільки якщо зміна архітектури/коду)
@@ -180,6 +183,7 @@
 - `_Rarzrabotki/Olap/Ai_Olap/pipelines/*.json` — 5 декларативних pipeline-конфіги
 - `_Rarzrabotki/Olap/Ai_Olap/tests/` — pytest acceptance + unit tests
 - `_Rarzrabotki/Olap/Ai_Olap/README.md` — quickstart + troubleshooting
+- `_Rarzrabotki/Olap/PowerBi/PL.pbix` — PL дашборд (Stage 4 in-progress)
 
 ---
 
@@ -196,7 +200,8 @@
 | `olap_data_sources_erp.md` | Додавання нового джерельного регістра/документа |
 | `olap_sql_schema.md` | Зміна DDL OlapBASERP (нові таблиці, індекси) |
 | `olap_etl_pipeline.md` | Реалізація Stage 3; правка ETL скриптів |
-| `olap_powerbi_model.md` | Реалізація Stage 4; додавання DAX-мір |
+| `olap_powerbi_model.md` | Реалізація Stage 4; додавання DAX-мір (загальна архітектура) |
+| `olap_powerbi_pl_pbix.md` | Зміна моделі PL.pbix (таблиці, зв'язки, мири, partition'и) |
 | `olap_acceptance_etalons.md` | Кожен новий місяць після проведення документів |
 | `olap_deviations_from_spec.md` | Кожне нове відхилення від spec v3 final |
 
