@@ -51,14 +51,23 @@ class SqlBackendExtractor(Extractor):
         table, field_map = resolve(meta_full)
 
         wanted_1c = cfg.get("fields")
+        strict = bool(cfg.get("strict_fields", False))
         select_cols: list[str] = []
         if wanted_1c:
             for fname in wanted_1c:
                 col = field_map.get(fname)
                 if not col:
-                    raise ExtractionError(
-                        f"{meta_full}: field '{fname}' not in mapping. Known: {list(field_map)[:8]}…"
+                    if strict:
+                        raise ExtractionError(
+                            f"{meta_full}: field '{fname}' not in mapping. Known: {list(field_map)[:8]}…"
+                        )
+                    log.info(
+                        "field absent — skipped",
+                        meta=meta_full,
+                        field=fname,
+                        hint="defaults in column_mapper transformer recommended",
                     )
+                    continue
                 select_cols.append(f'{col} AS "{fname}"')
         else:
             select_cols = [f'{col} AS "{fname}"' for fname, col in field_map.items()]
