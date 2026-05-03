@@ -30,7 +30,8 @@ def transform(
             if src in row:
                 new[dst] = row[src]
         for k, v in defaults.items():
-            new.setdefault(k, v)
+            if new.get(k) is None:
+                new[k] = v
         if keep_extra:
             for k, v in row.items():
                 if k not in column_map:

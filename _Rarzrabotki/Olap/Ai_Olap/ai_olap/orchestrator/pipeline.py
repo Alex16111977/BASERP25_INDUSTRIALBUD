@@ -39,7 +39,11 @@ class Pipeline:
             if extractor_cfg.get("auto_period_params") and self.period:
                 p = self.period
                 next_month = dt.date(p.year + (p.month == 12), (p.month % 12) + 1, 1)
-                extractor_cfg["params"] = [p, next_month]
+                # BaseERP cluster backend stores _Date_Time with +2000 year offset.
+                offset = int(extractor_cfg.get("period_offset_years", 2000))
+                p_db = dt.date(p.year + offset, p.month, p.day)
+                n_db = dt.date(next_month.year + offset, next_month.month, next_month.day)
+                extractor_cfg["params"] = [p_db, n_db]
             extractor = make_extractor(extractor_cfg)
             rows = extractor.extract()
 
