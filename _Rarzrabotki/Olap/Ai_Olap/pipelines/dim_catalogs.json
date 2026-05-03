@@ -1,0 +1,402 @@
+{
+  "pipeline_id": "dim_catalogs",
+  "description": "Full reload of all 16 Dim_* + 1 Bridge from BaseERP (own org KodEDRPOU=40645273 only for Organizations)",
+  "schedule": "0 1 * * *",
+  "steps": [
+    {
+      "step_id": "dim_organizations",
+      "extractor": {
+        "type": "sql_backend",
+        "object": "Справочник.Организации",
+        "fields": ["Ссылка", "Наименование", "ПометкаУдаления"],
+        "where": "_Fld32799 = '40645273'"
+      },
+      "transformer": {
+        "steps": ["varbinary_to_uuid", "column_mapper"],
+        "options": {
+          "column_mapper": {
+            "column_map": {
+              "Ссылка": "Organization_ID",
+              "Наименование": "Organization_Name",
+              "ПометкаУдаления": "Marked_For_Deletion"
+            },
+            "defaults": {"Is_Group": false}
+          }
+        }
+      },
+      "loader": {"target_table": "Dim_Organizations", "mode": "full_reload"}
+    },
+    {
+      "step_id": "dim_departments",
+      "extractor": {
+        "type": "sql_backend",
+        "object": "Справочник.СтруктураПредприятия",
+        "fields": ["Ссылка", "Код", "Наименование", "Родитель", "ЭтоГруппа", "ПометкаУдаления"]
+      },
+      "transformer": {
+        "steps": ["varbinary_to_uuid", "column_mapper"],
+        "options": {
+          "column_mapper": {
+            "column_map": {
+              "Ссылка": "Department_ID",
+              "Код": "Department_Code",
+              "Наименование": "Department_Name",
+              "Родитель": "Parent_ID",
+              "ЭтоГруппа": "Is_Group",
+              "ПометкаУдаления": "Marked_For_Deletion"
+            }
+          }
+        }
+      },
+      "loader": {"target_table": "Dim_Departments", "mode": "full_reload"}
+    },
+    {
+      "step_id": "dim_directions",
+      "extractor": {
+        "type": "sql_backend",
+        "object": "Справочник.НаправленияДеятельности",
+        "fields": ["Ссылка", "Код", "Наименование", "Родитель", "ЭтоГруппа", "ПометкаУдаления"]
+      },
+      "transformer": {
+        "steps": ["varbinary_to_uuid", "column_mapper"],
+        "options": {
+          "column_mapper": {
+            "column_map": {
+              "Ссылка": "Direction_ID",
+              "Код": "Direction_Code",
+              "Наименование": "Direction_Name",
+              "Родитель": "Parent_ID",
+              "ЭтоГруппа": "Is_Group",
+              "ПометкаУдаления": "Marked_For_Deletion"
+            }
+          }
+        }
+      },
+      "loader": {"target_table": "Dim_Directions", "mode": "full_reload"}
+    },
+    {
+      "step_id": "dim_counterparties",
+      "extractor": {
+        "type": "sql_backend",
+        "object": "Справочник.Контрагенты",
+        "fields": ["Ссылка", "Наименование", "ПометкаУдаления"]
+      },
+      "transformer": {
+        "steps": ["varbinary_to_uuid", "column_mapper"],
+        "options": {
+          "column_mapper": {
+            "column_map": {
+              "Ссылка": "Counterparty_ID",
+              "Наименование": "Counterparty_Name",
+              "ПометкаУдаления": "Marked_For_Deletion"
+            },
+            "defaults": {"Is_Group": false}
+          }
+        }
+      },
+      "loader": {"target_table": "Dim_Counterparties", "mode": "full_reload"}
+    },
+    {
+      "step_id": "dim_contracts",
+      "extractor": {
+        "type": "sql_backend",
+        "object": "Справочник.ДоговорыКонтрагентов",
+        "fields": ["Ссылка", "Наименование", "Контрагент", "ПометкаУдаления"]
+      },
+      "transformer": {
+        "steps": ["varbinary_to_uuid", "column_mapper"],
+        "options": {
+          "column_mapper": {
+            "column_map": {
+              "Ссылка": "Contract_ID",
+              "Наименование": "Contract_Name",
+              "Контрагент": "Counterparty_ID",
+              "ПометкаУдаления": "Marked_For_Deletion"
+            }
+          }
+        }
+      },
+      "loader": {"target_table": "Dim_Contracts", "mode": "full_reload"}
+    },
+    {
+      "step_id": "dim_items",
+      "extractor": {
+        "type": "sql_backend",
+        "object": "Справочник.Номенклатура",
+        "fields": ["Ссылка", "Код", "Наименование", "Родитель", "ЭтоГруппа", "ПометкаУдаления"]
+      },
+      "transformer": {
+        "steps": ["varbinary_to_uuid", "column_mapper"],
+        "options": {
+          "column_mapper": {
+            "column_map": {
+              "Ссылка": "Item_ID",
+              "Код": "Item_Code",
+              "Наименование": "Item_Name",
+              "Родитель": "Parent_ID",
+              "ЭтоГруппа": "Is_Group",
+              "ПометкаУдаления": "Marked_For_Deletion"
+            }
+          }
+        }
+      },
+      "loader": {"target_table": "Dim_Items", "mode": "full_reload"}
+    },
+    {
+      "step_id": "dim_item_groups",
+      "extractor": {
+        "type": "sql_backend",
+        "object": "Справочник.ГруппыФинансовогоУчетаНоменклатуры",
+        "fields": ["Ссылка", "Наименование", "Родитель", "ЭтоГруппа", "ПометкаУдаления"]
+      },
+      "transformer": {
+        "steps": ["varbinary_to_uuid", "column_mapper"],
+        "options": {
+          "column_mapper": {
+            "column_map": {
+              "Ссылка": "ItemGroup_ID",
+              "Наименование": "ItemGroup_Name",
+              "Родитель": "Parent_ID",
+              "ЭтоГруппа": "Is_Group",
+              "ПометкаУдаления": "Marked_For_Deletion"
+            }
+          }
+        }
+      },
+      "loader": {"target_table": "Dim_ItemGroups", "mode": "full_reload"}
+    },
+    {
+      "step_id": "dim_individuals",
+      "extractor": {
+        "type": "sql_backend",
+        "object": "Справочник.ФизическиеЛица",
+        "fields": ["Ссылка", "Наименование", "ПометкаУдаления"]
+      },
+      "transformer": {
+        "steps": ["varbinary_to_uuid", "column_mapper"],
+        "options": {
+          "column_mapper": {
+            "column_map": {
+              "Ссылка": "Individual_ID",
+              "Наименование": "Individual_Name",
+              "ПометкаУдаления": "Marked_For_Deletion"
+            },
+            "defaults": {"Is_Group": false}
+          }
+        }
+      },
+      "loader": {"target_table": "Dim_Individuals", "mode": "full_reload"}
+    },
+    {
+      "step_id": "dim_users",
+      "extractor": {
+        "type": "sql_backend",
+        "object": "Справочник.Пользователи",
+        "fields": ["Ссылка", "Наименование", "ПометкаУдаления"]
+      },
+      "transformer": {
+        "steps": ["varbinary_to_uuid", "column_mapper"],
+        "options": {
+          "column_mapper": {
+            "column_map": {
+              "Ссылка": "User_ID",
+              "Наименование": "User_Name",
+              "ПометкаУдаления": "Marked_For_Deletion"
+            },
+            "defaults": {"Is_Group": false}
+          }
+        }
+      },
+      "loader": {"target_table": "Dim_Users", "mode": "full_reload"}
+    },
+    {
+      "step_id": "dim_bank_accounts",
+      "extractor": {
+        "type": "sql_backend",
+        "object": "Справочник.БанковскиеСчетаОрганизаций",
+        "fields": ["Ссылка", "Наименование", "ПометкаУдаления"]
+      },
+      "transformer": {
+        "steps": ["varbinary_to_uuid", "column_mapper"],
+        "options": {
+          "column_mapper": {
+            "column_map": {
+              "Ссылка": "BankAccount_ID",
+              "Наименование": "BankAccount_Name",
+              "ПометкаУдаления": "Marked_For_Deletion"
+            },
+            "defaults": {"Account_Type": "Bank", "Is_Group": false}
+          }
+        }
+      },
+      "loader": {"target_table": "Dim_BankAccounts", "mode": "full_reload"}
+    },
+    {
+      "step_id": "dim_currencies",
+      "extractor": {
+        "type": "sql_backend",
+        "object": "Справочник.Валюты",
+        "fields": ["Ссылка", "Код", "Наименование", "ПометкаУдаления"]
+      },
+      "transformer": {
+        "steps": ["varbinary_to_uuid", "column_mapper"],
+        "options": {
+          "column_mapper": {
+            "column_map": {
+              "Ссылка": "Currency_ID",
+              "Код": "Currency_Code",
+              "Наименование": "Currency_Name",
+              "ПометкаУдаления": "Marked_For_Deletion"
+            },
+            "defaults": {"Is_Group": false}
+          }
+        }
+      },
+      "loader": {"target_table": "Dim_Currencies", "mode": "full_reload"}
+    },
+    {
+      "step_id": "dim_dds_articles",
+      "extractor": {
+        "type": "sql_backend",
+        "object": "Справочник.СтатьиДвиженияДенежныхСредств",
+        "fields": ["Ссылка", "Код", "Наименование", "Родитель", "ЭтоГруппа", "ПометкаУдаления", "А_РазделCFS"]
+      },
+      "transformer": {
+        "steps": ["varbinary_to_uuid", "enum_resolver", "column_mapper"],
+        "options": {
+          "enum_resolver": {"column_to_enum": {"А_РазделCFS": "Перечисление.А_РазделыCFS"}},
+          "column_mapper": {
+            "column_map": {
+              "Ссылка": "DDS_Article_ID",
+              "Код": "DDS_Article_Code",
+              "Наименование": "DDS_Article_Name",
+              "Родитель": "Parent_ID",
+              "ЭтоГруппа": "Is_Group",
+              "ПометкаУдаления": "Marked_For_Deletion",
+              "А_РазделCFS": "CFS_Section"
+            }
+          }
+        }
+      },
+      "loader": {"target_table": "Dim_DDS_Articles", "mode": "full_reload"}
+    },
+    {
+      "step_id": "dim_expense_articles",
+      "extractor": {
+        "type": "sql_backend",
+        "object": "ПланВидовХарактеристик.СтатьиРасходов",
+        "fields": ["Ссылка", "Код", "Наименование", "Родитель", "ЭтоГруппа", "ПометкаУдаления"]
+      },
+      "transformer": {
+        "steps": ["varbinary_to_uuid", "column_mapper"],
+        "options": {
+          "column_mapper": {
+            "column_map": {
+              "Ссылка": "Expense_Article_ID",
+              "Код": "Expense_Article_Code",
+              "Наименование": "Expense_Article_Name",
+              "Родитель": "Parent_ID",
+              "ЭтоГруппа": "Is_Group",
+              "ПометкаУдаления": "Marked_For_Deletion"
+            }
+          }
+        }
+      },
+      "loader": {"target_table": "Dim_Expense_Articles", "mode": "full_reload"}
+    },
+    {
+      "step_id": "dim_income_articles",
+      "extractor": {
+        "type": "sql_backend",
+        "object": "ПланВидовХарактеристик.СтатьиДоходов",
+        "fields": ["Ссылка", "Код", "Наименование", "Родитель", "ЭтоГруппа", "ПометкаУдаления"]
+      },
+      "transformer": {
+        "steps": ["varbinary_to_uuid", "column_mapper"],
+        "options": {
+          "column_mapper": {
+            "column_map": {
+              "Ссылка": "Income_Article_ID",
+              "Код": "Income_Article_Code",
+              "Наименование": "Income_Article_Name",
+              "Родитель": "Parent_ID",
+              "ЭтоГруппа": "Is_Group",
+              "ПометкаУдаления": "Marked_For_Deletion"
+            }
+          }
+        }
+      },
+      "loader": {"target_table": "Dim_Income_Articles", "mode": "full_reload"}
+    },
+    {
+      "step_id": "dim_pl_articles",
+      "extractor": {
+        "type": "sql_backend",
+        "object": "Справочник.А_Статьи_PL",
+        "fields": ["Ссылка", "Код", "Наименование", "Родитель", "ЭтоГруппа", "ПометкаУдаления", "Группа"]
+      },
+      "transformer": {
+        "steps": ["varbinary_to_uuid", "column_mapper"],
+        "options": {
+          "column_mapper": {
+            "column_map": {
+              "Ссылка": "PL_Article_ID",
+              "Код": "PL_Article_Code",
+              "Наименование": "PL_Article_Name",
+              "Родитель": "Parent_ID",
+              "ЭтоГруппа": "Is_Group",
+              "ПометкаУдаления": "Marked_For_Deletion",
+              "Группа": "Group_ID"
+            }
+          }
+        }
+      },
+      "loader": {"target_table": "Dim_PL_Articles", "mode": "full_reload"}
+    },
+    {
+      "step_id": "dim_pl_article_groups",
+      "extractor": {
+        "type": "sql_backend",
+        "object": "Справочник.А_ГруппаСтатей_PL",
+        "fields": ["Ссылка", "Код", "Наименование", "Родитель", "ЭтоГруппа", "ПометкаУдаления"]
+      },
+      "transformer": {
+        "steps": ["varbinary_to_uuid", "column_mapper"],
+        "options": {
+          "column_mapper": {
+            "column_map": {
+              "Ссылка": "PL_Group_ID",
+              "Код": "PL_Group_Code",
+              "Наименование": "PL_Group_Name",
+              "Родитель": "Parent_ID",
+              "ЭтоГруппа": "Is_Group",
+              "ПометкаУдаления": "Marked_For_Deletion"
+            }
+          }
+        }
+      },
+      "loader": {"target_table": "Dim_PL_ArticleGroups", "mode": "full_reload"}
+    },
+    {
+      "step_id": "bridge_pl_dds",
+      "extractor": {
+        "type": "sql_backend",
+        "object": "Справочник.А_Статьи_PL",
+        "fields": ["Ссылка", "СтатьяДвиженияДенежныхСредств"],
+        "where": "_Folder = 0x00 AND _Marked = 0x00 AND _Fld55816RRef <> 0x00000000000000000000000000000000"
+      },
+      "transformer": {
+        "steps": ["varbinary_to_uuid", "column_mapper"],
+        "options": {
+          "column_mapper": {
+            "column_map": {
+              "Ссылка": "PL_Article_ID",
+              "СтатьяДвиженияДенежныхСредств": "DDS_Article_ID"
+            }
+          }
+        }
+      },
+      "loader": {"target_table": "PLArticle_DDS", "mode": "full_reload"}
+    }
+  ]
+}
