@@ -39,7 +39,7 @@ def main():
     conn = connect_erp()
     mgr = conn.Справочники.А_Статьи_PL
 
-    created = found = locked = 0
+    created = found = locked = skipped_no_dds = 0
     for a in articles:
         ref = mgr.НайтиПоНаименованию(a["name"], True)
         if ref and not ref.Пустая():
@@ -55,6 +55,16 @@ def main():
             is_new = False
             found += 1
         else:
+            # Расходная статья без ДДС в маппинге не запишется — платформенный гард
+            # ПередЗаписью требует обязательную ДДС в шапке для типа Расход.
+            # Пропускаем создание; финансист должен вручную создать в 1С,
+            # подобрать ДДС и поставить галку «Ручная корректировка».
+            t = a.get("type_statii") or "Расход"
+            if t == "Расход" and not dds_by_pl.get(a["name"]):
+                skipped_no_dds += 1
+                print(f"  SKIP-NEW {a['name']!r} (новая, тип={t}, ДДС не подобран)"
+                      f" — создайте вручную в 1С")
+                continue
             obj = mgr.СоздатьЭлемент()
             obj.Наименование = a["name"]
             is_new = True
@@ -94,7 +104,17 @@ def main():
             except Exception as ex:
                 print(f"  WARN: не удалось установить ТипСтатьи={t!r} у {a['name']!r}: {ex}")
 
-        obj.Записать()
+        try:
+            obj.Записать()
+        except Exception as ex:
+            msg = str(ex)
+            # Конфликт уникальности ДДС между PL-статьями — пропустить новую статью.
+            if "ДДС не может использоваться одновременно" in msg or "DDS" in msg:
+                skipped_no_dds += 1
+                print(f"  SKIP-CONFLICT {a['name']!r} — ДДС fuzzy-mapping конфликтует с уже"
+                      f" существующей PL-статьёй; создайте вручную")
+                continue
+            raise
         a["uuid"] = ref_uuid(conn, obj.Ссылка)
         marker = "NEW" if is_new else "   "
         suffix = ""
@@ -103,7 +123,7 @@ def main():
         print(f"  {marker} {a['name']}  group={grp_name!r}  dds={len(dds_by_pl.get(a['name'], []))}{suffix}")
 
     src_arts.write_text(json.dumps(arts_data, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"Done. found={found} created={created} locked={locked}. Updated {src_arts}")
+    print(f"Done. found={found} created={created} locked={locked} skipped_no_dds={skipped_no_dds}. Updated {src_arts}")
 
 
 if __name__ == "__main__":

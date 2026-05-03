@@ -1,5 +1,6 @@
 """Parser for PL Excel sheets."""
 import datetime
+import re
 from openpyxl import load_workbook
 from openpyxl.utils import column_index_from_string
 
@@ -7,6 +8,16 @@ import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 import config
+
+
+# Признак строки-комментария финансиста: число + единица валюты в названии
+# (напр. "Кернел кухня - - 4 554 246грн", "ВООЗ 2025 - 3,7 млн грн согл сс").
+# Такие строки НЕ являются статьями каталога — это поясняющие подытоги/комментарии
+# из листов Excel, которые финансист пишет в столбце B.
+_COMMENT_VALUE_RE = re.compile(
+    r"\d[\d\s ,.\-]*\s*(грн|тыс|млн|тис)\b",
+    re.IGNORECASE,
+)
 
 
 def _col_idx(letter):
@@ -67,6 +78,12 @@ def classify_row(article: str) -> str:
     for kw in config.TOTAL_ROW_KEYWORDS:
         if kw.lower() in s.lower():
             return "summary"
+    # Комментарий финансиста с числом и единицей валюты в названии — не статья.
+    if _COMMENT_VALUE_RE.search(s):
+        return "summary"
+    # Явные подгруппы/комментарии финансиста (точное имя без чисел).
+    if s_norm in {_norm_name(x) for x in getattr(config, "EXTRA_COMMENT_NAMES", set())}:
+        return "summary"
     return "detail"
 
 
