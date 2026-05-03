@@ -48,6 +48,25 @@ def find_doc_by_file(conn, excel_path):
     return _find_doc_by_period(conn, excel_path)
 
 
+def create_doc_for_period(conn, excel_path):
+    """Создать новый А_РасшифровкаЛистов на конец месяца excel_file (12:00:00).
+
+    Используется в --month режиме когда документа для месяца нет.
+    Возвращает Ссылку на свежесозданный документ (с пустой ТЧ Расшифровка).
+    """
+    ef = next((e for e in config.EXCEL_FILES if e["path"] == excel_path), None)
+    if not ef:
+        raise RuntimeError(f"excel_path '{excel_path}' не найден в config.EXCEL_FILES")
+    y, m, d = map(int, ef["period"].split("-"))
+    dt = datetime(y, m, d, 12, 0, 0)
+    obj = conn.Документы.А_РасшифровкаЛистов.СоздатьДокумент()
+    obj.Дата = dt
+    obj.ИмяФайла = excel_path
+    obj.Записать()  # без проведения; ТЧ Расшифровка пустая, наполнит fill_rasshifrovka()
+    print(f"  [CREATE] Документ А_РасшифровкаЛистов создан: №{str(obj.Номер).strip()} от {dt}")
+    return obj.Ссылка
+
+
 def _find_doc_by_period(conn, excel_path):
     ef = next((e for e in config.EXCEL_FILES if e["path"] == excel_path), None)
     if not ef:
@@ -156,10 +175,17 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--dry-run", action="store_true",
                     help="Напечатать план заполнения без модификации базы.")
+    ap.add_argument("--month", default=None,
+                    help="Опционально: YYYY-MM. Обрабатывать только Excel-файлы этого месяца. "
+                         "Если документа А_РасшифровкаЛистов для месяца нет — создать.")
     args = ap.parse_args()
 
     mode = "DRY-RUN" if args.dry_run else "LIVE"
-    print(f"=== Режим: {mode} ===\n")
+    month_filter = args.month
+    if month_filter:
+        print(f"=== Режим: {mode}, месяц: {month_filter} ===\n")
+    else:
+        print(f"=== Режим: {mode} (все месяцы из config.EXCEL_FILES) ===\n")
 
     conn = connect_erp()
     mapping_raw = json.loads(
@@ -170,13 +196,21 @@ def main():
     entries = []
     for ef in config.EXCEL_FILES:
         path, label = ef["path"], ef["label"]
+        if month_filter and not ef["period"].startswith(month_filter):
+            continue
         print(f"\n--- {label} ---")
         visible, hidden = read_visible_and_hidden(path)
         print(f"  Листов видимых: {len(visible)}, скрытых (пропущены): {len(hidden)}")
 
         doc_ref = find_doc_by_file(conn, path)
         if not doc_ref:
-            raise RuntimeError(f"Документ для '{path}' не найден (ни по basename, ни по дате)")
+            if month_filter and not args.dry_run:
+                doc_ref = create_doc_for_period(conn, path)
+            elif month_filter and args.dry_run:
+                print(f"  [DRY-RUN] Документ для '{path}' не найден — был бы создан")
+                continue
+            else:
+                raise RuntimeError(f"Документ для '{path}' не найден (ни по basename, ни по дате)")
         print(f"  Документ: UUID={uuid_str(conn, doc_ref)}")
 
         backup_file = backup_existing_rows(conn, doc_ref, config.JSON_DIR)
@@ -205,7 +239,12 @@ def main():
             "backup_file": backup_file.name if backup_file else None,
         })
 
+    if not entries:
+        print(f"\n[!] Не обработано ни одного файла. month_filter={month_filter!r}.")
+        return
     suffix = "_dryrun" if args.dry_run else ""
+    if month_filter:
+        suffix += f"_{month_filter}"
     out = config.JSON_DIR / f"13_fill_rasshifrovka_log{suffix}.json"
     out.write_text(
         json.dumps({"run_at": datetime.now().isoformat(), "mode": mode,

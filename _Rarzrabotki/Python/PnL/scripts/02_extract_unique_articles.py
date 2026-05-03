@@ -18,12 +18,15 @@ def main():
     src = config.JSON_DIR / "01_raw_sheets.json"
     data = json.loads(src.read_text(encoding="utf-8"))
 
-    # 1) Collect per raw name
+    # Алиасы Excel-имён → каноничное имя (исправление опечаток).
+    aliases = {k: v for k, v in getattr(config, "ARTICLE_NAME_ALIASES", {}).items()}
+
+    # 1) Collect per raw name (с применением алиасов)
     raw = defaultdict(lambda: {"occurrences": 0, "sample_sheets": set(), "groups": set(), "periods": set()})
     for period in data:
         for sh in period["sheets"]:
             for r in sh["rows"]:
-                name = r["article"]
+                name = aliases.get(r["article"], r["article"])
                 raw[name]["occurrences"] += 1
                 if len(raw[name]["sample_sheets"]) < 5:
                     raw[name]["sample_sheets"].add(sh["sheet_name"])

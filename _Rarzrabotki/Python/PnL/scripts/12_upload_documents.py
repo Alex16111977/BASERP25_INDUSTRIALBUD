@@ -55,11 +55,17 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--limit", type=int, default=None)
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--month", default=None,
+                    help="Опционально: YYYY-MM. Загружать только документы с date, начинающейся с указанного префикса.")
     args = ap.parse_args()
 
     src = config.JSON_DIR / "08_documents_to_import.json"
     data = json.loads(src.read_text(encoding="utf-8"))
     docs = data["documents"]
+    if args.month:
+        before = len(docs)
+        docs = [d for d in docs if d.get("date", "").startswith(args.month)]
+        print(f"[FILTER --month={args.month}] {before} -> {len(docs)} документов")
     if args.limit:
         docs = docs[: args.limit]
 

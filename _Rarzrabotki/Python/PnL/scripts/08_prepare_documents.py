@@ -10,6 +10,7 @@
    - Остальные (без подразделения в A_РасшифровкаЛистов) пропускаются.
 4. Записать 08_documents_to_import.json.
 """
+import argparse
 import json
 import sys
 from datetime import datetime
@@ -59,6 +60,14 @@ def load_rasshifrovka_mapping(conn):
 
 
 def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--month", default=None,
+                    help="Опционально: YYYY-MM. Включить в 08_documents_to_import только периоды этого месяца.")
+    args = ap.parse_args()
+    month_filter = args.month
+    if month_filter:
+        print(f"[FILTER] обрабатываем только месяц {month_filter}")
+
     raw = json.loads((config.JSON_DIR / "01_raw_sheets.json").read_text(encoding="utf-8"))
     arts = json.loads((config.JSON_DIR / "02_unique_articles.json").read_text(encoding="utf-8"))["articles"]
     groups = json.loads((config.JSON_DIR / "03_groups_pl.json").read_text(encoding="utf-8"))["groups"]
@@ -68,12 +77,18 @@ def main():
     group_uuid_by_name = {g["name"]: g.get("uuid", "") for g in groups}
     group_uuid_by_norm = {normalize(g["name"]): g.get("uuid", "") for g in groups}
 
-    # Lookup статей по нормализованному имени
+    # Lookup статей по нормализованному имени (с учётом алиасов опечаток из config.py).
+    aliases = getattr(config, "ARTICLE_NAME_ALIASES", {}) or {}
     by_norm = {}
     for a in arts:
         by_norm[normalize(a["name"])] = a
         for v in a.get("variants", []):
             by_norm[normalize(v)] = a
+    # Добавляем нормализованные алиасы как ключи на каноничную статью.
+    for src_name, canon_name in aliases.items():
+        canon_a = next((a for a in arts if a["name"] == canon_name), None)
+        if canon_a:
+            by_norm[normalize(src_name)] = canon_a
 
     # Маппинг из А_РасшифровкаЛистов (источник истины)
     print("Читаем Документ.А_РасшифровкаЛистов (маппинг из 1С)...")
@@ -90,6 +105,8 @@ def main():
 
     for period in raw:
         date_iso = period["period"]
+        if month_filter and not date_iso.startswith(month_filter):
+            continue
         # ИСКАТЬ ПО ДАТЕ — Excel period ("2025-12-31") должен совпадать с датой А_Расшифровки.
         if date_iso not in rasshifrovka:
             print(f"  WARN: период {date_iso} не имеет А_РасшифровкаЛистов")
