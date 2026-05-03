@@ -1,0 +1,23 @@
+{
+  "pipeline_id": "etl_runs_keepalive",
+  "description": "Daily heartbeat — touches ETL_Runs to confirm scheduler is alive",
+  "schedule": "0 6 * * *",
+  "steps": [
+    {
+      "step_id": "ping",
+      "extractor": {
+        "type": "raw_sql",
+        "raw_sql": "SELECT GETDATE() AS Heartbeat_At"
+      },
+      "transformer": {
+        "steps": ["column_mapper"],
+        "options": {
+          "column_mapper": {
+            "column_map": {"Heartbeat_At": "Heartbeat_At"}
+          }
+        }
+      },
+      "loader": {"target_table": "ETL_Runs", "mode": "append"}
+    }
+  ]
+}

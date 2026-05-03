@@ -35,7 +35,12 @@ class Pipeline:
             sid = step["step_id"]
             log.info("step start", pipeline=self.pipeline_id, step=sid)
 
-            extractor = make_extractor(step["extractor"])
+            extractor_cfg = dict(step["extractor"])
+            if extractor_cfg.get("auto_period_params") and self.period:
+                p = self.period
+                next_month = dt.date(p.year + (p.month == 12), (p.month % 12) + 1, 1)
+                extractor_cfg["params"] = [p, next_month]
+            extractor = make_extractor(extractor_cfg)
             rows = extractor.extract()
 
             xform = step.get("transformer") or {}

@@ -1,0 +1,35 @@
+{
+  "pipeline_id": "fact_cf_balance",
+  "description": "Cashflow opening/closing balances per BankAccount via 1С virtual table .ОстаткиИОбороты (COM)",
+  "schedule": "0 3 1 * *",
+  "steps": [
+    {
+      "step_id": "balance",
+      "extractor": {
+        "type": "com",
+        "com_query": "ВЫБРАТЬ Остатки.БанковскийСчет.УникальныйИдентификатор() КАК BankAccount_ID, Остатки.СуммаНачальныйОстаток КАК Sum_Grn_Open, Остатки.СуммаКонечныйОстаток КАК Sum_Grn_Close, Остатки.СуммаПриход КАК Sum_Grn_Inflow, Остатки.СуммаРасход КАК Sum_Grn_Outflow ИЗ РегистрНакопления.ДенежныеСредстваБезналичные.ОстаткиИОбороты(&НачалоПериода, &КонецПериода, , , Организация = &Организация) КАК Остатки",
+        "params": {"Организация": null}
+      },
+      "transformer": {
+        "steps": ["column_mapper"],
+        "options": {
+          "column_mapper": {
+            "column_map": {
+              "BankAccount_ID": "BankAccount_ID",
+              "Sum_Grn_Open": "Sum_Grn_Open",
+              "Sum_Grn_Close": "Sum_Grn_Close",
+              "Sum_Grn_Inflow": "Sum_Grn_Inflow",
+              "Sum_Grn_Outflow": "Sum_Grn_Outflow"
+            },
+            "defaults": {"Account_Type": "Bank"}
+          }
+        }
+      },
+      "loader": {
+        "target_table": "Fact_CF_Balance",
+        "mode": "idempotent_period",
+        "period_column": "Period_Month"
+      }
+    }
+  ]
+}
