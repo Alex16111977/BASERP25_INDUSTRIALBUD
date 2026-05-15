@@ -1,0 +1,43 @@
+{
+  "pipeline_id": "dim_pap_articles",
+  "description": "Dim_PAP_Articles з ПланВидовХарактеристик.СтатьиАктивовПассивов (_Chrc1770) + реквізит АктивПассив (Aktiv/Passiv/AktivPassiv) для розрізу балансу (канон OD-9). Дзеркало dim_income_articles + enum_resolver як dim_dds_articles.",
+  "schedule": "0 1 * * *",
+  "steps": [
+    {
+      "step_id": "load",
+      "extractor": {
+        "type": "raw_sql",
+        "sql": "SELECT d._IDRRef AS Ссылка, d._Code AS Код, d._Description AS Наименование, d._ParentIDRRef AS Родитель, d._Folder AS ЭтоГруппа, d._Marked AS ПометкаУдаления, d._Fld53725RRef AS АктивПассив FROM _Chrc1770 d UNION ALL SELECT CAST(0x00000000000000000000000000000001 AS varbinary(16)), '00-UNK', N'(Пусто)', CAST(0x00000000000000000000000000000000 AS varbinary(16)), CAST(0x00 AS varbinary(1)), CAST(0x00 AS varbinary(1)), CAST(0x00000000000000000000000000000000 AS varbinary(16))"
+      },
+      "transformer": {
+        "steps": ["varbinary_to_uuid", "enum_resolver", "column_mapper"],
+        "options": {
+          "enum_resolver": {
+            "column_to_enum": {
+              "АктивПассив": "Перечисление.ВидыСтатейУправленческогоБаланса"
+            }
+          },
+          "column_mapper": {
+            "column_map": {
+              "Ссылка": "PAP_Article_ID",
+              "Код": "PAP_Article_Code",
+              "Наименование": "PAP_Article_Name",
+              "Родитель": "Parent_ID",
+              "ЭтоГруппа": "Is_Group",
+              "ПометкаУдаления": "Marked_For_Deletion",
+              "АктивПассив": "AktivPassiv"
+            },
+            "defaults": {
+              "Is_Group": false,
+              "Marked_For_Deletion": false
+            }
+          }
+        }
+      },
+      "loader": {
+        "target_table": "Dim_PAP_Articles",
+        "mode": "full_reload"
+      }
+    }
+  ]
+}
