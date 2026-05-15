@@ -445,3 +445,38 @@ WHERE D.Department_Name = N'Глобино-2'
 - Архітектурні принципи: [olap_architecture_overview.md](olap_architecture_overview.md)
 - Live код: [`_Rarzrabotki/Olap/Ai_Olap/`](../../Olap/Ai_Olap/)
 - README з quickstart: [`Ai_Olap/README.md`](../../Olap/Ai_Olap/README.md)
+
+---
+
+## Balance Stage (2026-05-16) — pipelines fact_balance + dim_pap_articles
+
+Два нові декларативні pipeline (дзеркало fact_cashflow / dim_income_articles):
+
+| pipeline | джерело SQL backend | loader | rows (січ.2026/ТОВ) |
+|---|---|---|---|
+| `pipelines/dim_pap_articles.json` | `_Chrc1770` (ПВХ.СтатьиАктивовПассивов) + enum_resolver АктивПассив→`_Enum1172` | full_reload | 54 |
+| `pipelines/fact_balance.json` | `_InfoRg56091` r INNER JOIN `_Document56084` d ON d._IDRRef=r._RecorderRRef | idempotent_period (Period_Month) | 11 561 |
+
+**Rule #-1 (discovery-first):** перед raw_sql ОБОВ'ЯЗКОВО resolve `_InfoRg/_Fld`
+через `mapping/refresh_mapping.py`. WHITELIST +5: `РегистрСведений.А_ОтчетБаланс_Свод`,
+`Документ.А_ФинРез_Баланс`, `ПланВидовХарактеристик.СтатьиАктивовПассивов`,
+`Перечисление.А_ИсточникБаланса`, `Перечисление.ВидыСтатейУправленческогоБаланса`.
+`enum_resolver.FROZEN_ENUMS` +2: `А_ИсточникБаланса` (7, Cyrillic Names як
+fact_cashflow), `ВидыСтатейУправленческогоБаланса` (3, ASCII Aktiv/Passiv/AktivPassiv
+— референсуються DAX-ами PL.pbix + varchar(15)). baserp_storage.json: 74→**80**
+об'єктів (additive — cashflow/PnL не зачеплені).
+`scripts/introspect_balance_fields.py` — дамп resolved _Fld + additive-guard.
+
+resolved (джерело істини raw_sql): Source `_Fld56104RRef`, Орг `_Fld56092RRef`,
+Стаття `_Fld56095RRef`, ДенСр `_Fld56124_RRRef` (composite), НачОст `_Fld56122`,
+Приход `_Fld56119`, Расход `_Fld56120`, КонОст `_Fld56106`, Регистратор
+`_RecorderRRef`; Period з `_Document56084._Date_Time` (реєстратор-підпорядкований
+регістр — власного Періоду немає). Фільтр власна орг `0x80D3...36B2`.
+
+**Запуск:** `python main.py --run-once dim_pap_articles` →
+`python main.py --run-once fact_balance --period 2026-01` (venv `.venv/Scripts/python.exe`).
+
+**Acceptance** `tests/test_etl_acceptance_balance.py` (PASS): Σ Fact_Balance.Sum_Close
+по PAP_Article == ПАП `ОстаткиИОбороты` (січень/ТОВ, виключення 3 груп як Етап4)
+до копійки (ОТ tol 1.0); Σ Sum_Close ≈ 0 (Актив=Пасив). Канон-регрес
+`tests/test_etl_acceptance_globyno2.py` (PnL) PASS.

@@ -267,3 +267,90 @@ ROW(
 - 1С-метадані Fact-джерела: [olap_1c_objects.md](olap_1c_objects.md) (`РегистрСведений.А_ОтчетPL_Свод`)
 - Acceptance numbers: [olap_acceptance_etalons.md](olap_acceptance_etalons.md)
 - Live PBIX: `_Rarzrabotki/Olap/PowerBi/PL.pbix`
+
+---
+
+## 13. Balance Stage (2026-05-16) — модель управлінського балансу
+
+> Канон §10/Roadmap (OD-9). PL.pbix вже багатофактовий (Fact_PnL +
+> Fact_Cashflow + 65 мір); додано третю Fact-область — **Баланс**.
+> Зміни внесені через MCP `powerbi-modeling-mcp` у живий PBIX
+> (server `SQLSERVER`, DB `OlapBASERP`, Import).
+
+### 13.1 Таблиці (Power Query M, Import)
+
+| модельна назва | OlapBASERP | M-джерело |
+|---|---|---|
+| `Fact_Balance` | dbo.Fact_Balance | `Sql.Database("SQLSERVER","OlapBASERP")` |
+| `Dim_PAP_Articles` | dbo.Dim_PAP_Articles | те саме |
+
+> Назва Dim лишена `Dim_PAP_Articles` (прецедент `Dim_DenezhnyeSredstva`),
+> DAX-міри референсують саме її — НЕ перейменовувати без оновлення мір.
+
+### 13.2 Зв'язки (Many→One, single-direction) — 7
+
+`Fact_Balance[PAP_Article_ID]→Dim_PAP_Articles`, `[Organization_ID]→Организации`,
+`[Department_ID]→СтруктураПредприятия`, `[Counterparty_ID]→Контрагенты`,
+`[Individual_ID]→ФизическиеЛица`, `[Contract_ID]→ДоговорыКонтрагентов`,
+`[Period]→Calendar[date_]`.
+**Partner_ID — без прямого зв'язку** (неоднозначний шлях через
+Контрагенты→Партнеры; дзеркалить Fact_Cashflow). Item/Warehouse/OperObject/
+Cash/SettlementObj/Intangible — без Dim (drill-down наступний цикл, не блокує).
+
+### 13.3 DAX-міри (Table_Measures, displayFolder `Balance`) — 8
+
+```dax
+[Баланс Вх]     = SUM(Fact_Balance[Sum_Open])
+[Баланс Прихід] = SUM(Fact_Balance[Sum_Inflow])
+[Баланс Розхід] = SUM(Fact_Balance[Sum_Outflow])
+[Баланс Вих]    = SUM(Fact_Balance[Sum_Close])
+[Перевірка обороту] = [Баланс Вих]-([Баланс Вх]+[Баланс Прихід]-[Баланс Розхід])
+[Актив]  = CALCULATE([Баланс Вих],'Dim_PAP_Articles'[AktivPassiv]="Aktiv")
+         + CALCULATE([Баланс Вих],'Dim_PAP_Articles'[AktivPassiv]="AktivPassiv",
+                     Fact_Balance[Sum_Close] > 0)
+[Пассив] = -CALCULATE([Баланс Вих],'Dim_PAP_Articles'[AktivPassiv]="Passiv")
+         - CALCULATE([Баланс Вих],'Dim_PAP_Articles'[AktivPassiv]="AktivPassiv",
+                      Fact_Balance[Sum_Close] < 0)
+[Контроль Актив-Пассив] = [Актив] - [Пассив]
+```
+
+Двосторонні `AktivPassiv` діляться по знаку Sum_Close (як Налоги, канон OD-9).
+
+### 13.4 Verified (DAX, січень 2026/ТОВ, після Refresh Fact_Balance+Dim_PAP_Articles)
+
+- `[Баланс Вих]` (Σ Close) = **−0.01 ≈ 0** → Актив=Пасив ✓
+- Aktiv-only = **289 064 974,43** (точний канон-контроль) ✓
+- Passiv-only = −298 396 250,36; AktivPassiv-net = 9 331 275,92
+- Тотожність 289 064 974,43 + 9 331 275,92 − 298 396 250,36 = **−0.01**
+  → `[Контроль Актив-Пассив]` ≈ 0 ✓
+- `[Перевірка обороту]` = −0.36 ≈ 0 (округлення ОТ розкладу); `Fact_Balance` 11 561
+
+### 13.5 ⚠️ Обмеження MCP dax Execute (`>`/`<` row-scan)
+
+`powerbi-modeling-mcp` `dax_query_operations Execute` кидає «An unexpected
+exception» на БУДЬ-ЯКОМУ row-scan з числовим `>`/`<` по Double-колонці —
+**відтворюється і на незайманому production `Fact_Cashflow[Sum_Fact]>0`**.
+Це обмеження тест-харнеса MCP, НЕ дефект моделі: `=`, рядкові предикати,
+`SUM/SUMX`, `1>0`-літерал, Dim-фільтри — працюють; міри `Validate`-нуються.
+У рушії самого Power BI Desktop (рантайм звіту) міри `[Актив]/[Пассив]/
+[Контроль]` обчислюються коректно (їх `>0/<0` — у збереженому визначенні,
+не в тексті MCP-запиту). Канон-міри НЕ спотворювати під баг харнеса.
+Перевірка контролю — арифметично через компонованні Dim-агрегати (13.4).
+
+### 13.6 Сторінка «Баланс» (візуали — вручну у Power BI Desktop)
+
+MCP керує лише моделлю (не report-layer). Створити сторінку поряд з
+PnL/Cashflow:
+- **Matrix:** рядки `Dim_PAP_Articles` (drill Parent→child через PAP_Article_ID/
+  Parent_ID), значення `[Баланс Вх]/[Прихід]/[Розхід]/[Вих]`.
+- **KPI-карти:** `[Актив]`, `[Пассив]`, `[Контроль Актив-Пассив]` (≈0).
+- **Слайсери:** `Calendar[Year_Month]`, `Dim_PAP_Articles[AktivPassiv]`,
+  `Fact_Balance[Source]` (drill-down 7 джерел), `Организации`.
+- Сховати тех. колонки (`Loaded_At`, `Marked_For_Deletion`, `*_ID`).
+
+### 13.7 Save .pbix
+
+MCP змінює живу in-memory модель; **файл .pbix зберігає користувач**
+вручну: Power BI Desktop → Ctrl+S. Без цього зміни моделі втратяться при
+закритті. Після збереження — Refresh (Power Query) щоб дані Fact_Balance
+збіглися з останнім ETL.

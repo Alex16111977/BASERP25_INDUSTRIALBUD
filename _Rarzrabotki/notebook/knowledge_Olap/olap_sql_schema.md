@@ -444,3 +444,28 @@ ORDER BY TABLE_NAME;
 - Power BI який читає ці таблиці: [olap_powerbi_model.md](olap_powerbi_model.md)
 - Який 1С контент потрапляє у які SQL колонки: [olap_data_sources_erp.md](olap_data_sources_erp.md)
 - Spec v3 §5: `docs/superpowers/specs/2026-05-01-olap-baserp-architecture-design-v3-final.md`
+
+---
+
+## Balance Stage (2026-05-16) — Fact_Balance + Dim_PAP_Articles
+
+Канон §10/Roadmap (OD-9). Джерело: `РегистрСведений.А_ОтчетБаланс_Свод`
+(Етапи 1-4 свёртки в 1С, ETL лише копіює). Таблиць OlapBASERP: **24 → 26**.
+
+DDL: `_Rarzrabotki/Python/Olap/ddl/07_balance.sql` (applier `apply_07_balance.py`,
+ідемпотентно `IF OBJECT_ID IS NULL`).
+
+**`Fact_Balance`** (26 кол.): `Balance_ID bigint IDENTITY PK`, `Period_Month date`,
+`Period datetime2`, `Source varchar(40)` (enum А_ИсточникБаланса, 7 знач.),
+`Recorder_Balance_ID char(32)` (Док.А_ФинРез_Баланс); 13 dim `char(32)`
+(Organization/Department/PAP_Article/Item/Counterparty/Partner/Warehouse/
+OperObject/Contract/Individual/Cash/SettlementObj/Intangible); `Analytics1..3
+nvarchar(150)`; 4 ресурси `decimal(15,2)` `Sum_Open/Inflow/Outflow/Close`;
+`Loaded_At`; 4 індекси (Period_Source, Article, Individual, SettlementObj).
+
+**`Dim_PAP_Articles`** (ПВХ.СтатьиАктивовПассивов): `PAP_Article_ID char(32) PK`,
+`PAP_Article_Code`, `PAP_Article_Name nvarchar(150)`, `Parent_ID`, `Is_Group bit`,
+`AktivPassiv varchar(15)` (Aktiv/Passiv/AktivPassiv — реквізит АктивПассив, OD-9),
+`Marked_For_Deletion bit`, `Loaded_At`.
+
+Row counts (live, січень 2026/ТОВ): `Fact_Balance` 11 561, `Dim_PAP_Articles` 54.

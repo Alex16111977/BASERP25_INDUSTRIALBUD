@@ -18,7 +18,7 @@
 | **Основний repo** | `C:\Configuration_downloads\BASERP25\` |
 | **Stage 3 код** | `_Rarzrabotki/Olap/Ai_Olap/` (SQL-first Python ETL) |
 | **База знань створена** | 2026-05-03 |
-| **Останнє оновлення** | 2026-05-03 (Stage 3 done) |
+| **Останнє оновлення** | 2026-05-16 (Balance Stage done — Fact_Balance + PL.pbix модель балансу) |
 
 ## Поточний стан проекту
 
@@ -28,9 +28,12 @@
 | **Stage 2** | SQL DDL OlapBASERP — 24 таблиці | ✅ DONE | `df732a73f` | 2026-05-02 → 03 |
 | **Stage 3** | Python ETL Ai_Olap (SQL-first; 16 Dim + Bridge + 2 Fact + scheduler) | ✅ DONE | `8d5ebf3a1` | 2026-05-03 |
 | **Stage 4** | Power BI PBIX × 2 (PnL + Cashflow) + DAX | 🔄 IN PROGRESS | — | 2026-05-03 PL.pbix модельна частина зібрана |
+| **Balance** | Управлінський баланс OLAP-цикл (Fact_Balance + Dim_PAP_Articles + PL.pbix модель балансу) | ✅ DONE | `7ea6d83c5`+ | 2026-05-16 |
 | **Stage 5** | Windows Task Scheduler 02:00 щоночі | ⏳ PLANNED | — | — |
 
 **Acceptance verified end-to-end (Stage 1+2+3)**: 🎯 **Глобино-2 / Source=ERP_Income / Period=2026-02-01 / Sum_ERP_Grn = 38 432 968.66 ₴** (точно ± 0.01) — pytest `tests/test_etl_acceptance_globyno2.py` PASS після `python main.py` (одна команда, без аргументів).
+
+**Acceptance verified (Balance Stage, 2026-05-16)**: 🎯 січень 2026/ТОВ ІНДАСТРІАЛБУД — Σ `Fact_Balance.Sum_Close` по `PAP_Article` == ПАП `ОстаткиИОбороты` до копійки (ОТ tol 1.0); Σ Close ≈ 0 (Актив=Пасив) — pytest `tests/test_etl_acceptance_balance.py` PASS. PL.pbix DAX: Aktiv-only = **289 064 974,43** (точний канон-контроль), `[Контроль Актив-Пассив]` ≈ 0. Деталі: [olap_powerbi_pl_pbix.md](olap_powerbi_pl_pbix.md) §13.
 
 **Stage 3 default mode** (commit `8d5ebf3a1`): `python main.py` без прапорців виконує повний прогон **всіх Dim + всіх періодів Fact** (TRUNCATE + INSERT). Для пер-місячного режиму — `--period YYYY-MM` (idempotent DELETE WHERE + INSERT). Daemon-режим `--scheduled` поки **не** використовуємо — йде ручне тестування.
 
