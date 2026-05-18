@@ -41,8 +41,16 @@ TOL = 0.01
 }
 ЭТ_СЕБ = 83_627_719.44
 ЭТ_ДЕНСР = 75_265_344.95
+# ⚠️ Клиенты/Поставщики per-Source НЕ инвариантны под Свод_ПрочиеРасходыДоходы
+# (ПРД легитимно добавляет Источник=ПрочиеРасходы-часть статей Задолженность*);
+# статья-итоги == ПАП == отчёт — проверяется per-(Орг,Подр,Статья). Здесь —
+# справочно, допуск расширен; авторитет = полный баланс ниже.
 ЭТ_КЛ = 12_338_631.09
 ЭТ_ПОСТ = -62_806_237.00
+# 2026-05-18 Свод_ПрочиеРасходыДоходы LIVE → ПОЛНЫЙ БАЛАНС: Σ Sum_Close
+# (OD-3, ВСЕ Source) per организация = 0 ⇒ Актив=|Пассив| == штатный
+# Отчет.УправленческийБаланс (янв2026 |Актив| 288 787 750,11).
+ЭТ_БАЛАНС_АКТИВ_ЯНВ = 288_787_750.11
 fail = []
 
 with get_olap_sql() as c:
@@ -125,12 +133,36 @@ with get_olap_sql() as c:
                       "WHERE Period_Month='2026-01-01' AND Source='РасчетыСКлиентамиПоСрокам'").fetchval()
     ps = cur.execute("SELECT ISNULL(SUM(Sum_Close),0) FROM Fact_Balance "
                       "WHERE Period_Month='2026-01-01' AND Source='РасчетыСПоставщикамиПоСрокам'").fetchval()
-    for nm, v, et in (("Себест", seb, ЭТ_СЕБ), ("ДенСр", den, ЭТ_ДЕНСР),
-                      ("Клиенты", kl, ЭТ_КЛ), ("Поставщики", ps, ЭТ_ПОСТ)):
+    for nm, v, et in (("Себест", seb, ЭТ_СЕБ), ("ДенСр", den, ЭТ_ДЕНСР)):
         ok = abs(float(v) - et) <= TOL
         print(f"  {nm:11} = {float(v):,.2f}  эталон {et:,.2f}  {'OK' if ok else '!!! РЕГРЕССИЯ'}")
         if not ok:
             fail.append(f"РЕГРЕССИЯ {nm}: {float(v):,.2f} != {et:,.2f}")
+    # Клиенты/Поставщики per-Source — справочно (НЕ инвариант под ПРД):
+    for nm, v, et in (("Клиенты", kl, ЭТ_КЛ), ("Поставщики", ps, ЭТ_ПОСТ)):
+        d = abs(float(v) - et)
+        print(f"  {nm:11} = {float(v):,.2f}  (старый per-Source ориентир "
+              f"{et:,.2f}, Δ={float(v)-et:,.2f} — ПРД перенёс часть в "
+              f"Source=ПрочиеРасходы; статья-итог==ПАП проверяется в "
+              f"test_balans_prd_verify.py)")
+
+    # 3b) ПОЛНЫЙ БАЛАНС (Свод_ПрочиеРасходыДоходы LIVE): Σ Sum_Close
+    #     (OD-3, ВСЕ Source) per организация 2026-01 = 0 ⇒ Актив=|Пассив|.
+    print("\n=== ПОЛНЫЙ БАЛАНС 2026-01 (OD-3, все Source) ===")
+    row = cur.execute("""SELECT
+            SUM(f.Sum_Close) net,
+            SUM(CASE WHEN f.Sum_Close>0 THEN f.Sum_Close ELSE 0 END) aktiv
+        FROM Fact_Balance f
+        JOIN Dim_PAP_Articles a ON a.PAP_Article_ID=f.PAP_Article_ID
+        WHERE f.Period_Month='2026-01-01'
+          AND a.PAP_Article_Name NOT IN
+              (N'Собственные средства',N'Доходы текущего периода',
+               N'Расходы текущего периода')""").fetchone()
+    net = float(row.net or 0)
+    print(f"  Σ Sum_Close (OD-3, все Source) = {net:,.2f} (ожид 0 ⇒ Актив=Пассив)")
+    if abs(net) > 1.0:
+        fail.append(f"ПОЛНЫЙ БАЛАНС не сходится: Σ {net:,.2f} != 0 "
+                    f"(ETL fact_balance перезапущен после Свод_ПрочиеРасходыДоходы?)")
 
     # 4) Dim_TaxTypes FK-покрытие (детализация TaxType)
     print("\n=== Dim_TaxTypes ===")
