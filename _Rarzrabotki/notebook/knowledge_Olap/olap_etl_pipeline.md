@@ -538,8 +538,45 @@ resolved (джерело істини raw_sql): Source `_Fld56104RRef`, Орг `
 > `TaxType="ПустаяСсылка"`). Новий ИТОГ `Source=ПустаяСсылка` КО 2026-01 =
 > **−108 631 177,36** (Прямой −101 434 478,92 + ОТ −7 196 698,44, серверно
 > COM). `verify_olap_balance_papdirect.py` еталони оновлені (+«Оплата труда»).
-> ⏳ ETL-прогін очікує дозволу (запис у спільну OlapBASERP — авто-блок);
-> PL.pbix модель НЕ міняється (Refresh Fact_Balance + Ctrl+S).
+> ✅ ETL виконано (3 періоди); `verify_olap_balance_papdirect.py` PASS.
+>
+> **⚙️ 2026-05-18 — `Свод_ПрочиеРасходыДоходы` LIVE → ПОВНИЙ БАЛАНС
+> (БЕЗ змін ETL-конфігів):** Источник∈{ПрочиеДоходы/ПрочиеРасходы/
+> ПартииПрочихРасходов} (FROZEN ИсточникиУправленческогоБаланса 31 —
+> вже є). `fact_balance.json`/`enum_resolver`/Dim НЕ міняються; лише
+> `--run-once fact_balance --period 2025-12|2026-01|2026-02` (дек 7757 /
+> янв 7721 / лют 8319; +Source=ПрочиеРасходы). Регістр Σ Sum_Close (OD-3,
+> ВСІ Source) = **0,00** ⇒ Актив=Пассив == штатний звіт; `verify_olap_
+> balance_papdirect.py` доповнено блоком «ПОЛНЫЙ БАЛАНС» — PASS.
+>
+> **⚙️ 2026-05-18 — вимір `ТипПоказателя` → `Fact_Balance.TipPokazatelya`
+> + `Dim_TipPokazatelya`:** фінансист додав у `А_ОтчетБаланс_Свод` вимір
+> `ТипПоказателя` (`Перечисление.ВидыСтатейУправленческогоБаланса`),
+> заповнюється централізовано в `ПровестиБалансСвод` формулою штатного
+> УпрБаланс (АктивПассив→Пассив; «Налоги»→Пассив). Зміни ETL:
+> - `refresh_mapping.py` перезапущено (ВидыСтатейУправленческогоБаланса +
+>   А_ОтчетБаланс_Свод вже у WHITELIST; `ТипПоказателя`→**`_Fld56131RRef`**
+>   у `baserp_storage.json`);
+> - `enum_resolver.FROZEN_ENUMS["Перечисление.ВидыСтатейУправленческогоБаланса"]`
+>   латиниця→**кирилиця** `["Актив","Пассив","АктивПассив"]` (_EnumOrder
+>   0..2) — конвенція як Source/ТипыНалогов (FK Fact==Dim, seed з 1С COM
+>   Имя); пуста ссилка enum→"ПустаяСсылка" (як TaxType);
+> - `fact_balance.json`: raw_sql += `r._Fld56131RRef AS TipPokazatelya`;
+>   `column_to_enum += "TipPokazatelya":"...ВидыСтатейУправленческогоБаланса"`;
+>   `column_map += "TipPokazatelya":"TipPokazatelya"`;
+> - SQL DDL OlapBASERP: `ALTER TABLE Fact_Balance ADD TipPokazatelya
+>   varchar(50)` + **`Dim_TipPokazatelya`** (4: Актив/Пассив/АктивПассив/
+>   ПустаяСсылка; seed `seed_dim_tip_pokazatelya.py` з 1С метаданих, як
+>   Dim_TaxTypes). ETL 3 періоди. `verify_olap_balance_tippokazatelya.py`
+>   **PASS**: TipPokazatelya 0 NULL, FK→Dim 100%, «Налоги»→Пассив,
+>   ПОЛНЫЙ БАЛАНС по TipPokazatelya дек 278 093 267,32 / янв
+>   288 787 750,11 == штатний звіт.
+> PL.pbix: користувач додав таблицю `ТипПоказателя`; зв'язок
+> `Fact_Balance[TipPokazatelya]→ТипПоказателя[TipPokazatelya]`
+> (Many→One, OneDirection, active) налаштовано через MCP — **видалено
+> ложну авто-зв'язку** `ТипПоказателя[EnumOrder]→ТипыНалогов[EnumOrder]`
+> (Power BI хибно сматчив `EnumOrder`=0,1,2 двох різних Dim). Потрібен
+> Ctrl+S.
 
 **Acceptance** `tests/test_etl_acceptance_balance.py` (PASS): Σ Fact_Balance.Sum_Close
 по PAP_Article == ПАП `ОстаткиИОбороты` (січень/ТОВ, виключення 3 груп як Етап4)
