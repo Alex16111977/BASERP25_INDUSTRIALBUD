@@ -18,7 +18,7 @@
 | **Основний repo** | `C:\Configuration_downloads\BASERP25\` |
 | **Stage 3 код** | `_Rarzrabotki/Olap/Ai_Olap/` (SQL-first Python ETL) |
 | **База знань створена** | 2026-05-03 |
-| **Останнє оновлення** | 2026-05-16 (Balance Stage done — Fact_Balance + PL.pbix модель балансу) |
+| **Останнє оновлення** | 2026-05-18 (Свод_ПрочиеАктивыПассивы_Прямой LIVE: Fact_Balance +колонка **TaxType** (`Перечисление.ТипыНалогов`), Source=ПустаяСсылка прямих рухів ПАП; enum_resolver: пуста ссилка enum→"ПустаяСсылка"; ETL 3 міс. Success; verify PASS — Налоги 9 331 275,92 розріз TaxType==Карточка; PL.pbix колонка «ТипНалога» через MCP — потрібен Desktop Refresh+Ctrl+S) |
 
 ## Поточний стан проекту
 
@@ -28,12 +28,71 @@
 | **Stage 2** | SQL DDL OlapBASERP — 24 таблиці | ✅ DONE | `df732a73f` | 2026-05-02 → 03 |
 | **Stage 3** | Python ETL Ai_Olap (SQL-first; 16 Dim + Bridge + 2 Fact + scheduler) | ✅ DONE | `8d5ebf3a1` | 2026-05-03 |
 | **Stage 4** | Power BI PBIX × 2 (PnL + Cashflow) + DAX | 🔄 IN PROGRESS | — | 2026-05-03 PL.pbix модельна частина зібрана |
-| **Balance** | Управлінський баланс OLAP-цикл (Fact_Balance + Dim_PAP_Articles + PL.pbix модель балансу) | ✅ DONE | `7ea6d83c5`+ | 2026-05-16 |
+| **Balance** | Управлінський баланс OLAP-цикл (Fact_Balance + Dim_PAP_Articles + PL.pbix модель балансу) | ✅ DONE (інфра) | `7ea6d83c5`+ | 2026-05-16 |
+| **Balance перенос** | Реальний обмін А_ОтчетБаланс_Свод→Fact_Balance (Себест 4775, січ/ТОВ); фікс Source enum (ИсточникиУправленческогоБаланса 31) | ✅ DONE | — | 2026-05-17 |
+| **Balance ДенСр** | `Свод_ДенежныеСредства` LIVE: +4 ден. Source у Fact_Balance (безнал→БанкСчёт, нал→Касса, підзвіт→ФизическоеЛицо, в путі→плуг); Σ КО=75 265 344,95; «безнал» КО=50 435 887,99==УпрБаланс. Себест не регресувала | ✅ DONE | — | 2026-05-17 |
+| **Balance OLAP-модель** | Dim_Warehouses (347, ієрарх. без Кода, recursive-CTE `_Reference502`); зв'язки Fact_Balance→{Cash_ID→ДенежныеСредства, Item_ID→Номенклатура, Warehouse_ID→Склады, Individual_ID→ФизическиеЛица}; PL.pbix 1С-нотація RU + сховані тех.колонки + 5 ієрархій | ✅ DONE | — | 2026-05-17 |
+| **Balance РасчетыСПартнерами** | `Свод_РасчетыСПартнерами` LIVE: +2 Source (РасчСКлиент/ПоставщПоСрокам, Стаття-по-ресурсу як штатна ДвиженияАктивовПассивов) у Fact_Balance; Σ клієнти КО=12 338 631,09 / постач КО=−62 806 237,00==УпрБаланс; **Dim_ObjektyRaschetov** (плоский `_Reference319`, 13957) + ETL/верифікація PASS; Себест/ДенСр не регресували. PL.pbix таблиця+зв'язок створені через MCP (нативний Query partition), drill-down перевірено DAX | ✅ DONE (ETL+Dim+PL.pbix; потрібен Ctrl+S) | — | 2026-05-17 |
+| **Balance ПрочиеАктивыПассивы_Прямой** | `Свод_ПрочиеАктивыПассивы_Прямой` LIVE: **Source=ПустаяСсылка** (прямі рухи ПАП, 0 JOIN, ВЫРАЗИТЬ Аналітика). Fact_Balance +**колонка TaxType** (`_Fld56130RRef`→`Перечисление.ТипыНалогов`); ALTER ADD TaxType varchar(50); fact_balance.json (raw_sql+enum_resolver+column_map); FROZEN_ENUMS+WHITELIST ТипыНалогов(14); **enum_resolver: пуста ссилка enum→"ПустаяСсылка"** (varbinary_to_uuid мапить 16 нулів→None ДО resolver; інакше Source NOT NULL). ETL 2025-12/2026-01/2026-02 Success. `verify_olap_balance_papdirect.py` PASS: Source=ПустаяСсылка по статтях==регістр/ПАП/УпрБаланс (Налоги 9 331 275,92 / ОС −149 202,85 / Прибыли −110 616 551,99 / ИТОГ −101 434 478,92); розріз Налоги по TaxType==Карточка (НДС 9 246 711,36/ДругиеНалоги 72 252,00/НДФЛ 4 925,02/ВоенныйСбор 1 368,07/НачисленныйЕСВ 6 019,47); 3 міс. співіснують; Себест/ДенСр/Расч не регресували; PnL Глобино-2 не регрес. PL.pbix: колонка **«ТипНалога»** (Fact_Balance) + **Dim «ТипыНалогов»** (`Dim_TaxTypes` 15 рядків, native query) + зв'язок `Fact_Balance[ТипНалога]→ТипыНалогов[TaxType]` (Many→One, active) — через MCP; потрібен Desktop Refresh Fact_Balance+«ТипыНалогов»+Ctrl+S (навігатор кешує §13.1) | ✅ DONE (ETL+verify+PL.pbix col+Dim+зв'язок; потрібен Refresh+Ctrl+S) | — | 2026-05-18 |
+| **Balance ОплатаТруда** | `Свод_ОплатаТруда` LIVE (BSL+приймання): статья «Оплата труда» **БЕЗ аналітики** під **Source=ПустаяСсылка** (ПАП Источник=пусто, Статья=&ОТ; рішення 2026-05-18 — старий розклад ∝ ВзаиморасчетыССотрудниками відмінено). Σ КО серверно: дек **−3 875 135,00** / січ **−7 196 698,44** / лют **−9 972 924,59** == ПАП.ОстаткиИОбороты(Статья=ОТ) == УпрБаланс. **OLAP-сторона: НОВИХ Source/Dim/колонок PBIX НЕ потрібно** (ОТ під наявним Source=ПустаяСсылка, без субконто/TaxType). verify_olap_balance_papdirect.py еталони оновлені (+«Оплата труда» −7 196 698,44; ИТОГ Source=пусто **−108 631 177,36**). ⏳ ETL fact_balance 3 періоди + прогін verify_olap — **очікує дозволу (запис у OlapBASERP — авто-блок)**; PL.pbix модель НЕ міняється — лише Refresh+Ctrl+S | ⏳ BSL+verify DONE; ETL/verify_olap PENDING (дозвіл) | — | 2026-05-18 |
 | **Stage 5** | Windows Task Scheduler 02:00 щоночі | ⏳ PLANNED | — | — |
 
 **Acceptance verified end-to-end (Stage 1+2+3)**: 🎯 **Глобино-2 / Source=ERP_Income / Period=2026-02-01 / Sum_ERP_Grn = 38 432 968.66 ₴** (точно ± 0.01) — pytest `tests/test_etl_acceptance_globyno2.py` PASS після `python main.py` (одна команда, без аргументів).
 
-**Acceptance verified (Balance Stage, 2026-05-16)**: 🎯 січень 2026/ТОВ ІНДАСТРІАЛБУД — Σ `Fact_Balance.Sum_Close` по `PAP_Article` == ПАП `ОстаткиИОбороты` до копійки (ОТ tol 1.0); Σ Close ≈ 0 (Актив=Пасив) — pytest `tests/test_etl_acceptance_balance.py` PASS. PL.pbix DAX: Aktiv-only = **289 064 974,43** (точний канон-контроль), `[Контроль Актив-Пассив]` ≈ 0. Деталі: [olap_powerbi_pl_pbix.md](olap_powerbi_pl_pbix.md) §13.
+**Acceptance Balance (2026-05-18, фактичний стан):** у `Документ.А_ФинРез_Баланс`
+активні **5** `Свод_*`: `Свод_СебестоимостьТоваров` + `Свод_ДенежныеСредства` +
+`Свод_РасчетыСПартнерами` + `Свод_ПрочиеАктивыПассивы_Прямой` +
+`Свод_ОплатаТруда` (решта 1 `Свод_ПрочиеРасходыДоходы` + `СверкаСПАП`
+закоментовані — див. `knowledge_Balanse/balanse_pattern_and_roadmap.md`).
+Прямой+ОплатаТруда → Source=ПустаяСсылка ИТОГ КО=**−108 631 177,36** (Прямой
+−101 434 478,92 + ОТ −7 196 698,44); ОТ БЕЗ субконто; OLAP ETL ОТ очікує
+дозволу (запис у OlapBASERP). Штатний
+`tests/test_etl_acceptance_balance.py` (вимагає Σ Close≈0, Актив=Пасив —
+ПОВНИЙ баланс) очікувано FAIL (ще не всі `Свод_*`). Релевантні часткові
+перевірки (PASS):
+- Себест: `Fact_Balance` «Товары на оптовых складах» Sum_Close=**83 627 719,44**
+  (==регістр==ПАП до копійки, не регресувала);
+- ДенСр: 4 ден. Source у Fact_Balance, Σ КО денежної групи=**75 265 344,95**;
+  «Денежные средства (безналичные)» КО=**50 435 887,99**==ПАП==Управлінський
+  баланс; підзвіт деталізований по `ФизическоеЛицо` (Individual_ID→
+  Dim_Individuals); тести `test_balans_densr_pretest.py`/`_verify.py` PASS.
+- РасчетыСПартнерами: 2 Source (`РасчетыСКлиентамиПоСрокам` КО=**12 338 631,09**,
+  `РасчетыСПоставщикамиПоСрокам` КО=**−62 806 237,00**) у Fact_Balance;
+  статті ЗадолженностьКлиентов **61 165 524,68** / ПолученныеАвансы
+  **−48 826 893,59** / ВыданныеАвансы **68 949 869,33** /
+  ЗадолженностьПередПоставщиками **−131 756 106,33** == ПАП == УпрБаланс;
+  деталізація по `ОбъектРасчетов` (SettlementObj_ID→**Dim_ObjektyRaschetov**
+  плоский `_Reference319`, 13957 рядків; 2291 деталь покриття 100% + 57
+  плугів); Себест/ДенСр не регресували; тести
+  `test_balans_raschety_pretest.py`/`_verify.py`/`verify_olap_balance_raschety.py`
+  PASS. PL.pbix: таблиця «ОбъектыРасчетов» (партиція Dim_ObjektyRaschetov,
+  **нативний `[Query=…]`** — навігатор SQL кешує нові таблиці в сесії, обхід
+  через native query; state=Ready, 13957) + зв'язок
+  `Fact_Balance[SettlementObj_ID]→ОбъектыРасчетов[SettlementObj_ID]`
+  (Many→One, OneDirection, active) + model Calculate + сховані тех.колонки
+  (видима «ОбъектРасчетов» 1С-нотація) — створено через MCP, drill-down
+  перевірено DAX. ⚠️ **Зміни in-memory — потрібен Ctrl+S у Power BI Desktop.**
+- ПрочиеАктивыПассивы_Прямой (2026-05-18): **Source=ПустаяСсылка** (прямі
+  рухи ПАП, 0 JOIN) у Fact_Balance; +**колонка TaxType**
+  (`_Fld56130RRef`→`Перечисление.ТипыНалогов`, 14 значень FROZEN). Σ по
+  статтях == регістр/ПАП/УпрБаланс: Налоги КО=**9 331 275,92**, ОС
+  **−149 202,85**, Прибыли и убытки **−110 616 551,99**, ИТОГ
+  **−101 434 478,92**; розріз Налоги по TaxType == Карточка
+  (НДС **9 246 711,36** / ДругиеНалоги **72 252,00** / НДФЛ **4 925,02** /
+  ВоенныйСбор **1 368,07** / НачисленныйЕСВ **6 019,47**); 2025-12/2026-01/
+  2026-02 співіснують; Себест/ДенСр/Расч + PnL(Глобино-2) не регресували.
+  Грабля: `varbinary_to_uuid` мапить пусту ссилку enum (16 нулів)→None ДО
+  `enum_resolver` → фікс: `enum_resolver.transform` None→"ПустаяСсылка"
+  (Source NOT NULL). PL.pbix: колонка **«ТипНалога»** (String, 1С-нотація,
+  SourceColumn=TaxType) + **Dim «ТипыНалогов»** (`Dim_TaxTypes` 15 рядків:
+  14 enum + ПустаяСсылка; native query; ключ=метаім'я) + зв'язок
+  `Fact_Balance[ТипНалога]→ТипыНалогов[TaxType]` Many→One active (FK 100%)
+  додані через MCP — навігатор кешує (§13.1) → потрібен Desktop Refresh
+  Fact_Balance + «ТипыНалогов» + Ctrl+S. Тести
+  `test_balans_papdirect_pretest.py`/`_verify.py`/`verify_olap_balance_papdirect.py`
+  (+ `scripts/seed_dim_tax_types.py`, `scripts/ddl_dim_tax_types.sql`) PASS.
+Σ Close≈0 та канон 289 064 974,43 стануть застосовні коли активують решту
+`Свод_*` (ETL лише копіює регістр).
 
 **Stage 3 default mode** (commit `8d5ebf3a1`): `python main.py` без прапорців виконує повний прогон **всіх Dim + всіх періодів Fact** (TRUNCATE + INSERT). Для пер-місячного режиму — `--period YYYY-MM` (idempotent DELETE WHERE + INSERT). Daemon-режим `--scheduled` поки **не** використовуємо — йде ручне тестування.
 

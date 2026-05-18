@@ -338,6 +338,17 @@ python main.py --refresh-mapping                         # скинути кеш
 
 Зупиняється на першій помилці. Час end-to-end ~2 секунди при чистій localhost інстансі. **`fact_cf_balance`** і `etl_runs_keepalive` НЕ входять у дефолт; запускати окремо через `--run-once`.
 
+> **Оновлення 2026-05-17:** `dim_documents` **ВИЛУЧЕНО** з
+> `ALL_DEFAULT_PIPELINES` — його джерело `РегистрСведений.А_ДокументРасшифровка`
+> ВІДСУТНЄ у поточній BaseERP (немає `_InfoRg56031` → весь default-ланцюг
+> падав). У `main.py` залишено коментар з умовою повернення (коли об'єкт буде
+> створений у 1С). Поточний дефолт фактично: `["dim_catalogs", "fact_pnl",
+> "fact_cashflow"]`. **Balance** (`dim_pap_articles` + `fact_balance`) НЕ у
+> дефолті — запускати окремо: `--run-once dim_pap_articles` потім
+> `--run-once fact_balance --period YYYY-MM`. Реальні row-counts повного
+> прогону (full reload): dim_catalogs **61 338**, fact_pnl **12 033**,
+> fact_cashflow **62 045** (усі періоди).
+
 ### ai_olap/orchestrator/pipeline.py
 
 `Pipeline(cfg, period=date).run()` ітерує `cfg["steps"]`:
@@ -461,10 +472,24 @@ WHERE D.Department_Name = N'Глобино-2'
 через `mapping/refresh_mapping.py`. WHITELIST +5: `РегистрСведений.А_ОтчетБаланс_Свод`,
 `Документ.А_ФинРез_Баланс`, `ПланВидовХарактеристик.СтатьиАктивовПассивов`,
 `Перечисление.А_ИсточникБаланса`, `Перечисление.ВидыСтатейУправленческогоБаланса`.
-`enum_resolver.FROZEN_ENUMS` +2: `А_ИсточникБаланса` (7, Cyrillic Names як
-fact_cashflow), `ВидыСтатейУправленческогоБаланса` (3, ASCII Aktiv/Passiv/AktivPassiv
-— референсуються DAX-ами PL.pbix + varchar(15)). baserp_storage.json: 74→**80**
-об'єктів (additive — cashflow/PnL не зачеплені).
+`enum_resolver.FROZEN_ENUMS` +2: `ВидыСтатейУправленческогоБаланса` (3,
+ASCII Aktiv/Passiv/AktivPassiv — DAX PL.pbix + varchar(15)) та
+**`ИсточникиУправленческогоБаланса`** (див. виправлення нижче).
+baserp_storage.json: additive — cashflow/PnL не зачеплені.
+
+> **⚠️ Виправлення 2026-05-17 (spec↔реальність):** регістр
+> `А_ОтчетБаланс_Свод.Source` ФАКТИЧНО зберігає **типове**
+> `Перечисление.ИсточникиУправленческогоБаланса` (31 значення, _EnumOrder
+> 0..30; `Свод_СебестоимостьТоваров` пише `СебестоимостьТоваров`), а **НЕ**
+> кастомне `А_ИсточникБаланса` (7) зі spec v3. Перший прогон ETL падав
+> `Cannot insert NULL into Source` (enum_resolver не знаходив UUID).
+> **Фікс (Python ETL, 1С не чіпали):** `enum_resolver.py` FROZEN_ENUMS +=
+> `ИсточникиУправленческогоБаланса` (31 значення, НЕ DYNAMIC — у `_Enum1234`
+> немає `_Description`, лише `_IDRRef`/`_EnumOrder`); `pipelines/
+> fact_balance.json` `Source`→`Перечисление.ИсточникиУправленческогоБаланса`;
+> `mapping/refresh_mapping.py` WHITELIST += це перечислення (→ `_Enum1234`
+> у baserp_storage.json). Це узгоджено з `knowledge_Balanse` (там регістр
+> вже описаний з `ИсточникиУправленческогоБаланса`).
 `scripts/introspect_balance_fields.py` — дамп resolved _Fld + additive-guard.
 
 resolved (джерело істини raw_sql): Source `_Fld56104RRef`, Орг `_Fld56092RRef`,
@@ -476,7 +501,76 @@ resolved (джерело істини raw_sql): Source `_Fld56104RRef`, Орг `
 **Запуск:** `python main.py --run-once dim_pap_articles` →
 `python main.py --run-once fact_balance --period 2026-01` (venv `.venv/Scripts/python.exe`).
 
+> **⚙️ 2026-05-18 — `Свод_ПрочиеАктивыПассивы_Прямой` LIVE (+колонка TaxType):**
+> прямі рухи ПАП `Source=ПустаяСсылка` (0 JOIN, ВЫРАЗИТЬ Аналітика).
+> Зміни Python ETL (1С не чіпали понад додане користувачем вимір ТипНалога):
+> - `mapping/refresh_mapping.py` WHITELIST += `Перечисление.ТипыНалогов`
+>   (→ `_Enum1651` у baserp_storage.json); `refresh_mapping.py` перезапущено
+>   (А_ОтчетБаланс_Свод тепер resolve **`ТипНалога`→`_Fld56130RRef`**).
+> - `enum_resolver.FROZEN_ENUMS += "Перечисление.ТипыНалогов"` — 14 значень
+>   `_EnumOrder` 0..13 (НДС/НДФЛ/…/НачисленныйЕСВ/ВоенныйСбор/ЕдиныйНалог/
+>   НалогНаПрибыль/ДругиеНалоги/Акциз; метаімена, не синоніми).
+> - **`enum_resolver.transform`: пуста ссилка enum → `"ПустаяСсылка"`.**
+>   Корінь: `varbinary_to_uuid._convert` мапить 16 нулів (`ALL_ZERO`)→`None`
+>   ДО `enum_resolver` (рядок 20-21). Прямой пише `Source=ПустаяСсылка`
+>   (16 нулів) → `None` → `Fact_Balance.Source NOT NULL` падав
+>   `Cannot insert NULL`. Фікс: у `transform` для enum-колонки `val is None`
+>   → `"ПустаяСсылка"` (1С-ім'я пустої ссилки; PnL/Cashflow Source ніколи не
+>   порожній → не зачеплені; Глобино-2 PASS).
+> - `pipelines/fact_balance.json`: raw_sql += `r._Fld56130RRef AS TaxType`;
+>   `enum_resolver.column_to_enum += "TaxType":"Перечисление.ТипыНалогов"`;
+>   `column_mapper.column_map += "TaxType":"TaxType"`.
+> - SQL DDL OlapBASERP: `ALTER TABLE Fact_Balance ADD TaxType varchar(50)
+>   COLLATE Cyrillic_General_CI_AS NULL` (як Source, NULLABLE — заповнено
+>   лише у статті «Налоги», решта `"ПустаяСсылка"`).
+> ETL `--run-once fact_balance --period 2025-12|2026-01|2026-02` Success
+> (7682/7643/8208). Verify `scripts/verify_olap_balance_papdirect.py` PASS.
+>
+> **⚙️ 2026-05-18 — `Свод_ОплатаТруда` LIVE (БЕЗ змін ETL-конфігів):**
+> статья «Оплата труда» зводиться БЕЗ аналітики під наявним
+> `Source=ПустаяСсылка` (ПАП Источник=пусто, Статья=&ОТ; зеркало канон-
+> Прямого, комплементарно `Т.Статья<>&ОТ`). **`fact_balance.json` /
+> `enum_resolver` / `Dim_TaxTypes` / `refresh_mapping` НЕ міняються** (нових
+> Source/вимірів немає; ОТ без субконто → TaxType="ПустаяСсылка").
+> `refresh_mapping.py` НЕ потрібен (структура РС не змінилась). Потрібен лише
+> `--run-once fact_balance --period 2025-12|2026-01|2026-02` (перечитає
+> регістр; рядки «Оплата труда» з'являться під `Source=ПустаяСсылка`,
+> `TaxType="ПустаяСсылка"`). Новий ИТОГ `Source=ПустаяСсылка` КО 2026-01 =
+> **−108 631 177,36** (Прямой −101 434 478,92 + ОТ −7 196 698,44, серверно
+> COM). `verify_olap_balance_papdirect.py` еталони оновлені (+«Оплата труда»).
+> ⏳ ETL-прогін очікує дозволу (запис у спільну OlapBASERP — авто-блок);
+> PL.pbix модель НЕ міняється (Refresh Fact_Balance + Ctrl+S).
+
 **Acceptance** `tests/test_etl_acceptance_balance.py` (PASS): Σ Fact_Balance.Sum_Close
 по PAP_Article == ПАП `ОстаткиИОбороты` (січень/ТОВ, виключення 3 груп як Етап4)
 до копійки (ОТ tol 1.0); Σ Sum_Close ≈ 0 (Актив=Пасив). Канон-регрес
 `tests/test_etl_acceptance_globyno2.py` (PnL) PASS.
+
+### Оновлення 2026-05-17 — `Свод_ДенежныеСредства` LIVE + `dim_warehouses`
+
+**Свод_ДенежныеСредства активна в 1С** (`Документ.А_ФинРез_Баланс`): регістр
+`А_ОтчетБаланс_Свод` тепер має +4 ден. Source. ETL **без змін конфігу** —
+`pipelines/fact_balance.json` raw_sql фільтрує лише власну орг + період
+(Source НЕ фільтрує), тож `--run-once fact_balance --period 2026-01` сам тягне
+нові ден. рядки. Заповнюються `Cash_ID` (безнал→`_Fld56124_RRRef`→
+Dim_DenezhnyeSredstva), `Individual_ID` (підзвіт→`_Fld56123RRef`→Dim_Individuals).
+Січень/ТОВ Fact_Balance: Себест 4775 + ден. ~213; Σ ден. групи Sum_Close=
+**75 265 344,95**; «безнал» КО=50 435 887,99==ПАП==УпрБаланс.
+
+**Новий крок `dim_warehouses`** у `pipelines/dim_catalogs.json` (Dim_Warehouses
+для Fact_Balance.Warehouse_ID, Себест). `Справочник.Склады` ієрархічний але
+**без Кода** → raw_sql recursive-CTE по `_Reference502` БЕЗ `_Code` (паттерн
+dim_organizations). DDL `ddl/08_dim_warehouses.sql` + `apply_08_dim_warehouses.py`.
+`mapping/refresh_mapping.py` WHITELIST += `Справочник.Склады` (baserp_storage.json
+84 об'єкти). Live: 347 рядків, 303 групи, Level1..5. dim_catalogs повний
+прогон run_id=261, **61 685** рядків (19 Dim-кроків).
+
+**Запуск:** `apply_08_dim_warehouses.py` → `main.py --run-once dim_catalogs`
+→ `main.py --run-once fact_balance --period 2026-01`. Діагностика:
+`scripts/probe_olap_balance_state.py`, `scripts/verify_olap_balance_densr.py`,
+`scripts/probe_ref502_columns.py`.
+
+> **Урок:** ETL `sql_backend` НЕ дає `_ParentIDRRef`/`_Folder`/`_Code`
+> (GetDBStorageStructureInfo пропускає системні) — для ієрархічних Dim
+> завжди raw_sql recursive-CTE. Відсутність `_Code` (Длина кода=0) ≠
+> неієрархічний — перевіряти Конфігуратор / `_ParentIDRRef`+`_Folder`.
