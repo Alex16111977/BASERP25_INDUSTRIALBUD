@@ -283,19 +283,138 @@ ROW(
 |---|---|---|
 | `Fact_Balance` | dbo.Fact_Balance | `Sql.Database("SQLSERVER","OlapBASERP")` |
 | `Dim_PAP_Articles` | dbo.Dim_PAP_Articles | те саме |
+| `ОбъектыРасчetов` (2026-05-17) | dbo.Dim_ObjektyRaschetov | `Sql.Database("SQLSERVER","OlapBASERP")` (партиція `Dim_ObjektyRaschetov`) |
+
+> ⚠️ **Нова таблиця в Import-моделі — навігатор SQL кешується:**
+> `Источник{[Schema="dbo",Item="Dim_ObjektyRaschetov"]}[Data]` дає
+> `[Expression.Error] Ключу не відповідає жоден рядок` поки PBI Desktop не
+> оновить каталог джерела вручну. Обхід (нативний `[Query="SELECT … FROM
+> dbo.Dim_ObjektyRaschetov"]`) тригерить prompt дозволу нативного запиту →
+> headless MCP Refresh зависає. **Рішення: користувач у Power BI Desktop
+> робить Refresh таблиці «ОбъектыРасчetов» (підтвердити будь-який
+> credential/native-query prompt) → зв'язок 13.2 → Ctrl+S.**
 
 > Назва Dim лишена `Dim_PAP_Articles` (прецедент `Dim_DenezhnyeSredstva`),
 > DAX-міри референсують саме її — НЕ перейменовувати без оновлення мір.
 
-### 13.2 Зв'язки (Many→One, single-direction) — 7
+### 13.2 Зв'язки (Many→One, single-direction) — 10 (оновлено 2026-05-17)
 
 `Fact_Balance[PAP_Article_ID]→Dim_PAP_Articles`, `[Organization_ID]→Организации`,
 `[Department_ID]→СтруктураПредприятия`, `[Counterparty_ID]→Контрагенты`,
-`[Individual_ID]→ФизическиеЛица`, `[Contract_ID]→ДоговорыКонтрагентов`,
+`[Individual_ID]→ФизическиеЛица` (підзвітні особи — `Свод_ДенежныеСредства`
+гілка ПодотчетноеЛицо), `[Contract_ID]→ДоговорыКонтрагентов`,
 `[Period]→Calendar[date_]`.
+**+3 додано 2026-05-17 (drill-down Себестоимость/ДенСр):**
+- `[Item_ID]→Номенклатура[Item_ID]` (auto-detected після Refresh; активна)
+- `[Warehouse_ID]→Склады[Warehouse_ID]` (нова таблиця `Склады`=Dim_Warehouses,
+  4 кол.; зв'язок auto-detected)
+- `[Cash_ID]→Dim_DenezhnyeSredstva[Cash_Account_ID]` (створено через MCP
+  `relationship_operations Create`, дзеркало `Fact_Cashflow.Cash_Account_ID`;
+  після `model Refresh Calculate`). DAX-перевірка січ.2026/ТОВ:
+  безнал `Account_Type=BankAccount` Close=50 435 887,99; нал Cashbox
+  24 345 737,54 + плуги(без субконто, Cash_ID=NULL) 297 122,93 = 24 642 860,47
+  == УпрБаланс ✓.
+
+**+1 додано 2026-05-17 (`Свод_РасчетыСПартнерами`, через MCP):**
+- `[SettlementObj_ID]→ОбъектыРасчetов[SettlementObj_ID]` (Many→One,
+  single-direction, **активна**) — Dim `Dim_ObjektyRaschetov` (13957, плоский
+  `_Reference319`; FK 2291/2291=100%, плуги SettlementObj_ID=NULL). Таблиця
+  «ОбъектыРасчetов» — партиція **нативний `[Query="SELECT … FROM
+  dbo.Dim_ObjektyRaschetov"]`** (навігатор `Источник{[Item=…]}` кешує нові
+  таблиці в сесії PBIX → давав `[Expression.Error] Ключу не відповідає
+  жоден рядок`; native query це обходить, state=Ready). Зв'язок створено
+  `relationship Create` + `model Refresh Calculate`; сховані
+  `SettlementObj_ID/ПометкаУдаления/Loaded_At` (IsHidden), видима колонка
+  `ОбъектРасчетов`. Drill-down перевірено DAX:
+  `SUMMARIZECOLUMNS('ОбъектыРасчetов'[ОбъектРасчетов], …Sum_Close…)` дає
+  розбивку по реальних об'єктах; січ.2026/ТОВ клієнти Σ=12 338 631,09,
+  постач Σ=−62 806 237,00. **⚠️ in-memory — обов'язковий Ctrl+S.**
+
 **Partner_ID — без прямого зв'язку** (неоднозначний шлях через
-Контрагенты→Партнеры; дзеркалить Fact_Cashflow). Item/Warehouse/OperObject/
-Cash/SettlementObj/Intangible — без Dim (drill-down наступний цикл, не блокує).
+Контрагенты→Партнеры; дзеркалить Fact_Cashflow). OperObject/Intangible —
+без Dim у моделі (drill-down наступний цикл, не блокує).
+
+> ⚠️ **Знайдено баг-шум авто-детекту (НЕ виправлено, поза запитом):**
+> Power BI авто-створив зв'язки по generic-колонці `Hierarchy_Path`:
+> `СтатьиДвиженияДенежныхСредств[Hierarchy_Path]↔Номенклатура` (BothDirections,
+> One-One, **активна** — шкідлива: хибний крос-фільтр) + 3 неактивні
+> (СтруктураПредприятия/СтатьиРасходов/Партнеры → Номенклатура). Рекомендація:
+> видалити/деактивувати активну (узгодити з користувачем — це спільна модель).
+
+### 13.2-bis Колонка `Fact_Balance[ТипНалога]` (2026-05-18, через MCP)
+
+`Свод_ПрочиеАктивыПассивы_Прямой` LIVE → Fact_Balance +колонка **TaxType**
+(`Перечисление.ТипыНалогов`, розшифровка ПАП.Аналитика статті «Налоги»).
+Через MCP `column_operations Create`: модельна колонка **«ТипНалога»** на
+Fact_Balance (1С-нотація, `SourceColumn=TaxType`, `DataType=String`,
+`IsHidden=false`, `SummarizeBy=None` — дзеркало `Source`).
+
+**+ Dim `ТипыНалогов` (2026-05-18, на вимогу користувача — образець
+Dim_ObjektyRaschetov):** SQL `dbo.Dim_TaxTypes` (15 рядків: 14 enum +
+`ПустаяСсылка`; ключ=метаім'я як Fact_Balance.TaxType, `TaxType_Name`=
+синонім 1С UI, `EnumOrder`). DDL `scripts/ddl_dim_tax_types.sql` + сидер
+`scripts/seed_dim_tax_types.py` (імена/синоніми з 1С метаданих — `_Enum1651`
+у SQL не має імен). PL.pbix: таблиця **«ТипыНалогов»** — партиція
+**нативний `[Query="SELECT TaxType, TaxType_Name, EnumOrder FROM
+dbo.Dim_TaxTypes"]`** (навігатор кешує нові таблиці §13.1, native query це
+обходить; state=NoData до Desktop Refresh). Колонки: `TaxType`(прих., ключ),
+**«ТипНалога»** (видима, `SourceColumn=TaxType_Name`, SortBy=`EnumOrder`),
+`EnumOrder`(прих.). Зв'язок **`Fact_Balance[ТипНалога]→ТипыНалогов[TaxType]`**
+(Many→One, OneDirection, active) — створено MCP `relationship Create`
+(підтверджено `relationship List`: 39 зв'язків). FK 100% (verify
+`Fact_Balance.TaxType` без Dim = 0).
+⚠️ **Навігатор SQL кешує схему (§13.1):** партиція Fact_Balance —
+`Источник{[Item="Fact_Balance"]}[Data]`; MCP `partition Refresh` падає
+`Столбец "TaxType" не существует в наборе строк` (кеш не бачить нову
+SQL-колонку). Таблиця «ТипыНалогов» — native query, partition state=NoData
+→ тригерить prompt дозволу нативного запиту. **Резолюція (як усі
+Balance-зміни §13.7 + Dim_ObjektyRaschetov §13.2):** користувач у Power BI
+Desktop робить **Refresh Fact_Balance + Refresh «ТипыНалогов»**
+(інтерактивний — навігатор перечитує каталог, підтягує TaxType; підтвердити
+будь-який credential/native-query prompt) → **Ctrl+S**. Метадані колонки +
+таблиці + зв'язку вже в моделі (in-memory); дані заповняться після Desktop
+Refresh. Очікувані
+значення (січ.2026/ТОВ): Налоги по `Fact_Balance[ТипНалога]` НДС
+9 246 711,36 / ДругиеНалоги 72 252,00 / НДФЛ 4 925,02 / ВоенныйСбор
+1 368,07 / НачисленныйЕСВ 6 019,47 (== Карточка), решта статей TaxType=
+`"ПустаяСсылка"`. Verify (SQL, до Desktop Refresh):
+`scripts/verify_olap_balance_papdirect.py` PASS.
+
+### 13.2-ter Dim `ТипПоказателя` + зв'язок (2026-05-18, через MCP)
+
+Фінансист додав у `А_ОтчетБаланс_Свод` вимір **`ТипПоказателя`**
+(`Перечисление.ВидыСтатейУправленческогоБаланса`: Актив/Пассив/
+АктивПассив), заповнюється централізовано в `ПровестиБалансСвод`
+формулою штатного `Отчет.УправленческийБаланс`
+(`ВЫБОР КОГДА АктивПассив=ЗНАЧЕНИЕ(...АктивПассив) ТОГДА Пассив ИНАЧЕ
+АктивПассив КОНЕЦ`; «Налоги»→**Пассив**). Мета: у Power BI поділ
+Актив/Пассив як у штатному звіті (а не raw «АктивПассив»).
+
+ETL: `Fact_Balance.TipPokazatelya` (`_Fld56131RRef`,
+enum_resolver→кирилиця «Актив»/«Пассив», конвенція як Source/TaxType).
+**+ Dim `Dim_TipPokazatelya`** (образець Dim_TaxTypes): SQL 4 рядки
+(Актив/Пассив/АктивПассив + `ПустаяСсылка`; ключ=метаім'я,
+`TipPokazatelya_Name`=синонім 1С UI, `EnumOrder`). DDL
+`scripts/ddl_dim_tip_pokazatelya.sql` (+ `ALTER Fact_Balance ADD
+TipPokazatelya`) + сидер `scripts/seed_dim_tip_pokazatelya.py`.
+
+PL.pbix: користувач додав таблицю **«ТипПоказателя»** (4 кол.:
+`TipPokazatelya` ключ, `TipPokazatelya_Name`, `EnumOrder`, `Loaded_At`).
+Зв'язок через MCP **`Fact_Balance[TipPokazatelya]→ТипПоказателя
+[TipPokazatelya]`** (Many→One, OneDirection, **active**).
+⚠️ **УРОК — ложна авто-зв'язка по `EnumOrder`:** Power BI auto-detect
+створив зайву зв'язку `ТипПоказателя[EnumOrder]→ТипыНалогов[EnumOrder]`
+(active, BothDirections — хибний матч службового `EnumOrder`=0,1,2 двох
+різних Dim; спотворював би `ТипыНалогов`). Через MCP `relationship
+Delete` видалено; правильну `Fact_Balance[TipPokazatelya]→
+ТипПоказателя` (auto-detected, була `isActive=false`) `relationship
+Activate`. **Загальне правило:** після додавання Dim з колонкою
+`EnumOrder`/`*_ID` перевіряти `relationship List` на хибні авто-зв'язки
+між службовими стовпцями різних Dim і видаляти їх. `verify_olap_balance_
+tippokazatelya.py` PASS (TipPokazatelya 0 NULL, FK→Dim 100%, «Налоги»→
+Пассив, ПОЛНЫЙ БАЛАНС дек 278 093 267,32 / янв 288 787 750,11 ==
+штатний звіт). Метадані зв'язку in-memory → **Ctrl+S**; зріз бажано
+по `ТипПоказателя[TipPokazatelya_Name]` (Актив/Пассив).
 
 ### 13.3 DAX-міри (Table_Measures, displayFolder `Balance`) — 8
 
@@ -354,3 +473,82 @@ MCP змінює живу in-memory модель; **файл .pbix зберіг�
 вручну: Power BI Desktop → Ctrl+S. Без цього зміни моделі втратяться при
 закритті. Після збереження — Refresh (Power Query) щоб дані Fact_Balance
 збіглися з останнім ETL.
+
+### 13.8 Стандартизація нових Dim під 1С-нотацію (2026-05-17)
+
+Нові/незачеплені довідники приведені до конвенції старих (еталон
+`СтруктураПредприятия`: бізнес-ім'я RU видиме, **усе технічне `isHidden`**,
+`sourceColumn` зберігається при rename). Через MCP `column_operations`
+Rename+Update(IsHidden):
+
+| Таблиця | Перейменовано (видиме RU) | Сховано (isHidden) |
+|---|---|---|
+| `Склады` | `Warehouse_Name→Склад` | `Warehouse_ID`, `ПометкаУдаления`(Marked_For_Deletion), `Loaded_At` |
+| `Номенклатура` | `Item_Name→Номенклатура`, `Is_Group→ЭтоГруппа`, `Marked_For_Deletion→ПометкаУдаления` | `Item_ID`,`Item_Code`,`Parent_ID`,`ЭтоГруппа`,`ПометкаУдаления`,`Loaded_At`,`Hierarchy_Path`,`Hierarchy_Depth`,`Level1..5` |
+| `Виды номенклатуры` | `ItemGroup_Name→Вид номенклатуры`, `Is_Group→ЭтоГруппа`, `Marked_For_Deletion→ПометкаУдаления` | `ItemGroup_ID`,`ItemGroup_Code`,`Parent_ID`,`ЭтоГруппа`,`ПометкаУдаления`,`Loaded_At` |
+| `Dim_PAP_Articles` * | `PAP_Article_Name→СтатьяАктивовПассивов` | `PAP_Article_ID`,`PAP_Article_Code`,`Parent_ID`,`Is_Group`,`Marked_For_Deletion`,`Loaded_At` |
+| `Dim_DenezhnyeSredstva` * | `Account_Name→Денежные средства` | `Cash_Account_ID`,`Organization_ID`,`Currency_Code`,`Loaded_At` |
+
+\* Назви ТАБЛИЦЬ `Dim_PAP_Articles`/`Dim_DenezhnyeSredstva` **НЕ змінено**
+(73 DAX-міри + зв'язки залежать; §13.1). Колонки-залежності мір/слайсерів
+**не чіпані**: `Dim_PAP_Articles[AktivPassiv]`, `Dim_DenezhnyeSredstva[Account_Type]`
+лишені видимими/без rename. Ключі `*_ID` лише сховані (не перейменовані) —
+зв'язки цілі.
+
+**Verified (DAX після змін):** Себест Close=83 627 719,44; `[Актив]`/
+`[Контроль Актив-Пассив]` рахуються (міри по `[AktivPassiv]` не зламані);
+`'Склады'[Склад]` drill-down Себест працює (Цех екстракції 10 117 180,38…);
+`Dim_DenezhnyeSredstva[Account_Type]`=BankAccount 50 435 887,99 (зв'язок
+`Cash_ID` цілий після приховання `Cash_Account_ID`). 73 міри + усі зв'язки OK.
+
+> ⚠️ Зміни **in-memory** — користувач має зберегти **Ctrl+S** у Power BI
+> Desktop (інакше rename/hide втратяться при закритті).
+
+### 13.9 Ієрархії Dim (2026-05-17, образець `ИерархияСтатейДДС`)
+
+Конвенція: `hierarchy Иерархия<Сущность>` з `hideMembers: hideBlankMembers`,
+5 рівнів Level1..Level5 (приховані колонки). Створено через MCP
+`user_hierarchy_operations`/`column_operations`. Перейменування таблиць
+`Dim_PAP_Articles→СтатьиАктивовПассивов`, `Dim_DenezhnyeSredstva→ДенежныеСредства`
+зроблено користувачем у PBI Desktop (DAX-fixup автоматичний — 73 міри цілі,
+перевірено: Себест=83 627 719,44, [Актив]/[Контроль] рахуються).
+
+| Dim (1С-ієрархічний) | Иерархия | Джерело Level1..5 | Стан |
+|---|---|---|---|
+| `Номенклатура` | `ИерархияНоменклатуры` | ETL Level1..5 (рекурс. CTE dim_items) — готові | ✅ DONE |
+| `СтатьиАктивовПассивов` | `ИерархияСтатейАктивовПассивов` | calc PATH (Parent_ID) Level1..5 | ✅ DONE |
+| `Виды номенклатуры` | `ИерархияВидовНоменклатуры` | calc PATH (Parent_ID) Level1..5 | ✅ DONE |
+| `ФизическиеЛица` | `ИерархияФизическихЛиц` | calc PATH (Parent_ID) Level1..5 | ✅ DONE |
+| `Склады` | `ИерархияСкладов` | **ІЄРАРХІЧНИЙ** (Иерархия груп і елементів, 2 рівні), **без Кода** (Длина кода=0). Recursive-CTE по `_Reference502` БЕЗ `_Code` (як dim_organizations). Dim_Warehouses 347 рядків, 303 групи, Level1..5 | ✅ DONE |
+| `ДенежныеСредства` | — | складений з 8 довідників, не єдиний ієрарх. довідник | ✅ SKIP |
+
+**Parent-child Level (PATH):** для довідників без ETL-Level (Parent_ID є):
+calc-колонки `_ParentClean` (зануляє корінь/orphan через LOOKUPVALUE),
+`_HPath = PATH(ID,_ParentClean)`, `Level{n} = LOOKUPVALUE(Name,ID,
+PATHITEM(_HPath,n))` — усі `isHidden`; ієрархія на Level1..5. Візуально
+== `ИерархияСтатейДДС`. Перевірено: Level1 заповнені (PAP «Денежные
+средства/Дебиторская задолженность…», ФизЛица — ПІБ, Виды — Товары/Продукція).
+
+**Склады — ІЄРАРХІЧНИЙ, recursive-CTE БЕЗ Кода.** Перша спроба впала
+`[42S22] Недопустимое имя столбца "_Code"` — бо Длина кода=0 (нема `_Code`),
+а НЕ через відсутність ієрархії. `_Reference502` має `_ParentIDRRef`/`_Folder`
+(перевірено `scripts/probe_ref502_columns.py`: є _IDRRef/_Description/_Marked/
+_ParentIDRRef/_Folder, нема _Code). `ddl/08_dim_warehouses.sql` +
+`pipelines/dim_catalogs.json` `dim_warehouses` **виправлено**: recursive-CTE
+по `_Reference502` БЕЗ `_Code`/Код (Warehouse_Code теж прибрано), решта як
+dim_items. **Урок:** ієрархічність 1С — по Конфігуратору (Иерархический✓) /
+фізичних `_ParentIDRRef`/`_Folder`; відсутність `_Code` ≠ неієрархічний
+(catalog може мати Длина кода=0). Не плутати.
+
+✅ **ВИКОНАНО (2026-05-17, агентом):** `apply_08_dim_warehouses.py` (PASS)
+→ `main.py --run-once dim_catalogs` (run_id=261, Success, 61 685; Dim_Warehouses
+347 рядків / 303 групи / Level1 заповнений) → у моделі через MCP додано 9
+data-колонок (sourceColumn: Parent_ID/Is_Group/Hierarchy_Path/Hierarchy_Depth/
+Level1..5, усі `isHidden`) → Refresh `Склады` → `ИерархияСкладов` на Level1..5
+(HideBlankMembers). Перевірено DAX: Себест Sum_Close дрилиться по
+`Склады[Level1]` (Глобине 27,3М; Цех металоконструкцій 28,3М; ПІДГІРЦІ 10,9М…),
+зв'язок `Fact_Balance[Warehouse_ID]→Склады` цілий.
+
+> ⚠️ **Усі 5 ієрархій + Dim-зміни — in-memory.** Зберегти **Ctrl+S** у Power
+> BI Desktop. (Дані Dim_Warehouses в OlapBASERP уже оновлені ETL — Refresh
+> моделі підтягне; при наступному відкритті після Ctrl+S усе на місці.)
