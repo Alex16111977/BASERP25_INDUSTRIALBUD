@@ -8,14 +8,16 @@
       "extractor": {
         "type": "raw_sql",
         "auto_period_params": true,
-        "raw_sql": "SELECT r._RecorderRRef AS Recorder_Balance_ID, d._Date_Time AS Period, r._Fld56104RRef AS Source, r._Fld56092RRef AS Organization_ID, r._Fld56093RRef AS Department_ID, r._Fld56095RRef AS PAP_Article_ID, r._Fld56097RRef AS Item_ID, r._Fld56098RRef AS Counterparty_ID, r._Fld56099RRef AS Partner_ID, r._Fld56100RRef AS Warehouse_ID, r._Fld56101RRef AS OperObject_ID, r._Fld56102RRef AS Contract_ID, r._Fld56123RRef AS Individual_ID, r._Fld56124_RRRef AS Cash_ID, r._Fld56125RRef AS SettlementObj_ID, r._Fld56127RRef AS Intangible_ID, r._Fld56116 AS Analytics1, r._Fld56117 AS Analytics2, r._Fld56118 AS Analytics3, r._Fld56122 AS Sum_Open, r._Fld56119 AS Sum_Inflow, r._Fld56120 AS Sum_Outflow, r._Fld56106 AS Sum_Close FROM _InfoRg56091 r INNER JOIN _Document56084 d ON d._IDRRef = r._RecorderRRef WHERE r._Active = 0x01 AND r._Fld56092RRef = 0x80D3000C29BBAC2311E653F06BEE36B2 AND d._Date_Time >= ? AND d._Date_Time < ?"
+        "raw_sql": "SELECT r._RecorderRRef AS Recorder_Balance_ID, d._Date_Time AS Period, r._Fld56104RRef AS Source, r._Fld56092RRef AS Organization_ID, r._Fld56093RRef AS Department_ID, r._Fld56095RRef AS PAP_Article_ID, r._Fld56097RRef AS Item_ID, r._Fld56098RRef AS Counterparty_ID, r._Fld56099RRef AS Partner_ID, r._Fld56100RRef AS Warehouse_ID, r._Fld56101RRef AS OperObject_ID, r._Fld56102RRef AS Contract_ID, r._Fld56123RRef AS Individual_ID, r._Fld56124_RRRef AS Cash_ID, r._Fld56125RRef AS SettlementObj_ID, r._Fld56127RRef AS Intangible_ID, r._Fld56130RRef AS TaxType, r._Fld56131RRef AS TipPokazatelya, r._Fld56116 AS Analytics1, r._Fld56117 AS Analytics2, r._Fld56118 AS Analytics3, r._Fld56122 AS Sum_Open, r._Fld56119 AS Sum_Inflow, r._Fld56120 AS Sum_Outflow, r._Fld56106 AS Sum_Close FROM _InfoRg56091 r INNER JOIN _Document56084 d ON d._IDRRef = r._RecorderRRef WHERE r._Active = 0x01 AND r._Fld56092RRef = 0x80D3000C29BBAC2311E653F06BEE36B2 AND d._Date_Time >= ? AND d._Date_Time < ?"
       },
       "transformer": {
         "steps": ["varbinary_to_uuid", "enum_resolver", "period_offset_fix", "column_mapper"],
         "options": {
           "enum_resolver": {
             "column_to_enum": {
-              "Source": "Перечисление.А_ИсточникБаланса"
+              "Source": "Перечисление.ИсточникиУправленческогоБаланса",
+              "TaxType": "Перечисление.ТипыНалогов",
+              "TipPokazatelya": "Перечисление.ВидыСтатейУправленческогоБаланса"
             }
           },
           "period_offset_fix": {"source_column": "Period", "period_month_column": "Period_Month"},
@@ -38,6 +40,8 @@
               "Cash_ID": "Cash_ID",
               "SettlementObj_ID": "SettlementObj_ID",
               "Intangible_ID": "Intangible_ID",
+              "TaxType": "TaxType",
+              "TipPokazatelya": "TipPokazatelya",
               "Analytics1": "Analytics1",
               "Analytics2": "Analytics2",
               "Analytics3": "Analytics3",
