@@ -671,6 +671,12 @@ Level1..5, усі `isHidden`) → Refresh `Склады` → `ИерархияС
   `TipObjektaRaschetov`→«Тип об'єкта розрахунків», `Partner_Name`→«Партнер»,
   `Department_Name`→«Підрозділ», `Object_Type_Name`→«Тип об'єкта»; composite-UUID
   `Counterparty_ID`/`Contract_ID`/`Object_ID` приховані (Q3: UUID без імен).
+  `SettlementObj_Name`→«ОбъектРасчетов» (recreate Task 3 скинув ручний rename —
+  відновлено через MCP), `SettlementObj_ID`/`Marked_For_Deletion`/`Loaded_At` приховані.
+- **`ФінАгенти`**: `FinAgent_Name`→«ФінАгент»; `FinAgent_ID`/`Marked_For_Deletion`/
+  `Loaded_At` приховані. Зв'язок `ДоговорыКонтрагентов[FinAgent_ID]→ФінАгенти[FinAgent_ID]`
+  (Many→One, active). На `ДоговорыКонтрагентов` 8 нових колонок у RU + `FinAgent_ID`
+  прихований (зроблено раніше, §13.10 початок).
 
 > ⚠️ **УРОК — ложні авто-зв'язки по `EnumOrder` (повторення прецеденту §13.2-ter):**
 > після додавання `ТипиДоговорів` (колонка `EnumOrder`) Power BI auto-detect
@@ -682,9 +688,14 @@ Level1..5, усі `isHidden`) → Refresh `Склады` → `ИерархияС
 > `EnumOrder`/`*_ID` — `relationship List` → видаляти хибні авто-зв'язки між
 > службовими стовпцями різних Dim ДО створення цільових зв'язків.
 
+**Підсумок зв'язків (через MCP, 2 нові snowflake):**
+`ДоговорыКонтрагентов[FinAgent_ID]→ФінАгенти[FinAgent_ID]` +
+`ДоговорыКонтрагентов[Тип договора]→ТипиДоговорів[TipDogovora]` (обидві
+Many→One, OneDirection, active). `relationship List` після очистки = без
+хибних авто-зв'язків по `EnumOrder`.
+
 > ⚠️ Зміни MCP **in-memory** — користувач робить фінальний **Refresh + Ctrl+S**
-> (нові snowflake-зв'язки `→ФінАгенти`/`→ТипиДоговорів` потребують пересчёту
-> моделі в Desktop; DAX до пересчёту повертає «зв'язок потребує пересчёту» —
-> це норма, не дефект). NB: recreate таблиці (Task 3) скинув ручне
-> перейменування `SettlementObj_Name`→«ОбъектРасчетов» — за потреби
-> перейменувати знову.
+> (обидві нові snowflake-зв'язки потребують пересчёту моделі в Desktop; DAX
+> до пересчёту повертає «зв'язок потребує пересчёту» — це норма, не дефект).
+> Після Ctrl+S модель повна: ДоговорыКонтрагентов/ОбъектыРасчетов з RU-іменами
+> + 2 нові виміри ТипиДоговорів/ФінАгенти зі snowflake-зв'язками.

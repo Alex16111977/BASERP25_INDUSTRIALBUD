@@ -91,6 +91,18 @@
   ЗадолженностьПередПоставщиками **−131 756 106,33** == УпрБаланс; 2291
   деталь + 57 плугів; Себест/ДенСр не регресували. Тести:
   `test_balans_raschety_pretest.py` / `test_balans_raschety_verify.py` (PASS ×2).
+  **+2026-05-18 розшифровка субконто Контрагент/Партнер/Договор** з того ж
+  `АналитикаУчетаПоПартнерам` (`АП` вже в JOIN; як `ВедомостьРасчетовСПартнерами`):
+  `Партнер=АП.Партнер`, `Контрагент=ЕСТЬNULL(ВЫРАЗИТЬ(АП.Контрагент КАК
+  Справочник.Контрагенты),пуста)`, `Договор=ЕСТЬNULL(ВЫРАЗИТЬ(АП.Договор КАК
+  Справочник.ДоговорыКонтрагентов),пуста)` у 4 гілки+GROUP BY+фінал; плуги —
+  ПустаяСсылка. Структура РС/оркестратор НЕ змінені, Σ==ПАП **sum-invariant
+  не змінилася** (янв2026/ТОВ 2287 деталей 100% субконто, баланс
+  288 787 750,11). Деталі — [balanse_pattern_and_roadmap.md] §4.4. OLAP:
+  `Fact_Balance.Counterparty_ID/Contract_ID/Partner_ID` (mapping вже був),
+  FK→`Dim_Counterparties/Dim_Contracts/Dim_Partners` 0 orphans;
+  `test_balans_raschety_kontragent_{pretest,bsl_extract,verify_jan}.py` +
+  `verify_olap_balance_raschety_kontragent.py` PASS.
 - **OLAP downstream реалізований** (knowledge_Olap): Fact_Balance тягне 4
   ден. Source (ETL `fact_balance.json` без змін); зв'язки PL.pbix
   `Cash_ID→ДенежныеСредства`, `Individual_ID→ФизическиеЛица`,
@@ -156,6 +168,8 @@
 - **Перелік джерела `Source`:** `Enums/А_ИсточникБаланса.xml`, `Enums/ВидыСтатейУправленческогоБаланса.xml`
 - **Штатний звіт-еталон:** `Reports/УправленческийБаланс/` (той самий ПАП-джерело)
 - **OLAP downstream (РЕАЛІЗОВАНО 2026-05-17):** `_Rarzrabotki/notebook/knowledge_Olap/` — Fact_Balance тягне Себест+4 ден. Source; PL.pbix зв'язки/5 ієрархій/1С-нотація. Деталі: `knowledge_Olap/olap_acceptance_etalons.md` §Balance Etalons
+- **OLAP drill-down розширено (2026-05-19):** Dim_Contracts/Dim_ObjektyRaschetov розширені (денорм. імена/enum/composite), +Dim_TipyDogovorov/Dim_FinAgents (snowflake від Dim_Contracts); 1С РС/логіка НЕ змінювались (OD-9). Деталі: `knowledge_Olap/olap_powerbi_pl_pbix.md §13.10` + `balanse_register.md §6`. Регрес повного балансу (дек 278 093 267,32 / янв 288 787 750,11) НЕ зачеплено
+- **⏳ ЗАПЛАНОВАНО (НЕ реалізовано):** заповнення `Аналитика1/2/3` у 6 `Свод_*` за таблицею пріоритетів (ПРЕДСТАВЛЕНИЕ субконто; гейт — баланс янв2026 незмінний). Поточний стан РС незмінний — див. `balanse_register.md §2`
 - **Acceptance-тести (актуальні, канон v2):** `_Rarzrabotki/Python/test/test_balans_s3b_seb_subconto_pretest.py`/`_verify.py` (Себест), `test_balans_densr_pretest.py`/`test_balans_densr_verify.py` (ДенСр, підзвіт→ФизЛицо) — усі PASS
 - **Acceptance-тести (історія монолита):** `test_balans_s4_verify.py`, `test_balans_vs_upr_balance_report.py`, `test_etl_acceptance_balance.py` (повний баланс — застосовний коли активують решту 4 `Свод_*`)
 - **Діагностичний скрипт маппінгу (історія):** `_Rarzrabotki/Python/test/map_balance_articles_registers.py`
