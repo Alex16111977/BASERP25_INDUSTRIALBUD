@@ -12,7 +12,7 @@ CREATE TABLE dbo.Dim_Contracts (
     Parent_ID                char(32)      NULL,
     Is_Group                 bit           NOT NULL DEFAULT 0,
     Marked_For_Deletion      bit           NOT NULL DEFAULT 0,
-    Is_FinAgent_Contract     bit           NOT NULL DEFAULT 0,
+    Is_FinAgent_Contract     bit           NULL,
     TipDogovora              varchar(50)   COLLATE Cyrillic_General_CI_AS NULL,
     FinAgent_ID              char(32)      NULL,
     Department_Name          nvarchar(300) NULL,
