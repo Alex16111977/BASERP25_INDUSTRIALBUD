@@ -334,6 +334,42 @@ ROW(
 Контрагенты→Партнеры; дзеркалить Fact_Cashflow). OperObject/Intangible —
 без Dim у моделі (drill-down наступний цикл, не блокує).
 
+**+2026-05-18 (`Свод_РасчетыСПартнерами` → субконто Контрагент/Договор/
+Партнёр):** 1С тепер наповнює виміри РС `Контрагент`/`Партнер`/`Договор`
+для розрахункових Source з `АналитикаУчетаПоПартнерам`. **Модель PL.pbix
+НЕ змінювалась** — зв'язки `Fact_Balance[Counterparty_ID]→Контрагенты`
+та `[Contract_ID]→ДоговорыКонтрагентов` вже існують (з List, див. вище
+рядки 303–305); `[SettlementObj_ID]→ОбъектыРасчetов` теж. Раніше
+`Counterparty_ID/Contract_ID` у Fact_Balance були NULL для розрахунків
+(регістр не наповнювався) → drill-down порожній. Після доробки 1С +
+перепроведення янв2026 + `--run-once fact_balance --period 2026-01`
+(run_id=290) деталі розрахунків мають `Counterparty_ID/Contract_ID/
+Partner_ID` 100%, FK→Dim 0 orphans (`verify_olap_balance_raschety_
+kontragent.py` PASS), повний баланс незмінний (Σ Sum_Close=0, Актив
+288 787 750,11). **Дія користувача:** Power BI Desktop → **Refresh**
+(Power Query тягне свіжий Fact_Balance) → **Ctrl+S**. Зміни моделі не
+потрібні (нічого не створювалось).
+
+> ⚠️ **РЕ-ETL ПО КОЖНОМУ МІСЯЦЮ ОКРЕМО (lesson 2026-05-19):** доробку
+> 2026-05-18 (run_id=290) застосували **лише до янв2026**. Грудень2025 та
+> лютий2026 у `Fact_Balance` лишались з пустим `Counterparty_ID` для
+> `РасчетыСКлиентамиПоСрокам`/`РасчетыСПоставщикамиПоСрокам` → drill-down
+> контрагентів у звіті порожній за ці місяці (1С-регістр
+> `А_ОтчетБаланс_Свод` за грудень контрагентів МАВ — 1995/2038 +284/298;
+> stale була тільки OLAP-копія). **Корінь:** `python main.py` (без
+> прапорців) виконує лише `dim_catalogs/fact_pnl/fact_cashflow` —
+> **`fact_balance` НЕ у дефолті** (див. ETL §Default mode), тож звичайний
+> прогон + PBI Refresh Balance НЕ оновлює. Лікування — окремо per-period:
+> `python main.py --run-once fact_balance --period 2025-12` (run_id=294,
+> 7757) + `--period 2026-02` (run_id=295, 8321). Після цього Dec/Jan/Feb
+> `cp_filled` збігається з 1С (Dec 284/1995, Feb 404/1970). **Правило:**
+> після БУДЬ-ЯКОЇ 1С-доробки субконто `А_ОтчетБаланс_Свод` ре-ETL
+> `fact_balance` треба прогнати **за КОЖЕН вже завантажений місяць**, не
+> лише за поточний. Діагностика: `Python/test/test_dec2025_reg_
+> counterparty.py` (Section 1 — 1С vs OLAP, без date-параметрів).
+> **Дія користувача:** Power BI Desktop → **Refresh** (свіжий Fact_Balance
+> Dec/Feb) → **Ctrl+S**.
+
 > ⚠️ **Знайдено баг-шум авто-детекту (НЕ виправлено, поза запитом):**
 > Power BI авто-створив зв'язки по generic-колонці `Hierarchy_Path`:
 > `СтатьиДвиженияДенежныхСредств[Hierarchy_Path]↔Номенклатура` (BothDirections,
@@ -413,10 +449,29 @@ Activate`. **Загальне правило:** після додавання Di
 між службовими стовпцями різних Dim і видаляти їх. `verify_olap_balance_
 tippokazatelya.py` PASS (TipPokazatelya 0 NULL, FK→Dim 100%, «Налоги»→
 Пассив, ПОЛНЫЙ БАЛАНС дек 278 093 267,32 / янв 288 787 750,11 ==
-штатний звіт). Метадані зв'язку in-memory → **Ctrl+S**; зріз бажано
-по `ТипПоказателя[TipPokazatelya_Name]` (Актив/Пассив).
+штатний звіт). Метадані зв'язку in-memory → **Ctrl+S**.
 
-### 13.3 DAX-міри (Table_Measures, displayFolder `Balance`) — 8
+**+ Стандартизація під 1С-нотацію (2026-05-19, через MCP, образець
+§13.2-bis ТипыНалогов / §13.8 еталон):** колонку `TipPokazatelya_Name`
+перейменовано на видиму **«ТипПоказателя»** (`column_operations Rename`;
+sourceColumn лишився `TipPokazatelya_Name`), `sortByColumn=EnumOrder`;
+службові `TipPokazatelya` (ключ FK), `EnumOrder`, `Loaded_At` →
+`isHidden=true` (`column_operations Update`). Зв'язок
+`Fact_Balance[TipPokazatelya]→ТипПоказателя[TipPokazatelya]` цілий
+(приховання ключа НЕ ламає зв'язок — прецедент §13.8 Cash_Account_ID;
+`relationship List`=40, усі active, хибних авто-зв'язків між службовими
+стовпцями нема). DAX-перевірка: таблиця `ТипПоказателя` 4 рядки, сорт по
+`EnumOrder` (Актив=0 / Пассив=1 / Актив/Пассив=2 / (Не визначено)=99).
+**In-memory → Ctrl+S.** Зріз по видимій колонці (Актив/Пассив);
+службові ключ/порядок/Loaded_At сховані як у `ТипыНалогов`/
+`СтруктураПредприятия`. **Уточнення 2026-05-19 (користувач у PBI
+Desktop, збережено 11:35):** видиму колонку скорочено
+**«ТипПоказателя» → «Тип»** → актуальне посилання `'ТипПоказателя'[Тип]`
+(`column_operations List` підтвердив: `TipPokazatelya`/`EnumOrder`/
+`Loaded_At` лишились прихованими, sortByColumn=EnumOrder, зв'язок
+`Fact_Balance[TipPokazatelya]→ТипПоказателя` цілий).
+
+### 13.3 DAX-міри (Table_Measures, displayFolder `Balance`) — 10 (+1 у `Balance\Фільтри`)
 
 ```dax
 [Баланс Вх]     = SUM(Fact_Balance[Sum_Open])
@@ -431,9 +486,32 @@ tippokazatelya.py` PASS (TipPokazatelya 0 NULL, FK→Dim 100%, «Налоги»�
          - CALCULATE([Баланс Вих],'Dim_PAP_Articles'[AktivPassiv]="AktivPassiv",
                       Fact_Balance[Sum_Close] < 0)
 [Контроль Актив-Пассив] = [Актив] - [Пассив]
+[Баланс Вих (абс)] = ABS([Баланс Вих])   // 2026-05-19; formatString #,0.00;-#,0.00;
+[Видимість рядка Баланс] =               // 2026-05-19; displayFolder Balance\Фільтри; formatString 0
+    VAR Close_ = SUM(Fact_Balance[Sum_Close])
+    RETURN IF(Close_ <> 0, 1, BLANK())
 ```
 
 Двосторонні `AktivPassiv` діляться по знаку Sum_Close (як Налоги, канон OD-9).
+
+`[Баланс Вих (абс)]` (2026-05-19, через MCP `measure_operations Create`,
+образець `Сума казна ДДС (абс)` / `Сума план ДДС (об'єкт) (абс)`) — модуль
+`[Баланс Вих]`, щоб у матриці Актив/Пасив пасив (від'ємне сальдо)
+відображався з додатним знаком. displayFolder `Balance`, формат як у
+ДДС-(абс). DAX-перевірка (по `ТипПоказателя[Тип]`): Актив 845 205 614,22
+(без змін) / Пассив −845 175 060,96 → **+845 175 060,96**. In-memory →
+Ctrl+S.
+
+`[Видимість рядка Баланс]` (2026-05-19, через MCP `measure_operations
+Create`, образець `[Видимість рядка ДДС план-казна (місяць)]` /
+`[Видимість рядка PL]`) — helper для приховування порожніх рядків у
+матрицях Балансу: `1` якщо `Sum_Close (== [Баланс Вих]) <> 0`, інакше
+`BLANK`. displayFolder **`Balance\Фільтри`**, formatString `0`.
+**Застосування:** Filters pane матриці → `Filters on this visual` (НЕ `on
+this page`) → поле `Видимість рядка Баланс` → `is not blank`. Перевірено
+DAX (по `ТипПоказателя[Тип]`): Актив/Пассив (Sum_Close≠0) → `1`; рядки з
+нульовим сальдо → `BLANK` (приховуються). Від'ємне сальдо (Пассив) дає
+`1` — ховаються лише справжні нулі. In-memory → Ctrl+S.
 
 ### 13.4 Verified (DAX, січень 2026/ТОВ, після Refresh Fact_Balance+Dim_PAP_Articles)
 
@@ -552,3 +630,47 @@ Level1..5, усі `isHidden`) → Refresh `Склады` → `ИерархияС
 > ⚠️ **Усі 5 ієрархій + Dim-зміни — in-memory.** Зберегти **Ctrl+S** у Power
 > BI Desktop. (Дані Dim_Warehouses в OlapBASERP уже оновлені ETL — Refresh
 > моделі підтягне; при наступному відкритті після Ctrl+S усе на місці.)
+
+### 13.10 Розширення ДоговорыКонтрагентов + ФінАгенти + ТипиДоговорів (2026-05-19)
+
+#### Виконано через MCP (in-memory)
+
+**Таблиця `ДоговорыКонтрагентов`** — 8 нових колонок (sourceColumn→RU-назва):
+
+| sourceColumn | RU-назва в моделі |
+|---|---|
+| `Is_FinAgent_Contract` | Це договір фін.агента |
+| `TipDogovora` | Тип договора |
+| `Department_Name` | Підрозділ (бух.) |
+| `Dept_OkazUslug_Name` | Підрозділ (послуги між підр.) |
+| `Partner_Name` | Партнер |
+| `Counterparty_Name` | Контрагент |
+| `DDS_Article_Forced_Name` | Стаття ДДС (осн. примусово) |
+| `Org_Buh_Name` | Організація (бух.) |
+
+Технічна колонка `FinAgent_ID` — прихована (FK для snowflake-зв'язку).
+
+**Нова таблиця `ФінАгенти`** (`Dim_FinAgents`): `FinAgent_ID` прихований,
+`FinAgent_Name`→«ФінАгент»; решта тех. колонки приховані.
+
+**Snowflake-зв'язок** `ДоговорыКонтрагентов[FinAgent_ID]→ФінАгенти[FinAgent_ID]`
+(Many→One, active) — створено через MCP.
+
+#### User-gated (виконати у Power BI Desktop)
+
+Наступні дії **ще не виконані** (потребують Power BI Desktop):
+
+1. **Refresh `ОбъектыРасчетов`** — 8 нових колонок (`TipRaschetov`, `TipObjektaRaschetov`,
+   `Partner_Name`, `Department_Name`, `Counterparty_ID`, `Contract_ID`, `Object_ID`,
+   `Object_Type_Name`) ще не в моделі; після Refresh перейменувати/сховати по аналогії.
+2. **Додати таблицю `ТипиДоговорів`** — native query:
+   ```sql
+   SELECT TipDogovora, TipDogovora_Name, EnumOrder FROM dbo.Dim_TipyDogovorov
+   ```
+3. **Створити зв'язок** `ДоговорыКонтрагентов[TipDogovora]→ТипиДоговорів[TipDogovora]`
+   (Many→One, active).
+4. **Refresh + Ctrl+S** — MCP-зміни in-memory; нова snowflake-зв'язок потребує пересчёту
+   моделі в Desktop. БЕЗ Ctrl+S усі зміни (MCP + нові зв'язки) втрачаються.
+
+> ⚠️ Зміни MCP **in-memory** — обов'язково **Ctrl+S у Power BI Desktop** після
+> всіх user-gated дій. Без збереження зміни сесії будуть втрачені.
