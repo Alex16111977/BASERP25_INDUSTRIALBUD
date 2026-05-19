@@ -196,39 +196,35 @@
     {
       "step_id": "dim_contracts",
       "extractor": {
-        "type": "sql_backend",
-        "object": "Справочник.ДоговорыКонтрагентов",
-        "fields": [
-          "Ссылка",
-          "Наименование",
-          "Контрагент",
-          "ПометкаУдаления"
-        ]
+        "type": "raw_sql",
+        "sql": "SELECT d._IDRRef AS Ссылка, d._Description AS Наименование, d._Marked AS ПометкаУдаления, d._Fld54925 AS ЭтоДоговорФинАгента, d._Fld28847RRef AS ТипДоговора, d._Fld54926RRef AS ФинАгент, sp1._Description AS ПодразделениеНаим, sp2._Description AS ПодрОказУслугНаим, p._Description AS ПартнерНаим, k._Description AS КонтрагентНаим, dds._Description AS СтатьяДДСОснПринудНаим, org._Description AS ОргБухНаим FROM _Reference171 d LEFT JOIN _Reference540 sp1 ON sp1._IDRRef = d._Fld28841RRef LEFT JOIN _Reference540 sp2 ON sp2._IDRRef = d._Fld55513RRef LEFT JOIN _Reference360 p ON p._IDRRef = d._Fld28840RRef LEFT JOIN _Reference263 k ON k._IDRRef = d._Fld28835RRef LEFT JOIN _Reference529 dds ON dds._IDRRef = d._Fld55916RRef LEFT JOIN _Reference329 org ON org._IDRRef = d._Fld54493RRef UNION ALL SELECT CAST(0x00000000000000000000000000000001 AS varbinary(16)), N'(Пусто)', CAST(0x00 AS varbinary(1)), CAST(0x00 AS varbinary(1)), CAST(0x00000000000000000000000000000000 AS varbinary(16)), CAST(0x00000000000000000000000000000000 AS varbinary(16)), NULL, NULL, NULL, NULL, NULL, NULL"
       },
       "transformer": {
-        "steps": [
-          "varbinary_to_uuid",
-          "column_mapper"
-        ],
+        "steps": ["varbinary_to_uuid", "enum_resolver", "column_mapper"],
         "options": {
+          "enum_resolver": {
+            "column_to_enum": {"ТипДоговора": "Перечисление.ТипыДоговоров"}
+          },
           "column_mapper": {
             "column_map": {
               "Ссылка": "Contract_ID",
               "Наименование": "Contract_Name",
-              "Контрагент": "Counterparty_ID",
-              "ПометкаУдаления": "Marked_For_Deletion"
+              "ПометкаУдаления": "Marked_For_Deletion",
+              "ЭтоДоговорФинАгента": "Is_FinAgent_Contract",
+              "ТипДоговора": "TipDogovora",
+              "ФинАгент": "FinAgent_ID",
+              "ПодразделениеНаим": "Department_Name",
+              "ПодрОказУслугНаим": "Dept_OkazUslug_Name",
+              "ПартнерНаим": "Partner_Name",
+              "КонтрагентНаим": "Counterparty_Name",
+              "СтатьяДДСОснПринудНаим": "DDS_Article_Forced_Name",
+              "ОргБухНаим": "Org_Buh_Name"
             },
-            "defaults": {
-              "Is_Group": false,
-              "Marked_For_Deletion": false
-            }
+            "defaults": {"Is_Group": false, "Marked_For_Deletion": false}
           }
         }
       },
-      "loader": {
-        "target_table": "Dim_Contracts",
-        "mode": "full_reload"
-      }
+      "loader": {"target_table": "Dim_Contracts", "mode": "full_reload"}
     },
     {
       "step_id": "dim_items",
