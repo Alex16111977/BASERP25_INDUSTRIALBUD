@@ -364,36 +364,37 @@
     {
       "step_id": "dim_objekty_raschetov",
       "extractor": {
-        "type": "sql_backend",
-        "object": "Справочник.ОбъектыРасчетов",
-        "fields": [
-          "Ссылка",
-          "Наименование",
-          "ПометкаУдаления"
-        ]
+        "type": "raw_sql",
+        "sql": "SELECT d._IDRRef AS Ссылка, d._Description AS Наименование, d._Marked AS ПометкаУдаления, d._Fld32485RRef AS ТипРасчетов, d._Fld32487RRef AS ТипОбъектаРасчетов, d._Fld32500_RRRef AS КонтрагентUUID, d._Fld32501_RRRef AS ДоговорUUID, d._Fld32484_RRRef AS ОбъектUUID, p._Description AS ПартнерНаим, sp._Description AS ПодразделениеНаим, mo._Description AS ОбъектТипНаим FROM _Reference319 d LEFT JOIN _Reference360 p ON p._IDRRef = d._Fld32498RRef LEFT JOIN _Reference540 sp ON sp._IDRRef = d._Fld32491RRef LEFT JOIN _Reference211 mo ON mo._IDRRef = d._Fld32486RRef UNION ALL SELECT CAST(0x00000000000000000000000000000001 AS varbinary(16)), N'(Пусто)', CAST(0x00 AS varbinary(1)), CAST(0x00000000000000000000000000000000 AS varbinary(16)), CAST(0x00000000000000000000000000000000 AS varbinary(16)), CAST(0x00000000000000000000000000000000 AS varbinary(16)), CAST(0x00000000000000000000000000000000 AS varbinary(16)), CAST(0x00000000000000000000000000000000 AS varbinary(16)), NULL, NULL, NULL"
       },
       "transformer": {
-        "steps": [
-          "varbinary_to_uuid",
-          "column_mapper"
-        ],
+        "steps": ["varbinary_to_uuid", "enum_resolver", "column_mapper"],
         "options": {
+          "enum_resolver": {
+            "column_to_enum": {
+              "ТипРасчетов": "Перечисление.ТипыРасчетовСПартнерами",
+              "ТипОбъектаРасчетов": "Перечисление.ТипыОбъектовРасчетов"
+            }
+          },
           "column_mapper": {
             "column_map": {
               "Ссылка": "SettlementObj_ID",
               "Наименование": "SettlementObj_Name",
-              "ПометкаУдаления": "Marked_For_Deletion"
+              "ПометкаУдаления": "Marked_For_Deletion",
+              "ТипРасчетов": "TipRaschetov",
+              "ТипОбъектаРасчетов": "TipObjektaRaschetov",
+              "ПартнерНаим": "Partner_Name",
+              "ПодразделениеНаим": "Department_Name",
+              "КонтрагентUUID": "Counterparty_ID",
+              "ДоговорUUID": "Contract_ID",
+              "ОбъектUUID": "Object_ID",
+              "ОбъектТипНаим": "Object_Type_Name"
             },
-            "defaults": {
-              "Marked_For_Deletion": false
-            }
+            "defaults": {"Marked_For_Deletion": false}
           }
         }
       },
-      "loader": {
-        "target_table": "Dim_ObjektyRaschetov",
-        "mode": "full_reload"
-      }
+      "loader": {"target_table": "Dim_ObjektyRaschetov", "mode": "full_reload"}
     },
     {
       "step_id": "dim_users",
