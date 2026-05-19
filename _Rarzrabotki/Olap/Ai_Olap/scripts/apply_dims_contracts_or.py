@@ -7,12 +7,14 @@ sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[1]))
 from ai_olap.core.connections import get_olap_sql
 
 HERE = pathlib.Path(__file__).parent
-for fname in ("ddl_dim_contracts.sql", "ddl_dim_objekty_raschetov.sql"):
-    ddl = (HERE / fname).read_text(encoding="utf-8")
-    with get_olap_sql() as c:
-        cur = c.cursor()
+# Одно соединение + единая транзакция: парная schema-миграция атомарна
+# (падение второго DDL откатывает DROP первого).
+with get_olap_sql() as c:
+    cur = c.cursor()
+    for fname in ("ddl_dim_contracts.sql", "ddl_dim_objekty_raschetov.sql"):
+        ddl = (HERE / fname).read_text(encoding="utf-8")
         for batch in [b.strip() for b in ddl.split("\nGO") if b.strip()]:
             cur.execute(batch)
-        c.commit()
-    print(f"applied {fname}")
+        print(f"applied {fname}")
+    c.commit()
 print("PASS: Dim_Contracts + Dim_ObjektyRaschetov recreated")
