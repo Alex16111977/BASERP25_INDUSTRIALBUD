@@ -8,7 +8,7 @@ IF OBJECT_ID('dbo.Dim_TipyDogovorov', 'U') IS NOT NULL
 GO
 CREATE TABLE dbo.Dim_TipyDogovorov (
     TipDogovora      varchar(50)   COLLATE Cyrillic_General_CI_AS NOT NULL PRIMARY KEY,
-    TipDogovora_Name nvarchar(150) NOT NULL,
+    TipDogovora_Name nvarchar(100) NOT NULL,
     EnumOrder        int           NOT NULL,
     Loaded_At        datetime2     NOT NULL DEFAULT SYSDATETIME()
 );
