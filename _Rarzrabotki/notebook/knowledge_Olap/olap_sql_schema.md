@@ -60,6 +60,7 @@ OlapBASERP/
 │   ├── Dim_Items
 │   ├── Dim_ItemGroups
 │   ├── Dim_Individuals
+│   ├── Dim_ObjektyRaschetov  — Справочник.ОбъектыРасчетов (плоский, Fact_Balance.SettlementObj_ID)
 │   ├── Dim_Users
 │   ├── Dim_BankAccounts      — + Account_Type ('Bank'/'Cash') + Currency_ID
 │   ├── Dim_Currencies
@@ -209,7 +210,15 @@ CREATE TABLE Fact_CF_Balance (
 
 ---
 
-## 16 Dim таблиць
+## 17 Dim таблиць
+
+> +1 з 2026-05-17: **Dim_ObjektyRaschetov** (`Справочник.ОбъектыРасчетов`,
+> `_Reference319` — фізично лише `_IDRRef/_Description/_Marked` → плоский, без
+> коду/ієрархії; sql_backend full_reload; FK `Fact_Balance.SettlementObj_ID`,
+> джерело `Свод_РасчетыСПартнерами`). DDL:
+> `scripts/ddl_dim_objekty_raschetov.sql` (idempotent DROP+CREATE). Колонки:
+> `SettlementObj_ID char(32) PK, SettlementObj_Name nvarchar(150),
+> Marked_For_Deletion bit, Loaded_At datetime2`.
 
 ### Common pattern (для більшості Dim)
 
@@ -264,6 +273,7 @@ UNION 2 справочників 1С: `БанковскиеСчетаОрган�
 | Dim_Items | `Справочник.Номенклатура` | — |
 | Dim_ItemGroups | `Справочник.Номенклатура` (filter ЭтоГруппа=Истина) | — |
 | Dim_Individuals | `Справочник.ФизическиеЛица` | — |
+| Dim_ObjektyRaschetov | `Справочник.ОбъектыРасчетов` (`_Reference319`, плоский) | Fact_Balance.SettlementObj_ID |
 | Dim_Users | `Справочник.Пользователи` | — |
 | Dim_BankAccounts | UNION (`БанковскиеСчетаОрганизаций` + `Кассы`) | + Account_Type, Currency_ID |
 | Dim_Currencies | `Справочник.Валюты` | — |
@@ -455,11 +465,15 @@ ORDER BY TABLE_NAME;
 DDL: `_Rarzrabotki/Python/Olap/ddl/07_balance.sql` (applier `apply_07_balance.py`,
 ідемпотентно `IF OBJECT_ID IS NULL`).
 
-**`Fact_Balance`** (26 кол.): `Balance_ID bigint IDENTITY PK`, `Period_Month date`,
-`Period datetime2`, `Source varchar(40)` (enum А_ИсточникБаланса, 7 знач.),
+**`Fact_Balance`** (**27 кол.**, 2026-05-18 +TaxType): `Balance_ID bigint IDENTITY PK`, `Period_Month date`,
+`Period datetime2`, `Source varchar(40)` (enum **ИсточникиУправленческогоБаланса**, 31 знач., _EnumOrder 0..30 — типове перечислення ERP; виправлено 2026-05-17, НЕ кастомне А_ИсточникБаланса; **`ПустаяСсылка`** для прямих рухів ПАП — `Свод_ПрочиеАктивыПассивы_Прямой`),
 `Recorder_Balance_ID char(32)` (Док.А_ФинРез_Баланс); 13 dim `char(32)`
 (Organization/Department/PAP_Article/Item/Counterparty/Partner/Warehouse/
-OperObject/Contract/Individual/Cash/SettlementObj/Intangible); `Analytics1..3
+OperObject/Contract/Individual/Cash/SettlementObj/Intangible);
+**`TaxType varchar(50) COLLATE Cyrillic_General_CI_AS NULL`** (enum
+`Перечисление.ТипыНалогов` 14 знач., метаімена; заповнено лише у статті
+«Налоги», решта `"ПустаяСсылка"`; ALTER ADD 2026-05-18 для
+`Свод_ПрочиеАктивыПассивы_Прямой` розшифровки ПАП.Аналитика); `Analytics1..3
 nvarchar(150)`; 4 ресурси `decimal(15,2)` `Sum_Open/Inflow/Outflow/Close`;
 `Loaded_At`; 4 індекси (Period_Source, Article, Individual, SettlementObj).
 
@@ -468,4 +482,101 @@ nvarchar(150)`; 4 ресурси `decimal(15,2)` `Sum_Open/Inflow/Outflow/Close`
 `AktivPassiv varchar(15)` (Aktiv/Passiv/AktivPassiv — реквізит АктивПассив, OD-9),
 `Marked_For_Deletion bit`, `Loaded_At`.
 
-Row counts (live, січень 2026/ТОВ): `Fact_Balance` 11 561, `Dim_PAP_Articles` 54.
+**`Dim_TaxTypes`** (2026-05-18, `Перечисление.ТипыНалогов` — образець
+Dim_ObjektyRaschetov): `TaxType varchar(50) COLLATE Cyrillic_General_CI_AS
+PK` (метаім'я == Fact_Balance.TaxType), `TaxType_Name nvarchar(100)`
+(синонім 1С UI), `EnumOrder int`, `Loaded_At`. **15 рядків** (14 enum +
+`ПустаяСсылка`/«(Не налог)» для НЕ-«Налоги»). DDL
+`scripts/ddl_dim_tax_types.sql`; сидер `scripts/seed_dim_tax_types.py`
+(імена/синоніми з 1С COM — `_Enum1651` у SQL backend не має імен, frozen).
+FK `Fact_Balance.TaxType→Dim_TaxTypes.TaxType` 100% (verify 0 orphans).
+
+Row counts (live, січень 2026/ТОВ): `Fact_Balance` 7 643 (2026-01),
+`Dim_PAP_Articles` 54, `Dim_TaxTypes` 15.
+
+### Оновлення 2026-05-17 — `Свод_ДенежныеСредства` LIVE + `Dim_Warehouses` (26 → 27 таблиць)
+
+**Fact_Balance** тепер містить 5 Source (Себест + 4 ден.): окрім
+`СебестоимостьТоваров` — `ДенежныеСредстваБезналичные`/`Наличные`/`ВПути`/
+`УПодотчетныхЛиц` (Свод_ДенежныеСредства в 1С). Колонки незмінні; заповнюються
+`Cash_ID` (безнал→БанкСчёт, нал→Касса), `Individual_ID` (підзвіт→ПодотчетноеЛицо),
+`Warehouse_ID`/`Item_ID` (Себест). Січень/ТОВ: Σ ден. групи Sum_Close=
+**75 265 344,95**; «безнал» КО=50 435 887,99. ETL `fact_balance.json` без змін
+(raw_sql фільтрує лише Орг+період, Source НЕ фільтрує — нові рядки тягне сам).
+
+**`Dim_Warehouses`** (нова, 27-а таблиця; для `Fact_Balance.Warehouse_ID`):
+```sql
+CREATE TABLE Dim_Warehouses (
+    Warehouse_ID         char(32) PRIMARY KEY,   -- Справочник.Склады
+    Warehouse_Name       nvarchar(250) NOT NULL,
+    Parent_ID            char(32) NULL,          -- ієрархія (Иерархия груп і елементів)
+    Is_Group             bit NOT NULL DEFAULT 0,
+    Marked_For_Deletion  bit NOT NULL DEFAULT 0,
+    Hierarchy_Path       nvarchar(500) NULL,
+    Hierarchy_Depth      int NULL,
+    Level1..Level5       nvarchar(150) NULL,      -- для PBI ієрархії ИерархияСкладов
+    Loaded_At            datetime2 NOT NULL DEFAULT SYSDATETIME()
+);
+```
+DDL `ddl/08_dim_warehouses.sql` (applier `apply_08_dim_warehouses.py`).
+⚠️ `Справочник.Склады` **БЕЗ Кода** (Длина кода=0 → `_Reference502` не має
+`_Code`, але має `_ParentIDRRef`/`_Folder` — ієрархічний). ETL крок
+`dim_warehouses` у `dim_catalogs.json` = recursive-CTE по `_Reference502`
+БЕЗ `_Code` (паттерн dim_organizations). Live: **347 рядків, 303 групи,
+Level1..5 заповнені**. `refresh_mapping.py` WHITELIST += `Справочник.Склады`
+(→ `_Reference502` у baserp_storage.json, 84 об'єкти).
+
+> **Урок:** відсутність `_Code` ≠ неієрархічний довідник (catalog може мати
+> Длина кода=0). Ієрархічність — по Конфігуратору / фізичних
+> `_ParentIDRRef`+`_Folder`, перевірка `scripts/probe_ref502_columns.py`.
+
+Повний список тепер **27 рядків** (24 базові + Fact_Balance + Dim_PAP_Articles
++ Dim_Warehouses).
+
+### Оновлення 2026-05-19 — розширення Dim_Contracts/Dim_ObjektyRaschetov + нові Dim_TipyDogovorov/Dim_FinAgents (29 таблиць)
+
+**`Dim_Contracts`** пересоздан (idempotent DROP+CREATE; DDL `scripts/ddl_dim_contracts.sql`).
+Нові колонки (додано до всіх старих):
+
+| Колонка | Тип | Опис |
+|---|---|---|
+| `Is_FinAgent_Contract` | `bit NULL` | Признак договора фінагента (NULL-able — інакше транзит старого sql_backend ламався) |
+| `TipDogovora` | `varchar(50)` | Метаімя `Перечисление.ТипыДоговоров` (FK→Dim_TipyDogovorov) |
+| `FinAgent_ID` | `char(32)` | FK→Dim_FinAgents (Справочник.А_ФинАгенты) |
+| `Department_Name` | `nvarchar(300)` | Денорм. назва підрозділу (бух.) |
+| `Dept_OkazUslug_Name` | `nvarchar(300)` | Підрозділ-надавач послуг між підрозділами |
+| `Partner_Name` | `nvarchar(300)` | Партнер договора |
+| `Counterparty_Name` | `nvarchar(300)` | Контрагент договора |
+| `DDS_Article_Forced_Name` | `nvarchar(300)` | Стаття ДДС (основна примусово) |
+| `Org_Buh_Name` | `nvarchar(300)` | Організація (бух.) |
+
+Джерело: `_Reference171` (ДоговорыКонтрагентов); денорм через LEFT JOIN `_Reference540/_Reference360/_Reference263/_Reference529/_Reference329`.
+
+**`Dim_ObjektyRaschetov`** пересоздан (DDL `scripts/ddl_dim_objekty_raschetov.sql`). Нові колонки:
+`TipRaschetov varchar(50)` / `TipObjektaRaschetov varchar(50)` (enum метаімена),
+`Partner_Name` / `Department_Name` (nvarchar(300)),
+`Counterparty_ID` / `Contract_ID` / `Object_ID` (char(32), composite UUID з `_Fld...RRef`),
+`Object_Type_Name nvarchar(300)` (назва типу посилання об'єкта через `ТипСсылки`→`_Reference211`).
+Джерело: `_Reference319`.
+
+**`Dim_TipyDogovorov`** (нова, DDL `scripts/ddl_dim_tipy_dogovorov.sql`):
+`TipDogovora varchar(50) COLLATE Cyrillic_General_CI_AS PK` (метаімя),
+`TipDogovora_Name nvarchar(100)`, `EnumOrder int`, `Loaded_At`.
+**12 рядків** (11 знач. `Перечисление.ТипыДоговоров` + ПустаяСсылка).
+Сид: `scripts/seed_dim_tipy_dogovorov.py` (COM, паттерн Dim_TaxTypes). **Вне DEFAULT pipelines** — запускати окремо.
+
+**`Dim_FinAgents`** (нова, DDL `scripts/ddl_dim_fin_agents.sql`):
+`FinAgent_ID char(32) PK`, `FinAgent_Name nvarchar(300)`, `Loaded_At`.
+**13 рядків** (`_Reference54722` + unknown-member ПустаяСсылка). ETL-шаг `dim_fin_agents`
+у `pipelines/dim_catalogs.json` (`raw_sql`-крок; входить у default dim_catalogs).
+
+FK: `Dim_Contracts.TipDogovora→Dim_TipyDogovorov.TipDogovora` і
+`Dim_Contracts.FinAgent_ID→Dim_FinAgents.FinAgent_ID` (verify 0 orphans).
+
+**WHITELIST** `mapping/refresh_mapping.py` +5: `Справочник.А_ФинАгенты`,
+`Справочник.ИдентификаторыОбъектовМетаданных`, `Перечисление.ТипыДоговоров`,
+`Перечисление.ТипыРасчетовСПартнерами`, `Перечисление.ТипыОбъектовРасчетов`;
+`baserp_storage.json` перегенерований.
+
+Row counts (verify PASS): Dim_Contracts=8248, Dim_ObjektyRaschetov=14109, Dim_TipyDogovorov=12, Dim_FinAgents=13.
+Повний список тепер **29 таблиць** (+ Dim_TipyDogovorov + Dim_FinAgents).

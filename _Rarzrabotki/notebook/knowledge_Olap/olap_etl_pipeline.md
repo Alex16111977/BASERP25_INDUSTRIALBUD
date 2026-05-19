@@ -317,7 +317,7 @@ Pipeline крок викликає їх через `tpipe.apply(rows, steps_list
 ### main.py — режими CLI
 
 ```bash
-python main.py                                           # DEFAULT: повний прогон (validate + dim_catalogs + fact_pnl + fact_cashflow), TRUNCATE+INSERT всіх дат
+python main.py                                           # DEFAULT: повний прогон (validate + 3 Dim + 3 Fact, усі робочі), TRUNCATE+INSERT всіх дат
 python main.py --period 2026-02                          # Той самий ланцюжок, але Fact-pipelines обмежуються одним місяцем (idempotent DELETE WHERE + INSERT)
 python main.py --validate                                # перевіряє всі pipelines/*.json по schema
 python main.py --run-once dim_catalogs                   # один pipeline (Dim — без --period)
@@ -329,25 +329,32 @@ python main.py --refresh-mapping                         # скинути кеш
 
 ### Default mode (без прапорців) — `cmd_all`
 
-Коли не передано жодного режим-flag, виконуються **3 pipeline'и підряд** з `ALL_DEFAULT_PIPELINES = ["dim_catalogs", "fact_pnl", "fact_cashflow"]`:
+Коли не передано жодного режим-flag, виконуються **6 pipeline'ів підряд** (3 Dim + 3 Fact) з `ALL_DEFAULT_PIPELINES`:
 
 1. `validate` — перевірка JSON-конфігів
-2. `dim_catalogs` — full reload 16 Dim + 1 Bridge (~55 934 рядків)
-3. `fact_pnl` — full reload `_InfoRg55970` (~3 937 рядків зараз; всі періоди коли проведуть інші місяці)
-4. `fact_cashflow` — full reload `_InfoRg55992` (~4 652 рядки)
+2. `dim_catalogs` — full reload 16 Dim + 1 Bridge
+3. `dim_pap_articles` — full reload Dim_PAP_Articles (FK Fact_Balance, канон OD-9)
+4. `dim_denezhnye_sredstva` — full reload Dim_DenezhnyeSredstva (FK Fact_Cashflow/Balance)
+5. `fact_pnl` — full reload `_InfoRg55970`
+6. `fact_cashflow` — full reload `_InfoRg55992`
+7. `fact_balance` — full reload `_InfoRg56091` (idempotent_period без `--period` → full_reload усіх дат)
 
-Зупиняється на першій помилці. Час end-to-end ~2 секунди при чистій localhost інстансі. **`fact_cf_balance`** і `etl_runs_keepalive` НЕ входять у дефолт; запускати окремо через `--run-once`.
+Зупиняється на першій помилці. **Виключені з дефолту** (зламані/неповні — падали б весь ланцюг; тримати поза `ALL_DEFAULT_PIPELINES` до фіксу, запускати/чинити окремо через `--run-once`):
+- `dim_documents` — джерело `РегистрСведений.А_ДокументРасшифровка` ВІДСУТНЄ у поточній BaseERP (немає `_InfoRg56031`). Повернути коли об'єкт створять у 1С.
+- `fact_cf_balance` — COM-запит `.ОстаткиИОбороти` падає синтаксичною помилкою 1С (перевірено 2026-05-19, run_id=296 Failed); ще й фреймворк не передає `period` у COM-екстрактор. Повернути після фіксу пайплайна.
+- `etl_runs_keepalive` — heartbeat, не data-pipeline.
 
-> **Оновлення 2026-05-17:** `dim_documents` **ВИЛУЧЕНО** з
-> `ALL_DEFAULT_PIPELINES` — його джерело `РегистрСведений.А_ДокументРасшифровка`
-> ВІДСУТНЄ у поточній BaseERP (немає `_InfoRg56031` → весь default-ланцюг
-> падав). У `main.py` залишено коментар з умовою повернення (коли об'єкт буде
-> створений у 1С). Поточний дефолт фактично: `["dim_catalogs", "fact_pnl",
-> "fact_cashflow"]`. **Balance** (`dim_pap_articles` + `fact_balance`) НЕ у
-> дефолті — запускати окремо: `--run-once dim_pap_articles` потім
-> `--run-once fact_balance --period YYYY-MM`. Реальні row-counts повного
-> прогону (full reload): dim_catalogs **61 338**, fact_pnl **12 033**,
-> fact_cashflow **62 045** (усі періоди).
+> **Оновлення 2026-05-19 (на вимогу користувача):** дефолт розширено —
+> `python main.py` (без прапорців) тепер оновлює **усі робочі Dim і Fact за
+> весь період**. `ALL_DEFAULT_PIPELINES = ["dim_catalogs", "dim_pap_articles",
+> "dim_denezhnye_sredstva", "fact_pnl", "fact_cashflow", "fact_balance"]`.
+> Раніше (2026-05-17) Balance/нові Dim були поза дефолтом → `Fact_Balance` не
+> оновлювався звичайним прогоном (першопричина бага «контрагенти Dec2025 не
+> в розшифровці»). Verified row-counts повного прогону 2026-05-19
+> (run_id 297–302, усі Success): dim_catalogs **75 975**, dim_pap_articles
+> **54**, dim_denezhnye_sredstva **5 907**, fact_pnl **12 033**,
+> fact_cashflow **62 045**, fact_balance **23 799** (усі періоди).
+> `--period YYYY-MM` лишається для точкового idempotent-перезавантаження місяця.
 
 ### ai_olap/orchestrator/pipeline.py
 
@@ -611,3 +618,78 @@ dim_organizations). DDL `ddl/08_dim_warehouses.sql` + `apply_08_dim_warehouses.p
 > (GetDBStorageStructureInfo пропускає системні) — для ієрархічних Dim
 > завжди raw_sql recursive-CTE. Відсутність `_Code` (Длина кода=0) ≠
 > неієрархічний — перевіряти Конфігуратор / `_ParentIDRRef`+`_Folder`.
+
+### Оновлення 2026-05-18 — розшифровка `Свод_РасчетыСПартнерами` по Контрагент/Договор/Партнёр
+
+`Свод_РасчетыСПартнерами` (1С) тепер заповнює виміри РС
+`Контрагент`/`Партнер`/`Договор` з `РегистрСведений.АналитикаУчетаПоПартнерам`
+(на деталях; плуги — ПустаяСсылка). **OLAP конфіг/Dim/mapping НЕ
+змінювались** — `pipelines/fact_balance.json` raw_sql вже тягнув
+`r._Fld56098RRef AS Counterparty_ID, r._Fld56099RRef AS Partner_ID,
+r._Fld56102RRef AS Contract_ID` і `column_map` вже мав ці колонки
+(зарезервовано раніше). Раніше колонки були порожні (регістр не
+наповнювався) → у Fact_Balance NULL; після доробки 1С + перепроведення
+ETL просто перечитує регістр.
+
+`mapping/refresh_mapping.py` **НЕ потрібен** (структура РС не змінювалась —
+виміри `Контрагент`/`Партнер`/`Договор` існували в `А_ОтчетБаланс_Свод`
+завжди, додано лише дані). **Лекція:** наповнення вже-наявного виміру РС
+(не новий реквізит) = `--run-once fact_balance --period <re-posted>` і
+все; OLAP нічого не показує, доки ETL не перезапущено ПІСЛЯ
+перепроведення документа.
+
+**Запуск (виконано):** `main.py --run-once fact_balance --period 2026-01`
+(run_id=290, 7721 рядків; користувач перепровів лише янв2026 — для
+дек2025/лют2026 потрібні перепроведення+ETL тих періодів). Dim
+(`Dim_Counterparties`/`Dim_Contracts`/`Dim_Partners`) вже засіяні
+кроком `dim_catalogs` — перезапуск НЕ потрібен (довідники не змінились).
+
+### Оновлення 2026-05-19 — dim_contracts/ObjektyRaschetov → raw_sql + Dim_TipyDogovorov/FinAgents
+
+**WHITELIST `mapping/refresh_mapping.py` +5 об'єктів:**
+`Справочник.А_ФинАгенты`, `Справочник.ИдентификаторыОбъектовМетаданных`,
+`Перечисление.ТипыДоговоров`, `Перечисление.ТипыРасчетовСПартнерами`,
+`Перечисление.ТипыОбъектовРасчетов`. `baserp_storage.json` перегенерований
+(refresh_mapping — строгий WHITELIST; об'єкт не зі списку → нема у mapping).
+
+**FROZEN_ENUMS +3 enum** (`enum_resolver.py`; джерело `scripts/gen_frozen_enums_contracts.py`):
+- `ТипыДоговоров` — 11 значень (порядок = \_EnumOrder; фіз. `_Enum1626`)
+- `ТипыРасчетовСПартнерами` — 5 значень (`_Enum1684`)
+- `ТипыОбъектовРасчетов` — 4 значення (`_Enum1657`)
+
+**`dim_contracts` у `pipelines/dim_catalogs.json` переписано `sql_backend` → `raw_sql`:**
+Джерело `_Reference171` (ДоговорыКонтрагентов); LEFT JOIN для денорм. назв:
+`_Reference540` (підрозділи), `_Reference360` (підрозділ послуг), `_Reference263` (партнери),
+`_Reference529` (контрагенти), `_Reference329` (статті ДДС); `enum_resolver` для TipDogovora;
+нові колонки `Is_FinAgent_Contract/TipDogovora/FinAgent_ID/Department_Name/Partner_Name/…`
+
+**`dim_objekty_raschetov` у `pipelines/dim_catalogs.json` переписано `sql_backend` → `raw_sql`:**
+Джерело `_Reference319` (ОбъектыРасчетов); `enum_resolver` для `TipRaschetov`/`TipObjektaRaschetov`;
+composite UUID (`_Fld...RRef`); `Object_Type_Name` через `ТипСсылки` JOIN `_Reference211`.
+
+**Новий шаг `dim_fin_agents`** у `pipelines/dim_catalogs.json` (`raw_sql`; джерело `_Reference54722`
++ unknown-member; 13 рядків; входить у **default** dim_catalogs — запускається з `python main.py`).
+
+**`Dim_TipyDogovorov` — сид окремо** (не у default pipelines):
+`scripts/seed_dim_tipy_dogovorov.py` (1С COM; паттерн Dim_TaxTypes; 12 рядків);
+запускається вручну після DDL `scripts/ddl_dim_tipy_dogovorov.sql`.
+
+**Verify** (`scripts/verify_olap_contracts_dims.py`) **PASS:**
+Dim_Contracts=8248, Dim_ObjektyRaschetov=14109, Dim_TipyDogovorov=12, Dim_FinAgents=13;
+FK 0 orphans TipDogovora→Dim_TipyDogovorov / FinAgent_ID→Dim_FinAgents; enum=кирилиця.
+Регрес: Fact_Balance незмінний (`verify_olap_balance_tippokazatelya.py` PASS,
+ПОЛНИЙ БАЛАНС дек 278 093 267,32 / янв 288 787 750,11 == штатний звіт).
+Повний `python main.py` зелений (dim_catalogs 75990 рядків, fact_* без змін).
+
+**Verify** `scripts/verify_olap_balance_raschety_kontragent.py` **PASS**
+(янв2026): розрахункові деталі (SettlementObj_ID NOT NULL, 2287) —
+`Counterparty_ID/Contract_ID/Partner_ID` **100% NOT NULL**; плуги
+(SettlementObj_ID NULL) — субконто порожні; FK
+`Counterparty_ID→Dim_Counterparties` / `Contract_ID→Dim_Contracts` /
+`Partner_ID→Dim_Partners` **0 orphans**; повний баланс Σ Sum_Close
+(всі Source) = **0,00**, Σ Актив = **288 787 750,11** == штатний звіт
+(не змінився); статті КО ЗадолженностьКлиентов 60 888 300,36 /
+ПередПоставщиками −131 478 882,01 == регістр/ПАП. Старий
+`verify_olap_balance_raschety.py` має застарілі (до-дрейфові) еталони
+статей (61 165 524,68 …) — для перевірки субконто/FK використовувати
+новий `_kontragent`-скрипт.
