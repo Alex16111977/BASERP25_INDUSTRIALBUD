@@ -42,16 +42,8 @@
     {
       "step_id": "dim_departments",
       "extractor": {
-        "type": "sql_backend",
-        "object": "Справочник.СтруктураПредприятия",
-        "fields": [
-          "Ссылка",
-          "Код",
-          "Наименование",
-          "Родитель",
-          "ЭтоГруппа",
-          "ПометкаУдаления"
-        ]
+        "type": "raw_sql",
+        "sql": "WITH RecCTE AS (SELECT d._IDRRef AS Ссылка, d._Code AS Код, d._Description AS Наименование, d._ParentIDRRef AS Родитель, CAST(0x00 AS varbinary(1)) AS ЭтоГруппа, d._Marked AS ПометкаУдаления, CAST(CONVERT(varchar(32), d._IDRRef, 2) AS nvarchar(500)) AS Hierarchy_Path, 1 AS Hierarchy_Depth, CAST(d._Description AS nvarchar(150)) AS Level1, CAST(NULL AS nvarchar(150)) AS Level2, CAST(NULL AS nvarchar(150)) AS Level3, CAST(NULL AS nvarchar(150)) AS Level4, CAST(NULL AS nvarchar(150)) AS Level5, COALESCE(NULLIF(d._Fld54614RRef, 0x00000000000000000000000000000000), CAST(0x00000000000000000000000000000001 AS varbinary(16))) AS Direction_ID FROM _Reference540 d WHERE d._ParentIDRRef = 0x00000000000000000000000000000000 UNION ALL SELECT d._IDRRef, d._Code, d._Description, d._ParentIDRRef, CAST(0x00 AS varbinary(1)), d._Marked, CAST(r.Hierarchy_Path + N'|' + CONVERT(varchar(32), d._IDRRef, 2) AS nvarchar(500)), r.Hierarchy_Depth + 1, r.Level1, CASE WHEN r.Hierarchy_Depth + 1 = 2 THEN CAST(d._Description AS nvarchar(150)) ELSE r.Level2 END, CASE WHEN r.Hierarchy_Depth + 1 = 3 THEN CAST(d._Description AS nvarchar(150)) ELSE r.Level3 END, CASE WHEN r.Hierarchy_Depth + 1 = 4 THEN CAST(d._Description AS nvarchar(150)) ELSE r.Level4 END, CASE WHEN r.Hierarchy_Depth + 1 = 5 THEN CAST(d._Description AS nvarchar(150)) ELSE r.Level5 END, COALESCE(NULLIF(d._Fld54614RRef, 0x00000000000000000000000000000000), r.Direction_ID, CAST(0x00000000000000000000000000000001 AS varbinary(16))) FROM _Reference540 d INNER JOIN RecCTE r ON d._ParentIDRRef = r.Ссылка) SELECT Ссылка, Код, Наименование, Родитель, ЭтоГруппа, ПометкаУдаления, Hierarchy_Path, Hierarchy_Depth, Level1, Level2, Level3, Level4, Level5, Direction_ID FROM RecCTE UNION ALL SELECT CAST(0x00000000000000000000000000000001 AS varbinary(16)) AS Ссылка, '00-UNK' AS Код, N'(Пусто)' AS Наименование, CAST(0x00000000000000000000000000000000 AS varbinary(16)) AS Родитель, CAST(0x00 AS varbinary(1)) AS ЭтоГруппа, CAST(0x00 AS varbinary(1)) AS ПометкаУдаления, N'(Пусто)' AS Hierarchy_Path, 1 AS Hierarchy_Depth, N'(Пусто)' AS Level1, CAST(NULL AS nvarchar(150)) AS Level2, CAST(NULL AS nvarchar(150)) AS Level3, CAST(NULL AS nvarchar(150)) AS Level4, CAST(NULL AS nvarchar(150)) AS Level5, CAST(0x00000000000000000000000000000001 AS varbinary(16)) AS Direction_ID OPTION (MAXRECURSION 0)"
       },
       "transformer": {
         "steps": [
@@ -61,12 +53,20 @@
         "options": {
           "column_mapper": {
             "column_map": {
+              "Родитель": "Parent_ID",
+              "ЭтоГруппа": "Is_Group",
+              "ПометкаУдаления": "Marked_For_Deletion",
+              "Hierarchy_Path": "Hierarchy_Path",
+              "Hierarchy_Depth": "Hierarchy_Depth",
+              "Level1": "Level1",
+              "Level2": "Level2",
+              "Level3": "Level3",
+              "Level4": "Level4",
+              "Level5": "Level5",
               "Ссылка": "Department_ID",
               "Код": "Department_Code",
               "Наименование": "Department_Name",
-              "Родитель": "Parent_ID",
-              "ЭтоГруппа": "Is_Group",
-              "ПометкаУдаления": "Marked_For_Deletion"
+              "Direction_ID": "Direction_ID"
             },
             "defaults": {
               "Is_Group": false,
@@ -83,16 +83,8 @@
     {
       "step_id": "dim_directions",
       "extractor": {
-        "type": "sql_backend",
-        "object": "Справочник.НаправленияДеятельности",
-        "fields": [
-          "Ссылка",
-          "Код",
-          "Наименование",
-          "Родитель",
-          "ЭтоГруппа",
-          "ПометкаУдаления"
-        ]
+        "type": "raw_sql",
+        "sql": "WITH RecCTE AS (SELECT d._IDRRef AS Ссылка, d._Code AS Код, d._Description AS Наименование, d._ParentIDRRef AS Родитель, d._Folder AS ЭтоГруппа, d._Marked AS ПометкаУдаления, CAST(CONVERT(varchar(32), d._IDRRef, 2) AS nvarchar(500)) AS Hierarchy_Path, 1 AS Hierarchy_Depth, CAST(d._Description AS nvarchar(150)) AS Level1, CAST(NULL AS nvarchar(150)) AS Level2, CAST(NULL AS nvarchar(150)) AS Level3, CAST(NULL AS nvarchar(150)) AS Level4, CAST(NULL AS nvarchar(150)) AS Level5 FROM _Reference292 d WHERE d._ParentIDRRef = 0x00000000000000000000000000000000 UNION ALL SELECT d._IDRRef, d._Code, d._Description, d._ParentIDRRef, d._Folder, d._Marked, CAST(r.Hierarchy_Path + N'|' + CONVERT(varchar(32), d._IDRRef, 2) AS nvarchar(500)), r.Hierarchy_Depth + 1, r.Level1, CASE WHEN r.Hierarchy_Depth + 1 = 2 THEN CAST(d._Description AS nvarchar(150)) ELSE r.Level2 END, CASE WHEN r.Hierarchy_Depth + 1 = 3 THEN CAST(d._Description AS nvarchar(150)) ELSE r.Level3 END, CASE WHEN r.Hierarchy_Depth + 1 = 4 THEN CAST(d._Description AS nvarchar(150)) ELSE r.Level4 END, CASE WHEN r.Hierarchy_Depth + 1 = 5 THEN CAST(d._Description AS nvarchar(150)) ELSE r.Level5 END FROM _Reference292 d INNER JOIN RecCTE r ON d._ParentIDRRef = r.Ссылка) SELECT Ссылка, Код, Наименование, Родитель, ЭтоГруппа, ПометкаУдаления, Hierarchy_Path, Hierarchy_Depth, Level1, Level2, Level3, Level4, Level5 FROM RecCTE UNION ALL SELECT CAST(0x00000000000000000000000000000001 AS varbinary(16)) AS Ссылка, '00-UNK' AS Код, N'(Пусто)' AS Наименование, CAST(0x00000000000000000000000000000000 AS varbinary(16)) AS Родитель, CAST(0x00 AS varbinary(1)) AS ЭтоГруппа, CAST(0x00 AS varbinary(1)) AS ПометкаУдаления, N'(Пусто)' AS Hierarchy_Path, 1 AS Hierarchy_Depth, N'(Пусто)' AS Level1, CAST(NULL AS nvarchar(150)) AS Level2, CAST(NULL AS nvarchar(150)) AS Level3, CAST(NULL AS nvarchar(150)) AS Level4, CAST(NULL AS nvarchar(150)) AS Level5 OPTION (MAXRECURSION 0)"
       },
       "transformer": {
         "steps": [
@@ -102,12 +94,19 @@
         "options": {
           "column_mapper": {
             "column_map": {
-              "Ссылка": "Direction_ID",
-              "Код": "Direction_Code",
-              "Наименование": "Direction_Name",
               "Родитель": "Parent_ID",
               "ЭтоГруппа": "Is_Group",
-              "ПометкаУдаления": "Marked_For_Deletion"
+              "ПометкаУдаления": "Marked_For_Deletion",
+              "Hierarchy_Path": "Hierarchy_Path",
+              "Hierarchy_Depth": "Hierarchy_Depth",
+              "Level1": "Level1",
+              "Level2": "Level2",
+              "Level3": "Level3",
+              "Level4": "Level4",
+              "Level5": "Level5",
+              "Ссылка": "Direction_ID",
+              "Код": "Direction_Code",
+              "Наименование": "Direction_Name"
             },
             "defaults": {
               "Is_Group": false,
@@ -124,13 +123,8 @@
     {
       "step_id": "dim_counterparties",
       "extractor": {
-        "type": "sql_backend",
-        "object": "Справочник.Контрагенты",
-        "fields": [
-          "Ссылка",
-          "Наименование",
-          "ПометкаУдаления"
-        ]
+        "type": "raw_sql",
+        "sql": "SELECT d._IDRRef AS Ссылка, CAST(N'' AS nvarchar(50)) AS Код, d._Description AS Наименование, CAST(0x00000000000000000000000000000000 AS varbinary(16)) AS Родитель, CAST(0x00 AS varbinary(1)) AS ЭтоГруппа, d._Marked AS ПометкаУдаления, d._Fld31169RRef AS Партнер, d._Fld31175 AS КодПоЕДРПОУ, d._Fld31173 AS НалоговыйНомер FROM _Reference263 d UNION ALL SELECT CAST(0x00000000000000000000000000000001 AS varbinary(16)), '00-UNK', N'(Пусто)', CAST(0x00000000000000000000000000000000 AS varbinary(16)), CAST(0x00 AS varbinary(1)), CAST(0x00 AS varbinary(1)), CAST(0x00000000000000000000000000000000 AS varbinary(16)) AS Партнер, CAST(N'' AS nvarchar(20)) AS КодПоЕДРПОУ, CAST(N'' AS nvarchar(20)) AS НалоговыйНомер"
       },
       "transformer": {
         "steps": [
@@ -142,7 +136,10 @@
             "column_map": {
               "Ссылка": "Counterparty_ID",
               "Наименование": "Counterparty_Name",
-              "ПометкаУдаления": "Marked_For_Deletion"
+              "ПометкаУдаления": "Marked_For_Deletion",
+              "Партнер": "Partner_ID",
+              "КодПоЕДРПОУ": "Code_EDRPOU",
+              "НалоговыйНомер": "Tax_Code"
             },
             "defaults": {
               "Is_Group": false,
@@ -153,6 +150,46 @@
       },
       "loader": {
         "target_table": "Dim_Counterparties",
+        "mode": "full_reload"
+      }
+    },
+    {
+      "step_id": "dim_partners",
+      "extractor": {
+        "type": "raw_sql",
+        "sql": "WITH RecCTE AS (SELECT d._IDRRef AS Ссылка, d._Code AS Код, d._Description AS Наименование, d._ParentIDRRef AS Родитель, CAST(0x00 AS varbinary(1)) AS ЭтоГруппа, d._Marked AS ПометкаУдаления, CAST(CONVERT(varchar(32), d._IDRRef, 2) AS nvarchar(500)) AS Hierarchy_Path, 1 AS Hierarchy_Depth, CAST(d._Description AS nvarchar(150)) AS Level1, CAST(NULL AS nvarchar(150)) AS Level2, CAST(NULL AS nvarchar(150)) AS Level3, CAST(NULL AS nvarchar(150)) AS Level4, CAST(NULL AS nvarchar(150)) AS Level5 FROM _Reference360 d WHERE d._ParentIDRRef = 0x00000000000000000000000000000000 UNION ALL SELECT d._IDRRef, d._Code, d._Description, d._ParentIDRRef, CAST(0x00 AS varbinary(1)), d._Marked, CAST(r.Hierarchy_Path + N'|' + CONVERT(varchar(32), d._IDRRef, 2) AS nvarchar(500)), r.Hierarchy_Depth + 1, r.Level1, CASE WHEN r.Hierarchy_Depth + 1 = 2 THEN CAST(d._Description AS nvarchar(150)) ELSE r.Level2 END, CASE WHEN r.Hierarchy_Depth + 1 = 3 THEN CAST(d._Description AS nvarchar(150)) ELSE r.Level3 END, CASE WHEN r.Hierarchy_Depth + 1 = 4 THEN CAST(d._Description AS nvarchar(150)) ELSE r.Level4 END, CASE WHEN r.Hierarchy_Depth + 1 = 5 THEN CAST(d._Description AS nvarchar(150)) ELSE r.Level5 END FROM _Reference360 d INNER JOIN RecCTE r ON d._ParentIDRRef = r.Ссылка) SELECT Ссылка, Код, Наименование, Родитель, ЭтоГруппа, ПометкаУдаления, Hierarchy_Path, Hierarchy_Depth, Level1, Level2, Level3, Level4, Level5 FROM RecCTE UNION ALL SELECT CAST(0x00000000000000000000000000000001 AS varbinary(16)) AS Ссылка, '00-UNK' AS Код, N'(Пусто)' AS Наименование, CAST(0x00000000000000000000000000000000 AS varbinary(16)) AS Родитель, CAST(0x00 AS varbinary(1)) AS ЭтоГруппа, CAST(0x00 AS varbinary(1)) AS ПометкаУдаления, N'(Пусто)' AS Hierarchy_Path, 1 AS Hierarchy_Depth, N'(Пусто)' AS Level1, CAST(NULL AS nvarchar(150)) AS Level2, CAST(NULL AS nvarchar(150)) AS Level3, CAST(NULL AS nvarchar(150)) AS Level4, CAST(NULL AS nvarchar(150)) AS Level5 OPTION (MAXRECURSION 0)"
+      },
+      "transformer": {
+        "steps": [
+          "varbinary_to_uuid",
+          "column_mapper"
+        ],
+        "options": {
+          "column_mapper": {
+            "column_map": {
+              "Родитель": "Parent_ID",
+              "ЭтоГруппа": "Is_Group",
+              "ПометкаУдаления": "Marked_For_Deletion",
+              "Hierarchy_Path": "Hierarchy_Path",
+              "Hierarchy_Depth": "Hierarchy_Depth",
+              "Level1": "Level1",
+              "Level2": "Level2",
+              "Level3": "Level3",
+              "Level4": "Level4",
+              "Level5": "Level5",
+              "Ссылка": "Partner_ID",
+              "Код": "Partner_Code",
+              "Наименование": "Partner_Name"
+            },
+            "defaults": {
+              "Is_Group": false,
+              "Marked_For_Deletion": false
+            }
+          }
+        }
+      },
+      "loader": {
+        "target_table": "Dim_Partners",
         "mode": "full_reload"
       }
     },
@@ -196,16 +233,8 @@
     {
       "step_id": "dim_items",
       "extractor": {
-        "type": "sql_backend",
-        "object": "Справочник.Номенклатура",
-        "fields": [
-          "Ссылка",
-          "Код",
-          "Наименование",
-          "Родитель",
-          "ЭтоГруппа",
-          "ПометкаУдаления"
-        ]
+        "type": "raw_sql",
+        "sql": "WITH RecCTE AS (SELECT d._IDRRef AS Ссылка, d._Code AS Код, d._Description AS Наименование, d._ParentIDRRef AS Родитель, d._Folder AS ЭтоГруппа, d._Marked AS ПометкаУдаления, CAST(CONVERT(varchar(32), d._IDRRef, 2) AS nvarchar(500)) AS Hierarchy_Path, 1 AS Hierarchy_Depth, CAST(d._Description AS nvarchar(150)) AS Level1, CAST(NULL AS nvarchar(150)) AS Level2, CAST(NULL AS nvarchar(150)) AS Level3, CAST(NULL AS nvarchar(150)) AS Level4, CAST(NULL AS nvarchar(150)) AS Level5 FROM _Reference306 d WHERE d._ParentIDRRef = 0x00000000000000000000000000000000 UNION ALL SELECT d._IDRRef, d._Code, d._Description, d._ParentIDRRef, d._Folder, d._Marked, CAST(r.Hierarchy_Path + N'|' + CONVERT(varchar(32), d._IDRRef, 2) AS nvarchar(500)), r.Hierarchy_Depth + 1, r.Level1, CASE WHEN r.Hierarchy_Depth + 1 = 2 THEN CAST(d._Description AS nvarchar(150)) ELSE r.Level2 END, CASE WHEN r.Hierarchy_Depth + 1 = 3 THEN CAST(d._Description AS nvarchar(150)) ELSE r.Level3 END, CASE WHEN r.Hierarchy_Depth + 1 = 4 THEN CAST(d._Description AS nvarchar(150)) ELSE r.Level4 END, CASE WHEN r.Hierarchy_Depth + 1 = 5 THEN CAST(d._Description AS nvarchar(150)) ELSE r.Level5 END FROM _Reference306 d INNER JOIN RecCTE r ON d._ParentIDRRef = r.Ссылка) SELECT Ссылка, Код, Наименование, Родитель, ЭтоГруппа, ПометкаУдаления, Hierarchy_Path, Hierarchy_Depth, Level1, Level2, Level3, Level4, Level5 FROM RecCTE UNION ALL SELECT CAST(0x00000000000000000000000000000001 AS varbinary(16)) AS Ссылка, '00-UNK' AS Код, N'(Пусто)' AS Наименование, CAST(0x00000000000000000000000000000000 AS varbinary(16)) AS Родитель, CAST(0x00 AS varbinary(1)) AS ЭтоГруппа, CAST(0x00 AS varbinary(1)) AS ПометкаУдаления, N'(Пусто)' AS Hierarchy_Path, 1 AS Hierarchy_Depth, N'(Пусто)' AS Level1, CAST(NULL AS nvarchar(150)) AS Level2, CAST(NULL AS nvarchar(150)) AS Level3, CAST(NULL AS nvarchar(150)) AS Level4, CAST(NULL AS nvarchar(150)) AS Level5 OPTION (MAXRECURSION 0)"
       },
       "transformer": {
         "steps": [
@@ -215,12 +244,19 @@
         "options": {
           "column_mapper": {
             "column_map": {
-              "Ссылка": "Item_ID",
-              "Код": "Item_Code",
-              "Наименование": "Item_Name",
               "Родитель": "Parent_ID",
               "ЭтоГруппа": "Is_Group",
-              "ПометкаУдаления": "Marked_For_Deletion"
+              "ПометкаУдаления": "Marked_For_Deletion",
+              "Hierarchy_Path": "Hierarchy_Path",
+              "Hierarchy_Depth": "Hierarchy_Depth",
+              "Level1": "Level1",
+              "Level2": "Level2",
+              "Level3": "Level3",
+              "Level4": "Level4",
+              "Level5": "Level5",
+              "Ссылка": "Item_ID",
+              "Код": "Item_Code",
+              "Наименование": "Item_Name"
             },
             "defaults": {
               "Is_Group": false,
@@ -309,6 +345,61 @@
       }
     },
     {
+      "step_id": "dim_fin_agents",
+      "extractor": {
+        "type": "raw_sql",
+        "sql": "SELECT d._IDRRef AS Ссылка, d._Description AS Наименование, d._Marked AS ПометкаУдаления FROM _Reference54722 d UNION ALL SELECT CAST(0x00000000000000000000000000000001 AS varbinary(16)) AS Ссылка, N'(Пусто)' AS Наименование, CAST(0x00 AS varbinary(1)) AS ПометкаУдаления"
+      },
+      "transformer": {
+        "steps": ["varbinary_to_uuid", "column_mapper"],
+        "options": {
+          "column_mapper": {
+            "column_map": {
+              "Ссылка": "FinAgent_ID",
+              "Наименование": "FinAgent_Name",
+              "ПометкаУдаления": "Marked_For_Deletion"
+            },
+            "defaults": {"Marked_For_Deletion": false}
+          }
+        }
+      },
+      "loader": {"target_table": "Dim_FinAgents", "mode": "full_reload"}
+    },
+    {
+      "step_id": "dim_objekty_raschetov",
+      "extractor": {
+        "type": "sql_backend",
+        "object": "Справочник.ОбъектыРасчетов",
+        "fields": [
+          "Ссылка",
+          "Наименование",
+          "ПометкаУдаления"
+        ]
+      },
+      "transformer": {
+        "steps": [
+          "varbinary_to_uuid",
+          "column_mapper"
+        ],
+        "options": {
+          "column_mapper": {
+            "column_map": {
+              "Ссылка": "SettlementObj_ID",
+              "Наименование": "SettlementObj_Name",
+              "ПометкаУдаления": "Marked_For_Deletion"
+            },
+            "defaults": {
+              "Marked_For_Deletion": false
+            }
+          }
+        }
+      },
+      "loader": {
+        "target_table": "Dim_ObjektyRaschetov",
+        "mode": "full_reload"
+      }
+    },
+    {
       "step_id": "dim_users",
       "extractor": {
         "type": "sql_backend",
@@ -380,6 +471,45 @@
       }
     },
     {
+      "step_id": "dim_warehouses",
+      "extractor": {
+        "type": "raw_sql",
+        "sql": "WITH RecCTE AS (SELECT d._IDRRef AS Ссылка, d._Description AS Наименование, d._ParentIDRRef AS Родитель, d._Folder AS ЭтоГруппа, d._Marked AS ПометкаУдаления, CAST(CONVERT(varchar(32), d._IDRRef, 2) AS nvarchar(500)) AS Hierarchy_Path, 1 AS Hierarchy_Depth, CAST(d._Description AS nvarchar(150)) AS Level1, CAST(NULL AS nvarchar(150)) AS Level2, CAST(NULL AS nvarchar(150)) AS Level3, CAST(NULL AS nvarchar(150)) AS Level4, CAST(NULL AS nvarchar(150)) AS Level5 FROM _Reference502 d WHERE d._ParentIDRRef = 0x00000000000000000000000000000000 UNION ALL SELECT d._IDRRef, d._Description, d._ParentIDRRef, d._Folder, d._Marked, CAST(r.Hierarchy_Path + N'|' + CONVERT(varchar(32), d._IDRRef, 2) AS nvarchar(500)), r.Hierarchy_Depth + 1, r.Level1, CASE WHEN r.Hierarchy_Depth + 1 = 2 THEN CAST(d._Description AS nvarchar(150)) ELSE r.Level2 END, CASE WHEN r.Hierarchy_Depth + 1 = 3 THEN CAST(d._Description AS nvarchar(150)) ELSE r.Level3 END, CASE WHEN r.Hierarchy_Depth + 1 = 4 THEN CAST(d._Description AS nvarchar(150)) ELSE r.Level4 END, CASE WHEN r.Hierarchy_Depth + 1 = 5 THEN CAST(d._Description AS nvarchar(150)) ELSE r.Level5 END FROM _Reference502 d INNER JOIN RecCTE r ON d._ParentIDRRef = r.Ссылка) SELECT Ссылка, Наименование, Родитель, ЭтоГруппа, ПометкаУдаления, Hierarchy_Path, Hierarchy_Depth, Level1, Level2, Level3, Level4, Level5 FROM RecCTE UNION ALL SELECT CAST(0x00000000000000000000000000000001 AS varbinary(16)) AS Ссылка, N'(Пусто)' AS Наименование, CAST(0x00000000000000000000000000000000 AS varbinary(16)) AS Родитель, CAST(0x00 AS varbinary(1)) AS ЭтоГруппа, CAST(0x00 AS varbinary(1)) AS ПометкаУдаления, N'(Пусто)' AS Hierarchy_Path, 1 AS Hierarchy_Depth, N'(Пусто)' AS Level1, CAST(NULL AS nvarchar(150)) AS Level2, CAST(NULL AS nvarchar(150)) AS Level3, CAST(NULL AS nvarchar(150)) AS Level4, CAST(NULL AS nvarchar(150)) AS Level5 OPTION (MAXRECURSION 0)"
+      },
+      "transformer": {
+        "steps": [
+          "varbinary_to_uuid",
+          "column_mapper"
+        ],
+        "options": {
+          "column_mapper": {
+            "column_map": {
+              "Ссылка": "Warehouse_ID",
+              "Наименование": "Warehouse_Name",
+              "Родитель": "Parent_ID",
+              "ЭтоГруппа": "Is_Group",
+              "ПометкаУдаления": "Marked_For_Deletion",
+              "Hierarchy_Path": "Hierarchy_Path",
+              "Hierarchy_Depth": "Hierarchy_Depth",
+              "Level1": "Level1",
+              "Level2": "Level2",
+              "Level3": "Level3",
+              "Level4": "Level4",
+              "Level5": "Level5"
+            },
+            "defaults": {
+              "Is_Group": false,
+              "Marked_For_Deletion": false
+            }
+          }
+        }
+      },
+      "loader": {
+        "target_table": "Dim_Warehouses",
+        "mode": "full_reload"
+      }
+    },
+    {
       "step_id": "dim_currencies",
       "extractor": {
         "type": "sql_backend",
@@ -419,17 +549,8 @@
     {
       "step_id": "dim_dds_articles",
       "extractor": {
-        "type": "sql_backend",
-        "object": "Справочник.СтатьиДвиженияДенежныхСредств",
-        "fields": [
-          "Ссылка",
-          "Код",
-          "Наименование",
-          "Родитель",
-          "ЭтоГруппа",
-          "ПометкаУдаления",
-          "А_РазделCFS"
-        ]
+        "type": "raw_sql",
+        "sql": "WITH RecCTE AS (SELECT d._IDRRef AS Ссылка, d._Code AS Код, d._Description AS Наименование, d._ParentIDRRef AS Родитель, d._Folder AS ЭтоГруппа, d._Marked AS ПометкаУдаления, CAST(CONVERT(varchar(32), d._IDRRef, 2) AS nvarchar(500)) AS Hierarchy_Path, 1 AS Hierarchy_Depth, CAST(d._Description AS nvarchar(150)) AS Level1, CAST(NULL AS nvarchar(150)) AS Level2, CAST(NULL AS nvarchar(150)) AS Level3, CAST(NULL AS nvarchar(150)) AS Level4, CAST(NULL AS nvarchar(150)) AS Level5, d._Fld55969RRef AS А_РазделCFS, COALESCE(d._Fld56081, 0x00) AS А_ИсключатьИзОтчетаCashflow FROM _Reference529 d WHERE d._ParentIDRRef = 0x00000000000000000000000000000000 UNION ALL SELECT d._IDRRef, d._Code, d._Description, d._ParentIDRRef, d._Folder, d._Marked, CAST(r.Hierarchy_Path + N'|' + CONVERT(varchar(32), d._IDRRef, 2) AS nvarchar(500)), r.Hierarchy_Depth + 1, r.Level1, CASE WHEN r.Hierarchy_Depth + 1 = 2 THEN CAST(d._Description AS nvarchar(150)) ELSE r.Level2 END, CASE WHEN r.Hierarchy_Depth + 1 = 3 THEN CAST(d._Description AS nvarchar(150)) ELSE r.Level3 END, CASE WHEN r.Hierarchy_Depth + 1 = 4 THEN CAST(d._Description AS nvarchar(150)) ELSE r.Level4 END, CASE WHEN r.Hierarchy_Depth + 1 = 5 THEN CAST(d._Description AS nvarchar(150)) ELSE r.Level5 END, d._Fld55969RRef, COALESCE(d._Fld56081, 0x00) FROM _Reference529 d INNER JOIN RecCTE r ON d._ParentIDRRef = r.Ссылка) SELECT Ссылка, Код, Наименование, Родитель, ЭтоГруппа, ПометкаУдаления, Hierarchy_Path, Hierarchy_Depth, Level1, Level2, Level3, Level4, Level5, А_РазделCFS, А_ИсключатьИзОтчетаCashflow FROM RecCTE UNION ALL SELECT CAST(0x00000000000000000000000000000001 AS varbinary(16)) AS Ссылка, '00-UNK' AS Код, N'(Пусто)' AS Наименование, CAST(0x00000000000000000000000000000000 AS varbinary(16)) AS Родитель, CAST(0x00 AS varbinary(1)) AS ЭтоГруппа, CAST(0x00 AS varbinary(1)) AS ПометкаУдаления, N'(Пусто)' AS Hierarchy_Path, 1 AS Hierarchy_Depth, N'(Пусто)' AS Level1, CAST(NULL AS nvarchar(150)) AS Level2, CAST(NULL AS nvarchar(150)) AS Level3, CAST(NULL AS nvarchar(150)) AS Level4, CAST(NULL AS nvarchar(150)) AS Level5, CAST(0x00000000000000000000000000000000 AS varbinary(16)) AS А_РазделCFS, CAST(0x00 AS varbinary(1)) AS А_ИсключатьИзОтчетаCashflow OPTION (MAXRECURSION 0)"
       },
       "transformer": {
         "steps": [
@@ -438,24 +559,32 @@
           "column_mapper"
         ],
         "options": {
-          "enum_resolver": {
-            "column_to_enum": {
-              "А_РазделCFS": "Перечисление.А_РазделыCFS"
-            }
-          },
           "column_mapper": {
             "column_map": {
-              "Ссылка": "DDS_Article_ID",
-              "Код": "DDS_Article_Code",
-              "Наименование": "DDS_Article_Name",
               "Родитель": "Parent_ID",
               "ЭтоГруппа": "Is_Group",
               "ПометкаУдаления": "Marked_For_Deletion",
-              "А_РазделCFS": "CFS_Section"
+              "Hierarchy_Path": "Hierarchy_Path",
+              "Hierarchy_Depth": "Hierarchy_Depth",
+              "Level1": "Level1",
+              "Level2": "Level2",
+              "Level3": "Level3",
+              "Level4": "Level4",
+              "Level5": "Level5",
+              "Ссылка": "DDS_Article_ID",
+              "Код": "DDS_Article_Code",
+              "Наименование": "DDS_Article_Name",
+              "А_РазделCFS": "CFS_Section",
+              "А_ИсключатьИзОтчетаCashflow": "Is_Excluded_From_Cashflow"
             },
             "defaults": {
               "Is_Group": false,
               "Marked_For_Deletion": false
+            }
+          },
+          "enum_resolver": {
+            "column_to_enum": {
+              "А_РазделCFS": "Перечисление.А_РазделыCFS"
             }
           }
         }
@@ -468,16 +597,8 @@
     {
       "step_id": "dim_expense_articles",
       "extractor": {
-        "type": "sql_backend",
-        "object": "ПланВидовХарактеристик.СтатьиРасходов",
-        "fields": [
-          "Ссылка",
-          "Код",
-          "Наименование",
-          "Родитель",
-          "ЭтоГруппа",
-          "ПометкаУдаления"
-        ]
+        "type": "raw_sql",
+        "sql": "WITH RecCTE AS (SELECT d._IDRRef AS Ссылка, d._Code AS Код, d._Description AS Наименование, d._ParentIDRRef AS Родитель, d._Folder AS ЭтоГруппа, d._Marked AS ПометкаУдаления, CAST(CONVERT(varchar(32), d._IDRRef, 2) AS nvarchar(500)) AS Hierarchy_Path, 1 AS Hierarchy_Depth, CAST(d._Description AS nvarchar(150)) AS Level1, CAST(NULL AS nvarchar(150)) AS Level2, CAST(NULL AS nvarchar(150)) AS Level3, CAST(NULL AS nvarchar(150)) AS Level4, CAST(NULL AS nvarchar(150)) AS Level5 FROM _Chrc1772 d WHERE d._ParentIDRRef = 0x00000000000000000000000000000000 UNION ALL SELECT d._IDRRef, d._Code, d._Description, d._ParentIDRRef, d._Folder, d._Marked, CAST(r.Hierarchy_Path + N'|' + CONVERT(varchar(32), d._IDRRef, 2) AS nvarchar(500)), r.Hierarchy_Depth + 1, r.Level1, CASE WHEN r.Hierarchy_Depth + 1 = 2 THEN CAST(d._Description AS nvarchar(150)) ELSE r.Level2 END, CASE WHEN r.Hierarchy_Depth + 1 = 3 THEN CAST(d._Description AS nvarchar(150)) ELSE r.Level3 END, CASE WHEN r.Hierarchy_Depth + 1 = 4 THEN CAST(d._Description AS nvarchar(150)) ELSE r.Level4 END, CASE WHEN r.Hierarchy_Depth + 1 = 5 THEN CAST(d._Description AS nvarchar(150)) ELSE r.Level5 END FROM _Chrc1772 d INNER JOIN RecCTE r ON d._ParentIDRRef = r.Ссылка) SELECT Ссылка, Код, Наименование, Родитель, ЭтоГруппа, ПометкаУдаления, Hierarchy_Path, Hierarchy_Depth, Level1, Level2, Level3, Level4, Level5 FROM RecCTE UNION ALL SELECT CAST(0x00000000000000000000000000000001 AS varbinary(16)) AS Ссылка, '00-UNK' AS Код, N'(Пусто)' AS Наименование, CAST(0x00000000000000000000000000000000 AS varbinary(16)) AS Родитель, CAST(0x00 AS varbinary(1)) AS ЭтоГруппа, CAST(0x00 AS varbinary(1)) AS ПометкаУдаления, N'(Пусто)' AS Hierarchy_Path, 1 AS Hierarchy_Depth, N'(Пусто)' AS Level1, CAST(NULL AS nvarchar(150)) AS Level2, CAST(NULL AS nvarchar(150)) AS Level3, CAST(NULL AS nvarchar(150)) AS Level4, CAST(NULL AS nvarchar(150)) AS Level5 OPTION (MAXRECURSION 0)"
       },
       "transformer": {
         "steps": [
@@ -487,12 +608,19 @@
         "options": {
           "column_mapper": {
             "column_map": {
-              "Ссылка": "Expense_Article_ID",
-              "Код": "Expense_Article_Code",
-              "Наименование": "Expense_Article_Name",
               "Родитель": "Parent_ID",
               "ЭтоГруппа": "Is_Group",
-              "ПометкаУдаления": "Marked_For_Deletion"
+              "ПометкаУдаления": "Marked_For_Deletion",
+              "Hierarchy_Path": "Hierarchy_Path",
+              "Hierarchy_Depth": "Hierarchy_Depth",
+              "Level1": "Level1",
+              "Level2": "Level2",
+              "Level3": "Level3",
+              "Level4": "Level4",
+              "Level5": "Level5",
+              "Ссылка": "Expense_Article_ID",
+              "Код": "Expense_Article_Code",
+              "Наименование": "Expense_Article_Name"
             },
             "defaults": {
               "Is_Group": false,
@@ -509,16 +637,8 @@
     {
       "step_id": "dim_income_articles",
       "extractor": {
-        "type": "sql_backend",
-        "object": "ПланВидовХарактеристик.СтатьиДоходов",
-        "fields": [
-          "Ссылка",
-          "Код",
-          "Наименование",
-          "Родитель",
-          "ЭтоГруппа",
-          "ПометкаУдаления"
-        ]
+        "type": "raw_sql",
+        "sql": "SELECT d._IDRRef AS Ссылка, d._Code AS Код, d._Description AS Наименование, d._ParentIDRRef AS Родитель, d._Folder AS ЭтоГруппа, d._Marked AS ПометкаУдаления FROM _Chrc1771 d UNION ALL SELECT CAST(0x00000000000000000000000000000001 AS varbinary(16)), '00-UNK', N'(Пусто)', CAST(0x00000000000000000000000000000000 AS varbinary(16)), CAST(0x00 AS varbinary(1)), CAST(0x00 AS varbinary(1))"
       },
       "transformer": {
         "steps": [
@@ -529,11 +649,11 @@
           "column_mapper": {
             "column_map": {
               "Ссылка": "Income_Article_ID",
-              "Код": "Income_Article_Code",
               "Наименование": "Income_Article_Name",
               "Родитель": "Parent_ID",
               "ЭтоГруппа": "Is_Group",
-              "ПометкаУдаления": "Marked_For_Deletion"
+              "ПометкаУдаления": "Marked_For_Deletion",
+              "Код": "Income_Article_Code"
             },
             "defaults": {
               "Is_Group": false,
