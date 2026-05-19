@@ -656,21 +656,35 @@ Level1..5, усі `isHidden`) → Refresh `Склады` → `ИерархияС
 **Snowflake-зв'язок** `ДоговорыКонтрагентов[FinAgent_ID]→ФінАгенти[FinAgent_ID]`
 (Many→One, active) — створено через MCP.
 
-#### User-gated (виконати у Power BI Desktop)
+#### Завершено через MCP (2026-05-19, після Refresh користувача)
 
-Наступні дії **ще не виконані** (потребують Power BI Desktop):
+Користувач додав таблицю `ТипиДоговорів` (native query
+`SELECT TipDogovora, TipDogovora_Name, EnumOrder FROM dbo.Dim_TipyDogovorov`)
+і `ФінАгенти`, зробив Refresh `ДоговорыКонтрагентов`/`ОбъектыРасчетов`.
+Далі через MCP завершено:
 
-1. **Refresh `ОбъектыРасчетов`** — 8 нових колонок (`TipRaschetov`, `TipObjektaRaschetov`,
-   `Partner_Name`, `Department_Name`, `Counterparty_ID`, `Contract_ID`, `Object_ID`,
-   `Object_Type_Name`) ще не в моделі; після Refresh перейменувати/сховати по аналогії.
-2. **Додати таблицю `ТипиДоговорів`** — native query:
-   ```sql
-   SELECT TipDogovora, TipDogovora_Name, EnumOrder FROM dbo.Dim_TipyDogovorov
-   ```
-3. **Створити зв'язок** `ДоговорыКонтрагентов[TipDogovora]→ТипиДоговорів[TipDogovora]`
-   (Many→One, active).
-4. **Refresh + Ctrl+S** — MCP-зміни in-memory; нова snowflake-зв'язок потребує пересчёту
-   моделі в Desktop. БЕЗ Ctrl+S усі зміни (MCP + нові зв'язки) втрачаються.
+- **`ТипиДоговорів`**: `TipDogovora_Name`→«Тип договора», `sortByColumn=EnumOrder`;
+  `TipDogovora`/`EnumOrder`/`Loaded_At` приховані. Зв'язок
+  `ДоговорыКонтрагентов[Тип договора]→ТипиДоговорів[TipDogovora]` (Many→One, active);
+  ключ `ДоговорыКонтрагентов[Тип договора]` прихований (зріз через вимір).
+- **`ОбъектыРасчетов`** (Refresh підтягнув 8 колонок): `TipRaschetov`→«Тип розрахунків»,
+  `TipObjektaRaschetov`→«Тип об'єкта розрахунків», `Partner_Name`→«Партнер»,
+  `Department_Name`→«Підрозділ», `Object_Type_Name`→«Тип об'єкта»; composite-UUID
+  `Counterparty_ID`/`Contract_ID`/`Object_ID` приховані (Q3: UUID без імен).
 
-> ⚠️ Зміни MCP **in-memory** — обов'язково **Ctrl+S у Power BI Desktop** після
-> всіх user-gated дій. Без збереження зміни сесії будуть втрачені.
+> ⚠️ **УРОК — ложні авто-зв'язки по `EnumOrder` (повторення прецеденту §13.2-ter):**
+> після додавання `ТипиДоговорів` (колонка `EnumOrder`) Power BI auto-detect
+> створив `ТипиДоговорів[EnumOrder]→ТипыНалогов[EnumOrder]` (**active**,
+> BothDirections) + `→ТипПоказателя[EnumOrder]` (inactive). Перша давала
+> неоднозначний шлях `Fact_Balance→ДоговорыКонтрагентов→ТипиДоговорів→ТипыНалогов`
+> і відкочувала commit зв'язку. Обидві видалені через `relationship Delete`,
+> цільову зв'язку пересоздано. **Правило:** після додавання будь-якого Dim з
+> `EnumOrder`/`*_ID` — `relationship List` → видаляти хибні авто-зв'язки між
+> службовими стовпцями різних Dim ДО створення цільових зв'язків.
+
+> ⚠️ Зміни MCP **in-memory** — користувач робить фінальний **Refresh + Ctrl+S**
+> (нові snowflake-зв'язки `→ФінАгенти`/`→ТипиДоговорів` потребують пересчёту
+> моделі в Desktop; DAX до пересчёту повертає «зв'язок потребує пересчёту» —
+> це норма, не дефект). NB: recreate таблиці (Task 3) скинув ручне
+> перейменування `SettlementObj_Name`→«ОбъектРасчетов» — за потреби
+> перейменувати знову.
