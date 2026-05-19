@@ -29,7 +29,7 @@ CONN = (
 
 # Whitelist of objects we actually need for ETL. Generated from olap_data_sources_erp.md.
 WHITELIST = [
-    # 16 Dim catalogs / chart-of-types
+    # Dim catalogs / chart-of-types
     "Справочник.Организации",
     "Справочник.СтруктураПредприятия",
     "Справочник.НаправленияДеятельности",
