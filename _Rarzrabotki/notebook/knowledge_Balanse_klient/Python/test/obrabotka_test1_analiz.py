@@ -13,11 +13,12 @@ import sys, io, json, os, datetime as dt
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", write_through=True)
 from _common import connect_erp, ARTIFACTS_DIR
 
-ERF_PATH = r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\Обработки\А_ОбработкаДисбалансаПоСтатьямБаланса.erf"
+ERF_PATH = r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\Обработки\А_ОбработкаДисбалансаПоСтатьямБаланса.epf"
 BASELINE_PATH = os.path.join(ARTIFACTS_DIR, "obrabotka_baseline.json")
 
 erp = connect_erp()
-report = erp.ВнешниеОтчеты.Создать(ERF_PATH, False)
+# Теперь это обработка (ExternalDataProcessor), а не отчёт
+report = erp.ВнешниеОбработки.Создать(ERF_PATH, False)
 
 report.НачалоПериода = dt.datetime(2026, 4, 1)
 report.ОкончаниеПериода = dt.datetime(2026, 4, 30, 23, 59, 59)
