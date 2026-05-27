@@ -185,6 +185,7 @@ C:\Python313\python.exe "_Rarzrabotki\Python\test\test_create_vedomost_vkassu_iz
 - Образец-паттерн: [`Documents/А_ОтгрузкаПродукции/Ext/ObjectModule.bsl`](../../../Documents/А_ОтгрузкаПродукции/Ext/ObjectModule.bsl) (188 строк) — паттерн Find-Or-Create через ПриЗаписи + обратная ссылка
 - Целевой документ: [`Documents/РаспределениеФ2/Ext/ObjectModule.bsl`](../../../Documents/РаспределениеФ2/Ext/ObjectModule.bsl)
 - Дочерний документ: `Documents/ВедомостьНаВыплатуЗарплатыВКассу.xml`
+- [12_button_iz_otrazheniya.md](12_button_iz_otrazheniya.md) — кнопка из А_ОтражениеЗПпоКазне создаёт N×ВКассу через эту же процедуру (с СтатьейДДС из ТЧ.РаспределениеКазна)
 - [KNOWLEDGE_MAP.md](KNOWLEDGE_MAP.md)
 - [08_doc_raspredelenie_zp.md](08_doc_raspredelenie_zp.md) — структура РаспределениеЗП/Ф2
 - [09_vedomost_vyplaty.md](09_vedomost_vyplaty.md) — структура ВКассу + регистр ЗарплатаКВыплате
