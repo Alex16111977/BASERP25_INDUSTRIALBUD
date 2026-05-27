@@ -14,7 +14,10 @@ import win32com.client
 
 CONN_ERP = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 EXPECTED_SUM = 348800.00
-EXPECTED_SOTR_COUNT = 21  # из preflight: 21 строка в ТЧ Сотрудники Ф2 №000000026
+EXPECTED_ZARP_ROWS = 31   # число строк ТЧ Распределение Ф2 №000000026 (= ТЧ Зарплата ВКассу hotfix v2)
+EXPECTED_UNIQ_FL = 21     # число уникальных ФЛ (= ТЧ Состав ВКассу)
+EXPECTED_SPOSOB = "Зарплата за месяц"
+EXPECTED_PROCENT = 100
 
 
 def main():
@@ -61,14 +64,38 @@ def main():
     # 4. Проверить ВКассу
     vk = vk_ref.ПолучитьОбъект()
 
-    # Шапка
-    podr_name = str(vk.Подразделение.Наименование) if not vk.Подразделение.Пустая() else ""
-    print(f"  Шапка.Подразделение = '{podr_name}'")
-    if podr_name != "ЦО":
-        print(f"FAIL: Подразделение должно быть 'ЦО', а получили '{podr_name}'")
+    # Шапка: Подразделение = ПУСТО (hotfix v2)
+    if not vk.Подразделение.Пустая():
+        podr_name = str(vk.Подразделение.Наименование)
+        print(f"FAIL: Подразделение должно быть ПУСТО, а получили '{podr_name}'")
         sys.exit(1)
-    print(f"  Шапка.Подразделение = ЦО ✓")
+    print(f"  Шапка.Подразделение = ПУСТО ✓")
 
+    # Шапка: СпособВыплаты = предопределённый "Зарплата" (Наим="Зарплата за месяц")
+    sposob_name = str(vk.СпособВыплаты.Наименование) if not vk.СпособВыплаты.Пустая() else ""
+    if sposob_name != EXPECTED_SPOSOB:
+        print(f"FAIL: СпособВыплаты должен быть '{EXPECTED_SPOSOB}', получили '{sposob_name}'")
+        sys.exit(1)
+    print(f"  Шапка.СпособВыплаты = '{sposob_name}' ✓")
+
+    # Шапка: ПроцентВыплаты = 100
+    if int(vk.ПроцентВыплаты) != EXPECTED_PROCENT:
+        print(f"FAIL: ПроцентВыплаты = {vk.ПроцентВыплаты}, ожидалось {EXPECTED_PROCENT}")
+        sys.exit(1)
+    print(f"  Шапка.ПроцентВыплаты = {vk.ПроцентВыплаты} ✓")
+
+    # Шапка: Организация = Касса.Владелец (если касса найдена)
+    if not vk.Касса.Пустая():
+        org_uid_vk = erp.string(vk.Организация.УникальныйИдентификатор())
+        org_uid_kassa = erp.string(vk.Касса.Владелец.УникальныйИдентификатор())
+        if org_uid_vk != org_uid_kassa:
+            print(f"FAIL: Организация ({vk.Организация.Наименование}) != Касса.Владелец ({vk.Касса.Владелец.Наименование})")
+            sys.exit(1)
+        print(f"  Шапка.Организация = Касса.Владелец = '{vk.Организация.Наименование}' ✓")
+    else:
+        print("  WARN: Касса не определена — проверку Организация=Касса.Владелец пропускаем")
+
+    # Шапка: А_РаспределениеФ2 ссылка корректная
     vk_f2_uid = erp.string(vk.А_РаспределениеФ2.УникальныйИдентификатор())
     f2_uid = erp.string(f2_ref.УникальныйИдентификатор())
     if vk_f2_uid != f2_uid:
@@ -76,18 +103,29 @@ def main():
         sys.exit(1)
     print(f"  Шапка.А_РаспределениеФ2.UID = {vk_f2_uid} ✓")
 
-    # ТЧ Зарплата
+    # ТЧ Зарплата = 31 строк (= ТЧ Распределение Ф2), Σ = 348800
     cnt_zp = vk.Зарплата.Количество()
     sum_zp = 0
     for i in range(cnt_zp):
         sum_zp += float(vk.Зарплата.Получить(i).КВыплате)
     print(f"  Зарплата: {cnt_zp} строк, Σ={sum_zp:,.2f}")
-    if cnt_zp != EXPECTED_SOTR_COUNT:
-        print(f"FAIL: ожидалось {EXPECTED_SOTR_COUNT} строк Зарплата, получили {cnt_zp}")
+    if cnt_zp != EXPECTED_ZARP_ROWS:
+        print(f"FAIL: ожидалось {EXPECTED_ZARP_ROWS} строк Зарплата, получили {cnt_zp}")
         sys.exit(1)
     if abs(sum_zp - EXPECTED_SUM) > 0.01:
         print(f"FAIL: Σ Зарплата = {sum_zp}, ожидалось {EXPECTED_SUM}")
         sys.exit(1)
+
+    # ТЧ Зарплата: ГруппаУчётаНачислений = "Зарплата (661)" во всех строках
+    no_group = 0
+    for i in range(cnt_zp):
+        r = vk.Зарплата.Получить(i)
+        if r.ГруппаУчетаНачислений.Пустая():
+            no_group += 1
+    if no_group > 0:
+        print(f"FAIL: {no_group} строк ТЧ Зарплата без ГруппыУчётаНачислений")
+        sys.exit(1)
+    print(f"  Зарплата.ГруппаУчётаНачислений заполнена во всех строках ✓")
 
     # ТЧ Расшифровка
     cnt_rs = vk.А_РасшифровкаВыплатыЗарплатаПоФизлицам.Количество()
@@ -96,11 +134,11 @@ def main():
         print("FAIL: ТЧ А_Расшифровка пуста")
         sys.exit(1)
 
-    # ТЧ Состав
+    # ТЧ Состав = 21 уникальных ФЛ
     cnt_sost = vk.Состав.Количество()
     print(f"  Состав: {cnt_sost} строк (уникальные ФЛ)")
-    if cnt_sost != EXPECTED_SOTR_COUNT:
-        print(f"FAIL: Состав должен иметь {EXPECTED_SOTR_COUNT} ФЛ, а получили {cnt_sost}")
+    if cnt_sost != EXPECTED_UNIQ_FL:
+        print(f"FAIL: Состав должен иметь {EXPECTED_UNIQ_FL} ФЛ, а получили {cnt_sost}")
         sys.exit(1)
 
     # СуммаПоДокументу
