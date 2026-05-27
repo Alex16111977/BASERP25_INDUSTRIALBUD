@@ -44,8 +44,12 @@ Entry-point для ИИ-сессий и аналитиков. **Прочитат
 | 6 | [05_sozdanie_dok_nachislenie.md](05_sozdanie_dok_nachislenie.md) | **★ Блок 4а** — `СоздатьДокументНачисления` + 4 ТЧ ЗУП-документа |
 | 7 | [06_sozdanie_dok_otrazhenie.md](06_sozdanie_dok_otrazhenie.md) | **★ Блок 4б** — `СоздатьДокументОтражениеЗарплатыВФинансовомУчете` + свёртка |
 | 8 | [07_integracii.md](07_integracii.md) | Обзор 3 баз + connection strings + правила обмена |
-| 9 | [LESSONS.md](LESSONS.md) | 10+ антипаттернов (cross-base UUID, reserved `Ссылка`, ЗначениеВСтрокуВнутр между разными типами и т.д.) |
-| 10 | [FINDINGS.md](FINDINGS.md) | Discovery-факты + эталонная пара UUID + размер тестового документа |
+| 9 | [08_doc_raspredelenie_zp.md](08_doc_raspredelenie_zp.md) | **🆕 Блок 5 (TODO)** — структура `А_РаспределениеЗП` / `РаспределениеФ2` (Казна + ERP) + проведение в БДДС + связь с РКО |
+| 10 | [09_vedomost_vyplaty.md](09_vedomost_vyplaty.md) | **🆕** Структура `ВедомостьНаВыплатуЗарплатыВКассу` + регистр `ЗарплатаКВыплате` |
+| 11 | [10_payment_flow.md](10_payment_flow.md) | **🆕** Полный поток выплаты по подразделениям Казна→ERP→Ведомости (план реализации) |
+| 12 | [11_vedomost_iz_raspredeleniyaF2.md](11_vedomost_iz_raspredeleniyaF2.md) | **🟢 РЕАЛИЗОВАНО** — ВКассу из РаспределениеФ2 (триггер на Ф2, шапка ЦО, новая ТЧ А_Расшифровка). Эталон: Ф2 №000000026 → ВКассу Σ=348800 |
+| 13 | [LESSONS.md](LESSONS.md) | 10+ антипаттернов (cross-base UUID, reserved `Ссылка`, ЗначениеВСтрокуВнутр между разными типами и т.д.) |
+| 13 | [FINDINGS.md](FINDINGS.md) | Discovery-факты + эталонная пара UUID + размер тестового документа |
 
 ---
 
@@ -162,7 +166,7 @@ C:\Python313\python.exe "C:\Configuration_downloads\BASERP25\_Rarzrabotki\notebo
 
 ## Статус
 
-🟢 **База знаний создана 2026-05-26.** 10 файлов + 4 Python COM скрипта + 4 артефакта _artifacts/.
+🟢 **База знаний v2 — 2026-05-26.** 13 файлов + 5 Python COM скриптов + артефакты + материалы для выплаты ЗП по подразделениям.
 
 | Этап | Статус |
 |---|---|
@@ -170,4 +174,7 @@ C:\Python313\python.exe "C:\Configuration_downloads\BASERP25\_Rarzrabotki\notebo
 | Discovery (4 Python COM скрипта) | ✅ DONE |
 | KNOWLEDGE_MAP + 7 тематических файлов | ✅ DONE |
 | LESSONS + FINDINGS + Python/README | ✅ DONE |
-| Git commit | ⏳ TODO |
+| Git commit v1 (`3063b4e38`) | ✅ DONE |
+| **v2:** изучение `А_РаспределениеЗП` / `РаспределениеФ2` / `ВедомостьНаВыплатуЗарплатыВКассу` + регистр `ЗарплатаКВыплате` | ✅ DONE |
+| **v2:** файлы 08-10 + Python/_artifacts/erp_payment_structures.md | ✅ DONE |
+| **v2:** реализация `СоздатьВедомостиНаВыплатуПоПодразделениям` (BSL) | ⏳ TODO (отдельная задача, см. [10_payment_flow.md](10_payment_flow.md) §7) |
