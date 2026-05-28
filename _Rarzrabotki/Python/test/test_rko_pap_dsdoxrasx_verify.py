@@ -1,4 +1,8 @@
-"""Verify: 6 acceptance после правки BSL для РКО N0000052986."""
+"""Verify: 6 acceptance после правки BSL для зарплатного РКО ВКассу.
+
+Динамический поиск тестового РКО (не хардкодим Номер — РКО мог быть перенастроен).
+Берём первый РКО с ХозОп зарплатной + Ведомость=ВКассу + есть в А_Расшифровке.
+"""
 import sys
 import win32com.client
 
@@ -9,11 +13,26 @@ v8 = win32com.client.Dispatch("V83.COMConnector")
 erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 S = erp.String
 
-# Найти РКО + эталон из А_ВзСС
+# Динамический поиск: РКО с ВКассу + зарплатная ХозОп + есть А_Расшифровка
 q_doc = erp.NewObject("Запрос")
-q_doc.Text = "ВЫБРАТЬ Д.Ссылка КАК Сс ИЗ Документ.РасходныйКассовыйОрдер КАК Д ГДЕ Д.Номер = &Ном"
-q_doc.SetParameter("Ном", "N0000052986")
-ref = q_doc.Execute().Выгрузить()[0].Сс
+q_doc.Text = """
+ВЫБРАТЬ ПЕРВЫЕ 1
+    Д.Ссылка КАК Сс, Д.Номер
+ИЗ Документ.РасходныйКассовыйОрдер КАК Д
+    ВНУТРЕННЕЕ СОЕДИНЕНИЕ Документ.ВедомостьНаВыплатуЗарплатыВКассу.А_РасшифровкаВыплатыЗарплатаПоФизлицам КАК Рш
+        ПО Рш.Ссылка = Д.Ведомость
+ГДЕ Д.Проведен И НЕ Д.ПометкаУдаления
+    И ТИПЗНАЧЕНИЯ(Д.Ведомость) = ТИП(Документ.ВедомостьНаВыплатуЗарплатыВКассу)
+    И Д.ХозяйственнаяОперация В (
+        ЗНАЧЕНИЕ(Перечисление.ХозяйственныеОперации.ВыплатаЗарплатыЧерезКассу),
+        ЗНАЧЕНИЕ(Перечисление.ХозяйственныеОперации.ВыплатаЗарплатыРаздатчиком),
+        ЗНАЧЕНИЕ(Перечисление.ХозяйственныеОперации.ВыплатаЗарплатыРаботнику))
+УПОРЯДОЧИТЬ ПО Д.Дата УБЫВ
+"""
+docrows = q_doc.Execute().Выгрузить()
+assert docrows.Количество() > 0, "FAIL: не найдено зарплатных РКО с ВКассу для теста"
+ref = docrows[0].Сс
+print(f"Тестовый РКО: {S(docrows[0].Номер)} = {S(ref)}")
 
 # Эталон Σ per СтрПредпр из А_ВзСС (по выплате — расход - возврат = чистая выплата per Подр)
 q_vzs = erp.NewObject("Запрос")
@@ -32,6 +51,8 @@ q_vzs.Text = """
 q_vzs.SetParameter("Сс", ref)
 ETALON_PODR = {S(row.Подр): float(row.Сум) for row in q_vzs.Execute().Выгрузить()}
 print(f"Эталон из А_ВзСС: {len(ETALON_PODR)} СтрПредпр, Σ={sum(ETALON_PODR.values()):,.2f}")
+assert len(ETALON_PODR) >= 1, "FAIL: А_ВзСС эталон пустой — тест бессмысленен"
+assert sum(ETALON_PODR.values()) > 0, "FAIL: Σ А_ВзСС эталона = 0 — тест бессмысленен"
 
 # Перепровести РКО
 obj = ref.ПолучитьОбъект()
@@ -55,6 +76,8 @@ ot_by_podr = {}
 for r in ot_app:
     p = S(r.Подразделение)
     ot_by_podr[p] = ot_by_podr.get(p, 0) + float(r.Сумма)
+assert len(ot_by_podr) == len(ETALON_PODR), \
+    f"#1 FAIL: ПАП(ОТ) Приход {len(ot_by_podr)} строк, А_ВзСС {len(ETALON_PODR)} СтрПредпр"
 mismatch1 = {k: (ot_by_podr.get(k, 0), ETALON_PODR.get(k, 0)) for k in set(ot_by_podr) | set(ETALON_PODR)
              if abs(ot_by_podr.get(k, 0) - ETALON_PODR.get(k, 0)) > 0.01}
 assert not mismatch1, f"#1 FAIL: ПАП(ОТ) Приход != А_ВзСС\nПАП: {ot_by_podr}\nA_ВзСС: {ETALON_PODR}\nMismatch: {mismatch1}"
@@ -66,6 +89,8 @@ ds_by_podr = {}
 for r in ds_exp:
     p = S(r.Подразделение)
     ds_by_podr[p] = ds_by_podr.get(p, 0) + float(r.Сумма)
+assert len(ds_by_podr) == len(ETALON_PODR), \
+    f"#2 FAIL: ПАП(ДенСр) Расход {len(ds_by_podr)} строк, А_ВзСС {len(ETALON_PODR)} СтрПредпр"
 mismatch2 = {k: (ds_by_podr.get(k, 0), ETALON_PODR.get(k, 0)) for k in set(ds_by_podr) | set(ETALON_PODR)
              if abs(ds_by_podr.get(k, 0) - ETALON_PODR.get(k, 0)) > 0.01}
 assert not mismatch2, f"#2 FAIL: ПАП(ДенСр) Расход != А_ВзСС\nПАП: {ds_by_podr}\nA_ВзСС: {ETALON_PODR}\nMismatch: {mismatch2}"
@@ -93,7 +118,17 @@ q_dsdr.Text = """
 q_dsdr.SetParameter("Сс", ref)
 dsdr = q_dsdr.Execute().Выгрузить()
 print(f"\nДСДохРасх: {dsdr.Количество()} строк")
-assert dsdr.Количество() == 21, f"#5 FAIL: ДСДохРасх = {dsdr.Количество()} строк (ожидаем 21)"
+# Количество ФЛ в А_Расшифровке = ожидаемое число строк ДСДохРасх
+q_fl = erp.NewObject("Запрос")
+q_fl.Text = """ВЫБРАТЬ КОЛИЧЕСТВО(Рш.ФизическоеЛицо) КАК N
+ИЗ Документ.РасходныйКассовыйОрдер КАК Д
+    ВНУТРЕННЕЕ СОЕДИНЕНИЕ Документ.ВедомостьНаВыплатуЗарплатыВКассу.А_РасшифровкаВыплатыЗарплатаПоФизлицам КАК Рш
+    ПО Рш.Ссылка = Д.Ведомость
+ГДЕ Д.Ссылка = &Сс"""
+q_fl.SetParameter("Сс", ref)
+EXPECTED_FL = int(q_fl.Execute().Выгрузить()[0].N)
+print(f"  Ожидаем {EXPECTED_FL} строк (= кол-во ФЛ в А_Расшифровке)")
+assert dsdr.Количество() == EXPECTED_FL, f"#5 FAIL: ДСДохРасх = {dsdr.Количество()} строк (ожидаем {EXPECTED_FL})"
 dsdr_podr_set = {S(r.Подр) for r in dsdr}
 assert dsdr_podr_set == set(ETALON_PODR.keys()), \
     f"#5 FAIL: ДСДохРасх Подр != эталон\nПАП Подр: {dsdr_podr_set}\nЭталон: {set(ETALON_PODR.keys())}"

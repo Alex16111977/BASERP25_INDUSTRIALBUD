@@ -13,11 +13,25 @@ v8 = win32com.client.Dispatch("V83.COMConnector")
 erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 S = erp.String
 
-# Найти РКО
+# Динамический поиск: РКО с ВКассу + зарплатная ХозОп + есть А_Расшифровка
 q_doc = erp.NewObject("Запрос")
-q_doc.Text = "ВЫБРАТЬ Д.Ссылка КАК Сс ИЗ Документ.РасходныйКассовыйОрдер КАК Д ГДЕ Д.Номер = &Ном"
-q_doc.SetParameter("Ном", "N0000052986")
-ref = q_doc.Execute().Выгрузить()[0].Сс
+q_doc.Text = """
+ВЫБРАТЬ ПЕРВЫЕ 1 Д.Ссылка КАК Сс, Д.Номер
+ИЗ Документ.РасходныйКассовыйОрдер КАК Д
+    ВНУТРЕННЕЕ СОЕДИНЕНИЕ Документ.ВедомостьНаВыплатуЗарплатыВКассу.А_РасшифровкаВыплатыЗарплатаПоФизлицам КАК Рш
+        ПО Рш.Ссылка = Д.Ведомость
+ГДЕ Д.Проведен И НЕ Д.ПометкаУдаления
+    И ТИПЗНАЧЕНИЯ(Д.Ведомость) = ТИП(Документ.ВедомостьНаВыплатуЗарплатыВКассу)
+    И Д.ХозяйственнаяОперация В (
+        ЗНАЧЕНИЕ(Перечисление.ХозяйственныеОперации.ВыплатаЗарплатыЧерезКассу),
+        ЗНАЧЕНИЕ(Перечисление.ХозяйственныеОперации.ВыплатаЗарплатыРаздатчиком),
+        ЗНАЧЕНИЕ(Перечисление.ХозяйственныеОперации.ВыплатаЗарплатыРаботнику))
+УПОРЯДОЧИТЬ ПО Д.Дата УБЫВ
+"""
+docrows = q_doc.Execute().Выгрузить()
+assert docrows.Количество() > 0, "FAIL: не найдено зарплатных РКО с ВКассу"
+ref = docrows[0].Сс
+print(f"Тестовый РКО: {S(docrows[0].Номер)}")
 
 # Эталон из А_ВзСС (Σ per СтрПредпр)
 q_vzs = erp.NewObject("Запрос")
@@ -33,6 +47,9 @@ q_vzs.Text = """
 q_vzs.SetParameter("Сс", ref)
 ETALON_PODR = {S(row.Подр): float(row.Сум) for row in q_vzs.Execute().Выгрузить()}
 print(f"Эталон из А_ВзСС: {len(ETALON_PODR)} СтрПредпр, Σ={sum(ETALON_PODR.values()):,.2f}")
+assert len(ETALON_PODR) >= 1 and sum(ETALON_PODR.values()) > 0, "FAIL: эталон пуст — тест бессмысленен"
+EXPECTED = len(ETALON_PODR)
+TOTAL_Σ = sum(ETALON_PODR.values())
 
 # Перепровести РКО
 obj = ref.ПолучитьОбъект()
@@ -59,17 +76,18 @@ for r in rows:
     print(f"  {S(r.Подразделение):<32} | {S(r.Касса):<25} | {S(r.СтатьяДДС):<25} | {float(r.Сумма):>10,.2f}")
 
 # Acceptance #1: ровно 12 строк
-assert rows.Количество() == 12, f"#1 FAIL: ожидаем 12 строк, получили {rows.Количество()}"
-print(f"\n✅ #1 12 строк в РегНак.ДенежныеСредстваНаличные")
+# #1: ≥ EXPECTED строк (одна СтрПредпр может иметь несколько СтатейДДС — больше OK)
+assert rows.Количество() >= EXPECTED, f"#1 FAIL: ожидаем ≥{EXPECTED} строк, получили {rows.Количество()}"
+print(f"\n✅ #1 {rows.Количество()} строк в РегНак.ДенежныеСредстваНаличные (≥{EXPECTED} СтрПредпр)")
 
-# Acceptance #2: Σ = 348 800
+# Acceptance #2: Σ = СуммаДокумента
 total = sum(float(r.Сумма) for r in rows)
 total_upr = sum(float(r.СуммаУпр) for r in rows)
 total_regl = sum(float(r.СуммаРегл) for r in rows)
-assert abs(total - 348800.0) < 0.01, f"#2 FAIL: Σ={total}"
-assert abs(total_upr - 348800.0) < 0.01, f"#2 FAIL: ΣУпр={total_upr}"
-assert abs(total_regl - 348800.0) < 0.01, f"#2 FAIL: ΣРегл={total_regl}"
-print(f"✅ #2 Σ=348 800 (Сумма+Упр+Регл)")
+assert abs(total - TOTAL_Σ) < 0.01, f"#2 FAIL: Σ={total}, ожидаем {TOTAL_Σ}"
+assert abs(total_upr - TOTAL_Σ) < 0.01, f"#2 FAIL: ΣУпр={total_upr}"
+assert abs(total_regl - TOTAL_Σ) < 0.01, f"#2 FAIL: ΣРегл={total_regl}"
+print(f"✅ #2 Σ={TOTAL_Σ:,.2f} (Сумма+Упр+Регл)")
 
 # Acceptance #3: Подр-сет совпадает с А_ВзСС
 podr_set = {S(r.Подразделение) for r in rows}
