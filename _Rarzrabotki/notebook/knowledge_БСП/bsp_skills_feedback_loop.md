@@ -73,6 +73,8 @@ house-style+common-module+bsp-form+doc-new на одной задаче.
 
 | 7 | **Форма документа давала не пиксель-типовой вид** (autofill: «Провести» дважды текстом вместо красивой «Провести и закрыть»; лишний отступ шапки) | §1.1 переписан: ЯВНЫЙ контракт первичен — `Autofill=false` + `CommandSet`(Post/PostAndClose/SetDeletionMark/Write) + кнопки с `Representation` (Text+DefaultButton для «Провести и закрыть», Picture для Записать/Провести) + команды формы; нет-зазора (`Representation=None`+`ShowTitle=false`, `Объект.Number/Date`); autofill понижен до fallback. Грунт `ПриобретениеТоваровУслуг`. (2026-05-30) |
 | 8 | В форме списка нет «Связанные документы» | Уточнено в §1.3: «Движения»/«Связанные» приходят автозаполнением панели ТАБЛИЦЫ-списка (`Autofill` не `false`) + `ПодключаемыеКоманды` |
+| 9 | **Не было эталона ПРОСТОГО документа** (без ТЧ); идеализированный §1.1 расходился с живым кодом | Кейс `А_ФинРез_Баланс` (2026-05-30): эталон простого документа = **`Документ.АмортизацияОС`**; реальный контракт — `CommandSet`=3 (Post/PostAndClose/Write, **без** SetDeletionMark), `Autofill` НЕ false (Пометка в «Ещё» автозаполнением), `ПровестиИЗакрыть` Ctrl+Enter без Picture. Зашито в `document-contract.md §1.1` + `case_a_finrez_balans_formy.md` |
+| 10 | **Грабли партиальной загрузки НОВОЙ формы** (db-load-xml) | В listFile для новой формы — **только обёртка** `Forms/X.xml` + документ-`.xml`, НЕ Ext-файлы (иначе `Неизвестный объект метаданных ...Form.X.Ext`, exit 1). `-updateConfigDumpInfo` перегенерирует весь `ConfigDumpInfo.xml` (~37k строк) — в фича-коммит не включать. Детали — `case_a_finrez_balans_formy.md §4.1-4.2` |
 
 ### Открытый follow-up (в существующем `bas-house-style/reference/documents.md`)
 | Пробел | Что сделать |
