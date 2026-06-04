@@ -1,0 +1,167 @@
+table СтатьиРасходов
+	lineageTag: b126bb64-cf1e-4a15-bdea-e154e8e4c917
+
+	column Expense_Article_ID
+		dataType: string
+		isHidden
+		lineageTag: b3c153f1-aed2-47ee-aa6c-638ee89449ea
+		summarizeBy: none
+		sourceColumn: Expense_Article_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Expense_Article_Code
+		dataType: string
+		isHidden
+		lineageTag: 0597586a-7cd5-492c-ae7a-10385cafe74b
+		summarizeBy: none
+		sourceColumn: Expense_Article_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column СтатьяРасходов
+		dataType: string
+		lineageTag: b87ad4eb-cc9a-4fec-8247-623b2ea3518d
+		summarizeBy: none
+		sourceColumn: Expense_Article_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Parent_ID
+		dataType: string
+		isHidden
+		lineageTag: bb6faa77-a05c-4180-bced-e3e5c19812ef
+		summarizeBy: none
+		sourceColumn: Parent_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ЭтоГруппа
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 6dac64b4-5c7b-4846-9377-91c6a7f199cd
+		summarizeBy: none
+		sourceColumn: Is_Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column ПометкаУдаления
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: fd904321-5fab-49bd-b87c-d961375de08f
+		summarizeBy: none
+		sourceColumn: Marked_For_Deletion
+
+		annotation SummarizationSetBy = Automatic
+
+	column Loaded_At
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 38341bed-fbbf-4773-a918-3fdcf22da157
+		summarizeBy: none
+		sourceColumn: Loaded_At
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hierarchy_Path
+		dataType: string
+		isHidden
+		lineageTag: 78fec899-bbf0-41b8-b2a0-552979d2ce1f
+		summarizeBy: none
+		sourceColumn: Hierarchy_Path
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hierarchy_Depth
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: c26c39bd-55bb-495f-9e1e-128ee4488050
+		summarizeBy: none
+		sourceColumn: Hierarchy_Depth
+
+		annotation SummarizationSetBy = Automatic
+
+	column Level1
+		dataType: string
+		isHidden
+		lineageTag: 109dca31-3a19-4b11-a07d-94c507585f08
+		summarizeBy: none
+		sourceColumn: Level1
+
+		annotation SummarizationSetBy = Automatic
+
+	column Level2
+		dataType: string
+		isHidden
+		lineageTag: 5fdc0e6f-1b1b-434e-9f9e-03eaa64f5848
+		summarizeBy: none
+		sourceColumn: Level2
+
+		annotation SummarizationSetBy = Automatic
+
+	column Level3
+		dataType: string
+		isHidden
+		lineageTag: 7d36e3a4-0c30-4e1c-9b5a-3c3b38f093da
+		summarizeBy: none
+		sourceColumn: Level3
+
+		annotation SummarizationSetBy = Automatic
+
+	column Level4
+		dataType: string
+		isHidden
+		lineageTag: 12d66b10-e408-40f0-9cb3-1877bddb2f81
+		summarizeBy: none
+		sourceColumn: Level4
+
+		annotation SummarizationSetBy = Automatic
+
+	column Level5
+		dataType: string
+		isHidden
+		lineageTag: f4d276fb-36e7-43bb-82b3-826b7e01a5bf
+		summarizeBy: none
+		sourceColumn: Level5
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy ИерархияСтатейРасходов
+		hideMembers: hideBlankMembers
+		lineageTag: 594b2372-0696-4b73-8632-02ed1f241ff6
+
+		level Level1
+			lineageTag: 0a45210c-9d61-4636-ba2b-36af85463014
+			column: Level1
+
+		level Level2
+			lineageTag: 03e7b87c-8b97-4d6c-a8b9-5d9efc9fc480
+			column: Level2
+
+		level Level3
+			lineageTag: 92ff1a0e-f2b8-43f6-b49e-14a9494d6f4f
+			column: Level3
+
+		level Level4
+			lineageTag: c56bbc9b-79b8-42c4-bafe-6194926fe7f2
+			column: Level4
+
+		level Level5
+			lineageTag: 3d3cae4d-fa5f-49e3-93d7-47b7f785d71a
+			column: Level5
+
+	partition Dim_Expense_Articles = m
+		mode: import
+		source =
+				let
+				    Источник = Sql.Database("SQLSERVER", "OlapBASERP"),
+				    dbo_Dim_Expense_Articles = Источник{[Schema="dbo",Item="Dim_Expense_Articles"]}[Data]
+				in
+				    dbo_Dim_Expense_Articles
+
+	annotation PBI_ResultType = Table
+

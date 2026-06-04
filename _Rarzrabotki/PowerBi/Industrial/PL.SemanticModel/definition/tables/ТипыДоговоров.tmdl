@@ -1,0 +1,54 @@
+table ТипыДоговоров
+	lineageTag: cfe7a3ca-fd8b-4f9f-8308-806400308540
+
+	column TipDogovora
+		dataType: string
+		isHidden
+		lineageTag: 417c6b6a-1120-4165-8ff7-53842c7c1de8
+		summarizeBy: none
+		sourceColumn: TipDogovora
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Тип договора'
+		dataType: string
+		lineageTag: 103db903-883b-4a72-8439-60b1612bdaeb
+		summarizeBy: none
+		sourceColumn: TipDogovora_Name
+		sortByColumn: EnumOrder
+
+		annotation SummarizationSetBy = Automatic
+
+	column EnumOrder
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 37a40094-63fd-49e4-b3b9-d6ce0b6a9244
+		summarizeBy: none
+		sourceColumn: EnumOrder
+
+		annotation SummarizationSetBy = Automatic
+
+	column Loaded_At
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 2df07573-0e6a-4113-9ea1-c8b6f6a1d3a0
+		summarizeBy: none
+		sourceColumn: Loaded_At
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ТипыДоговоров = m
+		mode: import
+		source =
+				let
+				    Источник = Sql.Database("SQLSERVER", "OlapBASERP"),
+				    dbo_Dim_TipyDogovorov = Источник{[Schema="dbo",Item="Dim_TipyDogovorov"]}[Data]
+				in
+				    dbo_Dim_TipyDogovorov
+
+	annotation PBI_NavigationStepName = Навигация
+
+	annotation PBI_ResultType = Table
+

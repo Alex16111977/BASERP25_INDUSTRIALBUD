@@ -10,7 +10,7 @@
 import argparse
 import json
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 
 from openpyxl import load_workbook
@@ -31,8 +31,25 @@ def read_visible_and_hidden(excel_path):
     return vis, hid
 
 
-def find_doc_by_file(conn, excel_path):
-    """ИмяФайла — Строка неограниченной длины, сравнивать через ПОДОБНО по basename."""
+def find_doc_by_file(conn, excel_path, period_str=None):
+    """Поиск документа А_РасшифровкаЛистов для данного Excel-файла.
+
+    КРИТИЧНО: для случая когда один Excel-файл содержит несколько month_header
+    (например, декабрьский файл с колонками за весь 2025 год → 12 записей в
+    EXCEL_FILES с одинаковым path), basename НЕ уникален. Поэтому приоритет:
+      1) точный поиск по period window (месяц из config.EXCEL_FILES[*].period)
+      2) fallback по basename (legacy: для случаев переименования файла)
+    """
+    # Определяем period_str из config если не передан явно
+    if period_str is None:
+        ef = next((e for e in config.EXCEL_FILES if e["path"] == excel_path), None)
+        period_str = ef["period"] if ef else None
+    if period_str:
+        # ИСКЛЮЧИТЕЛЬНО поиск в пределах месяца period_str.
+        # Basename-fallback запрещён: он находил бы документ другого месяца
+        # с тем же файлом (декабрьский Excel = 12 month_header'ов).
+        return _find_doc_by_period_window(conn, period_str)
+    # period_str неизвестен (excel_path не в config) — legacy basename-search
     basename = Path(excel_path).name
     q = conn.NewObject("Запрос")
     q.Текст = """
@@ -40,24 +57,52 @@ def find_doc_by_file(conn, excel_path):
     ИЗ Документ.А_РасшифровкаЛистов
     ГДЕ ИмяФайла ПОДОБНО &BasenameLike И НЕ ПометкаУдаления
     УПОРЯДОЧИТЬ ПО Дата УБЫВ"""
-    # ПОДОБНО — префиксное: совпадение basename в конце полного пути ИЛИ точно basename
     q.УстановитьПараметр("BasenameLike", f"%{basename}")
     tz = q.Выполнить().Выгрузить()
     if tz.Количество() > 0:
         return tz.Получить(0).Ссылка
-    return _find_doc_by_period(conn, excel_path)
+    return None
 
 
-def create_doc_for_period(conn, excel_path):
+def _find_doc_by_period_window(conn, period_str):
+    """Найти документ А_РасшифровкаЛистов с Дата В пределах месяца period_str (YYYY-MM-DD)."""
+    y, m, _d = map(int, period_str.split("-"))
+    month_start = datetime(y, m, 1, 0, 0, 0)
+    if m == 12:
+        next_m = datetime(y + 1, 1, 1, 0, 0, 0)
+    else:
+        next_m = datetime(y, m + 1, 1, 0, 0, 0)
+    month_end = next_m - timedelta(seconds=1)
+    q = conn.NewObject("Запрос")
+    q.Текст = """
+    ВЫБРАТЬ ПЕРВЫЕ 1 Ссылка
+    ИЗ Документ.А_РасшифровкаЛистов
+    ГДЕ Дата МЕЖДУ &С И &ПО И НЕ ПометкаУдаления
+    УПОРЯДОЧИТЬ ПО Дата"""
+    q.УстановитьПараметр("С", month_start)
+    q.УстановитьПараметр("ПО", month_end)
+    tz = q.Выполнить().Выгрузить()
+    return tz.Получить(0).Ссылка if tz.Количество() > 0 else None
+
+
+def create_doc_for_period(conn, excel_path, period_str=None):
     """Создать новый А_РасшифровкаЛистов на конец месяца excel_file (12:00:00).
 
     Используется в --month режиме когда документа для месяца нет.
     Возвращает Ссылку на свежесозданный документ (с пустой ТЧ Расшифровка).
+
+    КРИТИЧНО: period_str ОБЯЗАТЕЛЕН когда один excel_path встречается в config
+    несколько раз (декабрьский Excel = 12 month_header'ов). Иначе next()
+    вернёт первую запись (Январь 2025) и все 11 новых документов получат
+    одинаковую дату.
     """
-    ef = next((e for e in config.EXCEL_FILES if e["path"] == excel_path), None)
-    if not ef:
-        raise RuntimeError(f"excel_path '{excel_path}' не найден в config.EXCEL_FILES")
-    y, m, d = map(int, ef["period"].split("-"))
+    if period_str is None:
+        # legacy: один path = одна запись в EXCEL_FILES
+        ef = next((e for e in config.EXCEL_FILES if e["path"] == excel_path), None)
+        if not ef:
+            raise RuntimeError(f"excel_path '{excel_path}' не найден в config.EXCEL_FILES")
+        period_str = ef["period"]
+    y, m, d = map(int, period_str.split("-"))
     dt = datetime(y, m, d, 12, 0, 0)
     obj = conn.Документы.А_РасшифровкаЛистов.СоздатьДокумент()
     obj.Дата = dt
@@ -65,22 +110,6 @@ def create_doc_for_period(conn, excel_path):
     obj.Записать()  # без проведения; ТЧ Расшифровка пустая, наполнит fill_rasshifrovka()
     print(f"  [CREATE] Документ А_РасшифровкаЛистов создан: №{str(obj.Номер).strip()} от {dt}")
     return obj.Ссылка
-
-
-def _find_doc_by_period(conn, excel_path):
-    ef = next((e for e in config.EXCEL_FILES if e["path"] == excel_path), None)
-    if not ef:
-        return None
-    y, m, d = map(int, ef["period"].split("-"))
-    dt = datetime(y, m, d, 12, 0, 0)
-    q = conn.NewObject("Запрос")
-    q.Текст = """
-    ВЫБРАТЬ ПЕРВЫЕ 1 Ссылка
-    ИЗ Документ.А_РасшифровкаЛистов
-    ГДЕ Дата = &Дата И НЕ ПометкаУдаления"""
-    q.УстановитьПараметр("Дата", dt)
-    tz = q.Выполнить().Выгрузить()
-    return tz.Получить(0).Ссылка if tz.Количество() > 0 else None
 
 
 def backup_existing_rows(conn, doc_ref, out_dir):
@@ -202,10 +231,10 @@ def main():
         visible, hidden = read_visible_and_hidden(path)
         print(f"  Листов видимых: {len(visible)}, скрытых (пропущены): {len(hidden)}")
 
-        doc_ref = find_doc_by_file(conn, path)
+        doc_ref = find_doc_by_file(conn, path, period_str=ef["period"])
         if not doc_ref:
             if month_filter and not args.dry_run:
-                doc_ref = create_doc_for_period(conn, path)
+                doc_ref = create_doc_for_period(conn, path, period_str=ef["period"])
             elif month_filter and args.dry_run:
                 print(f"  [DRY-RUN] Документ для '{path}' не найден — был бы создан")
                 continue

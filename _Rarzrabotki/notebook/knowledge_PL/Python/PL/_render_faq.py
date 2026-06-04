@@ -7,12 +7,21 @@ AGG = Path(__file__).parent / "_pl_aggregates.json"
 OUT = Path(r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\notebook\knowledge_PL\pl_faq.md")
 
 UA_MONTHS = {
-    "2025-12": "Грудень 2025",
-    "2026-01": "Січень 2026",
-    "2026-02": "Лютий 2026",
+    "2024-01": "Січень 2024", "2024-02": "Лютий 2024", "2024-03": "Березень 2024",
+    "2024-04": "Квітень 2024", "2024-05": "Травень 2024", "2024-06": "Червень 2024",
+    "2024-07": "Липень 2024", "2024-08": "Серпень 2024", "2024-09": "Вересень 2024",
+    "2024-10": "Жовтень 2024", "2024-11": "Листопад 2024", "2024-12": "Грудень 2024",
+    "2025-01": "Січень 2025", "2025-02": "Лютий 2025", "2025-03": "Березень 2025",
+    "2025-04": "Квітень 2025", "2025-05": "Травень 2025", "2025-06": "Червень 2025",
+    "2025-07": "Липень 2025", "2025-08": "Серпень 2025", "2025-09": "Вересень 2025",
+    "2025-10": "Жовтень 2025", "2025-11": "Листопад 2025", "2025-12": "Грудень 2025",
+    "2026-01": "Січень 2026", "2026-02": "Лютий 2026", "2026-03": "Березень 2026",
+    "2026-04": "Квітень 2026",
 }
 
-PERIOD_ORDER = ["2025-12", "2026-01", "2026-02"]
+# 5 актуальних місяців (грудень 2025 — квітень 2026). Розширено 2026-05-21.
+# 2025-11 виключено — у листопаді 2025 0 фактичних витрат у регістрі ПрочиеРасходы.
+PERIOD_ORDER = ["2025-12", "2026-01", "2026-02", "2026-03", "2026-04"]
 
 
 def fmt(x):
@@ -278,15 +287,22 @@ def _render_sec11(out, data):
     out.append("---")
     out.append("")
 
-    # ─── 11.8 Delta між місяцями (4 × 2 = 8 Q&A) ───
-    out.append("### 11.8 Порівняння між місяцями (delta)")
+    # ─── 11.8 Delta між послідовними місяцями (динамічно з PERIOD_ORDER) ───
+    out.append("### 11.8 Порівняння між послідовними місяцями (delta)")
     out.append("")
-    pairs = [("2025-12", "2026-01", "Січень 2026 vs Грудень 2025"),
-             ("2026-01", "2026-02", "Лютий 2026 vs Січень 2026")]
+    eng_months = ["jan","feb","mar","apr","may","jun","jul","aug","sep","oct","nov","dec"]
+    pairs = []
+    for i in range(1, len(PERIOD_ORDER)):
+        prev_ym = PERIOD_ORDER[i-1]
+        curr_ym = PERIOD_ORDER[i]
+        pairs.append((prev_ym, curr_ym, f"{UA_MONTHS[curr_ym]} vs {UA_MONTHS[prev_ym]}"))
     for prev_ym, curr_ym, label in pairs:
         t_prev = data[prev_ym]["totals"]
         t_curr = data[curr_ym]["totals"]
-        delta_file = "pl_dump_delta_jan2026_vs_dec2025.md" if prev_ym == "2025-12" else "pl_dump_delta_feb2026_vs_jan2026.md"
+        # pl_dump_delta_{Mmm}YYYY_vs_{Mmm}YYYY.md
+        py, pm = prev_ym.split("-")
+        cy, cm = curr_ym.split("-")
+        delta_file = f"pl_dump_delta_{eng_months[int(cm)-1]}{cy}_vs_{eng_months[int(pm)-1]}{py}.md"
         metrics = [
             ("План PL", "plan"),
             ("Факт витрат ЕРП", "fact_rash"),
@@ -312,38 +328,40 @@ def _render_sec11(out, data):
     out.append("---")
     out.append("")
 
-    # ─── 11.9 Ключові факти / тренди (5 Q&A) ───
-    out.append("### 11.9 Ключові факти і тренди за 3 місяці (Груд 2025 – Лют 2026)")
+    # ─── 11.9 Ключові факти / тренди (динамічно по PERIOD_ORDER) ───
+    n_months = len(PERIOD_ORDER)
+    period_range_label = f"{UA_MONTHS[PERIOD_ORDER[0]]} – {UA_MONTHS[PERIOD_ORDER[-1]]}"
+    out.append(f"### 11.9 Ключові факти і тренди за {n_months} місяців ({period_range_label})")
     out.append("")
 
-    # Total across 3 months
     total_plan = sum(data[ym]["totals"]["plan"] for ym in PERIOD_ORDER)
     total_fact = sum(data[ym]["totals"]["fact_rash"] for ym in PERIOD_ORDER)
     total_cin  = sum(data[ym]["totals"]["cash_in"] for ym in PERIOD_ORDER)
     total_cout = sum(data[ym]["totals"]["cash_out"] for ym in PERIOD_ORDER)
     total_ndocs = sum(data[ym]["totals"]["n_plan_docs"] for ym in PERIOD_ORDER)
 
-    out.append("#### Q: Скільки всього План PL склав за 3 місяці (Грудень 2025 – Лютий 2026)?")
+    sum_summands = " + ".join(fmt(data[ym]["totals"]["plan"]) for ym in PERIOD_ORDER)
+    summary_files = ", ".join(f"`pl_dump_{ym.replace('-', '_')}_01_summary.md`" for ym in PERIOD_ORDER)
+
+    out.append(f"#### Q: Скільки всього План PL склав за {n_months} місяців ({period_range_label})?")
     out.append("")
     out.append(
         f"**Відповідь:** **{fmt(total_plan)} ₴** ({num_anchor(total_plan)}). "
-        f"Сума планів трьох місяців: {fmt(data['2025-12']['totals']['plan'])} + "
-        f"{fmt(data['2026-01']['totals']['plan'])} + {fmt(data['2026-02']['totals']['plan'])}. "
-        f"Разом {total_ndocs} ЦО-документів А_ОтчетPL. "
-        f"Джерела: `pl_dump_2025_12_01_summary.md`, `pl_dump_2026_01_01_summary.md`, `pl_dump_2026_02_01_summary.md`."
+        f"Сума планів {n_months} місяців: {sum_summands}. "
+        f"Разом {total_ndocs} ЦО-документів А_ОтчетPL. Джерела: {summary_files}."
     )
     out.append("")
 
-    out.append("#### Q: Скільки всього Факт витрат ЕРП за 3 місяці?")
+    out.append(f"#### Q: Скільки всього Факт витрат ЕРП за {n_months} місяців?")
     out.append("")
     out.append(
         f"**Відповідь:** **{fmt(total_fact)} ₴** ({num_anchor(total_fact)}). "
-        f"Фактичні витрати (регістр ПрочиеРасходы) за період грудень 2025 – лютий 2026. "
+        f"Фактичні витрати (регістр ПрочиеРасходы) за період {period_range_label.lower()}. "
         f"Джерело: summary-файли кожного місяця."
     )
     out.append("")
 
-    out.append("#### Q: Скільки всього касового припливу за 3 місяці?")
+    out.append(f"#### Q: Скільки всього касового припливу за {n_months} місяців?")
     out.append("")
     out.append(
         f"**Відповідь:** **{fmt(total_cin)} ₴** ({num_anchor(total_cin)}). "
@@ -355,16 +373,16 @@ def _render_sec11(out, data):
 
     out.append("#### Q: Який підрозділ стабільно лідирує за плановим бюджетом PL?")
     out.append("")
-    # Check Globino-2 is top in all 3 months
     leaders = [data[ym]["top_podr_plan"][0]["подр"] for ym in PERIOD_ORDER]
     if all(l == leaders[0] for l in leaders):
         leader = leaders[0]
         sums = {ym: data[ym]["top_podr_plan"][0]["план"] for ym in PERIOD_ORDER}
+        breakdown = ", ".join(f"{UA_MONTHS[ym]} — {fmt(sums[ym])} ₴" for ym in PERIOD_ORDER)
+        total_leader = sum(sums.values())
         out.append(
-            f"**Відповідь:** **{leader}** — лідирує за плановим бюджетом PL у **всіх 3 місяцях**: "
-            f"Грудень 2025 — {fmt(sums['2025-12'])} ₴, Січень 2026 — {fmt(sums['2026-01'])} ₴, "
-            f"Лютий 2026 — {fmt(sums['2026-02'])} ₴. Разом за 3 міс — {fmt(sum(sums.values()))} ₴ "
-            f"({num_anchor(sum(sums.values()))}). "
+            f"**Відповідь:** **{leader}** — лідирує за плановим бюджетом PL у **всіх {n_months} місяцях**: "
+            f"{breakdown}. Разом за {n_months} міс — {fmt(total_leader)} ₴ "
+            f"({num_anchor(total_leader)}). "
             f"Джерело: розділ 11.2 цього FAQ та summary-файли."
         )
     else:
@@ -373,14 +391,24 @@ def _render_sec11(out, data):
 
     out.append("#### Q: Яка PL-стаття стабільно найбільша за фактом витрат?")
     out.append("")
-    art_leaders = [data[ym]["top_art_fact"][0]["стаття"] for ym in PERIOD_ORDER]
+    art_leaders = [
+        (data[ym]["top_art_fact"][0]["стаття"] if data[ym].get("top_art_fact") else None)
+        for ym in PERIOD_ORDER
+    ]
+    art_leaders = [a for a in art_leaders if a is not None]
+    if not art_leaders:
+        out.append("**Відповідь:** Недостатньо даних факту по PL-статях у вибраному періоді.")
+        out.append("")
+        out.append("---")
+        out.append("")
+        return
     if all(a == art_leaders[0] for a in art_leaders):
         leader = art_leaders[0]
         sums = {ym: data[ym]["top_art_fact"][0]["факт"] for ym in PERIOD_ORDER}
+        breakdown = ", ".join(f"{UA_MONTHS[ym]} — {fmt(sums[ym])} ₴" for ym in PERIOD_ORDER)
         out.append(
-            f"**Відповідь:** **«{leader}»** — найбільша за фактом у **всіх 3 місяцях**: "
-            f"Грудень 2025 — {fmt(sums['2025-12'])} ₴, Січень 2026 — {fmt(sums['2026-01'])} ₴, "
-            f"Лютий 2026 — {fmt(sums['2026-02'])} ₴. Це очікувано для будівельної компанії — "
+            f"**Відповідь:** **«{leader}»** — найбільша за фактом у **всіх {n_months} місяцях**: "
+            f"{breakdown}. Це очікувано для будівельної компанії — "
             f"купівля стройматеріалів (цемент, арматура, метал, ізоляція) складає найбільшу частку витрат. "
             f"Джерело: розділ 11.4 цього FAQ."
         )

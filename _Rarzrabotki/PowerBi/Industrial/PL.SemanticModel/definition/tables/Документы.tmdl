@@ -1,0 +1,99 @@
+table Документы
+	lineageTag: b86f19fa-2409-453a-995b-f74387d77d60
+
+	column Document_ID
+		dataType: string
+		lineageTag: c3f7e4c6-4342-4841-a2cf-e42900f1599e
+		summarizeBy: none
+		sourceColumn: Document_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Document_Type_ERP
+		dataType: string
+		lineageTag: 4f50c758-db88-45b9-8e96-121fe4ae4ee0
+		summarizeBy: none
+		sourceColumn: Document_Type_ERP
+
+		annotation SummarizationSetBy = Automatic
+
+	column Document_Number_ERP
+		dataType: string
+		lineageTag: 024b3742-59c2-44e2-8eba-b32e80dbf214
+		summarizeBy: none
+		sourceColumn: Document_Number_ERP
+
+		annotation SummarizationSetBy = Automatic
+
+	column Document_Date
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: caf4e0d3-04b1-499e-80a0-9ffbbaa8d2cf
+		summarizeBy: none
+		sourceColumn: Document_Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Document_Number_BuhBud
+		dataType: string
+		lineageTag: e21255e4-585c-4bec-82dc-c23c042646c4
+		summarizeBy: none
+		sourceColumn: Document_Number_BuhBud
+
+		annotation SummarizationSetBy = Automatic
+
+	column Document_Type_BuhBud
+		dataType: string
+		lineageTag: 35d2e3b6-97e6-40f2-8c00-4351d8e66d2d
+		summarizeBy: none
+		sourceColumn: Document_Type_BuhBud
+
+		annotation SummarizationSetBy = Automatic
+
+	column Document_Presentation
+		dataType: string
+		lineageTag: 67529a9c-b341-4345-834a-28d83cf8ae6b
+		summarizeBy: none
+		sourceColumn: Document_Presentation
+
+		annotation SummarizationSetBy = Automatic
+
+	column Document_Comment
+		dataType: string
+		lineageTag: 519df956-0508-45b8-ae10-4f32fedc14f6
+		summarizeBy: none
+		sourceColumn: Document_Comment
+
+		annotation SummarizationSetBy = Automatic
+
+	column Marked_For_Deletion
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 2fd4eb88-e85c-497c-97f2-7641cb7ec480
+		summarizeBy: none
+		sourceColumn: Marked_For_Deletion
+
+		annotation SummarizationSetBy = Automatic
+
+	column Loaded_At
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f9e2d608-67fd-4235-94f8-11b7a1d7eca3
+		summarizeBy: none
+		sourceColumn: Loaded_At
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Документы = m
+		mode: import
+		source =
+				let
+				    Источник = Sql.Database("SQLSERVER", "OlapBASERP"),
+				    dbo_Dim_Documents = Источник{[Schema="dbo",Item="Dim_Documents"]}[Data]
+				in
+				    dbo_Dim_Documents
+
+	annotation PBI_NavigationStepName = Навигация
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,79 @@
+table СтатьиДоходов
+	lineageTag: 2fe3d013-f8e7-4404-8e34-61ae50058fd5
+
+	column Income_Article_ID
+		dataType: string
+		isHidden
+		lineageTag: bd1ab955-ac80-42b9-899a-dfd3d8082a7e
+		summarizeBy: none
+		sourceColumn: Income_Article_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Income_Article_Code
+		dataType: string
+		isHidden
+		lineageTag: 79168386-9954-458e-b447-e19780e0ae7c
+		summarizeBy: none
+		sourceColumn: Income_Article_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column СтатьяДоходов
+		dataType: string
+		lineageTag: c3dfee7d-efd5-4137-966d-2feb2a831c85
+		summarizeBy: none
+		sourceColumn: Income_Article_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Parent_ID
+		dataType: string
+		isHidden
+		lineageTag: 19bfebee-c8f0-4f01-b009-a837b044a28b
+		summarizeBy: none
+		sourceColumn: Parent_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ЭтоГруппа
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 1bd9fc93-f5b9-4cb8-b4b0-a4d897e23e18
+		summarizeBy: none
+		sourceColumn: Is_Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column ПометкаУдаления
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: e4574e22-ad19-4bb5-ba07-536c2c70b3ea
+		summarizeBy: none
+		sourceColumn: Marked_For_Deletion
+
+		annotation SummarizationSetBy = Automatic
+
+	column Loaded_At
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 78148a81-dab0-4a77-8174-67f941890e14
+		summarizeBy: none
+		sourceColumn: Loaded_At
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Income_Articles = m
+		mode: import
+		source =
+				let
+				    Источник = Sql.Database("SQLSERVER", "OlapBASERP"),
+				    dbo_Dim_Income_Articles = Источник{[Schema="dbo",Item="Dim_Income_Articles"]}[Data]
+				in
+				    dbo_Dim_Income_Articles
+
+	annotation PBI_ResultType = Table
+

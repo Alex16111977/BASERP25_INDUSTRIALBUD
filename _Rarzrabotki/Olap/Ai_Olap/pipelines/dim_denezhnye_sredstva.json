@@ -1,0 +1,32 @@
+{
+  "pipeline_id": "dim_denezhnye_sredstva",
+  "description": "Dim_DenezhnyeSredstva — universal composite dimension for Fact_Cashflow.Cash_Account_ID. UNION ALL of 8 1С catalogs (Stage v3 2026-05-08).",
+  "schedule": "0 1 * * *",
+  "steps": [
+    {
+      "step_id": "load",
+      "extractor": {
+        "type": "raw_sql",
+        "sql": "SELECT _IDRRef AS Cash_Account_ID, _Description AS Account_Name, N'БанковскийСчет' COLLATE Cyrillic_General_CI_AS AS Account_Type, _Fld54618RRef AS Direction_ID, _Fld54501RRef AS AccountingOrg_ID FROM _Reference60 WHERE _Marked = 0x00 UNION ALL SELECT _IDRRef, _Description, N'Касса' COLLATE Cyrillic_General_CI_AS, _Fld54708RRef, _Fld55471RRef FROM _Reference237 WHERE _Marked = 0x00 UNION ALL SELECT _IDRRef, _Description, N'КассаККМ' COLLATE Cyrillic_General_CI_AS, CAST(NULL AS varbinary(16)), CAST(NULL AS varbinary(16)) FROM _Reference238 WHERE _Marked = 0x00 UNION ALL SELECT _IDRRef, _Description, N'ДенежныйДокумент' COLLATE Cyrillic_General_CI_AS, CAST(NULL AS varbinary(16)), CAST(NULL AS varbinary(16)) FROM _Reference167 WHERE _Marked = 0x00 UNION ALL SELECT _IDRRef, _Description, N'ДоговорКредитаДепозита' COLLATE Cyrillic_General_CI_AS, CAST(NULL AS varbinary(16)), CAST(NULL AS varbinary(16)) FROM _Reference173 WHERE _Marked = 0x00 UNION ALL SELECT _IDRRef, _Description, N'ЭквайринговыйТерминал' COLLATE Cyrillic_General_CI_AS, CAST(NULL AS varbinary(16)), CAST(NULL AS varbinary(16)) FROM _Reference606 WHERE _Marked = 0x00 UNION ALL SELECT _IDRRef, _Description, N'Контрагент' COLLATE Cyrillic_General_CI_AS, CAST(NULL AS varbinary(16)), CAST(NULL AS varbinary(16)) FROM _Reference263 WHERE _Marked = 0x00 UNION ALL SELECT _IDRRef, _Description, N'ФизическоеЛицо' COLLATE Cyrillic_General_CI_AS, CAST(NULL AS varbinary(16)), CAST(NULL AS varbinary(16)) FROM _Reference589 WHERE _Marked = 0x00"
+      },
+      "transformer": {
+        "steps": ["varbinary_to_uuid", "column_mapper"],
+        "options": {
+          "column_mapper": {
+            "column_map": {
+              "Cash_Account_ID": "Cash_Account_ID",
+              "Account_Name": "Account_Name",
+              "Account_Type": "Account_Type",
+              "Direction_ID": "Direction_ID",
+              "AccountingOrg_ID": "AccountingOrg_ID"
+            }
+          }
+        }
+      },
+      "loader": {
+        "target_table": "Dim_DenezhnyeSredstva",
+        "mode": "full_reload"
+      }
+    }
+  ]
+}

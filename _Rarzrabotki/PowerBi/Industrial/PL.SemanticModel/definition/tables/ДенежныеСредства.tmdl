@@ -1,0 +1,94 @@
+table ДенежныеСредства
+	lineageTag: 449e93d5-d34f-4609-8d23-342c9ffe913e
+
+	column Cash_Account_ID
+		dataType: string
+		isHidden
+		lineageTag: 37152323-efd0-4f40-8220-e0f3731613c8
+		summarizeBy: none
+		sourceColumn: Cash_Account_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Денежные средства'
+		dataType: string
+		lineageTag: 848712f3-d0a3-41ff-96e2-1ca8d3ed1637
+		summarizeBy: none
+		sourceColumn: Account_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Тип денежного средства'
+		dataType: string
+		lineageTag: 1b54e724-d2e1-4391-b665-1b5e14ea7f94
+		summarizeBy: none
+		sourceColumn: Тип денежного средства
+
+		annotation SummarizationSetBy = Automatic
+
+	column Organization_ID
+		dataType: string
+		isHidden
+		lineageTag: ffd48be0-ec81-4864-b56f-354a32d95236
+		summarizeBy: none
+		sourceColumn: Organization_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Currency_Code
+		dataType: string
+		isHidden
+		lineageTag: 39b826f5-06a7-4017-bd1b-7c43c800c2c1
+		summarizeBy: none
+		sourceColumn: Currency_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Loaded_At
+		dataType: dateTime
+		isHidden
+		lineageTag: 64733cdb-aa3a-42fa-bb7a-9808f8602399
+		summarizeBy: none
+		sourceColumn: Loaded_At
+
+		annotation SummarizationSetBy = Automatic
+
+	column Direction_ID
+		dataType: string
+		isHidden
+		lineageTag: 6f374182-0b3e-4492-8032-81b5b5ff4376
+		summarizeBy: none
+		sourceColumn: Direction_ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Наименование Направления деятельности по Direction_ID (calc column, можно использовать в группировках). 2026-05-20.
+	column НаправлениеИзСправочника = COALESCE(LOOKUPVALUE('НаправленияДеятельности'[Направление], 'НаправленияДеятельности'[Direction_ID], 'ДенежныеСредства'[Direction_ID]), "(Пусто)")
+		dataType: string
+		lineageTag: af8a2158-44bf-4e0b-8fa2-bd88ba489364
+
+	column AccountingOrg_ID
+		dataType: string
+		isHidden
+		lineageTag: 7bf41ed7-e1a9-418d-b499-29747c8a8f75
+		sourceColumn: AccountingOrg_ID
+
+	/// Организация-бухгалтерия по AccountingOrg_ID. 2026-05-20.
+	column ОрганизацияБухгалтерия = COALESCE(LOOKUPVALUE('Организации'[Организация], 'Организации'[Organization_ID], 'ДенежныеСредства'[AccountingOrg_ID]), "(Пусто)")
+		lineageTag: 39348471-7e1c-4140-96e0-a78b3e4d3fc6
+
+	partition ДенежныеСредства = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("SQLSERVER", "OlapBASERP", [Query="SELECT Cash_Account_ID, Account_Name, Account_Type, Organization_ID, Currency_Code, Loaded_At, Direction_ID, AccountingOrg_ID FROM dbo.Dim_DenezhnyeSredstva"]),
+				    #"Переименованные столбцы" = Table.RenameColumns(Source,{{"Account_Type", "Тип денежного средства"}})
+				in
+				    #"Переименованные столбцы"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Навигация
+

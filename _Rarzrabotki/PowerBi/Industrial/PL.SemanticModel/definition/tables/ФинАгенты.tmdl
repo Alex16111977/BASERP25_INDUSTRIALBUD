@@ -1,0 +1,53 @@
+table ФинАгенты
+	lineageTag: 83dabc39-3ff2-4a96-84ca-382313ceaca8
+
+	column FinAgent_ID
+		dataType: string
+		isHidden
+		lineageTag: 645ac45c-ea00-4f06-96e7-1b3e407bd9c7
+		summarizeBy: none
+		sourceColumn: FinAgent_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ФинАгент
+		dataType: string
+		lineageTag: 662e8714-7b70-4ebc-9162-686f64cc38ee
+		summarizeBy: none
+		sourceColumn: FinAgent_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Marked_For_Deletion
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 88a56a3c-8c27-461c-bb25-8c6b14a745f0
+		summarizeBy: none
+		sourceColumn: Marked_For_Deletion
+
+		annotation SummarizationSetBy = Automatic
+
+	column Loaded_At
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 77b3cb16-f23e-4e72-b022-fdfd6ea69fa0
+		summarizeBy: none
+		sourceColumn: Loaded_At
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ФинАгенты = m
+		mode: import
+		source =
+				let
+				    Источник = Sql.Database("SQLSERVER", "OlapBASERP"),
+				    dbo_Dim_FinAgents = Источник{[Schema="dbo",Item="Dim_FinAgents"]}[Data]
+				in
+				    dbo_Dim_FinAgents
+
+	annotation PBI_NavigationStepName = Навигация
+
+	annotation PBI_ResultType = Table
+

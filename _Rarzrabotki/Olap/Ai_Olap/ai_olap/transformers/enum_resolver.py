@@ -36,6 +36,15 @@ FROZEN_ENUMS: dict[str, list[str]] = {
         "PL_Excel",
         "PL_ЕРП",
     ],
+    # 2026-05-21: ТипСтатьи у Справочник.А_Статьи_PL → Dim_PL_Articles.Type_Statya.
+    # Семантика знака суммы в А_ФинРез_PL: Доход → +Сумма, Расход → -Сумма.
+    # Order MUST match Metadata.Enums.А_ТипСтатьиPL._EnumOrder (live read 2026-05-21).
+    "Перечисление.А_ТипСтатьиPL": [
+        "Доход",              # order 0
+        "Расход",             # order 1
+        "ОперационныйИтог",   # order 2 (для итоговых строк отчёта)
+        "Информационный",     # order 3 (для справочных статей)
+    ],
     # Stage v3 (2026-05-08): rebuild А_ИсточникDDS to 4 values matching new register
     "Перечисление.А_ИсточникDDS": [
         "ЕРП",          # order 0

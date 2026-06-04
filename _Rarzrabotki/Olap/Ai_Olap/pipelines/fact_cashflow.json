@@ -1,6 +1,6 @@
 {
   "pipeline_id": "fact_cashflow",
-  "description": "Fact_Cashflow idempotent reload from РегистрСведений.А_ОтчетDDS_Свод for a single month",
+  "description": "Fact_Cashflow Stage v3 (2026-05-08) idempotent reload from РегистрСведений.А_ОтчетDDS_Свод. 14 dim + 5 res + Comment + Analytics. Source enum: ЕРП/Казна/План/ПланОбъекта.",
   "schedule": "0 2 1 * *",
   "steps": [
     {
@@ -8,7 +8,7 @@
       "extractor": {
         "type": "raw_sql",
         "auto_period_params": true,
-        "raw_sql": "SELECT r._RecorderRRef AS Recorder_DDS_ID, d._Date_Time AS Period, r._Fld56003RRef AS Source, r._Fld56004RRef AS CFS_Section, r._Fld55993RRef AS Organization_ID, r._Fld55994RRef AS Department_ID, r._Fld55995RRef AS Direction_ID, r._Fld55996_RRRef AS BankAccount_ID, r._Fld55997RRef AS DDS_Article_ID, r._Fld55998RRef AS Counterparty_ID, r._Fld55999RRef AS Contract_ID, r._Fld56005RRef AS Movement_Direction_Id, r._Fld56006RRef AS Currency_ID, r._Fld56007 AS Exchange_Rate, r._Fld56001 AS Sum_Grn, r._Fld56002 AS Sum_Original, r._Fld56000_RRRef AS Source_Recorder_ID FROM _InfoRg55992 r INNER JOIN _Document56017 d ON d._IDRRef = r._RecorderRRef WHERE r._Active = 0x01 AND r._Fld55993RRef = 0x80D3000C29BBAC2311E653F06BEE36B2 AND d._Date_Time >= ? AND d._Date_Time < ?"
+        "raw_sql": "SELECT r._RecorderRRef AS Recorder_DDS_ID, d._Date_Time AS Period, r._Fld56064RRef AS Movement_Type, r._Fld56065RRef AS Cash_Type, r._Fld56066RRef AS Source, r._Fld55993RRef AS Organization_ID, r._Fld55994RRef AS Department_ID, r._Fld56068_RRRef AS Cash_Account_ID, r._Fld56069RRef AS DDS_Article_ID, r._Fld55998RRef AS Counterparty_ID, r._Fld55999RRef AS Contract_ID, r._Fld56070RRef AS Individual_ID, r._Fld56071RRef AS Currency_ID, r._Fld56072_RRRef AS Document_ID, r._Fld56073 AS Analytics, r._Fld56076 AS Comment, r._Fld56001 AS Sum_Fact, r._Fld56002 AS Sum_Currency, r._Fld56074 AS Sum_Kazna, r._Fld56075 AS Sum_Plan, r._Fld56080 AS Sum_Plan_Object FROM _InfoRg55992 r INNER JOIN _Document56017 d ON d._IDRRef = r._RecorderRRef WHERE r._Active = 0x01 AND r._Fld55993RRef = 0x80D3000C29BBAC2311E653F06BEE36B2 AND d._Date_Time >= ? AND d._Date_Time < ?"
       },
       "transformer": {
         "steps": ["varbinary_to_uuid", "enum_resolver", "period_offset_fix", "column_mapper"],
@@ -16,7 +16,8 @@
           "enum_resolver": {
             "column_to_enum": {
               "Source": "Перечисление.А_ИсточникDDS",
-              "CFS_Section": "Перечисление.А_РазделыCFS"
+              "Movement_Type": "Перечисление.ТипыДвиженияДенежныхСредств",
+              "Cash_Type": "Перечисление.ТипыДенежныхСредств"
             }
           },
           "period_offset_fix": {"source_column": "Period", "period_month_column": "Period_Month"},
@@ -25,22 +26,26 @@
               "Recorder_DDS_ID": "Recorder_DDS_ID",
               "Period": "Period",
               "Period_Month": "Period_Month",
+              "Movement_Type": "Movement_Type",
+              "Cash_Type": "Cash_Type",
               "Source": "Source",
-              "CFS_Section": "CFS_Section",
               "Organization_ID": "Organization_ID",
               "Department_ID": "Department_ID",
-              "Direction_ID": "Direction_ID",
-              "BankAccount_ID": "BankAccount_ID",
+              "Cash_Account_ID": "Cash_Account_ID",
               "DDS_Article_ID": "DDS_Article_ID",
               "Counterparty_ID": "Counterparty_ID",
               "Contract_ID": "Contract_ID",
+              "Individual_ID": "Individual_ID",
               "Currency_ID": "Currency_ID",
-              "Exchange_Rate": "Exchange_Rate",
-              "Sum_Grn": "Sum_Grn",
-              "Sum_Original": "Sum_Original",
-              "Source_Recorder_ID": "Source_Recorder_ID"
-            },
-            "defaults": {"Account_Type": "Bank", "Direction": "Inflow", "BankAccount_ID": "00000000000000000000000000000000"}
+              "Document_ID": "Document_ID",
+              "Analytics": "Analytics",
+              "Comment": "Comment",
+              "Sum_Fact": "Sum_Fact",
+              "Sum_Currency": "Sum_Currency",
+              "Sum_Kazna": "Sum_Kazna",
+              "Sum_Plan": "Sum_Plan",
+              "Sum_Plan_Object": "Sum_Plan_Object"
+            }
           }
         }
       },

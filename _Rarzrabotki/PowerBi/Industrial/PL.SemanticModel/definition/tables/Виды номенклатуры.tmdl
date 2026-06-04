@@ -1,0 +1,133 @@
+table 'Виды номенклатуры'
+	lineageTag: 7830fdda-7f35-4824-b42e-3a201b8b9b7d
+
+	column ItemGroup_ID
+		dataType: string
+		isHidden
+		lineageTag: 7169357d-ba99-4009-a4af-45ef97218628
+		summarizeBy: none
+		sourceColumn: ItemGroup_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ItemGroup_Code
+		dataType: string
+		isHidden
+		lineageTag: 985f0397-6532-4958-a833-b27a0215c330
+		summarizeBy: none
+		sourceColumn: ItemGroup_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Вид номенклатуры'
+		dataType: string
+		lineageTag: 35dbaa21-5d42-49f5-bc60-3146548c455d
+		summarizeBy: none
+		sourceColumn: ItemGroup_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Parent_ID
+		dataType: string
+		isHidden
+		lineageTag: 97722afe-ab88-4eb8-a649-6998afcc1fff
+		summarizeBy: none
+		sourceColumn: Parent_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ЭтоГруппа
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 163eb3a4-5483-463f-9285-6f9217c50211
+		summarizeBy: none
+		sourceColumn: Is_Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column ПометкаУдаления
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: a92e561e-38f6-410e-8a59-f978875b5755
+		summarizeBy: none
+		sourceColumn: Marked_For_Deletion
+
+		annotation SummarizationSetBy = Automatic
+
+	column Loaded_At
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 4de12302-2351-40da-b0fe-830a3c9cca8b
+		summarizeBy: none
+		sourceColumn: Loaded_At
+
+		annotation SummarizationSetBy = Automatic
+
+	column _ParentClean = IF(ISBLANK(LOOKUPVALUE('Виды номенклатуры'[ItemGroup_ID],'Виды номенклатуры'[ItemGroup_ID],'Виды номенклатуры'[Parent_ID])),BLANK(),'Виды номенклатуры'[Parent_ID])
+		isHidden
+		lineageTag: 5ba524d9-aacc-47f4-8449-7927b3175d1a
+
+	column _HPath = PATH('Виды номенклатуры'[ItemGroup_ID],'Виды номенклатуры'[_ParentClean])
+		isHidden
+		lineageTag: a113aecd-7045-4eb3-a677-dfdd58fec231
+
+	column Level1 = LOOKUPVALUE('Виды номенклатуры'[Вид номенклатуры],'Виды номенклатуры'[ItemGroup_ID],PATHITEM('Виды номенклатуры'[_HPath],1))
+		isHidden
+		lineageTag: b1585582-376c-4828-9e02-3189d60946fb
+
+	column Level2 = LOOKUPVALUE('Виды номенклатуры'[Вид номенклатуры],'Виды номенклатуры'[ItemGroup_ID],PATHITEM('Виды номенклатуры'[_HPath],2))
+		isHidden
+		lineageTag: 4d736c1f-b5ca-4c58-b707-6c98cdc53cc2
+
+	column Level3 = LOOKUPVALUE('Виды номенклатуры'[Вид номенклатуры],'Виды номенклатуры'[ItemGroup_ID],PATHITEM('Виды номенклатуры'[_HPath],3))
+		isHidden
+		lineageTag: 0b818175-e537-447e-b0fe-a03d46d119d5
+
+	column Level4 = LOOKUPVALUE('Виды номенклатуры'[Вид номенклатуры],'Виды номенклатуры'[ItemGroup_ID],PATHITEM('Виды номенклатуры'[_HPath],4))
+		isHidden
+		lineageTag: 9be18d1f-379f-4116-a922-8d553401352d
+
+	column Level5 = LOOKUPVALUE('Виды номенклатуры'[Вид номенклатуры],'Виды номенклатуры'[ItemGroup_ID],PATHITEM('Виды номенклатуры'[_HPath],5))
+		isHidden
+		lineageTag: 52b401da-1540-4009-98cc-d32559b81381
+
+	hierarchy ИерархияВидовНоменклатуры
+		hideMembers: hideBlankMembers
+		lineageTag: 9f70f132-a0b9-4865-8995-12e8af731088
+
+		level Level1
+			lineageTag: 7e64f09a-8631-40dc-a1f2-184c0446e2fa
+			column: Level1
+
+		level Level2
+			lineageTag: 96247648-e349-4e66-b5a2-051af1f473eb
+			column: Level2
+
+		level Level3
+			lineageTag: 2fd7cfd7-2cb2-4db4-85ba-e77c08c64d6b
+			column: Level3
+
+		level Level4
+			lineageTag: 134f2f13-4449-4fd5-9798-6fe57e7f924a
+			column: Level4
+
+		level Level5
+			lineageTag: a6644862-ac4a-43d3-bec4-4261c2378725
+			column: Level5
+
+	partition 'Виды номенклатуры' = m
+		mode: import
+		source =
+				let
+				    Источник = Sql.Database("SQLSERVER", "OlapBASERP"),
+				    dbo_Dim_ItemGroups = Источник{[Schema="dbo",Item="Dim_ItemGroups"]}[Data]
+				in
+				    dbo_Dim_ItemGroups
+
+	annotation PBI_NavigationStepName = Навигация
+
+	annotation PBI_ResultType = Table
+

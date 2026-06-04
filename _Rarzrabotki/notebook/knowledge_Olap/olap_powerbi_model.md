@@ -1,6 +1,15 @@
-# OLAP — Power BI Model (Stage 4, ⏳ PLANNED)
+# OLAP — Power BI Model (Stage 4, частково РЕАЛІЗОВАНО)
 
-> **STATUS BANNER:** ⏳ Stage 4 ще не реалізовано. Цей файл описує **запланований стан** із spec v3 §6. Реалізація буде окремим планом після ETL Stage 3.
+> **STATUS BANNER:** ⏳ Stage 4 у процесі. PnL.pbix реалізовано і **значно розширено 2026-05-04…05** (snowflake-зв'язки, 5 ієрархій, unknown member паттерн, рос-перейменування полів, приховування службових колонок). Описаний нижче "плановий стан" доповнюється секцією **"Реалізований стан 2026-05-04"** наприкінці файлу.
+>
+> ⚠️ **Stage v2 (2026-05-05) ОНОВЛЕННЯ — DAX-приклади нижче застарілі:**
+> Більшість мір у §6 нижче (`[Виручка ЕРП]`, `[OpEx ЕРП]`, `[Каса]`, `[ЕРП без PL — *]`) написані під **pre-Stage-v2 структуру** з 8 Source значеннями і колонками `Sum_ERP_Grn` / `Sum_Kazna_Grn`. **Stage v2 фактичний стан:**
+> - Колонки: `Sum_Fact` (rename `Sum_ERP_Grn`), `Sum_Excel` (rename `Sum_Plan_Grn`), `Sum_F1`, `Sum_F2`, `Sum_F1_Excel`, `Sum_F2_Excel`. **Видалено:** `Sum_Kazna_Grn`, `Currency_ID`, `Exchange_Rate`, `Sum_Original`, `Source_Recorder_*`.
+> - Source: тільки `PL_Excel` / `PL_ЕРП` (Казна повністю прибрана з PnL).
+> - Розрізнення Виручка/Собівартість/OpEx — через фільтри на диммерах `СтатьяДоходов` / `СтатьяРасходов` / `Статья`, не на `Source`.
+> - Drill-down — через нову таблицю `Документы` (FK Fact_PnL.Document_ID).
+>
+> Канонічна Stage v2 модель та acceptance — [olap_powerbi_pl_pbix.md](olap_powerbi_pl_pbix.md) §5+§7+§11 і [olap_changelog_2026_05.md](olap_changelog_2026_05.md) §"Stage v2 — Power BI PL.pbix зміни".
 
 ---
 
@@ -297,10 +306,83 @@ User у дашборді бачить рядок «Глобино-2 / Реалі
 
 ---
 
+---
+
+## Реалізований стан 2026-05-04…05
+
+> Описує **актуальну модель PL.pbix** після рефакторингу. Заміняє відповідні розділи "Plan v3 §6" вище.
+
+### Snowflake-зв'язки (через ETL pre-computed FK)
+
+```
+Fact_PnL ──> СтруктураПредприятия ──> НаправленияДеятельности
+              (Direction_ID)            (з реквізиту А_НаправлениеДеятельности 1С)
+
+Fact_PnL ──> Контрагенты ──> Партнеры
+              (Partner_ID)    (з реквізиту Партнер 1С)
+
+Fact_PnL ──> А_Статьи_PL ──> А_ГруппаСтатей_PL
+              (Group_ID)
+```
+
+**Деактивовані** (для уникнення ambiguous paths):
+- `Fact_PnL[PL_Group_ID] → А_ГруппаСтатей_PL` — надлишковий, snowflake через А_Статьи_PL
+- `Fact_PnL[Direction_ID] → НаправленияДеятельности` — надлишковий, snowflake через СтруктураПредприятия
+
+### 5 user hierarchies (на SQL-колонках, не DAX)
+
+| Hierarchy (рос-ім'я) | Таблиця | Рівнів |
+|---------------------|---------|:------:|
+| `ИерархияПодразделений` | `СтруктураПредприятия` | 5 |
+| `ИерархияПартнеров` | `Партнеры` | 5 |
+| `ИерархияСтатейДДС` | `СтатьиДвиженияДенежныхСредств` | 5 |
+| `ИерархияСтатейРасходов` | `СтатьиРасходов` | 5 |
+| `ИерархияНоменклатуры` | `Номенклатура` | 5 |
+
+Усі — `HideMembers=HideBlankMembers`. Drill-down expand/collapse у matrix працює як у 1С.
+
+### Перейменування полів — російські 1С-стиль імена
+
+Усі `*_Name` → бізнес-назви: **Контрагент / Партнер / СтатьяДДС / СтатьяДоходов / СтатьяРасходов / Номенклатура / Подразделение / Направление / Организация / Валюта / Договор / ФизическоеЛицо / ГруппаФУНоменклатуры / СтатьяPL / ГруппаСтатейPL / Пользователь**.
+
+Спільні поля у всіх 16 Dim:
+- `Marked_For_Deletion` → `ПометкаУдаления`
+- `Is_Group` → `ЭтоГруппа`
+
+### Приховані колонки (`isHidden=true`) — 98 колонок у 16 Dim
+
+Видимі для користувача залишаються тільки:
+- **Бізнес-назва** (Контрагент, Партнер, СтатьяДДС, …) — 1 на таблицю
+- **Иерархия***  — для hierarchical Dim
+
+Приховано: `*_ID`, `*_Code`, `Parent_ID`, `Direction_ID`, `Partner_ID`, `Group_ID`, `Hierarchy_Path`, `Hierarchy_Depth`, `Level1..Level5`, `ЭтоГруппа`, `ПометкаУдаления`, `Sort_Order`, `Loaded_At`, `CFS_Section`, `Code_EDRPOU`, `Tax_Code`.
+
+Усі сховані колонки **залишаються активними у моделі** — зв'язки через ID не зламано, hierarchies використовують Level1..5, Sort By Column для PL-статей використовує `Sort_Order`.
+
+### Unknown Member паттерн
+
+Кожен Dim з FK у Fact_PnL має 1 рядок з ID `0x...0001` Name `'(Пусто)'`. Покриті: `Dim_Directions`, `Dim_Departments`, `Dim_DDS_Articles`, `Dim_Expense_Articles`, `Dim_Income_Articles`, `Dim_Counterparties`, `Dim_Partners`, `Dim_Items`. Гарантує що NULL FK у Fact завжди знайде пару → запобігає broken refs у Power BI.
+
+### Phantom relationships — як уникати
+
+Power BI auto-detect **агресивно** створює зв'язки між таблицями через text-колонки з однаковими іменами (`Hierarchy_Path`, `Level1`, `Parent_ID`). Це створює "phantom" зв'язки які ламають модель.
+
+**Рішення:** усі hierarchy-колонки сховано через `isHidden=true` — Power BI не auto-detect через них. Якщо вже з'явилися — видалити через MCP `relationship_operations.Delete`.
+
+### Як використати у візуалі
+
+1. Перетягнути в Rows матриці потрібну `ИерархияXxx`
+2. Додати міру з Fact_PnL у Values (наприклад `SUM(Sum_ERP_Grn)`)
+3. Натиснути **"Развернуть до следующего уровня"** (стрілка-розгалуження угорі візуала)
+4. Drill-down працює як у 1С — expand/collapse рівнів
+
+---
+
 ## Cross-references
 
 - SQL-схема джерело даних: [olap_sql_schema.md](olap_sql_schema.md)
 - Python ETL що вантажить дані: [olap_etl_pipeline.md](olap_etl_pipeline.md)
 - Acceptance etalons: [olap_acceptance_etalons.md](olap_acceptance_etalons.md)
 - Source markers (frozen identifiers): [olap_1c_objects.md](olap_1c_objects.md)
+- **Changelog 2026-05-04…05:** [olap_changelog_2026_05.md](olap_changelog_2026_05.md)
 - Spec v3 §6: `docs/superpowers/specs/2026-05-01-olap-baserp-architecture-design-v3-final.md`
