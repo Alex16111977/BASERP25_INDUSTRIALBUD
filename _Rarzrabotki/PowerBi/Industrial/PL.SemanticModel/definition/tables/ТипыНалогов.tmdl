@@ -1,0 +1,41 @@
+/// Перечисление.ТипыНалогов (Dim_TaxTypes) — расшифровка Fact_Balance.TaxType (Свод_ПрочиеАктивыПассивы_Прямой, статья «Налоги»)
+table ТипыНалогов
+	lineageTag: 76d5a1e4-8088-42e3-a22a-2c0202045309
+
+	column TaxType
+		dataType: string
+		isHidden
+		lineageTag: 81fb429a-aaea-4c3b-9c3c-31cc8a6f9f3a
+		summarizeBy: none
+		sourceColumn: TaxType
+
+		annotation SummarizationSetBy = Automatic
+
+	column ТипНалога
+		dataType: string
+		lineageTag: 0cbd1402-585b-4305-8f3e-a01a5cb15e77
+		summarizeBy: none
+		sourceColumn: TaxType_Name
+		sortByColumn: EnumOrder
+
+	column EnumOrder
+		dataType: int64
+		isHidden
+		lineageTag: 7d28c0ef-82a1-4529-a933-c3ada6401499
+		summarizeBy: none
+		sourceColumn: EnumOrder
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ТипыНалогов = m
+		mode: import
+		source =
+				let
+				    Источник = Sql.Database("SQLSERVER", "OlapBASERP", [Query="SELECT TaxType, TaxType_Name, EnumOrder FROM dbo.Dim_TaxTypes"])
+				in
+				    Источник
+
+	annotation PBI_NavigationStepName = Навигация
+
+	annotation PBI_ResultType = Table
+

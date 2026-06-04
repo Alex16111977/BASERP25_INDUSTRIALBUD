@@ -300,20 +300,23 @@ Stage 3 реалізований інакше:
 
 ---
 
-## 10. Реквізит `Сорт` відсутній у `Справочник.А_Статьи_PL` метаданих
+## 10. Реквізит `Сорт` відсутній у `Справочник.А_Статьи_PL` метаданих — **RESOLVED 2026-05-04**
 
-### Що
+### Що (історично)
 SQL DDL `OlapBASERP.Dim_PL_Articles` має колонку `Sort_Order int NULL` (Stage 2). Spec згадує реквізит `Сорт` через попередній коміт `23269eeb6 PnL: + скрипти для заповнення Сорт у А_Статьи_PL`.
 
-### Deviation
-У поточній 1С метадані (verified через MCP `get_metadata_structure`) **реквізит `Сорт` відсутній** у Справочник.А_Статьи_PL і Справочник.А_ГруппаСтатей_PL. У pipeline `dim_pl_articles` поле не запитується; `Sort_Order` залишається NULL.
+### Deviation (історично)
+У 1С метадані (на момент `get_metadata_structure`) **реквізит `Сорт` був відсутній** у Справочник.А_Статьи_PL і Справочник.А_ГруппаСтатей_PL. У pipeline `dim_pl_articles` поле не запитувалось; `Sort_Order` залишався NULL.
 
-### Імпакт
-Power BI dashboards Stage 4 не зможуть впорядкувати PL-статті за `Sort_Order` без додаткового workaround (можна використати `PL_Article_Code` як proxy сортування).
+### Resolution (2026-05-04)
+- Реквізит `Сорт` (Number 10,0) **доданий** до `Справочник.А_Статьи_PL` та `Справочник.А_ГруппаСтатей_PL` (попередня сесія).
+- Заповнення значень виконано через [`_Rarzrabotki/Python/PnL/scripts/17_upload_pl_sort.py`](../../../Python/PnL/scripts/17_upload_pl_sort.py): 8 груп + 63 статті.
+- ETL pipeline [`pipelines/dim_catalogs.json`](../../../Olap/Ai_Olap/pipelines/dim_catalogs.json) оновлено: додано `"Сорт"` у `fields` і `"Сорт": "Sort_Order"` у `column_map` для `dim_pl_articles` та `dim_pl_article_groups`.
+- Розширено SQL схему: `ALTER TABLE Dim_PL_ArticleGroups ADD Sort_Order int NULL` (раніше було лише в `Dim_PL_Articles`).
+- Mapping cache регенеровано: `python mapping/refresh_mapping.py`.
+- Verification (ETL run #34): `Dim_PL_ArticleGroups` 8/8 заповнено (100..800), `Dim_PL_Articles` 63/71 заповнено (статті у межах груп з кроком 100), 8 груп всередині `А_Статьи_PL` мають `Sort_Order=0` (за дизайном — сортування для ієрархії статей не потрібне, групи відображаються через Group_ID FK на `Dim_PL_ArticleGroups`).
 
-### Подальші дії
-- Якщо CFO потребує точне впорядкування — додати реквізит `Сорт` (Number) у Справочник.А_Статьи_PL у Stage 1.b → запустити сітку заповнення (скрипти з commit 23269eeb6).
-- Або: видалити `Sort_Order` з SQL DDL і використовувати Code-based ORDER BY у DAX.
+### Status: **RESOLVED**
 
 ---
 

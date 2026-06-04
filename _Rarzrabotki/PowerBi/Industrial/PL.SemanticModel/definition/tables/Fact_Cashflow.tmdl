@@ -1,0 +1,173 @@
+table Fact_Cashflow
+	lineageTag: 26a93492-8a2d-4668-b366-9dae5bbd50dd
+
+	column Fact_ID
+		dataType: int64
+		lineageTag: bec121b3-4dee-49a7-9366-21b686a871ce
+		sourceColumn: Fact_ID
+
+	column Period
+		dataType: dateTime
+		lineageTag: 70ab029d-c4e1-4226-b969-484101746b68
+		sourceColumn: Period
+
+	column Period_Month
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 15442401-a61b-4203-9347-e464c771ae95
+		summarizeBy: none
+		sourceColumn: Period_Month
+
+		annotation UnderlyingDateTimeDataType = Date
+
+		annotation SummarizationSetBy = Automatic
+
+	column Recorder_DDS_ID
+		dataType: string
+		lineageTag: c306d20b-dbd6-4f80-af24-27980a0539ff
+		sourceColumn: Recorder_DDS_ID
+
+	column Movement_Type
+		dataType: string
+		lineageTag: 22953789-64c1-4f40-9f90-2cc536bb0595
+		sourceColumn: Movement_Type
+
+	column Cash_Type
+		dataType: string
+		lineageTag: 02c30242-4f50-44fe-88f0-73b637a5da6a
+		sourceColumn: Cash_Type
+
+	column Source
+		dataType: string
+		lineageTag: 04a44461-aa46-4d4a-9d93-a177b02dfb99
+		sourceColumn: Source
+
+	column Organization_ID
+		dataType: string
+		lineageTag: 9f45aa58-3fda-4d07-afdd-846ee6a3adc2
+		sourceColumn: Organization_ID
+
+	column Department_ID
+		dataType: string
+		lineageTag: 13b4fe3d-cc60-4a66-b092-95e72496eee6
+		sourceColumn: Department_ID
+
+	column Cash_Account_ID
+		dataType: string
+		lineageTag: 15bc3c74-0044-440e-b10e-b0eeb97b238d
+		sourceColumn: Cash_Account_ID
+
+	column DDS_Article_ID
+		dataType: string
+		lineageTag: 715e0201-4507-4d70-9bb7-3438bd3f5ef1
+		sourceColumn: DDS_Article_ID
+
+	column Counterparty_ID
+		dataType: string
+		lineageTag: b388b749-e35b-4591-b2b7-d29333aafda9
+		sourceColumn: Counterparty_ID
+
+	column Contract_ID
+		dataType: string
+		lineageTag: 18ffa2f0-6b65-4b49-a480-c8cf6e4acddd
+		sourceColumn: Contract_ID
+
+	column Individual_ID
+		dataType: string
+		lineageTag: 94c967d5-49cb-4ced-8e72-147cac2af3b7
+		sourceColumn: Individual_ID
+
+	column Currency_ID
+		dataType: string
+		lineageTag: f1b0dd48-4a3e-46af-aecc-ce37ea8db18f
+		sourceColumn: Currency_ID
+
+	column Document_ID
+		dataType: string
+		lineageTag: 106ea174-3b14-4814-8323-8496013f7539
+		sourceColumn: Document_ID
+
+	column Analytics
+		dataType: string
+		lineageTag: 3c0f8fb7-a5e3-4d7d-95f8-befd766a0cf9
+		sourceColumn: Analytics
+
+	column Comment
+		dataType: string
+		lineageTag: 33a78f61-e1b6-4b15-886b-7ed1a50f7558
+		sourceColumn: Comment
+
+	column Sum_Fact
+		dataType: double
+		lineageTag: 277c03ab-36c2-4634-b38b-897a55169967
+		summarizeBy: sum
+		sourceColumn: Sum_Fact
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Sum_Currency
+		dataType: double
+		lineageTag: 1a400e8f-ae9b-460b-93bd-45caaf52faa6
+		summarizeBy: sum
+		sourceColumn: Sum_Currency
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Sum_Kazna
+		dataType: double
+		lineageTag: 2304e273-9d4f-4c55-9d25-0d16b6490079
+		summarizeBy: sum
+		sourceColumn: Sum_Kazna
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Sum_Plan
+		dataType: double
+		lineageTag: 347b502d-edea-4b54-8207-ad764c57d16b
+		summarizeBy: sum
+		sourceColumn: Sum_Plan
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Sum_Plan_Object
+		dataType: double
+		lineageTag: ed559ab3-9f34-449e-952f-c8877572ac12
+		summarizeBy: sum
+		sourceColumn: Sum_Plan_Object
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Loaded_At
+		dataType: dateTime
+		lineageTag: 98b7b932-4241-4f5b-9962-4ecba0853eb8
+		sourceColumn: Loaded_At
+
+	column Business_Operation
+		dataType: string
+		lineageTag: e2a7d8c2-56be-41d8-a1f3-8ebdaaea4d30
+		summarizeBy: none
+		sourceColumn: Business_Operation
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Fact_Cashflow = m
+		mode: import
+		source =
+				let
+				    Source = Sql.Database("SQLSERVER", "OlapBASERP"),
+				    dbo_Fact_Cashflow = Source{[Schema="dbo",Item="Fact_Cashflow"]}[Data]
+				in
+				    dbo_Fact_Cashflow
+
+	annotation PBI_ResultType = Table
+

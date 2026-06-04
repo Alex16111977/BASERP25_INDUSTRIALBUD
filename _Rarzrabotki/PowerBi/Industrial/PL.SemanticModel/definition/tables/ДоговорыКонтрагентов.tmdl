@@ -1,0 +1,156 @@
+table ДоговорыКонтрагентов
+	lineageTag: 3663082d-a4b4-40db-b51f-ee8214b2642e
+
+	column Contract_ID
+		dataType: string
+		isHidden
+		lineageTag: 6c183854-62ac-47e6-b7b7-01c44793e5c4
+		summarizeBy: none
+		sourceColumn: Contract_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Contract_Code
+		dataType: string
+		isHidden
+		lineageTag: 3bd2f7e1-caf5-44bf-96b5-4a1cfcd06d26
+		summarizeBy: none
+		sourceColumn: Contract_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Договор
+		dataType: string
+		lineageTag: 05a7f484-ba7c-4a48-9ca4-bd69407e7e92
+		summarizeBy: none
+		sourceColumn: Contract_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Parent_ID
+		dataType: string
+		isHidden
+		lineageTag: 3cc12d98-d528-47ee-9633-e67261361d75
+		summarizeBy: none
+		sourceColumn: Parent_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ЭтоГруппа
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 86e37097-cf69-44cd-b63f-3d0f1dd18335
+		summarizeBy: none
+		sourceColumn: Is_Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column ПометкаУдаления
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: a6496551-9aa3-44b7-8af1-6156b631b4fc
+		summarizeBy: none
+		sourceColumn: Marked_For_Deletion
+
+		annotation SummarizationSetBy = Automatic
+
+	column Loaded_At
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 579702fb-9481-470b-8964-1190ef2da06d
+		summarizeBy: none
+		sourceColumn: Loaded_At
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Это договор фин.агента'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 71eb9be9-a880-4f93-aca1-94d08c1fc0b1
+		summarizeBy: none
+		sourceColumn: Is_FinAgent_Contract
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Тип договора'
+		dataType: string
+		isHidden
+		lineageTag: 52610664-b02e-41de-a0ab-5675a65f5bfb
+		summarizeBy: none
+		sourceColumn: TipDogovora
+
+		annotation SummarizationSetBy = Automatic
+
+	column FinAgent_ID
+		dataType: string
+		isHidden
+		lineageTag: 447e7912-0c8d-4bf5-b027-fb72cea93149
+		summarizeBy: none
+		sourceColumn: FinAgent_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Подразделение (бух)'
+		dataType: string
+		lineageTag: 02265d36-9b74-4620-9405-4214a1842b2c
+		summarizeBy: none
+		sourceColumn: Department_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Подразделение (услуги между подр.)'
+		dataType: string
+		lineageTag: 98f20f7e-4ba3-4989-bf93-1db2bf92c244
+		summarizeBy: none
+		sourceColumn: Dept_OkazUslug_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Партнёр
+		dataType: string
+		lineageTag: b032abc0-2e5b-42a7-9094-3343eea7525d
+		summarizeBy: none
+		sourceColumn: Partner_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Контрагент
+		dataType: string
+		lineageTag: 23c30336-32d7-41e9-85b6-2c60913106a3
+		summarizeBy: none
+		sourceColumn: Counterparty_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Статья ДДС (осн. принудительно)'
+		dataType: string
+		lineageTag: aca14ee2-9eba-4a05-bf30-4ef64b344b01
+		summarizeBy: none
+		sourceColumn: DDS_Article_Forced_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Организация (бух)'
+		dataType: string
+		lineageTag: 5f1e2287-feea-4987-bd57-df4401440281
+		summarizeBy: none
+		sourceColumn: Org_Buh_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Contracts = m
+		mode: import
+		source =
+				let
+				    Источник = Sql.Database("SQLSERVER", "OlapBASERP"),
+				    dbo_Dim_Contracts = Источник{[Schema="dbo",Item="Dim_Contracts"]}[Data]
+				in
+				    dbo_Dim_Contracts
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Навигация
+

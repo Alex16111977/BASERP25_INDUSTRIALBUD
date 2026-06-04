@@ -7,11 +7,35 @@
 		</v8:item>
 	</Title>
 	<AutoTitle>false</AutoTitle>
+	<CommandSet>
+		<ExcludedCommand>Post</ExcludedCommand>
+		<ExcludedCommand>PostAndClose</ExcludedCommand>
+		<ExcludedCommand>Write</ExcludedCommand>
+	</CommandSet>
 	<AutoTime>CurrentOrLast</AutoTime>
 	<UsePostingMode>Auto</UsePostingMode>
 	<RepostOnWrite>true</RepostOnWrite>
 	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
 		<ChildItems>
+			<Button name="ФормаПровестиИЗакрыть" id="900">
+				<Type>CommandBarButton</Type>
+				<Representation>Text</Representation>
+				<DefaultButton>true</DefaultButton>
+				<CommandName>Form.Command.ПровестиИЗакрыть</CommandName>
+				<ExtendedTooltip name="ФормаПровестиИЗакрытьРасширеннаяПодсказка" id="901"/>
+			</Button>
+			<Button name="ФормаЗаписать" id="902">
+				<Type>CommandBarButton</Type>
+				<Representation>Picture</Representation>
+				<CommandName>Form.Command.ЗаписатьДокумент</CommandName>
+				<ExtendedTooltip name="ФормаЗаписатьРасширеннаяПодсказка" id="903"/>
+			</Button>
+			<Button name="ФормаПровести" id="904">
+				<Type>CommandBarButton</Type>
+				<Representation>Picture</Representation>
+				<CommandName>Form.Command.ПровестиДокумент</CommandName>
+				<ExtendedTooltip name="ФормаПровестиРасширеннаяПодсказка" id="905"/>
+			</Button>
 			<Button name="ФормаЗаполнитьИзКазны" id="71">
 				<Type>CommandBarButton</Type>
 				<Representation>PictureAndText</Representation>
@@ -24,183 +48,75 @@
 				<CommandName>Form.Command.ДвиженияДокумента</CommandName>
 				<ExtendedTooltip name="ФормаДвиженияДокументаРасширеннаяПодсказка" id="107"/>
 			</Button>
+			<Popup name="ПодменюСоздатьНаОсновании" id="9201">
+				<Title>
+					<v8:item>
+						<v8:lang>ru</v8:lang>
+						<v8:content>Создать на основании</v8:content>
+					</v8:item>
+				</Title>
+				<ExtendedTooltip name="ПодменюСоздатьНаОснованииРасширеннаяПодсказка" id="9202"/>
+				<ChildItems>
+					<ButtonGroup name="ПодменюСоздатьНаОснованииВажное" id="9203">
+						<ExtendedTooltip name="ПодменюСоздатьНаОснованииВажноеРасширеннаяПодсказка" id="9204"/>
+					</ButtonGroup>
+					<ButtonGroup name="ПодменюСоздатьНаОснованииОбычное" id="9205">
+						<ExtendedTooltip name="ПодменюСоздатьНаОснованииОбычноеРасширеннаяПодсказка" id="9206"/>
+					</ButtonGroup>
+					<ButtonGroup name="ПодменюСоздатьНаОснованииСмТакже" id="9207">
+						<ExtendedTooltip name="ПодменюСоздатьНаОснованииСмТакжеРасширеннаяПодсказка" id="9208"/>
+					</ButtonGroup>
+				</ChildItems>
+			</Popup>
+			<Popup name="ПодменюПечать" id="9209">
+				<Title>
+					<v8:item>
+						<v8:lang>ru</v8:lang>
+						<v8:content>Печать</v8:content>
+					</v8:item>
+				</Title>
+				<ExtendedTooltip name="ПодменюПечатьРасширеннаяПодсказка" id="9210"/>
+			</Popup>
+			<ButtonGroup name="ФормаГлобальныеКоманды" id="9211">
+				<CommandSource>FormCommandPanelGlobalCommands</CommandSource>
+				<ExtendedTooltip name="ФормаГлобальныеКомандыРасширеннаяПодсказка" id="9212"/>
+			</ButtonGroup>
+			<Popup name="ПодменюОтчеты" id="9213">
+				<Title>
+					<v8:item>
+						<v8:lang>ru</v8:lang>
+						<v8:content>Отчеты</v8:content>
+					</v8:item>
+				</Title>
+				<ExtendedTooltip name="ПодменюОтчетыРасширеннаяПодсказка" id="9214"/>
+				<ChildItems>
+					<ButtonGroup name="ПодменюОтчетыВажное" id="9215">
+						<ExtendedTooltip name="ПодменюОтчетыВажноеРасширеннаяПодсказка" id="9216"/>
+					</ButtonGroup>
+					<ButtonGroup name="ПодменюОтчетыОбычное" id="9217">
+						<ExtendedTooltip name="ПодменюОтчетыОбычноеРасширеннаяПодсказка" id="9218"/>
+					</ButtonGroup>
+					<ButtonGroup name="ПодменюОтчетыСмТакже" id="9219">
+						<ExtendedTooltip name="ПодменюОтчетыСмТакжеРасширеннаяПодсказка" id="9220"/>
+					</ButtonGroup>
+				</ChildItems>
+			</Popup>
+			<Popup name="ПодменюЗаполнить" id="9221">
+				<Title>
+					<v8:item>
+						<v8:lang>ru</v8:lang>
+						<v8:content>Заполнить</v8:content>
+					</v8:item>
+				</Title>
+				<ExtendedTooltip name="ПодменюЗаполнитьРасширеннаяПодсказка" id="9222"/>
+			</Popup>
 		</ChildItems>
 	</AutoCommandBar>
+	<Events>
+		<Event name="OnOpen">ПриОткрытии</Event>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+	</Events>
 	<ChildItems>
-		<UsualGroup name="ПодменюЗаполнить" id="75">
-			<Title>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Заполнение</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>uk</v8:lang>
-					<v8:content>Заповнення</v8:content>
-				</v8:item>
-			</Title>
-			<ToolTip>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Дополнительные команды заполнения</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>uk</v8:lang>
-					<v8:content>Додаткові команди заповнення</v8:content>
-				</v8:item>
-			</ToolTip>
-			<Behavior>Usual</Behavior>
-			<ExtendedTooltip name="ПодменюДополнительныхОбработокЗаполненияРасширеннаяПодсказка" id="76"/>
-		</UsualGroup>
-		<UsualGroup name="ПодменюОтчеты" id="77">
-			<Title>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Отчеты</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>uk</v8:lang>
-					<v8:content>Звіти</v8:content>
-				</v8:item>
-			</Title>
-			<Behavior>Usual</Behavior>
-			<ExtendedTooltip name="ПодменюОтчетыРасширеннаяПодсказка" id="78"/>
-			<ChildItems>
-				<UsualGroup name="ПодменюОтчетыВажное" id="79">
-					<Title>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Подменю отчеты важное</v8:content>
-						</v8:item>
-						<v8:item>
-							<v8:lang>uk</v8:lang>
-							<v8:content>Підменю звіти важливе</v8:content>
-						</v8:item>
-					</Title>
-					<Behavior>Usual</Behavior>
-					<ExtendedTooltip name="ПодменюОтчетыВажноеРасширеннаяПодсказка" id="80"/>
-				</UsualGroup>
-				<UsualGroup name="ПодменюОтчетыОбычное" id="81">
-					<Title>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Подменю отчеты обычное</v8:content>
-						</v8:item>
-						<v8:item>
-							<v8:lang>uk</v8:lang>
-							<v8:content>Підміню звіти звичайне</v8:content>
-						</v8:item>
-					</Title>
-					<ToolTip>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Подменю отчеты важное</v8:content>
-						</v8:item>
-						<v8:item>
-							<v8:lang>uk</v8:lang>
-							<v8:content>Підменю звіти важливе</v8:content>
-						</v8:item>
-					</ToolTip>
-					<Behavior>Usual</Behavior>
-					<ExtendedTooltip name="ПодменюОтчетыОбычноеРасширеннаяПодсказка" id="82"/>
-				</UsualGroup>
-				<UsualGroup name="ПодменюОтчетыСмТакже" id="83">
-					<Title>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Подменю отчеты см также</v8:content>
-						</v8:item>
-						<v8:item>
-							<v8:lang>uk</v8:lang>
-							<v8:content>Підміню звіти див також</v8:content>
-						</v8:item>
-					</Title>
-					<ToolTip>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Подменю отчеты важное</v8:content>
-						</v8:item>
-						<v8:item>
-							<v8:lang>uk</v8:lang>
-							<v8:content>Підменю звіти важливе</v8:content>
-						</v8:item>
-					</ToolTip>
-					<Behavior>Usual</Behavior>
-					<ExtendedTooltip name="ПодменюОтчетыСмТакжеРасширеннаяПодсказка" id="84"/>
-				</UsualGroup>
-			</ChildItems>
-		</UsualGroup>
-		<UsualGroup name="ФормаГлобальныеКоманды" id="85">
-			<Title>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Форма глобальные команды</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>uk</v8:lang>
-					<v8:content>Форма глобальні команди</v8:content>
-				</v8:item>
-			</Title>
-			<Behavior>Usual</Behavior>
-			<ExtendedTooltip name="ФормаГлобальныеКомандыРасширеннаяПодсказка" id="86"/>
-		</UsualGroup>
-		<UsualGroup name="ПодменюСоздатьНаОсновании" id="87">
-			<Title>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Создать на основании</v8:content>
-				</v8:item>
-				<v8:item>
-					<v8:lang>uk</v8:lang>
-					<v8:content>Створити на підставі</v8:content>
-				</v8:item>
-			</Title>
-			<Behavior>Usual</Behavior>
-			<ExtendedTooltip name="ПодменюСоздатьНаОснованииРасширеннаяПодсказка" id="88"/>
-			<ChildItems>
-				<UsualGroup name="ПодменюСоздатьНаОснованииВажное" id="89">
-					<Title>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Создать на основании (Важное)</v8:content>
-						</v8:item>
-						<v8:item>
-							<v8:lang>uk</v8:lang>
-							<v8:content>Створити на підставі (Важливе)</v8:content>
-						</v8:item>
-					</Title>
-					<Behavior>Usual</Behavior>
-					<ExtendedTooltip name="ПодменюСоздатьНаОснованииВажноеРасширеннаяПодсказка" id="90"/>
-				</UsualGroup>
-				<UsualGroup name="ПодменюСоздатьНаОснованииОбычное" id="91">
-					<Title>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Создать на основании (Обычное)</v8:content>
-						</v8:item>
-						<v8:item>
-							<v8:lang>uk</v8:lang>
-							<v8:content>Створити на підставі (Звичайне)</v8:content>
-						</v8:item>
-					</Title>
-					<Behavior>Usual</Behavior>
-					<ExtendedTooltip name="ПодменюСоздатьНаОснованииОбычноеРасширеннаяПодсказка" id="92"/>
-				</UsualGroup>
-				<UsualGroup name="ПодменюСоздатьНаОснованииСмТакже" id="93">
-					<Title>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>Создать на основании (См. также)</v8:content>
-						</v8:item>
-						<v8:item>
-							<v8:lang>uk</v8:lang>
-							<v8:content>Створити на підставі (Див. також)</v8:content>
-						</v8:item>
-					</Title>
-					<Behavior>Usual</Behavior>
-					<ExtendedTooltip name="ПодменюСоздатьНаОснованииСмТакжеРасширеннаяПодсказка" id="94"/>
-				</UsualGroup>
-			</ChildItems>
-		</UsualGroup>
 		<UsualGroup name="ГруппаШапка" id="1">
 			<Group>Horizontal</Group>
 			<Behavior>Usual</Behavior>
@@ -471,6 +387,49 @@
 		</Attribute>
 	</Attributes>
 	<Commands>
+		<Command name="ПровестиИЗакрыть" id="200">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Провести и закрыть</v8:content>
+				</v8:item>
+			</Title>
+			<Shortcut>Ctrl+Enter</Shortcut>
+			<Action>ПровестиИЗакрыть</Action>
+			<ModifiesSavedData>true</ModifiesSavedData>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="ЗаписатьДокумент" id="201">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Записать</v8:content>
+				</v8:item>
+			</Title>
+			<Shortcut>Ctrl+S</Shortcut>
+			<Picture>
+				<xr:Ref>StdPicture.Write</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>ЗаписатьДокумент</Action>
+			<ModifiesSavedData>true</ModifiesSavedData>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="ПровестиДокумент" id="202">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Провести</v8:content>
+				</v8:item>
+			</Title>
+			<Picture>
+				<xr:Ref>StdPicture.Post</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>ПровестиДокумент</Action>
+			<ModifiesSavedData>true</ModifiesSavedData>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
 		<Command name="ЗаполнитьИзКазны" id="65">
 			<Title>
 				<v8:item>

@@ -1,0 +1,131 @@
+table Склады
+	lineageTag: 4215b4e3-6f22-40a9-9e00-cbffe68b3325
+
+	column Warehouse_ID
+		dataType: string
+		isHidden
+		lineageTag: afc865b3-1625-479d-99bb-8b18d9d42374
+		summarizeBy: none
+		sourceColumn: Warehouse_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Склад
+		dataType: string
+		lineageTag: cb6f91e8-8fe9-4253-85ec-9815fbcc2aeb
+		summarizeBy: none
+		sourceColumn: Warehouse_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column ПометкаУдаления
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 4e3b7555-f04c-42f9-8c5a-3bca6ef6768c
+		summarizeBy: none
+		sourceColumn: Marked_For_Deletion
+
+		annotation SummarizationSetBy = Automatic
+
+	column Loaded_At
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 4167c581-b149-4c68-ba4f-652ee09ade33
+		summarizeBy: none
+		sourceColumn: Loaded_At
+
+		annotation SummarizationSetBy = Automatic
+
+	column Parent_ID
+		dataType: string
+		isHidden
+		lineageTag: f1166a98-ed19-499b-bb2e-b8ce330f5330
+		sourceColumn: Parent_ID
+
+	column Is_Group
+		dataType: boolean
+		isHidden
+		lineageTag: e73d1057-80cc-410f-83cf-be42bd996afc
+		sourceColumn: Is_Group
+
+	column Hierarchy_Path
+		dataType: string
+		isHidden
+		lineageTag: a731096d-bf1a-4634-b0eb-b2488d93cd85
+		sourceColumn: Hierarchy_Path
+
+	column Hierarchy_Depth
+		dataType: int64
+		isHidden
+		lineageTag: 61e1fd11-5420-4070-817c-f778cf75c172
+		sourceColumn: Hierarchy_Depth
+
+	column Level1
+		dataType: string
+		isHidden
+		lineageTag: 1a0e7bbf-a6ba-48eb-9305-5dc5f77bf9f4
+		sourceColumn: Level1
+
+	column Level2
+		dataType: string
+		isHidden
+		lineageTag: ba6201ba-6b74-49ca-a2b7-ddf54d8a11b5
+		sourceColumn: Level2
+
+	column Level3
+		dataType: string
+		isHidden
+		lineageTag: ef8827ac-c6ab-41dc-9f03-6264feae0541
+		sourceColumn: Level3
+
+	column Level4
+		dataType: string
+		isHidden
+		lineageTag: 973631f1-1ee8-4542-a751-74693480819e
+		sourceColumn: Level4
+
+	column Level5
+		dataType: string
+		isHidden
+		lineageTag: bc5d65a9-1b87-4f68-8cbc-e9cb4a00a083
+		sourceColumn: Level5
+
+	hierarchy ИерархияСкладов
+		hideMembers: hideBlankMembers
+		lineageTag: b705379e-f415-40dd-9b27-43a611bbdb06
+
+		level Level1
+			lineageTag: 64bfd4fa-4e39-49ee-8438-28c8979fdbae
+			column: Level1
+
+		level Level2
+			lineageTag: 7ece2b86-f921-4f56-b9ef-d72b91d0948f
+			column: Level2
+
+		level Level3
+			lineageTag: bc772db4-164c-431a-898e-3b8c480aae10
+			column: Level3
+
+		level Level4
+			lineageTag: d4c3fc1e-0f20-4119-bc5d-a546b85eb318
+			column: Level4
+
+		level Level5
+			lineageTag: 64e913a9-1f9d-49ee-b569-45b3f3d67cd1
+			column: Level5
+
+	partition Склады = m
+		mode: import
+		source =
+				let
+				    Источник = Sql.Database("SQLSERVER", "OlapBASERP"),
+				    dbo_Dim_Warehouses = Источник{[Schema="dbo",Item="Dim_Warehouses"]}[Data]
+				in
+				    dbo_Dim_Warehouses
+
+	annotation PBI_NavigationStepName = Навигация
+
+	annotation PBI_ResultType = Table
+

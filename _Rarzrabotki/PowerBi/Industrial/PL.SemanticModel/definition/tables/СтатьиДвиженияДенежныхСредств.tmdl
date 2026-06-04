@@ -1,0 +1,193 @@
+table СтатьиДвиженияДенежныхСредств
+	lineageTag: 69748738-c990-4ace-ac1a-dd0c2be44918
+
+	column DDS_Article_ID
+		dataType: string
+		isHidden
+		lineageTag: 9c29c782-d837-456f-88d9-5b9975184bd1
+		summarizeBy: none
+		sourceColumn: DDS_Article_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column DDS_Article_Code
+		dataType: string
+		isHidden
+		lineageTag: 0f27cb97-a06c-4517-ba8b-58dfd92d56b8
+		summarizeBy: none
+		sourceColumn: DDS_Article_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column СтатьяДДС
+		dataType: string
+		lineageTag: d43ce641-94dd-40f4-bedf-064cc9a596ef
+		summarizeBy: none
+		sourceColumn: DDS_Article_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Parent_ID
+		dataType: string
+		isHidden
+		lineageTag: 69a5a08b-1acb-4823-8736-b4d05667a40e
+		summarizeBy: none
+		sourceColumn: Parent_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ЭтоГруппа
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 44c38fb2-a9bd-450b-8dcd-421a3c1a3c25
+		summarizeBy: none
+		sourceColumn: Is_Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column ПометкаУдаления
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 7496a560-2484-4156-a18e-cf12c6dfec97
+		summarizeBy: none
+		sourceColumn: Marked_For_Deletion
+
+		annotation SummarizationSetBy = Automatic
+
+	column CFS_Section
+		dataType: string
+		isHidden
+		lineageTag: d347a6d2-b910-4016-87bd-9643bb7a53fc
+		summarizeBy: none
+		sourceColumn: CFS_Section
+
+		annotation SummarizationSetBy = Automatic
+
+	column Loaded_At
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 57278356-2209-401c-9127-6a71d710da6b
+		summarizeBy: none
+		sourceColumn: Loaded_At
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hierarchy_Path
+		dataType: string
+		isHidden
+		lineageTag: 5f541127-c114-4fea-9d86-27c1425af68b
+		summarizeBy: none
+		sourceColumn: Hierarchy_Path
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hierarchy_Depth
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a0e153f1-7ee7-4399-a538-2ab53207a2ab
+		summarizeBy: sum
+		sourceColumn: Hierarchy_Depth
+
+		annotation SummarizationSetBy = Automatic
+
+	column Level1
+		dataType: string
+		isHidden
+		lineageTag: 591283e2-14f3-49aa-a351-5e24802e10fb
+		summarizeBy: none
+		sourceColumn: Level1
+
+		annotation SummarizationSetBy = Automatic
+
+	column Level2
+		dataType: string
+		isHidden
+		lineageTag: 1335e4f4-6e1b-4630-82b4-0dceed09bd59
+		summarizeBy: none
+		sourceColumn: Level2
+
+		annotation SummarizationSetBy = Automatic
+
+	column Level3
+		dataType: string
+		isHidden
+		lineageTag: 070e9f66-dea7-41a1-860b-0dabccd69845
+		summarizeBy: none
+		sourceColumn: Level3
+
+		annotation SummarizationSetBy = Automatic
+
+	column Level4
+		dataType: string
+		isHidden
+		lineageTag: 74533aba-4ec8-4ad8-8624-87a8c84588af
+		summarizeBy: none
+		sourceColumn: Level4
+
+		annotation SummarizationSetBy = Automatic
+
+	column Level5
+		dataType: string
+		isHidden
+		lineageTag: bdda2bf6-7e2d-4522-a514-79348aa39b8b
+		summarizeBy: none
+		sourceColumn: Level5
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Исключить из Cashflow'
+		dataType: boolean
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: a268b1b9-6197-44fa-8d3d-591332335076
+		summarizeBy: none
+		sourceColumn: Is_Excluded_From_Cashflow
+
+		annotation SummarizationSetBy = Automatic
+
+	/// CFS section proxy (Operating/Investing/Financing/Internal) derived from Level2 hierarchy. Fallback for empty А_РазділCFS field in 1C.
+	column CFS_Section_Proxy = SWITCH(TRUE(), CONTAINSSTRING('СтатьиДвиженияДенежныхСредств'[Level2], "Операционная"), "Operating", CONTAINSSTRING('СтатьиДвиженияДенежныхСредств'[Level2], "Инвестиционная"), "Investing", CONTAINSSTRING('СтатьиДвиженияДенежныхСредств'[Level2], "Финансовая"), "Financing", CONTAINSSTRING('СтатьиДвиженияДенежныхСредств'[Level2], "Внутренние"), "Internal", BLANK())
+		dataType: string
+		lineageTag: ef5a2e65-02c6-451a-97ae-fd2d8a55f87c
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy ИерархияСтатейДДС
+		hideMembers: hideBlankMembers
+		lineageTag: f63fb1fc-8f7c-4b89-9b22-9b7fdb6a4e1b
+
+		level Level1
+			lineageTag: 15589175-0852-414b-a616-66d5252c276d
+			column: Level1
+
+		level Level2
+			lineageTag: 59130264-91fc-498b-b759-3fd42ecab21c
+			column: Level2
+
+		level Level3
+			lineageTag: b1f39605-642e-45ad-85f4-471cab37e786
+			column: Level3
+
+		level Level4
+			lineageTag: 88ef8b29-fa3a-48ce-8242-50865f4ea888
+			column: Level4
+
+		level Level5
+			lineageTag: 551e53aa-b09a-44d2-9702-305bf312c27c
+			column: Level5
+
+	partition Dim_DDS_Articles = m
+		mode: import
+		source =
+				let
+				    Источник = Sql.Database("SQLSERVER", "OlapBASERP"),
+				    dbo_Dim_DDS_Articles = Источник{[Schema="dbo",Item="Dim_DDS_Articles"]}[Data]
+				in
+				    dbo_Dim_DDS_Articles
+
+	annotation PBI_ResultType = Table
+
