@@ -1,0 +1,131 @@
+table ФизическиеЛица
+	lineageTag: d0d13364-f0f4-42af-a73b-5497b6cfa0ab
+
+	column Individual_ID
+		dataType: string
+		isHidden
+		lineageTag: 833f1e47-0f1a-43b5-98b8-e10affc6dfea
+		summarizeBy: none
+		sourceColumn: Individual_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Individual_Code
+		dataType: string
+		isHidden
+		lineageTag: 730be74a-39a9-42c2-b673-fd8cba38212c
+		summarizeBy: none
+		sourceColumn: Individual_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column ФизическоеЛицо
+		dataType: string
+		lineageTag: 9e7f94e3-547a-4d49-a8d6-2e868c08b8b8
+		summarizeBy: none
+		sourceColumn: Individual_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Parent_ID
+		dataType: string
+		isHidden
+		lineageTag: 9bf81a7f-6964-428e-b2d0-4c5c0563852d
+		summarizeBy: none
+		sourceColumn: Parent_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ЭтоГруппа
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 0c552ae9-6e78-4503-bfee-8a2a7cc32777
+		summarizeBy: none
+		sourceColumn: Is_Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column ПометкаУдаления
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: f9a928b5-9a59-4f79-8c8c-3e59cf63d62d
+		summarizeBy: none
+		sourceColumn: Marked_For_Deletion
+
+		annotation SummarizationSetBy = Automatic
+
+	column Loaded_At
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 137f9346-887e-4a15-acda-0af931504445
+		summarizeBy: none
+		sourceColumn: Loaded_At
+
+		annotation SummarizationSetBy = Automatic
+
+	column _ParentClean = IF(ISBLANK(LOOKUPVALUE('ФизическиеЛица'[Individual_ID],'ФизическиеЛица'[Individual_ID],'ФизическиеЛица'[Parent_ID])),BLANK(),'ФизическиеЛица'[Parent_ID])
+		isHidden
+		lineageTag: 0079a6fb-4c97-4578-bb3d-a2a1b0b390a2
+
+	column _HPath = PATH('ФизическиеЛица'[Individual_ID],'ФизическиеЛица'[_ParentClean])
+		isHidden
+		lineageTag: dfdebfc3-15ad-4d5f-93ac-1af21943ece6
+
+	column Level1 = LOOKUPVALUE('ФизическиеЛица'[ФизическоеЛицо],'ФизическиеЛица'[Individual_ID],PATHITEM('ФизическиеЛица'[_HPath],1))
+		isHidden
+		lineageTag: 6104c6d7-c7df-4d77-a83d-413b29249159
+
+	column Level2 = LOOKUPVALUE('ФизическиеЛица'[ФизическоеЛицо],'ФизическиеЛица'[Individual_ID],PATHITEM('ФизическиеЛица'[_HPath],2))
+		isHidden
+		lineageTag: ce73f330-023f-4821-9955-5db0bea9b310
+
+	column Level3 = LOOKUPVALUE('ФизическиеЛица'[ФизическоеЛицо],'ФизическиеЛица'[Individual_ID],PATHITEM('ФизическиеЛица'[_HPath],3))
+		isHidden
+		lineageTag: 1c6f6c67-06d5-4aa7-9a7a-30c26ceca2e0
+
+	column Level4 = LOOKUPVALUE('ФизическиеЛица'[ФизическоеЛицо],'ФизическиеЛица'[Individual_ID],PATHITEM('ФизическиеЛица'[_HPath],4))
+		isHidden
+		lineageTag: c95bc358-a7c9-4703-9ca6-27b2746e4ef0
+
+	column Level5 = LOOKUPVALUE('ФизическиеЛица'[ФизическоеЛицо],'ФизическиеЛица'[Individual_ID],PATHITEM('ФизическиеЛица'[_HPath],5))
+		isHidden
+		lineageTag: e838393c-467c-450a-b673-5c1df70a78fd
+
+	hierarchy ИерархияФизическихЛиц
+		hideMembers: hideBlankMembers
+		lineageTag: 74801cea-b543-4d41-9edf-c32a469c4042
+
+		level Level1
+			lineageTag: f9908af2-3f6a-4cdf-864f-327e3ffb0e5a
+			column: Level1
+
+		level Level2
+			lineageTag: e9ebb693-4a97-478e-9299-2aa637786a59
+			column: Level2
+
+		level Level3
+			lineageTag: c6bf8d08-8910-4f9d-8742-0e658fb54348
+			column: Level3
+
+		level Level4
+			lineageTag: ae45a371-84f8-42f2-ad5c-48adbe29a23e
+			column: Level4
+
+		level Level5
+			lineageTag: 39d4b0a4-e3e6-42c1-956b-012bc608a4a3
+			column: Level5
+
+	partition Dim_Individuals = m
+		mode: import
+		source =
+				let
+				    Источник = Sql.Database("SQLSERVER", "OlapBASERP"),
+				    dbo_Dim_Individuals = Источник{[Schema="dbo",Item="Dim_Individuals"]}[Data]
+				in
+				    dbo_Dim_Individuals
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,79 @@
+table НаправленияДеятельности
+	lineageTag: b7d7a274-bd14-40d3-8085-eb620e7d1d9a
+
+	column Direction_ID
+		dataType: string
+		isHidden
+		lineageTag: 114a3152-7586-4552-abaf-2aab6ef103b7
+		summarizeBy: none
+		sourceColumn: Direction_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Direction_Code
+		dataType: string
+		isHidden
+		lineageTag: bc5847df-8c7b-460e-9892-ab87a13e4f37
+		summarizeBy: none
+		sourceColumn: Direction_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Направление
+		dataType: string
+		lineageTag: 3804c159-2dac-4d7a-b146-d3cbd2c43b9d
+		summarizeBy: none
+		sourceColumn: Direction_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Parent_ID
+		dataType: string
+		isHidden
+		lineageTag: 36d388a0-52a1-4cf2-a028-1e90179283ba
+		summarizeBy: none
+		sourceColumn: Parent_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ЭтоГруппа
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: a00f7e6c-fa33-4a9b-919a-ab4155cbc48a
+		summarizeBy: none
+		sourceColumn: Is_Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column ПометкаУдаления
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: fb397e13-622c-4e46-ad39-ca4152952cb1
+		summarizeBy: none
+		sourceColumn: Marked_For_Deletion
+
+		annotation SummarizationSetBy = Automatic
+
+	column Loaded_At
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 712bc320-8d86-4516-91d2-edb618b76755
+		summarizeBy: none
+		sourceColumn: Loaded_At
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Directions = m
+		mode: import
+		source =
+				let
+				    Источник = Sql.Database("SQLSERVER", "OlapBASERP"),
+				    dbo_Dim_Directions = Источник{[Schema="dbo",Item="Dim_Directions"]}[Data]
+				in
+				    dbo_Dim_Directions
+
+	annotation PBI_ResultType = Table
+

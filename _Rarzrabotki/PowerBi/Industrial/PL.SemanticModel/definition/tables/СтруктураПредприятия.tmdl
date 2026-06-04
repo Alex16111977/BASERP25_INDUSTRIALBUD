@@ -1,0 +1,196 @@
+table СтруктураПредприятия
+	lineageTag: a346ec3a-97c3-4524-94ce-38c6603c7edc
+
+	column Department_ID
+		dataType: string
+		isHidden
+		lineageTag: cbab404f-c4c8-402e-a21e-d5e0fcbf5bcd
+		summarizeBy: none
+		sourceColumn: Department_ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Department_Code
+		dataType: string
+		isHidden
+		lineageTag: a0c87fca-bac0-42e8-9bce-84fe8b849709
+		summarizeBy: none
+		sourceColumn: Department_Code
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Подразделение
+		dataType: string
+		lineageTag: 75555444-9c81-4576-8a40-bec8def59c8a
+		summarizeBy: none
+		sourceColumn: Department_Name
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Parent_ID
+		dataType: string
+		isHidden
+		lineageTag: 2ef9fe03-a5fb-4cfd-8038-d9043a3dce82
+		summarizeBy: none
+		sourceColumn: Parent_ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ЭтоГруппа
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 7bb460eb-b4f5-4edf-8055-efb2590b00df
+		summarizeBy: none
+		sourceColumn: Is_Group
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ПометкаУдаления
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: a402bcae-26be-4a9c-a97b-5bcb07aeccfa
+		summarizeBy: none
+		sourceColumn: Marked_For_Deletion
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Loaded_At
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 78989575-c8a2-497e-80b8-b22310032fca
+		summarizeBy: none
+		sourceColumn: Loaded_At
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Direction_ID
+		dataType: string
+		isHidden
+		lineageTag: 1549648c-786c-4f70-8504-8d2b9b5ec9cb
+		summarizeBy: none
+		sourceColumn: Direction_ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hierarchy_Path
+		dataType: string
+		isHidden
+		lineageTag: c32d437f-eb53-44d9-8d0b-07c691a31406
+		summarizeBy: none
+		sourceColumn: Hierarchy_Path
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hierarchy_Depth
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 7d6c8a31-fef3-4906-8ebd-1a95c051f892
+		summarizeBy: sum
+		sourceColumn: Hierarchy_Depth
+
+		annotation SummarizationSetBy = Automatic
+
+	column Level1
+		dataType: string
+		isHidden
+		lineageTag: 1a28c931-cb2b-4f25-9047-611381b041ec
+		summarizeBy: none
+		sourceColumn: Level1
+
+		annotation SummarizationSetBy = Automatic
+
+	column Level2
+		dataType: string
+		isHidden
+		lineageTag: 3e9e53c1-b3bc-447c-b008-2d5656252596
+		summarizeBy: none
+		sourceColumn: Level2
+
+		annotation SummarizationSetBy = Automatic
+
+	column Level3
+		dataType: string
+		isHidden
+		lineageTag: 3ef03f95-469b-41cc-873e-a44f2c01c1f0
+		summarizeBy: none
+		sourceColumn: Level3
+
+		annotation SummarizationSetBy = Automatic
+
+	column Level4
+		dataType: string
+		isHidden
+		lineageTag: 543258b2-5ecc-482f-8931-823db362ebd9
+		summarizeBy: none
+		sourceColumn: Level4
+
+		annotation SummarizationSetBy = Automatic
+
+	column Level5
+		dataType: string
+		isHidden
+		lineageTag: f915d8f4-b1f3-4b8c-9d79-91251aa0df74
+		summarizeBy: none
+		sourceColumn: Level5
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy ИерархияПодразделений
+		hideMembers: hideBlankMembers
+		lineageTag: 14f10ac4-9a28-4379-9c07-755b790d99f3
+
+		level Level1
+			lineageTag: 02525bd4-1271-420c-ba34-f1c3cd85da09
+			column: Level1
+
+		level Level2
+			lineageTag: 247ef354-b881-49f7-8326-a65c24c41454
+			column: Level2
+
+		level Level3
+			lineageTag: 7200fbac-9ad0-4b2f-b01b-1c14064f58fa
+			column: Level3
+
+		level Level4
+			lineageTag: 1878b100-3601-44dd-9ae3-baf7c56f1f62
+			column: Level4
+
+		level Level5
+			lineageTag: 4349c2da-2046-4468-9aff-b8ad9a7da736
+			column: Level5
+
+	partition Dim_Departments = m
+		mode: import
+		source =
+				let
+				    Источник = Sql.Database("SQLSERVER", "OlapBASERP"),
+				    dbo_Dim_Departments = Источник{[Schema="dbo",Item="Dim_Departments"]}[Data]
+				in
+				    dbo_Dim_Departments
+
+	changedProperty = IsHidden
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Навигация
+

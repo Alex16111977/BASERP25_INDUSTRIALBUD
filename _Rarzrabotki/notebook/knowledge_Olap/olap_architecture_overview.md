@@ -1,6 +1,12 @@
 # OLAP Architecture Overview
 
 > 4-шарова архітектура BASERP25 → OlapBASERP → Power BI. Призначення, принципи, чому такий дизайн.
+>
+> ⚠️ **Stage v2 (2026-05-05) ВАЖЛИВЕ ПРИМІТКА:** DAX-приклади і деякі назви колонок у цьому файлі — **pre-Stage-v2** (історичний контекст принципів). Поточні Stage v2 актуалії:
+> - `Sum_ERP_Grn → Sum_Fact`, `Sum_Plan_Grn → Sum_Excel`, `Source_Recorder_* → Document_ID + новий Dim_Documents`.
+> - `Source` для PnL: 8 значень → 2 (`PL_Excel`, `PL_ЕРП`). Розрізнення CoGS/Income/OpEx — через виміри `СтатьяДоходов`/`СтатьяРасходов`.
+> - Казна повністю прибрана з PnL-моделі.
+> - Канонічне джерело актуальної моделі: [olap_changelog_2026_05.md](olap_changelog_2026_05.md) §"Stage v2".
 
 ---
 

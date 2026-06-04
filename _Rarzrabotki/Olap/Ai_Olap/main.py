@@ -3,9 +3,12 @@
 Usage:
     python main.py
         Default: повний прогон за ВСІ проведені документи (без period filter) —
-        validate -> dim_catalogs -> fact_pnl -> fact_cashflow.
-        Fact-таблиці перезавантажуються повністю (TRUNCATE + INSERT).
-        Зупиняється на першій помилці.
+        validate -> усі робочі Dim (dim_catalogs, dim_pap_articles,
+        dim_denezhnye_sredstva) -> усі робочі Fact (fact_pnl, fact_cashflow,
+        fact_balance). Усі Dim та Fact перезавантажуються повністю
+        (TRUNCATE + INSERT, усі періоди). Зупиняється на першій помилці.
+        Виключені (зламані/неповні, падали б весь ланцюг): dim_documents,
+        fact_cf_balance — запускати/чинити окремо через --run-once.
 
     python main.py --period 2026-02
         Той самий ланцюжок, але Fact-pipelines обмежуються одним місяцем
@@ -54,9 +57,21 @@ PIPELINES_DIR = PROJECT_ROOT / "pipelines"
 
 # Pipeline id-и які виконує `--all` режим, у порядку.
 ALL_DEFAULT_PIPELINES: list[str] = [
-    "dim_catalogs",   # 16 Dim + 1 Bridge full reload (period не потрібен)
-    "fact_pnl",       # idempotent per period
-    "fact_cashflow",  # idempotent per period
+    # --- Dim (full_reload, --period не потрібен) ---
+    "dim_catalogs",            # 16 Dim + 1 Bridge
+    "dim_pap_articles",        # Dim_PAP_Articles — FK Fact_Balance (канон OD-9)
+    "dim_denezhnye_sredstva",  # Dim_DenezhnyeSredstva — FK Fact_Cashflow/Balance
+    # dim_documents ВИКЛЮЧЕНО (2026-05-17): джерело РегистрСведений.
+    # А_ДокументРасшифровка відсутнє у поточній BaseERP (немає _InfoRg56031) —
+    # падав весь default-ланцюжок. Повернути коли об'єкт створять у 1С.
+    # --- Fact (idempotent_period; без --period → full reload усіх дат) ---
+    "fact_pnl",
+    "fact_cashflow",
+    "fact_balance",            # додано 2026-05-19 (раніше не було в дефолті —
+                               # Balance не оновлювався звичайним прогоном).
+    # fact_cf_balance ВИКЛЮЧЕНО (2026-05-19): COM-запит .ОстаткиИОбороти падає
+    # синтаксичною помилкою 1С (перевірено run_id=296 Failed) + фреймворк не
+    # передає період у COM-екстрактор. Повернути після фіксу пайплайна.
 ]
 
 
@@ -118,7 +133,7 @@ def cmd_all(args) -> int:
     label = f"period={period:%Y-%m}" if period else "ALL periods (full reload)"
     print(f"=== Ai_Olap full update — {label} ===\n")
 
-    print("[1/4] validate")
+    print(f"[1/{1 + len(ALL_DEFAULT_PIPELINES)}] validate")
     rc = cmd_validate(args)
     if rc != 0:
         print("validate failed — aborting", file=sys.stderr)

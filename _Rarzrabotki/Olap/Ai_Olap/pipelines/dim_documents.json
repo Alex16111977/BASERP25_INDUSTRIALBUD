@@ -1,0 +1,37 @@
+{
+  "pipeline_id": "dim_documents",
+  "description": "Dim_Documents full reload from РегистрСведений.А_ДокументРасшифровка (Stage v2 2026-05-05). Drill-down dimension for Fact_PnL.Document_ID FK. Captures ERP doc number/type/date + BuhBud counterpart type/number from hardcoded mapping.",
+  "schedule": "0 1 1 * *",
+  "steps": [
+    {
+      "step_id": "dim_documents",
+      "extractor": {
+        "type": "raw_sql",
+        "raw_sql": "SELECT r._Fld56032_RRRef AS Document_ID, r._Fld56038 AS Document_Number_ERP, r._Fld56036 AS Document_Type_ERP, r._Fld56039 AS Document_Date, r._Fld56035 AS Document_Number_BuhBud, r._Fld56037 AS Document_Type_BuhBud, r._Fld56034 AS Document_Presentation, r._Fld56033 AS Document_Comment FROM _InfoRg56031 r UNION ALL SELECT CAST(0x00000000000000000000000000000001 AS varbinary(16)) AS Document_ID, '' AS Document_Number_ERP, N'(Empty)' AS Document_Type_ERP, NULL AS Document_Date, '' AS Document_Number_BuhBud, '' AS Document_Type_BuhBud, N'(Empty)' AS Document_Presentation, N'' AS Document_Comment WHERE NOT EXISTS (SELECT 1 FROM _InfoRg56031 WHERE _Fld56032_RRRef = 0x00000000000000000000000000000001)"
+      },
+      "transformer": {
+        "steps": ["varbinary_to_uuid", "period_offset_fix", "column_mapper"],
+        "options": {
+          "period_offset_fix": {"source_column": "Document_Date", "derive_period_month": false},
+          "column_mapper": {
+            "column_map": {
+              "Document_ID": "Document_ID",
+              "Document_Number_ERP": "Document_Number_ERP",
+              "Document_Type_ERP": "Document_Type_ERP",
+              "Document_Date": "Document_Date",
+              "Document_Number_BuhBud": "Document_Number_BuhBud",
+              "Document_Type_BuhBud": "Document_Type_BuhBud",
+              "Document_Presentation": "Document_Presentation",
+              "Document_Comment": "Document_Comment"
+            },
+            "defaults": {"Marked_For_Deletion": false}
+          }
+        }
+      },
+      "loader": {
+        "target_table": "Dim_Documents",
+        "mode": "full_reload"
+      }
+    }
+  ]
+}

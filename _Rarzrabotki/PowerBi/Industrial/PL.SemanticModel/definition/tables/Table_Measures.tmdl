@@ -1,0 +1,551 @@
+table Table_Measures
+	lineageTag: 09a8b246-c724-4671-afb2-1137fc7c39ad
+
+	measure 'Сума грн місяць PL' = SUM(Fact_PnL[Sum_Fact])
+		formatString: #,0.00;-#,0.00;
+		displayFolder: PnL\ЕРП PL
+		lineageTag: ea124938-2269-4d45-b8ae-95bc5fe516c6
+
+	measure 'Сума грн квартал PL' = CALCULATE(SUM(Fact_PnL[Sum_Fact]), ALL('Calendar'[date_], 'Calendar'[year_month], 'Calendar'[month_], 'Calendar'[Period_Month], 'Calendar'[month_name]), VALUES('Calendar'[Year_Quarter]))
+		formatString: #,0.00;-#,0.00;
+		displayFolder: PnL\ЕРП PL
+		lineageTag: 375a3746-0496-417b-b2e1-87fc020ab36c
+
+	measure 'Сума грн рік PL' = CALCULATE(SUM(Fact_PnL[Sum_Fact]), ALL('Calendar'[date_], 'Calendar'[year_month], 'Calendar'[month_], 'Calendar'[Period_Month], 'Calendar'[month_name], 'Calendar'[quarter_], 'Calendar'[Year_Quarter]), VALUES('Calendar'[year_]))
+		formatString: #,0.00;-#,0.00;
+		displayFolder: PnL\ЕРП PL
+		lineageTag: bbbb7dc1-6f13-4327-bbb8-aa8f577d6e70
+
+	measure '% Доля затрат місяць грн' = VAR TotalSum = CALCULATE(SUM(Fact_PnL[Sum_Fact]), ALL(Fact_PnL), VALUES('Calendar'[Year_Month])) VAR CurrentSum = SUM(Fact_PnL[Sum_Fact]) RETURN IF(CurrentSum <> 0, DIVIDE(CurrentSum, TotalSum, 0), BLANK())
+		formatString: 0.00%;-0.00%;
+		displayFolder: PnL\Тренди PL
+		lineageTag: f488a5eb-8c2f-48a9-8ea2-d0425df8f672
+
+	measure '% Доля затрат квартал грн' = VAR TotalSum = CALCULATE(SUM(Fact_PnL[Sum_Fact]), ALL(Fact_PnL), VALUES('Calendar'[Year_Quarter])) VAR CurrentSum = [Сума грн квартал PL] RETURN IF(CurrentSum <> 0, DIVIDE(CurrentSum, TotalSum, 0), BLANK())
+		formatString: 0.00%;-0.00%;
+		displayFolder: PnL\Тренди PL
+		lineageTag: b0ff8e9f-10f5-4c25-87c6-dfc19402bc00
+
+	measure '% Доля затрат рік грн' = VAR TotalSum = CALCULATE(SUM(Fact_PnL[Sum_Fact]), ALL(Fact_PnL), VALUES('Calendar'[year_])) VAR CurrentSum = [Сума грн рік PL] RETURN IF(CurrentSum <> 0, DIVIDE(CurrentSum, TotalSum, 0), BLANK())
+		formatString: 0.00%;-0.00%;
+		displayFolder: PnL\Тренди PL
+		lineageTag: b0ac1a0c-c06f-4b66-8589-9678f10ccd90
+
+	measure '% Рост к году СумаГрн_ТЗ' = VAR CurrentValue = SUM(Fact_PnL[Sum_Fact]) VAR PreviousValue = CALCULATE(SUM(Fact_PnL[Sum_Fact]), SAMEPERIODLASTYEAR('Calendar'[date_])) RETURN IF(NOT(ISBLANK(CurrentValue)) && NOT(ISBLANK(PreviousValue)), DIVIDE(CurrentValue - PreviousValue, PreviousValue, 0), BLANK())
+		formatString: 0.00%;-0.00%;
+		displayFolder: PnL\Тренди PL
+		lineageTag: 5e5b8e93-8e3d-4b8c-ab11-9e696babb4cd
+
+	measure '% Рост к году СумаГрн_ТЗ_Квартал' = VAR CurrentValue = [Сума грн квартал PL] VAR PreviousValue = CALCULATE([Сума грн квартал PL], SAMEPERIODLASTYEAR('Calendar'[date_])) RETURN IF(NOT(ISBLANK(CurrentValue)) && NOT(ISBLANK(PreviousValue)), DIVIDE(CurrentValue - PreviousValue, PreviousValue, 0), BLANK())
+		formatString: 0.00%;-0.00%;
+		displayFolder: PnL\Тренди PL
+		lineageTag: 85db1a94-3788-49c8-88d7-4dba8509b8ff
+
+	measure '% Рост к году СумаГрн_ТЗ_Рік' = VAR CurrentValue = [Сума грн рік PL] VAR PreviousValue = CALCULATE([Сума грн рік PL], SAMEPERIODLASTYEAR('Calendar'[date_])) RETURN IF(NOT(ISBLANK(CurrentValue)) && NOT(ISBLANK(PreviousValue)), DIVIDE(CurrentValue - PreviousValue, PreviousValue, 0), BLANK())
+		formatString: 0.00%;-0.00%;
+		displayFolder: PnL\Тренди PL
+		lineageTag: ea20ab2a-f7df-4ded-a89e-c91127b2ccc2
+
+	measure '% Рост к предыдущему кварталу грн' = VAR CurrentValue = [Сума грн квартал PL] VAR PreviousValue = CALCULATE([Сума грн квартал PL], DATEADD('Calendar'[date_], -1, QUARTER)) RETURN IF(NOT(ISBLANK(CurrentValue)) && NOT(ISBLANK(PreviousValue)), DIVIDE(CurrentValue - PreviousValue, PreviousValue, 0), BLANK())
+		formatString: 0.00%;-0.00%;
+		displayFolder: PnL\Тренди PL
+		lineageTag: 7d840fd0-73cd-4b93-a144-5f915267bf7a
+
+	measure '% Рост к предыдущему месяцу СумаГрн_ТЗ' = VAR CurrentValue = SUM(Fact_PnL[Sum_Fact]) VAR PreviousValue = CALCULATE(SUM(Fact_PnL[Sum_Fact]), DATEADD('Calendar'[date_], -1, MONTH)) RETURN IF(NOT(ISBLANK(CurrentValue)) && NOT(ISBLANK(PreviousValue)), DIVIDE(CurrentValue - PreviousValue, PreviousValue, 0), BLANK())
+		formatString: 0.00%;-0.00%;
+		displayFolder: PnL\Тренди PL
+		lineageTag: a99e6c4a-f8d1-4b9f-aac2-18d36fd7e34b
+
+	measure 'Розбіжність грн квартал-місяць PL' = ROUND([Сума грн квартал PL] - SUM(Fact_PnL[Sum_Fact]), 2)
+		formatString: #,0.00;-#,0.00;
+		displayFolder: PnL\Розбіжність PL
+		lineageTag: 870a65fc-6654-4e66-bfe2-985397694f9c
+
+	measure 'Розбіжність грн рік-місяць PL' = ROUND([Сума грн рік PL] - SUM(Fact_PnL[Sum_Fact]), 2)
+		formatString: #,0.00;-#,0.00;
+		displayFolder: PnL\Розбіжність PL
+		lineageTag: 7efc2f33-12ea-42cd-a854-72242b03582d
+
+	measure 'Sum_Excel - Sum_Fact' = ROUND(SUM(Fact_PnL[Sum_Excel]) - SUM(Fact_PnL[Sum_Fact]), 2)
+		formatString: #,0.00;-#,0.00;
+		displayFolder: PnL\Розбіжність PL
+		lineageTag: 0de79301-f374-404b-ba16-8d4cd587bb2f
+
+	/// Helper-міра для приховування порожніх PL-рядків у матрицях. Результат 1 якщо хоч одна сума (Sum_Excel або Sum_Fact) ненульова, інакше BLANK. Використання: у Filters pane матриці → 'on this visual' → поле 'Видимість рядка PL' → 'is not blank'.
+	measure 'Видимість рядка PL' =
+			VAR Excel_ = SUM(Fact_PnL[Sum_Excel])
+			VAR Fact_  = SUM(Fact_PnL[Sum_Fact])
+			RETURN IF(Excel_ <> 0 || Fact_ <> 0, 1, BLANK())
+		formatString: 0
+		displayFolder: PnL\Фільтри
+		lineageTag: 1f097c94-123f-45fc-9972-ece8ed7d4f84
+
+	measure 'Сума факт ДДС' = SUM(Fact_Cashflow[Sum_Fact])
+		formatString: #,0.00;-#,0.00;
+		displayFolder: Cashflow\ЕРП ДДС
+		lineageTag: 6545468f-2f18-44e9-a3ae-b562c6dc2b4a
+
+	measure 'Сума казна ДДС' = SUM(Fact_Cashflow[Sum_Kazna])
+		formatString: #,0.00;-#,0.00;
+		displayFolder: Cashflow\Казна ДДС
+		lineageTag: bb04881c-937c-4e18-ba7d-e756cbae229f
+
+	measure 'Сума план ДДС (місяць)' = SUM(Fact_Cashflow[Sum_Plan])
+		formatString: #,0.00;-#,0.00;
+		displayFolder: Cashflow\План ДДС
+		lineageTag: 5977c150-b3ec-4f95-bba1-bfe476b273d4
+
+	measure 'Сума план ДДС (об''єкт)' = SUM(Fact_Cashflow[Sum_Plan_Object])
+		formatString: #,0.00;-#,0.00;
+		displayFolder: Cashflow\План ДДС
+		lineageTag: bac15b84-2c94-409b-844f-fd025a5f696f
+
+	measure 'Поступления ДДС' = CALCULATE([Сума факт ДДС], Fact_Cashflow[Movement_Type] = "Поступление")
+		formatString: #,0.00;-#,0.00;
+		displayFolder: Cashflow\ЕРП ДДС
+		lineageTag: 21b8f2af-b8c2-4603-a5b8-532071c4f0a2
+
+	measure 'Списания ДДС' = CALCULATE([Сума факт ДДС], Fact_Cashflow[Movement_Type] = "Списание")
+		formatString: #,0.00;-#,0.00;
+		displayFolder: Cashflow\ЕРП ДДС
+		lineageTag: ccd47203-ccf6-4283-991a-992af8e66cc8
+
+	measure 'Net Cashflow' = ROUND([Поступления ДДС] - [Списания ДДС], 2)
+		formatString: #,0.00;-#,0.00;
+		displayFolder: Cashflow\ЕРП ДДС
+		lineageTag: efc196d4-9330-42f0-bf3d-1dc05dc0b3be
+
+	/// Різниця між сумою факту ДДС (Sum_Fact — рухи ДС з ЕРП) та сумою Казни (Sum_Kazna — рухи ДС з Казни). Дорівнює 0 коли дані синхронні між двома джерелами. Округлено до копійок (ROUND, 2).
+	measure 'Сума факт ДДС - Сума казна ДДС' = ROUND([Сума факт ДДС] - [Сума казна ДДС], 2)
+		formatString: #,0.00;-#,0.00;
+		displayFolder: Cashflow\Казна ДДС
+		lineageTag: e8b85a67-3f76-4f06-bc90-72281883a2b6
+
+	/// % виконання місячного плану ДДС фактом з ЕРП. 100% = факт дорівнює плану місяця. >100% = перевиконання, <100% = недовиконання.
+	measure '% Виконання плану ДДС факт (місяць)' = DIVIDE([Сума факт ДДС], [Сума план ДДС (місяць)])
+		formatString: 0.0%;-0.0%;
+		displayFolder: Cashflow\ЕРП ДДС
+		lineageTag: 73ab1e4a-8856-4fd2-acc4-fee77a9ff0d7
+
+	/// % виконання об'єктного плану ДДС фактом з ЕРП. 100% = факт дорівнює об'єктному бюджету проекту.
+	measure '% Виконання плану ДДС факт (об''єкт)' = DIVIDE([Сума факт ДДС], [Сума план ДДС (об'єкт)])
+		formatString: 0.0%;-0.0%;
+		displayFolder: Cashflow\ЕРП ДДС
+		lineageTag: 9cc49bd8-7487-4bca-be54-1356a8adb391
+
+	/// % виконання місячного плану ДДС сумою з Казни. 100% = Казна дорівнює плану місяця.
+	measure '% Виконання плану ДДС казна (місяць)' = DIVIDE([Сума казна ДДС], [Сума план ДДС (місяць)])
+		formatString: 0.0%;-0.0%;
+		displayFolder: Cashflow\Казна ДДС
+		lineageTag: 52bb356d-0143-47bc-be37-4b9929c0a3b5
+
+	/// % виконання об'єктного плану ДДС сумою з Казни. 100% = Казна дорівнює об'єктному бюджету.
+	measure '% Виконання плану ДДС казна (об''єкт)' = DIVIDE([Сума казна ДДС], [Сума план ДДС (об'єкт)])
+		formatString: 0.0%;-0.0%;
+		displayFolder: Cashflow\Казна ДДС
+		lineageTag: 93f78f81-b709-4a00-8865-c5d0f21a580f
+
+	/// План місяця мінус факт з ЕРП. Додатне = недовиконання, відʼємне = перевиконання. Округлено до копійок (ROUND, 2).
+	measure 'Відхилення план-факт (місяць)' = ROUND([Сума план ДДС (місяць)] - [Сума факт ДДС], 2)
+		formatString: #,0.00;-#,0.00;
+		displayFolder: Cashflow\ЕРП ДДС
+		lineageTag: 26337528-d89e-41a2-af67-1706ab9eb971
+
+	/// Обʼєктний план мінус факт з ЕРП. Додатне = недовиконано бюджет проєкту, відʼємне = перевиконано. Округлено до копійок (ROUND, 2).
+	measure 'Відхилення план-факт (об''єкт)' = ROUND([Сума план ДДС (об'єкт)] - [Сума факт ДДС], 2)
+		formatString: #,0.00;-#,0.00;
+		displayFolder: Cashflow\ЕРП ДДС
+		lineageTag: f35a5dfb-e5b2-4318-83a6-8d443a182c02
+
+	/// План місяця мінус сума Казни. Додатне = Казна недобрала план, відʼємне = перевиконала. Округлено до копійок (ROUND, 2).
+	measure 'Відхилення план-казна (місяць)' = ROUND([Сума план ДДС (місяць)] - [Сума казна ДДС], 2)
+		formatString: #,0.00;-#,0.00;
+		displayFolder: Cashflow\Казна ДДС
+		lineageTag: 0234b73b-71e8-4df7-97e9-ccd7797f9edc
+
+	/// Обʼєктний план мінус сума Казни. Додатне = Казна недобрала бюджет проєкту, відʼємне = перевиконала. Округлено до копійок (ROUND, 2).
+	measure 'Відхилення план-казна (об''єкт)' = ROUND([Сума план ДДС (об'єкт)] - [Сума казна ДДС], 2)
+		formatString: #,0.00;-#,0.00;
+		displayFolder: Cashflow\Казна ДДС
+		lineageTag: d5a2a8cc-16ea-4472-9c6d-ad8ffd6581e0
+
+	/// Сума факту PL з ЕРП без Готівкових (ПКО/РКО) — ПЛ_ЕРП мінус форма 2. Інваріант: [Сума факт PL ФБаза] + [Сума факт PL Готівка] = [Сума грн місяць PL].
+	measure 'Сума факт PL ФБаза' = SUM(Fact_PnL[Sum_F1])
+		formatString: #,0.00;-#,0.00;
+		displayFolder: PnL\ЕРП PL
+		lineageTag: 62356a8e-338d-4fce-b8b1-0ee42d11b0aa
+
+	/// Сума факту PL з ЕРП тільки Готівкові (ПКО/РКО) — форма 2. Інваріант: базова + Готівка = Разом.
+	measure 'Сума факт PL Готівка' = SUM(Fact_PnL[Sum_F2])
+		formatString: #,0.00;-#,0.00;
+		displayFolder: PnL\ЕРП PL
+		lineageTag: 0f60c142-7b90-47ea-b6b6-0a5a79eaaaac
+
+	/// План PnL з Excel — основна базова міра. Джерело: Документ.А_ФинРез_PL (Source=PL_Excel).
+	measure 'Сума PL Excel' = SUM(Fact_PnL[Sum_Excel])
+		formatString: #,0.00;-#,0.00;
+		displayFolder: PnL\Excel PL
+		lineageTag: 8f794e16-e644-4f2e-9b5a-f03e2e71d3a2
+
+	/// План PnL з Excel — форма 1 (без Готівкових). Деталізація плану.
+	measure 'Сума PL Excel ФБаза' = SUM(Fact_PnL[Sum_F1_Excel])
+		formatString: #,0.00;-#,0.00;
+		displayFolder: PnL\Excel PL
+		lineageTag: 9b1437d2-d345-47ae-a8f6-9e020c54b13e
+
+	/// План PnL з Excel — форма 2 (тільки Готівкові ПКО/РКО). Деталізація плану.
+	measure 'Сума PL Excel Готівка' = SUM(Fact_PnL[Sum_F2_Excel])
+		formatString: #,0.00;-#,0.00;
+		displayFolder: PnL\Excel PL
+		lineageTag: dc05c898-df85-49e8-896f-19586c465650
+
+	/// Helper-міра для приховування порожніх рядків ДДС у матрицях. Результат 1 якщо хоч одна сума (Sum_Plan або Sum_Kazna) ненульова, інакше BLANK. Використання: у Filters pane матриці → 'on this visual' → поле 'Видимість рядка ДДС' → 'is not blank'.
+	measure 'Видимість рядка ДДС план-казна (місяць)' =
+			VAR Plan_  = SUM(Fact_Cashflow[Sum_Plan])
+			VAR Kazna_ = SUM(Fact_Cashflow[Sum_Kazna])
+			RETURN IF(Plan_ <> 0 || Kazna_ <> 0, 1, BLANK())
+		formatString: 0
+		displayFolder: Cashflow\Фільтри
+		lineageTag: 6b2646cc-abef-497f-bf7d-004bc2bfb18a
+
+	/// Helper для приховування порожніх рядків візуалів план (місяць) vs факт (ЕРП). 1 якщо Sum_Plan або Sum_Fact ненульове, інакше BLANK. Фільтр 'is not blank' в visual.
+	measure 'Видимість рядка ДДС план-факт (місяць)' =
+			VAR Plan_ = SUM(Fact_Cashflow[Sum_Plan])
+			VAR Fact_ = SUM(Fact_Cashflow[Sum_Fact])
+			RETURN IF(Plan_ <> 0 || Fact_ <> 0, 1, BLANK())
+		formatString: 0
+		displayFolder: Cashflow\Фільтри
+		lineageTag: c85a9e76-8a86-4109-953d-858ace00b520
+
+	/// Helper для приховування порожніх рядків візуалів план (об'єкт) vs факт (ЕРП). 1 якщо Sum_Plan_Object або Sum_Fact ненульове, інакше BLANK. Фільтр 'is not blank' в visual.
+	measure 'Видимість рядка ДДС план-факт (об''єкт)' =
+			VAR PlanObj_ = SUM(Fact_Cashflow[Sum_Plan_Object])
+			VAR Fact_ = SUM(Fact_Cashflow[Sum_Fact])
+			RETURN IF(PlanObj_ <> 0 || Fact_ <> 0, 1, BLANK())
+		formatString: 0
+		displayFolder: Cashflow\Фільтри
+		lineageTag: 82411414-d778-4486-8674-eb3dc18a189e
+
+	/// Helper для приховування порожніх рядків візуалів план (об'єкт) vs казна. 1 якщо Sum_Plan_Object або Sum_Kazna ненульове, інакше BLANK. Фільтр 'is not blank' в visual.
+	measure 'Видимість рядка ДДС план-казна (об''єкт)' =
+			VAR PlanObj_ = SUM(Fact_Cashflow[Sum_Plan_Object])
+			VAR Kazna_ = SUM(Fact_Cashflow[Sum_Kazna])
+			RETURN IF(PlanObj_ <> 0 || Kazna_ <> 0, 1, BLANK())
+		formatString: 0
+		displayFolder: Cashflow\Фільтри
+		lineageTag: ee09073d-838c-4cf7-a6c4-1b2bc723d63b
+
+	/// Helper-фільтр візуалу: 1 якщо SUM(Sum_Plan_Object) <> 0, інакше BLANK. Дивиться ТІЛЬКИ на план об'єкту (факт не рахується). Використання: Filters панель матриці → 'Filters on this visual' (НЕ 'on this page'!) → 'is not blank'.
+	measure 'Має план ДДС (об''єкт)' = IF(SUM(Fact_Cashflow[Sum_Plan_Object]) <> 0, 1, BLANK())
+		formatString: 0
+		displayFolder: Cashflow\Фільтри
+		lineageTag: 01d5ca38-7435-4de1-b5f8-2be2436e6fe1
+
+	/// Operating activities cashflow (CFO) — Net Cashflow фільтрований по CFS_Section_Proxy='Operating'. Direct method, IFRS-compatible.
+	measure 'CFO Operating' = CALCULATE([Net Cashflow], 'СтатьиДвиженияДенежныхСредств'[CFS_Section_Proxy] = "Operating")
+		formatString: #,##0;(#,##0);0
+		displayFolder: Cashflow\CFS Standard
+		lineageTag: 2d336549-b594-48d1-b543-8db6e6897e6b
+
+	/// Investing activities cashflow (CFI). Покупка/продаж внеоборотных активов, фінансових вкладень.
+	measure 'CFI Investing' = CALCULATE([Net Cashflow], 'СтатьиДвиженияДенежныхСредств'[CFS_Section_Proxy] = "Investing")
+		formatString: #,##0;(#,##0);0
+		displayFolder: Cashflow\CFS Standard
+		lineageTag: e778bcd6-3488-443e-80be-2806622a85be
+
+	/// Financing activities cashflow (CFF). Кредиты, выплаты дивидендов, внутрішніх розрахунків.
+	measure 'CFF Financing' = CALCULATE([Net Cashflow], 'СтатьиДвиженияДенежныхСредств'[CFS_Section_Proxy] = "Financing")
+		formatString: #,##0;(#,##0);0
+		displayFolder: Cashflow\CFS Standard
+		lineageTag: 9098d85c-409f-4915-a7e4-f0502a173f33
+
+	/// Free Cash Flow (FCF) = CFO + CFI. Кеш, доступний після операційних та інвестиційних витрат. Ключовий KPI для валюації.
+	measure 'Free Cash Flow' = [CFO Operating] + [CFI Investing]
+		formatString: #,##0;(#,##0);0
+		displayFolder: Cashflow\CFS Standard
+		lineageTag: 6fb48027-53e5-4870-9f87-b44ccb7f73d0
+
+	/// Кумулятивна грошова позиція (running total Net Cashflow). Для time-series аналізу: баланс накопичено до кінця обраного періоду.
+	measure 'Cumulative Cash Position' = CALCULATE([Net Cashflow], FILTER(ALL('Calendar'), 'Calendar'[date_] <= MAX('Calendar'[date_])))
+		formatString: #,##0;(#,##0);0
+		displayFolder: Cashflow\Cash Position
+		lineageTag: a8ddcb26-3320-499c-8e7f-193378723613
+
+	/// Net Cashflow за той же період минулого року (Year-over-Year base).
+	measure 'Net Cashflow PY' = CALCULATE([Net Cashflow], SAMEPERIODLASTYEAR('Calendar'[date_]))
+		formatString: #,##0;(#,##0);0
+		displayFolder: Cashflow\Executive KPI
+		lineageTag: e142dbda-0208-4750-87a9-75ccf5f566bc
+
+	/// Year-over-Year ріст Net Cashflow в %. Позитивний = покращення, негативний = погіршення.
+	measure 'Net Cashflow YoY %' = DIVIDE([Net Cashflow] - [Net Cashflow PY], ABS([Net Cashflow PY]))
+		formatString: 0.0%;(0.0%);0%
+		displayFolder: Cashflow\Executive KPI
+		lineageTag: fee9a781-18d6-4269-8891-4b9c94956cd5
+
+	/// Середнє денне списання за останні 30 днів. База для Days of Cash Remaining.
+	measure 'Avg Daily Outflow 30d' = DIVIDE(CALCULATE([Списания ДДС], DATESINPERIOD('Calendar'[date_], LASTDATE('Calendar'[date_]), -30, DAY)), 30)
+		formatString: #,##0;(#,##0);0
+		displayFolder: Cashflow\Executive KPI
+		lineageTag: f95ddf24-78ab-461b-aba5-d03ace92230a
+
+	/// На скільки днів вистачить готівки при поточному темпі списання. Критичний <30, warning 30-90, OK >90.
+	measure 'Days of Cash Remaining' = DIVIDE([Cumulative Cash Position], [Avg Daily Outflow 30d])
+		formatString: #,##0 "днів"
+		displayFolder: Cashflow\Executive KPI
+		lineageTag: 402f2652-6d42-4a56-ab23-178d766660ae
+
+	/// Кількість місяців у обраному періоді де expenses > receipts. Ред flag для планування ліквідності.
+	measure 'Funding Gap Months' = COUNTROWS(FILTER(VALUES('Calendar'[year_month]), [Net Cashflow] < 0))
+		formatString: 0
+		displayFolder: Cashflow\Executive KPI
+		lineageTag: b5dedf9c-158f-4455-9f36-006ead44bfbf
+
+	/// На скільки днів вистачить залишку плану проєкту при поточному темпі списання. Критичний <30 днів.
+	measure 'Days to Depletion' = DIVIDE([Відхилення план-факт (об'єкт)], [Avg Daily Outflow 30d])
+		formatString: #,##0 "днів"
+		displayFolder: Cashflow\Project Tracking
+		lineageTag: e24c7610-fe46-471f-84e2-798e607bc85c
+
+	/// Статус проєкту: Critical (>110% плану витрачено), Over (100-110%), Warning (90-100% — близько до ліміту), OK (<90%).
+	measure 'Project Status' = SWITCH(TRUE(), [% Виконання плану ДДС факт (об'єкт)] > 1.10, "Critical", [% Виконання плану ДДС факт (об'єкт)] > 1.00, "Over", [% Виконання плану ДДС факт (об'єкт)] > 0.90, "Warning", "OK")
+		displayFolder: Cashflow\Project Tracking
+		lineageTag: 55fc53d5-6379-490a-a89e-1f9c77c49c8b
+
+	/// Industry-standard variance threshold: Green |відхилення|<=5%, Amber 5-10%, Red >10%. Для conditional formatting в matrix.
+	measure 'Variance Threshold Flag' = SWITCH(TRUE(), ABS([% Виконання плану ДДС факт (місяць)] - 1) <= 0.05, "Green", ABS([% Виконання плану ДДС факт (місяць)] - 1) <= 0.10, "Amber", "Red")
+		displayFolder: Cashflow\Variance
+		lineageTag: d9c79389-3eba-4e38-9be8-b038f88101b7
+
+	/// Favorable variance (місяць, казна vs план). Inline refs в CALCULATE (не VARs) щоб правильно переобчислювались при вході в KEEPFILTERS. Доходы: Казна-План. Списание: ABS(План)-ABS(Казна). Total: комбінація обох.
+	measure 'Diff план-казна (місяць)' = VAR _Lvl = SELECTEDVALUE('СтатьиДвиженияДенежныхСредств'[Level1], "MIXED") RETURN SWITCH(TRUE(), _Lvl = "Доходы", ROUND([Сума казна ДДС] - [Сума план ДДС (місяць)], 2), _Lvl = "Списание", ROUND(ABS([Сума план ДДС (місяць)]) - ABS([Сума казна ДДС]), 2), ROUND(CALCULATE([Сума казна ДДС] - [Сума план ДДС (місяць)], KEEPFILTERS('СтатьиДвиженияДенежныхСредств'[Level1] = "Доходы")) + CALCULATE(ABS([Сума план ДДС (місяць)]) - ABS([Сума казна ДДС]), KEEPFILTERS('СтатьиДвиженияДенежныхСредств'[Level1] = "Списание")), 2))
+		formatString: #,0.00;-#,0.00;
+		displayFolder: Cashflow\Казна ДДС
+		lineageTag: 72c9d43f-ed8d-4543-a629-a7b1364acf22
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	/// Favorable variance (об'єкт, казна vs план). Inline refs в CALCULATE (не VARs) щоб правильно переобчислювались при вході в KEEPFILTERS.
+	measure 'Diff план-казна (об''єкт)' = VAR _Lvl = SELECTEDVALUE('СтатьиДвиженияДенежныхСредств'[Level1], "MIXED") RETURN SWITCH(TRUE(), _Lvl = "Доходы", ROUND([Сума казна ДДС] - [Сума план ДДС (об'єкт)], 2), _Lvl = "Списание", ROUND(ABS([Сума план ДДС (об'єкт)]) - ABS([Сума казна ДДС]), 2), ROUND(CALCULATE([Сума казна ДДС] - [Сума план ДДС (об'єкт)], KEEPFILTERS('СтатьиДвиженияДенежныхСредств'[Level1] = "Доходы")) + CALCULATE(ABS([Сума план ДДС (об'єкт)]) - ABS([Сума казна ДДС]), KEEPFILTERS('СтатьиДвиженияДенежныхСредств'[Level1] = "Списание")), 2))
+		formatString: #,0.00;-#,0.00;
+		displayFolder: Cashflow\Казна ДДС
+		lineageTag: c42defcd-f5f5-45e5-a226-fb2127698eac
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	/// Favorable variance (місяць, факт vs план). Inline refs в CALCULATE.
+	measure 'Diff план-факт (місяць)' = VAR _Lvl = SELECTEDVALUE('СтатьиДвиженияДенежныхСредств'[Level1], "MIXED") RETURN SWITCH(TRUE(), _Lvl = "Доходы", ROUND([Сума факт ДДС] - [Сума план ДДС (місяць)], 2), _Lvl = "Списание", ROUND(ABS([Сума план ДДС (місяць)]) - ABS([Сума факт ДДС]), 2), ROUND(CALCULATE([Сума факт ДДС] - [Сума план ДДС (місяць)], KEEPFILTERS('СтатьиДвиженияДенежныхСредств'[Level1] = "Доходы")) + CALCULATE(ABS([Сума план ДДС (місяць)]) - ABS([Сума факт ДДС]), KEEPFILTERS('СтатьиДвиженияДенежныхСредств'[Level1] = "Списание")), 2))
+		formatString: #,0.00;-#,0.00;
+		displayFolder: Cashflow\ЕРП ДДС
+		lineageTag: c825fad7-9833-4d3b-98c0-9bb057e397c2
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	/// Favorable variance (об'єкт, факт vs план). Inline refs в CALCULATE.
+	measure 'Diff план-факт (об''єкт)' = VAR _Lvl = SELECTEDVALUE('СтатьиДвиженияДенежныхСредств'[Level1], "MIXED") RETURN SWITCH(TRUE(), _Lvl = "Доходы", ROUND([Сума факт ДДС] - [Сума план ДДС (об'єкт)], 2), _Lvl = "Списание", ROUND(ABS([Сума план ДДС (об'єкт)]) - ABS([Сума факт ДДС]), 2), ROUND(CALCULATE([Сума факт ДДС] - [Сума план ДДС (об'єкт)], KEEPFILTERS('СтатьиДвиженияДенежныхСредств'[Level1] = "Доходы")) + CALCULATE(ABS([Сума план ДДС (об'єкт)]) - ABS([Сума факт ДДС]), KEEPFILTERS('СтатьиДвиженияДенежныхСредств'[Level1] = "Списание")), 2))
+		formatString: #,0.00;-#,0.00;
+		displayFolder: Cashflow\ЕРП ДДС
+		lineageTag: b296aba9-b6e1-4667-8778-25ce77f889a8
+
+		annotation PBI_FormatHint = {"isCustom":true}
+
+	measure '% Доля казна ДДС' =
+			VAR Cur = SUM(Fact_Cashflow[Sum_Kazna])
+			VAR Tot =
+			    SWITCH(TRUE(),
+			        ISINSCOPE('СтатьиДвиженияДенежныхСредств'[Level5]),
+			            CALCULATE(SUM(Fact_Cashflow[Sum_Kazna]), ALLSELECTED('СтатьиДвиженияДенежныхСредств'[Level5])),
+			        ISINSCOPE('СтатьиДвиженияДенежныхСредств'[Level4]),
+			            CALCULATE(SUM(Fact_Cashflow[Sum_Kazna]), ALLSELECTED('СтатьиДвиженияДенежныхСредств'[Level4])),
+			        ISINSCOPE('СтатьиДвиженияДенежныхСредств'[Level3]),
+			            CALCULATE(SUM(Fact_Cashflow[Sum_Kazna]), ALLSELECTED('СтатьиДвиженияДенежныхСредств'[Level3])),
+			        ISINSCOPE('СтатьиДвиженияДенежныхСредств'[Level2]),
+			            CALCULATE(SUM(Fact_Cashflow[Sum_Kazna]), ALLSELECTED('СтатьиДвиженияДенежныхСредств'[Level2])),
+			        ISINSCOPE('СтатьиДвиженияДенежныхСредств'[Level1]),
+			            Cur,
+			        CALCULATE(SUM(Fact_Cashflow[Sum_Kazna]), ALLSELECTED())
+			    )
+			RETURN
+			IF(Cur <> 0, DIVIDE(Cur, Tot, 0), BLANK())
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Cashflow\Казна ДДС
+		lineageTag: bd6dc3c1-9929-4331-b238-547454f37295
+
+	measure '% Доля план ДДС (місяць)' =
+			VAR Cur = SUM(Fact_Cashflow[Sum_Plan])
+			VAR Tot =
+			    SWITCH(TRUE(),
+			        ISINSCOPE('СтатьиДвиженияДенежныхСредств'[Level5]),
+			            CALCULATE(SUM(Fact_Cashflow[Sum_Plan]), ALLSELECTED('СтатьиДвиженияДенежныхСредств'[Level5])),
+			        ISINSCOPE('СтатьиДвиженияДенежныхСредств'[Level4]),
+			            CALCULATE(SUM(Fact_Cashflow[Sum_Plan]), ALLSELECTED('СтатьиДвиженияДенежныхСредств'[Level4])),
+			        ISINSCOPE('СтатьиДвиженияДенежныхСредств'[Level3]),
+			            CALCULATE(SUM(Fact_Cashflow[Sum_Plan]), ALLSELECTED('СтатьиДвиженияДенежныхСредств'[Level3])),
+			        ISINSCOPE('СтатьиДвиженияДенежныхСредств'[Level2]),
+			            CALCULATE(SUM(Fact_Cashflow[Sum_Plan]), ALLSELECTED('СтатьиДвиженияДенежныхСредств'[Level2])),
+			        ISINSCOPE('СтатьиДвиженияДенежныхСредств'[Level1]),
+			            Cur,
+			        CALCULATE(SUM(Fact_Cashflow[Sum_Plan]), ALLSELECTED())
+			    )
+			RETURN
+			IF(Cur <> 0, DIVIDE(Cur, Tot, 0), BLANK())
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Cashflow\План ДДС
+		lineageTag: 6bce17dc-56d9-4d5f-9af8-e6101ba4488d
+
+	measure '% Доля план ДДС (об''єкт)' =
+			VAR Cur = SUM(Fact_Cashflow[Sum_Plan_Object])
+			VAR Tot =
+			    SWITCH(TRUE(),
+			        ISINSCOPE('СтатьиДвиженияДенежныхСредств'[Level5]),
+			            CALCULATE(SUM(Fact_Cashflow[Sum_Plan_Object]), ALLSELECTED('СтатьиДвиженияДенежныхСредств'[Level5])),
+			        ISINSCOPE('СтатьиДвиженияДенежныхСредств'[Level4]),
+			            CALCULATE(SUM(Fact_Cashflow[Sum_Plan_Object]), ALLSELECTED('СтатьиДвиженияДенежныхСредств'[Level4])),
+			        ISINSCOPE('СтатьиДвиженияДенежныхСредств'[Level3]),
+			            CALCULATE(SUM(Fact_Cashflow[Sum_Plan_Object]), ALLSELECTED('СтатьиДвиженияДенежныхСредств'[Level3])),
+			        ISINSCOPE('СтатьиДвиженияДенежныхСредств'[Level2]),
+			            CALCULATE(SUM(Fact_Cashflow[Sum_Plan_Object]), ALLSELECTED('СтатьиДвиженияДенежныхСредств'[Level2])),
+			        ISINSCOPE('СтатьиДвиженияДенежныхСредств'[Level1]),
+			            Cur,
+			        CALCULATE(SUM(Fact_Cashflow[Sum_Plan_Object]), ALLSELECTED())
+			    )
+			RETURN
+			IF(Cur <> 0, DIVIDE(Cur, Tot, 0), BLANK())
+		formatString: 0.00%;-0.00%;0.00%
+		displayFolder: Cashflow\План ДДС
+		lineageTag: 619d306e-a072-4a3c-8d6c-0aeef678fe56
+
+	/// S-curve факту: running total [Сума казна ДДС] по місяцям. Показує як росте накопичений прибуток (Net Cashflow) проєкту від старту до обраного місяця. Джерело: Sum_Kazna (з знаком). Патерн: ALL('Calendar') як у [Cumulative Cash Position].
+	measure 'Накопичена сума казна ДДС' = CALCULATE([Сума казна ДДС], FILTER(ALL('Calendar'), 'Calendar'[date_] <= MAX('Calendar'[date_])))
+		formatString: #,##0;(#,##0);0
+		displayFolder: Cashflow\Cash Position
+		lineageTag: 9742716a-d0f0-4b85-bee2-9b921cda6978
+
+	/// S-curve плану: running total [Сума план ДДС (об'єкт)] по місяцям. Планова траєкторія прибутку проєкту для порівняння з [Накопичена сума казна ДДС] (факт). Джерело: Sum_Plan_Object.
+	measure 'Накопичена сума план ДДС (об''єкт)' = CALCULATE([Сума план ДДС (об'єкт)], FILTER(ALL('Calendar'), 'Calendar'[date_] <= MAX('Calendar'[date_])))
+		formatString: #,##0;(#,##0);0
+		displayFolder: Cashflow\Cash Position
+		lineageTag: 049672c5-1b24-4589-ac4a-d59dde883a93
+
+	/// Абсолютна величина [Сума казна ДДС] — витрати (гілка Списание) показуються з додатним знаком. Для план-факт матриць, де доходи і витрати в одній колонці повинні бути позитивними. Напрям визначається гілкою в ИерархииСтатейДДС (Level1: Доходы/Списание).
+	measure 'Сума казна ДДС (абс)' = ABS([Сума казна ДДС])
+		formatString: #,0.00;-#,0.00;
+		displayFolder: Cashflow\Казна ДДС
+		lineageTag: bc93d2a9-9a1b-41e5-8d61-9366f8658f4a
+
+	/// Абсолютна величина [Сума план ДДС (об'єкт)] — симетричний аналог для плану. Разом з [Сума казна ДДС (абс)] дає план/факт матриці з позитивними цифрами.
+	measure 'Сума план ДДС (об''єкт) (абс)' = ABS([Сума план ДДС (об'єкт)])
+		formatString: #,0.00;-#,0.00;
+		displayFolder: Cashflow\План ДДС
+		lineageTag: a3766bf8-79c2-486c-8a23-2e965d8bc177
+
+	/// Сума начального остатка (Opening). Джерело: Fact_Balance.Sum_Open (Свёртка в 1С Етапи 1-4).
+	measure 'Баланс Вх' = SUM(Fact_Balance[Sum_Open])
+		formatString: #,0.00
+		displayFolder: Balance
+		lineageTag: 5e45c8e8-4898-4fa0-bdac-16e0d2919fc5
+
+	/// Сума прихода (Inflow). Джерело: Fact_Balance.Sum_Inflow.
+	measure 'Баланс Прихід' = SUM(Fact_Balance[Sum_Inflow])
+		formatString: #,0.00
+		displayFolder: Balance
+		lineageTag: 40ddca71-25b9-43a7-afa2-b0c4e1d64590
+
+	/// Сума расхода (Outflow). Джерело: Fact_Balance.Sum_Outflow.
+	measure 'Баланс Розхід' = SUM(Fact_Balance[Sum_Outflow])
+		formatString: #,0.00
+		displayFolder: Balance
+		lineageTag: 58caa97b-b035-4d35-b1e1-5350470f153e
+
+	/// Сума конечного остатка (Closing). Джерело: Fact_Balance.Sum_Close. Сума по Статья == ПАП/Етап4 до копійки.
+	measure 'Баланс Вих' = SUM(Fact_Balance[Sum_Close])
+		formatString: #,0.00
+		displayFolder: Balance
+		lineageTag: 1715f55e-fab6-4aa9-b8e4-dc5c88754780
+
+	/// Контроль сходимості: Вих - (Вх + Прихід - Розхід) == 0.
+	measure 'Перевірка обороту' = [Баланс Вих] - ([Баланс Вх] + [Баланс Прихід] - [Баланс Розхід])
+		formatString: #,0.00
+		displayFolder: Balance
+		lineageTag: 80930429-0f98-4b60-b62a-4903b14cf88d
+
+	/// Актив (канон OD-9): статті Aktiv + двосторонні AktivPassiv з додатним сальдо (як Налоги).
+	measure Актив = CALCULATE([Баланс Вих], 'СтатьиАктивовПассивов'[AktivPassiv]="Aktiv") + CALCULATE([Баланс Вих], 'СтатьиАктивовПассивов'[AktivPassiv]="AktivPassiv", Fact_Balance[Sum_Close] > 0)
+		formatString: #,0.00
+		displayFolder: Balance
+		lineageTag: 436b6748-dc5d-4d16-9ce0-f39639af0440
+
+	/// Пассив (канон OD-9): статті Passiv + двосторонні AktivPassiv з відʼємним сальдо (знак інвертовано).
+	measure Пассив = -CALCULATE([Баланс Вих], 'СтатьиАктивовПассивов'[AktivPassiv]="Passiv") - CALCULATE([Баланс Вих], 'СтатьиАктивовПассивов'[AktivPassiv]="AktivPassiv", Fact_Balance[Sum_Close] < 0)
+		formatString: #,0.00
+		displayFolder: Balance
+		lineageTag: 6cd47d68-1519-4b51-9232-d087a876eda6
+
+	/// Актив=Пассив контроль: має бути ≈ 0 (січень закритий).
+	measure 'Контроль Актив-Пассив' = [Актив] - [Пассив]
+		formatString: #,0.00
+		displayFolder: Balance
+		lineageTag: c7381fe7-1fdb-44ef-8137-9ffe28696bdc
+
+	/// Абсолютна величина [Баланс Вих] — пасив (від'ємне сальдо) показується з додатним знаком. Для матриць Актив/Пасив де обидві сторони повинні бути позитивними. Симетричний аналог [Сума казна ДДС (абс)] / [Сума план ДДС (об'єкт) (абс)].
+	measure 'Баланс Вих (абс)' = ABS([Баланс Вих])
+		formatString: #,0.00;-#,0.00;
+		displayFolder: Balance
+		lineageTag: 6b351079-0da1-49e4-8ca5-4e673501395b
+
+	/// Helper-міра для приховування порожніх рядків Балансу у матрицях. Результат 1 якщо Sum_Close (== [Баланс Вих]) ненульовий, інакше BLANK. Використання: у Filters pane матриці → 'on this visual' (НЕ 'on this page') → поле 'Видимість рядка Баланс' → 'is not blank'. Аналог [Видимість рядка ДДС план-казна (місяць)] / [Видимість рядка PL].
+	measure 'Видимість рядка Баланс' =
+			VAR Close_ = SUM(Fact_Balance[Sum_Close])
+			RETURN IF(Close_ <> 0, 1, BLANK())
+		formatString: 0
+		displayFolder: Balance\Фільтри
+		lineageTag: 9da4d35e-21aa-4a1b-8262-1cba9c1de5dd
+
+	/// S-curve плану P&L з Excel: running total [Сума план PL Excel] по місяцям. Показує як росте накопичений P&L (Доход +, Расход −) від старту до обраного місяця. Аналог [Накопичена сума казна ДДС] для Excel PL. Патерн: ALL('Calendar') з FILTER по date_ ≤ MAX. Джерело: Fact_PnL[Sum_Excel] (план з Документ.А_ОтчетPL).
+	measure 'Накопичена сума PL Excel' = CALCULATE([Сума PL Excel], FILTER(ALL('Calendar'), 'Calendar'[date_] <= MAX('Calendar'[date_])))
+		formatString: #,##0.00
+		displayFolder: PnL\Excel PL
+		lineageTag: e3e3181e-2fe6-44a3-9870-a33ba66a5c6a
+
+	/// S-curve факту P&L з ЕРП: running total [Сума грн місяць PL] по місяцям. Показує як росте накопичений фактичний P&L (Доход +, Расход −) від старту до обраного місяця. Парна міра до [Накопичена сума план PL Excel] для S-curve план/факт накопичено. Джерело: Fact_PnL[Sum_Fact] (mirror-знак від 2026-05-21).
+	measure 'Накопичена сума факт PL' = CALCULATE([Сума грн місяць PL], FILTER(ALL('Calendar'), 'Calendar'[date_] <= MAX('Calendar'[date_])))
+		formatString: #,##0.00
+		displayFolder: PnL\ЕРП PL
+		lineageTag: 0b757832-65dd-43b4-976a-b540c555a6a7
+
+	column Measure_ID
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: a064180f-1e29-4cb3-b772-35ffa9f58226
+		summarizeBy: count
+		sourceColumn: Measure_ID
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Placeholder
+		dataType: string
+		isHidden
+		lineageTag: e890fb87-61ae-4638-9b67-6d9ce11b134a
+		summarizeBy: none
+		sourceColumn: Placeholder
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Table_Measures = m
+		mode: import
+		source =
+				let
+				    Источник = Sql.Database("SQLSERVER", "OlapBASERP"),
+				    dbo_Table_Measures = Источник{[Schema="dbo",Item="Table_Measures"]}[Data]
+				in
+				    dbo_Table_Measures
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Навигация
+

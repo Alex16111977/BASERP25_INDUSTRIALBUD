@@ -1,0 +1,108 @@
+table Контрагенты
+	lineageTag: 68aad6b0-1c42-45a4-8bad-86ba44863563
+
+	column Counterparty_ID
+		dataType: string
+		isHidden
+		lineageTag: 60c008ae-2f17-41c1-96ce-8d02f3432581
+		summarizeBy: none
+		sourceColumn: Counterparty_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Counterparty_Code
+		dataType: string
+		isHidden
+		lineageTag: 3c6cabad-1c8e-4795-bdfe-f38813531be0
+		summarizeBy: none
+		sourceColumn: Counterparty_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Контрагент
+		dataType: string
+		lineageTag: 5c58362a-bbd6-4898-8ca0-57572690882a
+		summarizeBy: none
+		sourceColumn: Counterparty_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Parent_ID
+		dataType: string
+		isHidden
+		lineageTag: b1769676-9368-4764-8edc-86b46ca3c72b
+		summarizeBy: none
+		sourceColumn: Parent_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ЭтоГруппа
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 85611296-5697-496a-b6d5-e265230f8aab
+		summarizeBy: none
+		sourceColumn: Is_Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column ПометкаУдаления
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 9be550ea-0512-4b09-bea7-9001c6f6574d
+		summarizeBy: none
+		sourceColumn: Marked_For_Deletion
+
+		annotation SummarizationSetBy = Automatic
+
+	column Code_EDRPOU
+		dataType: string
+		isHidden
+		lineageTag: bd4caf38-552c-4ba4-9f4a-f8231ea08f97
+		summarizeBy: none
+		sourceColumn: Code_EDRPOU
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tax_Code
+		dataType: string
+		isHidden
+		lineageTag: 0f9f225b-73de-45ad-b7df-cc1a140e4a70
+		summarizeBy: none
+		sourceColumn: Tax_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Loaded_At
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 928245ec-f6f2-47cb-a0ca-75ebc8875107
+		summarizeBy: none
+		sourceColumn: Loaded_At
+
+		annotation SummarizationSetBy = Automatic
+
+	column Partner_ID
+		dataType: string
+		isHidden
+		lineageTag: 5018a8c8-8311-462e-81ca-f95e57a1dace
+		summarizeBy: none
+		sourceColumn: Partner_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Counterparties = m
+		mode: import
+		source =
+				let
+				    Источник = Sql.Database("SQLSERVER", "OlapBASERP"),
+				    dbo_Dim_Counterparties = Источник{[Schema="dbo",Item="Dim_Counterparties"]}[Data]
+				in
+				    dbo_Dim_Counterparties
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Навигация
+

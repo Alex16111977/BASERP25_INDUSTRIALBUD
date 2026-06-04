@@ -34,7 +34,7 @@ Q_CATALOG = """
 	ПРЕДСТАВЛЕНИЕ(PL.ТипСтатьи) КАК ТипСтатьи,
 	ЕСТЬNULL(PL.СтатьяДвиженияДенежныхСредств.Код, "") КАК ДДСHeaderКод,
 	ЕСТЬNULL(PL.СтатьяДвиженияДенежныхСредств.Наименование, "") КАК ДДСHeaderНаим,
-	ЕСТЬNULL(PL.СтатьяДоходов.Наименование, "") КАК СтатьяДоходовНаим,
+	"" КАК СтатьяДоходовНаим,
 	PL.А_СозданоАвтоматически КАК СозданоАвтоматически
 ИЗ Справочник.А_Статьи_PL КАК PL
 ГДЕ НЕ PL.ПометкаУдаления И НЕ PL.ЭтоГруппа
@@ -1038,7 +1038,7 @@ def render_month_split(period_ym, date_from, date_to, plan, fact_rash, fact_doh,
         lines.append(f"## Розрізи за підрозділами ({len(by_podr)} підрозділів)")
         lines.append("")
 
-        for (podr, podr_str) in sorted(by_podr.keys()):
+        for (podr, podr_str) in sorted(by_podr.keys(), key=lambda x: (str(x[0] or ""), str(x[1] or ""))):
             subs = by_podr[(podr, podr_str)]
             podr_label = f"{podr}" + (f" (лист Excel: {podr_str})" if podr_str else "")
             lines.append(f"### Підрозділ: {podr_label}")

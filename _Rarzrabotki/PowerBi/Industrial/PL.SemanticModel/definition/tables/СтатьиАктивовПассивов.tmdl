@@ -1,0 +1,141 @@
+table СтатьиАктивовПассивов
+	lineageTag: f3def8fb-7116-4d38-81f4-eb8d8d266672
+
+	column PAP_Article_ID
+		dataType: string
+		isHidden
+		lineageTag: 5043ee3a-3777-45bb-9d85-96bc7a7d165c
+		summarizeBy: none
+		sourceColumn: PAP_Article_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column PAP_Article_Code
+		dataType: string
+		isHidden
+		lineageTag: 6f0aecf3-5ed5-4979-912d-919eb41ea8c4
+		summarizeBy: none
+		sourceColumn: PAP_Article_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column СтатьяАктивовПассивов
+		dataType: string
+		lineageTag: 82c47309-f502-4d6f-9fcf-7981ab33fee5
+		summarizeBy: none
+		sourceColumn: PAP_Article_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Parent_ID
+		dataType: string
+		isHidden
+		lineageTag: 0b387adb-5a1a-4fa3-a274-bd8f1f6b658f
+		summarizeBy: none
+		sourceColumn: Parent_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Is_Group
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: b5e81e87-fb9a-48b2-82c9-0851ef20661e
+		summarizeBy: none
+		sourceColumn: Is_Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column AktivPassiv
+		dataType: string
+		lineageTag: 2e27e916-e6f1-49c2-b4cf-bf84e969ec76
+		summarizeBy: none
+		sourceColumn: AktivPassiv
+
+		annotation SummarizationSetBy = Automatic
+
+	column Marked_For_Deletion
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: f415f712-e82d-44f1-bc4b-efeb831fb4cb
+		summarizeBy: none
+		sourceColumn: Marked_For_Deletion
+
+		annotation SummarizationSetBy = Automatic
+
+	column Loaded_At
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: ee53613f-e168-4874-99f1-308b4ec0330a
+		summarizeBy: none
+		sourceColumn: Loaded_At
+
+		annotation SummarizationSetBy = Automatic
+
+	column _ParentClean = IF(ISBLANK(LOOKUPVALUE('СтатьиАктивовПассивов'[PAP_Article_ID],'СтатьиАктивовПассивов'[PAP_Article_ID],'СтатьиАктивовПассивов'[Parent_ID])),BLANK(),'СтатьиАктивовПассивов'[Parent_ID])
+		isHidden
+		lineageTag: 340d84bc-d0d6-4f3d-87f5-005ccce77913
+
+	column _HPath = PATH('СтатьиАктивовПассивов'[PAP_Article_ID],'СтатьиАктивовПассивов'[_ParentClean])
+		isHidden
+		lineageTag: 691779af-8bbd-4343-a148-e4ac2510c5df
+
+	column Level1 = LOOKUPVALUE('СтатьиАктивовПассивов'[СтатьяАктивовПассивов],'СтатьиАктивовПассивов'[PAP_Article_ID],PATHITEM('СтатьиАктивовПассивов'[_HPath],1))
+		isHidden
+		lineageTag: 96853ce0-8593-4af2-82c5-7336afc55222
+
+	column Level2 = LOOKUPVALUE('СтатьиАктивовПассивов'[СтатьяАктивовПассивов],'СтатьиАктивовПассивов'[PAP_Article_ID],PATHITEM('СтатьиАктивовПассивов'[_HPath],2))
+		isHidden
+		lineageTag: e3b399dd-2433-484d-98d2-e2a38ad30871
+
+	column Level3 = LOOKUPVALUE('СтатьиАктивовПассивов'[СтатьяАктивовПассивов],'СтатьиАктивовПассивов'[PAP_Article_ID],PATHITEM('СтатьиАктивовПассивов'[_HPath],3))
+		isHidden
+		lineageTag: ab391cbe-484b-4f33-8ed0-7cdde9ee595e
+
+	column Level4 = LOOKUPVALUE('СтатьиАктивовПассивов'[СтатьяАктивовПассивов],'СтатьиАктивовПассивов'[PAP_Article_ID],PATHITEM('СтатьиАктивовПассивов'[_HPath],4))
+		isHidden
+		lineageTag: 02e5c592-cf07-4e28-8c12-4e5a8c6d9b51
+
+	column Level5 = LOOKUPVALUE('СтатьиАктивовПассивов'[СтатьяАктивовПассивов],'СтатьиАктивовПассивов'[PAP_Article_ID],PATHITEM('СтатьиАктивовПассивов'[_HPath],5))
+		isHidden
+		lineageTag: 2e79c2f5-d9ae-4883-975d-8e542785f34b
+
+	hierarchy ИерархияСтатейАктивовПассивов
+		hideMembers: hideBlankMembers
+		lineageTag: 27e526ee-1580-4a2e-8bac-589b7fbc607a
+
+		level Level1
+			lineageTag: 5d8784b1-3753-4765-97f1-72fb735b7462
+			column: Level1
+
+		level Level2
+			lineageTag: 61a320f7-6062-497c-8518-512afe4b9fb9
+			column: Level2
+
+		level Level3
+			lineageTag: 6cd3f64d-8ba4-4ded-8864-390ae5424d0e
+			column: Level3
+
+		level Level4
+			lineageTag: 0acbab3f-7937-4b48-9ec6-0d1a728a7300
+			column: Level4
+
+		level Level5
+			lineageTag: 13b5339a-c6fe-40e4-a00c-063f467a8dd1
+			column: Level5
+
+	partition СтатьиАктивовПассивов = m
+		mode: import
+		source =
+				let
+				    Источник = Sql.Database("SQLSERVER", "OlapBASERP"),
+				    dbo_Dim_PAP_Articles = Источник{[Schema="dbo",Item="Dim_PAP_Articles"]}[Data]
+				in
+				    dbo_Dim_PAP_Articles
+
+	annotation PBI_NavigationStepName = Навигация
+
+	annotation PBI_ResultType = Table
+

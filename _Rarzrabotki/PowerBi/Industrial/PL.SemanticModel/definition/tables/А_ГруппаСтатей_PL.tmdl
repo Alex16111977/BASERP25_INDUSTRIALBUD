@@ -1,0 +1,93 @@
+table А_ГруппаСтатей_PL
+	lineageTag: 8ca8fdb7-7c66-4506-a13b-a2304b9cedff
+
+	column PL_ArticleGroup_ID
+		dataType: string
+		isHidden
+		lineageTag: e9bafb17-2903-445d-8a29-abda9dacf981
+		summarizeBy: none
+		sourceColumn: PL_ArticleGroup_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column PL_ArticleGroup_Code
+		dataType: string
+		isHidden
+		lineageTag: ead4f33a-e005-4707-a2cf-9bf959b91fec
+		summarizeBy: none
+		sourceColumn: PL_ArticleGroup_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column ГруппаСтатейPL
+		dataType: string
+		lineageTag: cc44fc60-a9d9-4147-b18f-2ff21242c6e7
+		summarizeBy: none
+		sourceColumn: PL_ArticleGroup_Name
+		sortByColumn: Sort_Order
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Parent_ID
+		dataType: string
+		isHidden
+		lineageTag: c2206040-3bc0-455d-b417-2b8f52f6ecac
+		summarizeBy: none
+		sourceColumn: Parent_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ЭтоГруппа
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 5118f324-77b6-4f93-afa3-494afd2405ad
+		summarizeBy: none
+		sourceColumn: Is_Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column ПометкаУдаления
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 2e0f5395-6adf-4833-b091-82c7406de577
+		summarizeBy: none
+		sourceColumn: Marked_For_Deletion
+
+		annotation SummarizationSetBy = Automatic
+
+	column Loaded_At
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: d10cbce9-cc44-4318-9363-6e23092b1721
+		summarizeBy: none
+		sourceColumn: Loaded_At
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sort_Order
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 008aacfd-d65a-44ff-b4d0-6c220a49f3d2
+		summarizeBy: none
+		sourceColumn: Sort_Order
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_PL_ArticleGroups = m
+		mode: import
+		source =
+				let
+				    Источник = Sql.Database("SQLSERVER", "OlapBASERP", [Query="SELECT PL_ArticleGroup_ID, PL_ArticleGroup_Code, PL_ArticleGroup_Name, Parent_ID, Is_Group, Marked_For_Deletion, Sort_Order, Loaded_At FROM dbo.Dim_PL_ArticleGroups"])
+				in
+				    Источник
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Навигация
+

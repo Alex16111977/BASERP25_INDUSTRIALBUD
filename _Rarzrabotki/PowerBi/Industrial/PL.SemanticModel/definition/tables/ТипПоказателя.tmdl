@@ -1,0 +1,56 @@
+table ТипПоказателя
+	lineageTag: 46490ede-1147-481d-8501-f62876f040ed
+
+	column TipPokazatelya
+		dataType: string
+		isHidden
+		lineageTag: 2898e77f-d07d-4bed-9fa5-7c86981fe4e2
+		summarizeBy: none
+		sourceColumn: TipPokazatelya
+
+		annotation SummarizationSetBy = Automatic
+
+	column Тип
+		dataType: string
+		lineageTag: db1b5393-5aa9-4ff4-9154-25d5dad0e013
+		summarizeBy: none
+		sourceColumn: TipPokazatelya_Name
+		sortByColumn: EnumOrder
+
+		changedProperty = Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column EnumOrder
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 33adde8b-ba65-42e9-869a-1aa14ed5db68
+		summarizeBy: none
+		sourceColumn: EnumOrder
+
+		annotation SummarizationSetBy = Automatic
+
+	column Loaded_At
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 669f7673-8a39-4e4e-8b41-ff757080e504
+		summarizeBy: none
+		sourceColumn: Loaded_At
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ТипПоказателя = m
+		mode: import
+		source =
+				let
+				    Источник = Sql.Database("SQLSERVER", "OlapBASERP"),
+				    dbo_Dim_TipPokazatelya = Источник{[Schema="dbo",Item="Dim_TipPokazatelya"]}[Data]
+				in
+				    dbo_Dim_TipPokazatelya
+
+	annotation PBI_NavigationStepName = Навигация
+
+	annotation PBI_ResultType = Table
+

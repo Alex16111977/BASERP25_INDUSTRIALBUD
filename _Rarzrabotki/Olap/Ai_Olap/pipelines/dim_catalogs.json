@@ -1,6 +1,6 @@
 {
   "pipeline_id": "dim_catalogs",
-  "description": "Full reload of all 16 Dim_* + 1 Bridge from BaseERP (own org KodEDRPOU=40645273 only for Organizations)",
+  "description": "Full reload of all 16 Dim_* + 1 Bridge from BaseERP. Dim_Organizations — ВСЕ организации (полный lookup для FK денорм-полей А_ОрганизацияБухгалтерия и т.п.; Fact-таблицы фильтруют own org=40645273 в своих raw_sql); 2026-05-20.",
   "schedule": "0 1 * * *",
   "steps": [
     {
@@ -12,8 +12,7 @@
           "Ссылка",
           "Наименование",
           "ПометкаУдаления"
-        ],
-        "where": "_Fld32799 = '40645273'"
+        ]
       },
       "transformer": {
         "steps": [
@@ -676,15 +675,23 @@
           "Родитель",
           "ЭтоГруппа",
           "ПометкаУдаления",
-          "Группа"
+          "Группа",
+          "ТипСтатьи",
+          "Сорт"
         ]
       },
       "transformer": {
         "steps": [
           "varbinary_to_uuid",
+          "enum_resolver",
           "column_mapper"
         ],
         "options": {
+          "enum_resolver": {
+            "column_to_enum": {
+              "ТипСтатьи": "Перечисление.А_ТипСтатьиPL"
+            }
+          },
           "column_mapper": {
             "column_map": {
               "Ссылка": "PL_Article_ID",
@@ -693,7 +700,9 @@
               "Родитель": "Parent_ID",
               "ЭтоГруппа": "Is_Group",
               "ПометкаУдаления": "Marked_For_Deletion",
-              "Группа": "Group_ID"
+              "Группа": "Group_ID",
+              "ТипСтатьи": "Type_Statya",
+              "Сорт": "Sort_Order"
             },
             "defaults": {
               "Is_Group": false,
@@ -718,7 +727,8 @@
           "Наименование",
           "Родитель",
           "ЭтоГруппа",
-          "ПометкаУдаления"
+          "ПометкаУдаления",
+          "Сорт"
         ]
       },
       "transformer": {
@@ -734,7 +744,8 @@
               "Наименование": "PL_ArticleGroup_Name",
               "Родитель": "Parent_ID",
               "ЭтоГруппа": "Is_Group",
-              "ПометкаУдаления": "Marked_For_Deletion"
+              "ПометкаУдаления": "Marked_For_Deletion",
+              "Сорт": "Sort_Order"
             },
             "defaults": {
               "Is_Group": false,
