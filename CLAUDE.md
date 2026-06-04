@@ -108,6 +108,13 @@ SELECT Ref, Date, Number FROM Document.ПоступлениеТоваровУс�
 ### Rule #4 - ALWAYS Copy Changes to Main Configuration
 When working in a worktree (`.claude/worktrees/...`), **ALWAYS** copy modified files back to the main configuration directory `C:\Configuration_downloads\BASERP25\` after editing. Do NOT leave changes only in the worktree — the 1C Designer loads from the main directory.
 
+**🔒 ЕДИНЫЙ ПОРЯДОК worktree (ТОЛЬКО одно расположение):**
+- Все worktree — ТОЛЬКО в `C:\Configuration_downloads\BASERP25\.claude\worktrees\`.
+- **НИКОГДА** не создавать/использовать `C:\Users\<user>\.claude-worktrees\` (глобальный путь = «разбериха» с двумя источниками). Если он появляется — причина во внешней env-переменной `CLAUDE_WORKTREE_DIR` или старой версии CLI; чинить у источника, не плодить worktree там.
+- Для изоляции использовать ТОЛЬКО инструмент `EnterWorktree` (всегда кладёт worktree в локальный `.claude/worktrees/`).
+- Рабочая ветка — `claude/main`. Worktree ветвить от `claude/main`; после подтверждения изменения переносить в `claude/main` (основной каталог, откуда грузит Designer/сервер).
+- Папка `.claude/` целиком в `.gitignore` → worktree-контент на GitHub НЕ уходит.
+
 **After every code edit, run `cp` to copy changed files:**
 ```bash
 cp "<worktree_path>/path/to/file.bsl" "C:/Configuration_downloads/BASERP25/path/to/file.bsl"
