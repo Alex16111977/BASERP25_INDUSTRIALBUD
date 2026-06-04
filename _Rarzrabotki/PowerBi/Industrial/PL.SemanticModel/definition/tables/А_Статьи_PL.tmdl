@@ -1,0 +1,112 @@
+table А_Статьи_PL
+	lineageTag: 384b5fca-ace2-463a-8e00-017630c1fd37
+
+	column PL_Article_ID
+		dataType: string
+		isHidden
+		lineageTag: 37df3656-2966-4709-a720-366c0aa04abb
+		summarizeBy: none
+		sourceColumn: PL_Article_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column PL_Article_Code
+		dataType: string
+		isHidden
+		lineageTag: ae12e83b-2215-4ec9-a652-c68cadb1b154
+		summarizeBy: none
+		sourceColumn: PL_Article_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column СтатьяPL
+		dataType: string
+		lineageTag: 4b4755c8-c624-4f20-b145-06e1179a54d6
+		summarizeBy: none
+		sourceColumn: PL_Article_Name
+		sortByColumn: Sort_Order
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column Parent_ID
+		dataType: string
+		isHidden
+		lineageTag: 50d4bd18-16d6-426d-a1e4-a77b80c96c25
+		summarizeBy: none
+		sourceColumn: Parent_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ЭтоГруппа
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 46725cf5-7852-4e03-a7d6-5f5d19245265
+		summarizeBy: none
+		sourceColumn: Is_Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column ПометкаУдаления
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: d72cd517-6980-49d0-9c07-1bc1415ffc80
+		summarizeBy: none
+		sourceColumn: Marked_For_Deletion
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sort_Order
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 8aa2159e-09b0-4d57-bbb1-359bf03e53e0
+		summarizeBy: sum
+		sourceColumn: Sort_Order
+
+		annotation SummarizationSetBy = Automatic
+
+	column Group_ID
+		dataType: string
+		isHidden
+		lineageTag: a693632c-9809-46c3-8db9-2a00ecf07e17
+		summarizeBy: none
+		sourceColumn: Group_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Loaded_At
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: eef7e2a5-e392-4e2d-aea2-c66609c6e479
+		summarizeBy: none
+		sourceColumn: Loaded_At
+
+		annotation SummarizationSetBy = Automatic
+
+	column ТипСтатьи
+		dataType: string
+		lineageTag: c57d224f-dcd9-4b28-a5b3-fbfb9ae00384
+		summarizeBy: none
+		sourceColumn: Type_Statya
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_PL_Articles = m
+		mode: import
+		source =
+				let
+				    Источник = Sql.Database("SQLSERVER", "OlapBASERP", [Query="SELECT PL_Article_ID, PL_Article_Code, PL_Article_Name, Parent_ID, Is_Group, Marked_For_Deletion, Sort_Order, Group_ID, Loaded_At, Type_Statya FROM dbo.Dim_PL_Articles"])
+				in
+				    Источник
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Навигация
+

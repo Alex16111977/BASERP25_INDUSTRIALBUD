@@ -1,0 +1,120 @@
+table ОбъектыРасчетов
+	lineageTag: f3491209-933c-447f-a094-fb4bc4ec868c
+
+	column SettlementObj_ID
+		dataType: string
+		isHidden
+		lineageTag: 8d9829dd-d407-44b2-b58f-547a3f050ffa
+		summarizeBy: none
+		sourceColumn: SettlementObj_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ОбъектРасчетов
+		dataType: string
+		lineageTag: ccdec20b-5e91-4e1e-b4a4-a4d02636ced8
+		summarizeBy: none
+		sourceColumn: SettlementObj_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Marked_For_Deletion
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: b71297e7-b34f-42c9-ae0d-62db68f0b2d9
+		summarizeBy: none
+		sourceColumn: Marked_For_Deletion
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Тип расчётов'
+		dataType: string
+		lineageTag: c894c56f-3dee-4b80-9c7e-15aa12d5f075
+		summarizeBy: none
+		sourceColumn: TipRaschetov
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Тип объекта расчётов'
+		dataType: string
+		lineageTag: f9e7b4e0-eea1-4db3-b0e1-c1fa07fe566e
+		summarizeBy: none
+		sourceColumn: TipObjektaRaschetov
+
+		annotation SummarizationSetBy = Automatic
+
+	column Партнёр
+		dataType: string
+		lineageTag: d58856f5-4103-4eac-a6bc-7fc363773e39
+		summarizeBy: none
+		sourceColumn: Partner_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Подразделение
+		dataType: string
+		lineageTag: e43af9bb-34e1-43e8-ac60-003d41a1628d
+		summarizeBy: none
+		sourceColumn: Department_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Counterparty_ID
+		dataType: string
+		isHidden
+		lineageTag: bf077799-f492-4cb2-8230-59a8f02763a0
+		summarizeBy: none
+		sourceColumn: Counterparty_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Contract_ID
+		dataType: string
+		isHidden
+		lineageTag: b047d0ea-c55d-43c2-850a-2e04106aeb77
+		summarizeBy: none
+		sourceColumn: Contract_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Object_ID
+		dataType: string
+		isHidden
+		lineageTag: fa6a1d09-ec5c-4ae4-94af-8e8167f3a594
+		summarizeBy: none
+		sourceColumn: Object_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Тип объекта'
+		dataType: string
+		lineageTag: 99818487-1d7b-4898-a15c-e03d44690135
+		summarizeBy: none
+		sourceColumn: Object_Type_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Loaded_At
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: cf601cb1-6da4-4dc6-9f22-094b8a79eec0
+		summarizeBy: none
+		sourceColumn: Loaded_At
+
+		annotation SummarizationSetBy = Automatic
+
+	partition ОбъектыРасчетов = m
+		mode: import
+		source =
+				let
+				    Источник = Sql.Database("SQLSERVER", "OlapBASERP"),
+				    dbo_Dim_ObjektyRaschetov = Источник{[Schema="dbo",Item="Dim_ObjektyRaschetov"]}[Data]
+				in
+				    dbo_Dim_ObjektyRaschetov
+
+	annotation PBI_NavigationStepName = Навигация
+
+	annotation PBI_ResultType = Table
+

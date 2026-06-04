@@ -18,11 +18,13 @@ def test_globyno_erp_income_february_2026():
         cur = c.cursor()
         cur.execute(
             """
-            SELECT SUM(F.Sum_ERP_Grn) AS Total
+            SELECT SUM(F.Sum_Fact) AS Total
             FROM Fact_PnL F
             JOIN Dim_Departments D ON F.Department_ID = D.Department_ID
+            JOIN Dim_Income_Articles I ON F.Income_Article_ID = I.Income_Article_ID
             WHERE D.Department_Name = N'Глобино-2'
-              AND F.Source = 'ERP_Income'
+              AND F.Source = N'PL_ЕРП'
+              AND I.Income_Article_Name LIKE N'Выручка от продаж%'
               AND F.Period_Month = '2026-02-01'
             """
         )

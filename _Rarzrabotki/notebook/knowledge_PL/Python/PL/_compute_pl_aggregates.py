@@ -163,8 +163,10 @@ def main():
             mapping_dds_to_pl[tc] = r["PLНаим"]
     log(f"  mapping has {len(mapping_dds_to_pl)} ДДС→PL pairs")
 
+    # 5 актуальних місяців (грудень 2025 — квітень 2026). Розширено 2026-05-21
+    # після завантаження 2024 і 2025 років. Для глибших ретроспектив — окремі monthly dumps.
     result = {}
-    for ym in ["2025-12", "2026-01", "2026-02"]:
+    for ym in ["2025-12", "2026-01", "2026-02", "2026-03", "2026-04"]:
         result[ym] = aggregate_month(ym, mapping_dds_to_pl)
         log(f"[{ym}] done")
 

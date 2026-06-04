@@ -39,8 +39,20 @@ def main():
     conn = connect_erp()
     mgr = conn.Справочники.А_Статьи_PL
 
-    created = found = locked = skipped_no_dds = 0
+    # Deny-list: имена, помеченные финансистом «не создавать заново».
+    # Нормализация = casefold+strip для устойчивости к регистру/пробелам.
+    blocked_names = {n.strip().casefold() for n in getattr(config, "BLOCKED_ARTICLE_NAMES", set())}
+
+    created = found = locked = skipped_no_dds = skipped_blocked = 0
     for a in articles:
+        # === GUARD #0: deny-list (наивысший приоритет, до поиска в 1С) ===
+        # Защита от случайного восстановления удалённой статьи.
+        # Если имя в BLOCKED_ARTICLE_NAMES — пропускаем безусловно.
+        if a["name"].strip().casefold() in blocked_names:
+            skipped_blocked += 1
+            print(f"  SKIP-BLOCKED {a['name']!r}  (в config.BLOCKED_ARTICLE_NAMES — статья помечена удалённой)")
+            continue
+
         ref = mgr.НайтиПоНаименованию(a["name"], True)
         if ref and not ref.Пустая():
             obj = ref.ПолучитьОбъект()
@@ -123,7 +135,7 @@ def main():
         print(f"  {marker} {a['name']}  group={grp_name!r}  dds={len(dds_by_pl.get(a['name'], []))}{suffix}")
 
     src_arts.write_text(json.dumps(arts_data, ensure_ascii=False, indent=2), encoding="utf-8")
-    print(f"Done. found={found} created={created} locked={locked} skipped_no_dds={skipped_no_dds}. Updated {src_arts}")
+    print(f"Done. found={found} created={created} locked={locked} skipped_no_dds={skipped_no_dds} skipped_blocked={skipped_blocked}. Updated {src_arts}")
 
 
 if __name__ == "__main__":

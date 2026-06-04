@@ -644,6 +644,138 @@ ETL просто перечитує регістр.
 (`Dim_Counterparties`/`Dim_Contracts`/`Dim_Partners`) вже засіяні
 кроком `dim_catalogs` — перезапуск НЕ потрібен (довідники не змінились).
 
+### Оновлення 2026-05-20 (2) — `Dim_DenezhnyeSredstva.AccountingOrg_ID` + `Dim_Organizations` ПОВНИЙ (без own-org фільтра)
+
+Додано колонку `AccountingOrg_ID char(32) NULL` (FK→`Dim_Organizations`) у
+`Dim_DenezhnyeSredstva` за реквізитом **`А_ОрганизацияБухгалтерия`** на
+`Кассы` (`_Reference237._Fld55471RRef`) і `БанковскиеСчетаОрганизаций`
+(`_Reference60._Fld54501RRef`). У 6 інших типів composite ДенежныеСредства —
+`NULL` (`CAST(NULL AS varbinary(16))`).
+
+**Архітектурна зміна:** `dim_organizations` крок у `pipelines/dim_catalogs.json`
+**знято фільтр** `WHERE _Fld32799='40645273'` (own-org). Тепер `Dim_Organizations`
+вантажить **всі юр.особи** (11 рядків замість 1) — щоб бути повним lookup-
+словником для FK денорм-полів (`AccountingOrg_ID` посилається на сторонні
+бухгалтерії-аутсорс/партнери: ТОВ "Дмитровицька Долина", ІНДЕПТ СТІЛ ТОВ,
+ДЖИ ТРИ КОНСТРАКШН ТОВ, І.П.С  ТРЕЙД ТОВ, КАЙЛАС РЕЗОРТ ТОВ, ФОП Воронцов,
+ВФ АССЕТС ТОВ і т.і.). **Fact-таблиці (PnL/Cashflow/Balance) лишаються
+own-org-only** через свої `WHERE Organization_ID = 0x80D3000C...` у raw_sql —
+не зачеплено.
+
+**Файли:**
+- `pipelines/dim_catalogs.json` — крок `dim_organizations` без `where`;
+  опис pipeline оновлено.
+- `pipelines/dim_denezhnye_sredstva.json` — кожна гілка UNION ALL отримала
+  `_FldNNNRRef AS AccountingOrg_ID` (Касса/БанкСчёт) або
+  `CAST(NULL AS varbinary(16))` (6 інших); `column_map +`
+  `"AccountingOrg_ID":"AccountingOrg_ID"`.
+- `ddl/06_create_dim_denezhnye_sredstva.sql` — `+AccountingOrg_ID char(32)`.
+
+**Верифікація** (ETL run_id=333; `Dim_Organizations` 11 рядків;
+`Dim_DenezhnyeSredstva` 5907):
+| Account_Type | Всього | AccountingOrg_ID заповнено |
+|---|---:|---:|
+| БанковскийСчет | 100 | 100 |
+| Касса | 196 | 193 |
+| (інші 6) | 5611 | 0 |
+| **FK orphans** | — | **0** |
+
+**PL.pbix:** `Sql.Database` кешує метадані SQL-таблиці навіть при Full
+Refresh — додавши SQL-колонку, потрібно змінити M-вираз партиції на
+**native query** (`Sql.Database("SQLSERVER","OlapBASERP",[Query="SELECT
+... AccountingOrg_ID ... FROM dbo.Dim_DenezhnyeSredstva"])`) щоб обійти
+схема-кеш; додати data-колонку моделі через MCP `column_operations.Create
+type=DataColumn sourceColumn=AccountingOrg_ID`; Refresh `Full` →
+Calculate. Потім calc column **`ОрганизацияБухгалтерия`** на таблиці
+ДенежныеСредства: `COALESCE(LOOKUPVALUE('Организации'[Организация],
+'Организации'[Organization_ID], 'ДенежныеСредства'[AccountingOrg_ID]),
+"(Пусто)")` — придатна для рядкових групувань (на відміну від міри).
+Розбивка по БанкСчёт 100 у 9 оргбух (ТОВ ІНДАСТРІАЛБУД 57, ІНДЕПТ СТІЛ 10,
+ДЖИ ТРИ КОНСТРАКШН 9, …); Касса 196 — ТОВ ІНДАСТРІАЛБУД 191 + І.П.С ТОВ 2
++ 3 пусто.
+
+**Регрес-гейт балансу 288 787 750,11** — не зачеплено (Account_Type/
+Direction_ID/AccountingOrg_ID — лейбли Dim, у Fact-JOIN не беруть участь).
+
+### Оновлення 2026-05-20 — `Dim_DenezhnyeSredstva.Direction_ID` (А_НаправлениеДеятельности на Касса/БанкСчёт)
+
+Додано денормалізовану колонку `Direction_ID char(32) NULL` (FK→`Dim_Directions`)
+у `Dim_DenezhnyeSredstva`. Джерело — реквізит **`А_НаправлениеДеятельности`**
+на `Справочник.Кассы` (`_Reference237._Fld54708RRef`) і
+`Справочник.БанковскиеСчетаОрганизаций` (`_Reference60._Fld54618RRef`); для
+6 інших типів composite ДенежныеСредства — `NULL` (`CAST(NULL AS varbinary(16))`).
+
+**Файли:**
+- `pipelines/dim_denezhnye_sredstva.json` raw_sql: ветка БанкСчёт додає
+  `_Fld54618RRef AS Direction_ID`; ветка Касса — `_Fld54708RRef`; решта 6
+  гілок UNION ALL — `CAST(NULL AS varbinary(16))`. `column_mapper.column_map`
+  +`"Direction_ID":"Direction_ID"`. Транформер `varbinary_to_uuid` авто-
+  конвертує `bytes(16)` → hex32 (null UUID 16×0x00 → None → SQL NULL).
+- DDL `06_create_dim_denezhnye_sredstva.sql` — `ALTER`/`CREATE TABLE` +колонка
+  `Direction_ID char(32) NULL` (без FK-constraint — паттерн БД).
+- ALTER на живій БД виконано через ad-hoc pyodbc (idempotent
+  `IF COL_LENGTH(...) IS NULL ALTER ...`); не псує існуючий індекс `IX_CashAcc_Type`.
+
+**WHITELIST/mapping:** усі 3 об'єкти **вже** були у
+`mapping/refresh_mapping.py` WHITELIST (`Кассы`, `БанковскиеСчетаОрганизаций`,
+`НаправленияДеятельности`); `baserp_storage.json` resolve підтвердив
+`А_НаправлениеДеятельности → _Fld54708RRef` (Кассы) і `_Fld54618RRef`
+(БанкСчёт). **`refresh_mapping` НЕ запускався** (структура 1С не змінилась —
+реквізити вже були в конфізі і resolve'нуті раніше).
+
+**Верифікація** (живий ETL run_id=329, 5907 рядків):
+| Account_Type | Всього | Direction_ID заповнено | Пусто |
+|---|---:|---:|---:|
+| Касса | 196 | 81 | 115 |
+| БанковскийСчет | 100 | 25 | 75 |
+| ФизическоеЛицо | 732 | 0 | 732 |
+| Контрагент | 4 878 | 0 | 4 878 |
+| ДоговорКредитаДепозита | 1 | 0 | 1 |
+
+**FK 0 orphans** (`Direction_ID NOT IN Dim_Directions`). Приклади:
+БанкСчёт→Девелопмент/Производство/Строительство/И.П.С. Не-заповнено у БанкСчёт/
+Касса — нормально (реквізит не скрізь заповнений у 1С; це не дефект).
+**Регрес балансу неможливий** (Direction_ID — нова денорм-колонка Dim, жодна
+Fact-міра/JOIN її не використовує). PL.pbix — користувач додає колонку в
+таблицю «ДенежныеСредства» / або зв'язок Fact_*→Dim_Directions через
+Direction_ID за потребою + Refresh+Ctrl+S.
+
+### Оновлення 2026-05-20 — `Dim_DenezhnyeSredstva.Account_Type` EN→RU (1С-нотація)
+
+`pipelines/dim_denezhnye_sredstva.json` — 8 захардкоджених англійських літералів
+`Account_Type` (`BankAccount`/`Cashbox`/`CashboxKKM`/`CashDocument`/`CreditDeposit`/
+`AcquiringTerminal`/`Counterparty`/`Individual`) замінені на російські
+CamelCase 1С-метаімена синґулярних типів:
+
+| EN (було) | RU (зараз) | _Reference | rows янв2026 |
+|---|---|---|---|
+| BankAccount | **БанковскийСчет** | `_Reference60` | 100 |
+| Cashbox | **Касса** | `_Reference237` | 196 |
+| CashboxKKM | **КассаККМ** | `_Reference238` | 0 |
+| CashDocument | **ДенежныйДокумент** | `_Reference167` | 0 |
+| CreditDeposit | **ДоговорКредитаДепозита** | `_Reference173` | 1 |
+| AcquiringTerminal | **ЭквайринговыйТерминал** | `_Reference606` | 0 |
+| Counterparty | **Контрагент** | `_Reference263` | 4 878 |
+| Individual | **ФизическоеЛицо** | `_Reference589` | 732 |
+| Unknown (DDL seed) | **НеИзвестно** | — | 0 (TRUNCATE стирає DDL-seed) |
+
+raw_sql літерали обгорнуті `N'<rus>' COLLATE Cyrillic_General_CI_AS AS Account_Type`
+для надійного UNION ALL і явної кодування. DDL `06_create_dim_denezhnye_sredstva.sql`
+комент+seed `'Unknown'`→`N'НеИзвестно'` (на майбутні DROP/CREATE; на живу БД не
+впливає). **DDL ALTER COLUMN НЕ потрібен** — колонка вже
+`varchar(30) COLLATE Cyrillic_General_CI_AS` (DB default = Cyrillic_General_CI_AS;
+зонд `scripts/probe_account_type_collation.py`).
+
+**Регрес-гейт:** `Account_Type` — лише лейбл (FK Fact_Cashflow/Balance іде по
+`Cash_Account_ID` UUID, не по `Account_Type`); жодна DAX-міра / verify_olap
+скрипт не фільтрує по англійських літералах (grep підтвердив 0 інших
+вживань) → баланс 288 787 750,11 / Σ Sum_Close=0 / усі Fact-таблиці
+**не зачеплені**. ETL `--run-once dim_denezhnye_sredstva` run_id=328 Success
+(5907 рядків, ~33 ms read + 157 ms load). Верифікація:
+`SELECT Account_Type, COUNT(*) GROUP BY Account_Type` повертає 5 російських
+значень × 5907; 0 рядків зі старими EN-значеннями. PL.pbix — користувач
+Refresh таблиці «ДенежныеСредства» + Ctrl+S.
+
 ### Оновлення 2026-05-19 — dim_contracts/ObjektyRaschetov → raw_sql + Dim_TipyDogovorov/FinAgents
 
 **WHITELIST `mapping/refresh_mapping.py` +5 об'єктів:**

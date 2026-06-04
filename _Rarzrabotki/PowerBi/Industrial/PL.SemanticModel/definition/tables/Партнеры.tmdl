@@ -1,0 +1,169 @@
+table Партнеры
+	lineageTag: fc89106a-03cc-4ef3-8733-39236bc7363b
+
+	column Partner_ID
+		dataType: string
+		isHidden
+		lineageTag: e34648dc-b09e-4fb2-b534-3651b65fa294
+		summarizeBy: none
+		sourceColumn: Partner_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Partner_Code
+		dataType: string
+		isHidden
+		lineageTag: fd15e5b4-b052-44b8-a520-c0e5c5950237
+		summarizeBy: none
+		sourceColumn: Partner_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Партнер
+		dataType: string
+		lineageTag: 15ca8774-20ff-495c-92ab-de05cfd76b44
+		summarizeBy: none
+		sourceColumn: Partner_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Parent_ID
+		dataType: string
+		isHidden
+		lineageTag: 730b74c7-6612-4899-8d4a-e59274e2cca0
+		summarizeBy: none
+		sourceColumn: Parent_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ЭтоГруппа
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 98c9a682-a46b-4517-a2eb-7f35599e897b
+		summarizeBy: none
+		sourceColumn: Is_Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column ПометкаУдаления
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 6f1fd69d-9b64-4fbb-906c-d47ad5c5088e
+		summarizeBy: none
+		sourceColumn: Marked_For_Deletion
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hierarchy_Path
+		dataType: string
+		isHidden
+		lineageTag: af463826-018f-47eb-b6d3-d96a00edf2ed
+		summarizeBy: none
+		sourceColumn: Hierarchy_Path
+
+		annotation SummarizationSetBy = Automatic
+
+	column Hierarchy_Depth
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 0c33579d-41d6-4b83-b0c8-2a413eb5735d
+		summarizeBy: none
+		sourceColumn: Hierarchy_Depth
+
+		annotation SummarizationSetBy = Automatic
+
+	column Level1
+		dataType: string
+		isHidden
+		lineageTag: 74e00608-4f91-4641-991d-e7be58162f62
+		summarizeBy: none
+		sourceColumn: Level1
+
+		annotation SummarizationSetBy = Automatic
+
+	column Level2
+		dataType: string
+		isHidden
+		lineageTag: 88d78007-ce7d-47d1-92fb-0a5ebbd93e73
+		summarizeBy: none
+		sourceColumn: Level2
+
+		annotation SummarizationSetBy = Automatic
+
+	column Level3
+		dataType: string
+		isHidden
+		lineageTag: 3b913e4a-d7a3-4fc6-a799-b3c90e706290
+		summarizeBy: none
+		sourceColumn: Level3
+
+		annotation SummarizationSetBy = Automatic
+
+	column Level4
+		dataType: string
+		isHidden
+		lineageTag: c903af26-0e6d-4365-85a0-3d80e38a31cb
+		summarizeBy: none
+		sourceColumn: Level4
+
+		annotation SummarizationSetBy = Automatic
+
+	column Level5
+		dataType: string
+		isHidden
+		lineageTag: c68b1efd-53b0-4a33-968c-efead59b173e
+		summarizeBy: none
+		sourceColumn: Level5
+
+		annotation SummarizationSetBy = Automatic
+
+	column Loaded_At
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 13e1016f-32ed-4b8e-af10-03407177d5a3
+		summarizeBy: none
+		sourceColumn: Loaded_At
+
+		annotation SummarizationSetBy = Automatic
+
+	hierarchy ИерархияПартнеров
+		hideMembers: hideBlankMembers
+		lineageTag: 3198a963-f698-4c7a-a015-5db6f892e6a1
+
+		level Level1
+			lineageTag: 2e1aef71-8266-438c-bb4b-cb7629a079ee
+			column: Level1
+
+		level Level2
+			lineageTag: 861ee312-41cb-4743-b8a4-bb49955c1d28
+			column: Level2
+
+		level Level3
+			lineageTag: 24f91ff6-4c05-495e-8fec-3ae35ddbc31f
+			column: Level3
+
+		level Level4
+			lineageTag: 40201b5f-d581-4462-8989-ceafeec2995b
+			column: Level4
+
+		level Level5
+			lineageTag: 8fbc84a3-a9e6-406c-a6fa-916b7544cb2c
+			column: Level5
+
+	partition Партнеры = m
+		mode: import
+		source =
+				let
+				    Источник = Sql.Database("SQLSERVER", "OlapBASERP"),
+				    dbo_Dim_Partners = Источник{[Schema="dbo",Item="Dim_Partners"]}[Data]
+				in
+				    dbo_Dim_Partners
+
+	annotation PBI_NavigationStepName = Навигация
+
+	annotation PBI_ResultType = Table
+

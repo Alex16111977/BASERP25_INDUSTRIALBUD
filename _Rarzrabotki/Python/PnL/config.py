@@ -7,6 +7,54 @@ JSON_DIR = DATA_DIR / "json"
 REPORTS_DIR = DATA_DIR / "reports"
 
 EXCEL_FILES = [
+    # === 2024 ГОД (12 месяцев из одного декабрьского Excel 2024; колонки col=14..69 step=5) ===
+    {"path": r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\PL\Декабрь 2024\!PL по компании Декабрь 2024.xlsx",
+     "period": "2024-01-31", "month_header": "2024-01-01", "label": "Январь 2024"},
+    {"path": r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\PL\Декабрь 2024\!PL по компании Декабрь 2024.xlsx",
+     "period": "2024-02-29", "month_header": "2024-02-01", "label": "Февраль 2024"},
+    {"path": r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\PL\Декабрь 2024\!PL по компании Декабрь 2024.xlsx",
+     "period": "2024-03-31", "month_header": "2024-03-01", "label": "Март 2024"},
+    {"path": r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\PL\Декабрь 2024\!PL по компании Декабрь 2024.xlsx",
+     "period": "2024-04-30", "month_header": "2024-04-01", "label": "Апрель 2024"},
+    {"path": r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\PL\Декабрь 2024\!PL по компании Декабрь 2024.xlsx",
+     "period": "2024-05-31", "month_header": "2024-05-01", "label": "Май 2024"},
+    {"path": r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\PL\Декабрь 2024\!PL по компании Декабрь 2024.xlsx",
+     "period": "2024-06-30", "month_header": "2024-06-01", "label": "Июнь 2024"},
+    {"path": r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\PL\Декабрь 2024\!PL по компании Декабрь 2024.xlsx",
+     "period": "2024-07-31", "month_header": "2024-07-01", "label": "Июль 2024"},
+    {"path": r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\PL\Декабрь 2024\!PL по компании Декабрь 2024.xlsx",
+     "period": "2024-08-31", "month_header": "2024-08-01", "label": "Август 2024"},
+    {"path": r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\PL\Декабрь 2024\!PL по компании Декабрь 2024.xlsx",
+     "period": "2024-09-30", "month_header": "2024-09-01", "label": "Сентябрь 2024"},
+    {"path": r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\PL\Декабрь 2024\!PL по компании Декабрь 2024.xlsx",
+     "period": "2024-10-31", "month_header": "2024-10-01", "label": "Октябрь 2024"},
+    {"path": r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\PL\Декабрь 2024\!PL по компании Декабрь 2024.xlsx",
+     "period": "2024-11-30", "month_header": "2024-11-01", "label": "Ноябрь 2024"},
+    {"path": r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\PL\Декабрь 2024\!PL по компании Декабрь 2024.xlsx",
+     "period": "2024-12-31", "month_header": "2024-12-01", "label": "Декабрь 2024"},
+    # === 2025 ГОД (11 месяцев из одного декабрьского Excel; колонки col=19..69 step=5) ===
+    {"path": r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\PL\Декабрь_25\!PL по компании Декабрь 2025.xlsx",
+     "period": "2025-01-31", "month_header": "2025-01-01", "label": "Январь 2025"},
+    {"path": r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\PL\Декабрь_25\!PL по компании Декабрь 2025.xlsx",
+     "period": "2025-02-28", "month_header": "2025-02-01", "label": "Февраль 2025"},
+    {"path": r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\PL\Декабрь_25\!PL по компании Декабрь 2025.xlsx",
+     "period": "2025-03-31", "month_header": "2025-03-01", "label": "Март 2025"},
+    {"path": r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\PL\Декабрь_25\!PL по компании Декабрь 2025.xlsx",
+     "period": "2025-04-30", "month_header": "2025-04-01", "label": "Апрель 2025"},
+    {"path": r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\PL\Декабрь_25\!PL по компании Декабрь 2025.xlsx",
+     "period": "2025-05-31", "month_header": "2025-05-01", "label": "Май 2025"},
+    {"path": r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\PL\Декабрь_25\!PL по компании Декабрь 2025.xlsx",
+     "period": "2025-06-30", "month_header": "2025-06-01", "label": "Июнь 2025"},
+    {"path": r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\PL\Декабрь_25\!PL по компании Декабрь 2025.xlsx",
+     "period": "2025-07-31", "month_header": "2025-07-01", "label": "Июль 2025"},
+    {"path": r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\PL\Декабрь_25\!PL по компании Декабрь 2025.xlsx",
+     "period": "2025-08-31", "month_header": "2025-08-01", "label": "Август 2025"},
+    {"path": r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\PL\Декабрь_25\!PL по компании Декабрь 2025.xlsx",
+     "period": "2025-09-30", "month_header": "2025-09-01", "label": "Сентябрь 2025"},
+    {"path": r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\PL\Декабрь_25\!PL по компании Декабрь 2025.xlsx",
+     "period": "2025-10-31", "month_header": "2025-10-01", "label": "Октябрь 2025"},
+    {"path": r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\PL\Декабрь_25\!PL по компании Декабрь 2025.xlsx",
+     "period": "2025-11-30", "month_header": "2025-11-01", "label": "Ноябрь 2025"},
     {
         "path": r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\PL\Декабрь_25\!PL по компании Декабрь 2025.xlsx",
         "period": "2025-12-31",
@@ -30,6 +78,12 @@ EXCEL_FILES = [
         "period": "2026-03-31",
         "month_header": "2026-03-01",
         "label": "Березень 2026",
+    },
+    {
+        "path": r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\PL\Апрель_26\!PL по компании Квітень 2026.xlsx",
+        "period": "2026-04-30",
+        "month_header": "2026-04-01",
+        "label": "Квітень 2026",
     },
 ]
 
@@ -148,6 +202,134 @@ MANUAL_SHEET_TO_STRUCT_OVERRIDES = {
         "include_children": False,
         "reason": "МК Чорноморск = МК Чорноморськ (Производство). Эталон: док №3 Лютий 2026",
     },
+    # МД МХП ОРІЛЬ — новый МД-филиал, появился в апреле 2026. Направление Производство.
+    "МД МХП ОРІЛЬ": {
+        "struct_uuid": "1f60d4b1-26b2-11f1-810c-00155dce3d04",
+        "struct_name": "МД МХП ОРІЛЬ",
+        "direction_uuid": "9d2c848e-1ae7-11f0-80dc-00155d235309",
+        "direction_name": "Производство",
+        "include_children": False,
+        "reason": "Новый МД-филиал в Квітень 2026 (код 00-001020). Производство.",
+    },
+    # === 2024 ГОД — филиалы, закрытые/изменённые к 2025 (добавлено 2026-05-21) ===
+    "PL_Староконстантинов": {
+        "struct_uuid": "9db438f5-1ae7-11f0-80dc-00155d235309",
+        "struct_name": "Староконстантинов",
+        "direction_uuid": "9d021b84-1ae7-11f0-80dc-00155d235309",
+        "direction_name": "Строительство",
+        "include_children": True,
+        "reason": "Сводный лист PL_Староконстантинов = подразделение Строительства",
+    },
+    "Молоко Вітчизни": {
+        "struct_uuid": "9d2c90df-1ae7-11f0-80dc-00155d235309",
+        "struct_name": "Молоко Вітчизни",
+        "direction_uuid": "9d021b84-1ae7-11f0-80dc-00155d235309",
+        "direction_name": "Строительство",
+        "include_children": False,
+        "reason": "Подразделение 2024 года, Строительство",
+    },
+    "КМД Путровка": {
+        "struct_uuid": "9d2c911d-1ae7-11f0-80dc-00155d235309",
+        "struct_name": "КМД Путровка",
+        "direction_uuid": "9d021b71-1ae7-11f0-80dc-00155d235309",
+        "direction_name": "Закрытые обьекты",
+        "include_children": False,
+        "reason": "Объект закрыт к 2025",
+    },
+    "Турбина-3": {
+        "struct_uuid": "9d2c90b2-1ae7-11f0-80dc-00155d235309",
+        "struct_name": "Турбина 3",
+        "direction_uuid": "9d2c84a1-1ae7-11f0-80dc-00155d235309",
+        "direction_name": "Девелопмент",
+        "include_children": False,
+        "reason": "В Excel 'Турбина-3', в 1С — 'Турбина 3' без дефиса",
+    },
+    "Нежин 3": {
+        "struct_uuid": "9d2c8fc5-1ae7-11f0-80dc-00155d235309",
+        "struct_name": "Нежин 3 ",  # trailing space в 1С!
+        "direction_uuid": "9d021b71-1ae7-11f0-80dc-00155d235309",
+        "direction_name": "Закрытые обьекты",
+        "include_children": False,
+        "reason": "Объект закрыт; в 1С имя с trailing space",
+    },
+    "Глобино": {
+        "struct_uuid": "9d2c90ca-1ae7-11f0-80dc-00155d235309",
+        "struct_name": "Глобино",
+        "direction_uuid": "9d021b71-1ae7-11f0-80dc-00155d235309",
+        "direction_name": "Закрытые обьекты",
+        "include_children": False,
+        "reason": "Объект 'Глобино' закрыт к 2025 (отдельный от 'Глобино-2' и 'МК Глобино')",
+    },
+    "Приднепровский_металл": {
+        "struct_uuid": "9dc455b5-1ae7-11f0-80dc-00155d235309",
+        "struct_name": "Приднепровский-металл",
+        "direction_uuid": "9d021b71-1ae7-11f0-80dc-00155d235309",
+        "direction_name": "Закрытые обьекты",
+        "include_children": False,
+        "reason": "В Excel underscore, в 1С — дефис",
+    },
+    "Солома_Элеватор": {
+        "struct_uuid": "9d2c8c54-1ae7-11f0-80dc-00155d235309",
+        "struct_name": "Солома Элеватор",
+        "include_children": False,
+        "reason": "В Excel underscore, в 1С — пробел; направление не задано",
+    },
+    "МД Первомайск ПА": {
+        "struct_uuid": "9d2c9319-1ae7-11f0-80dc-00155d235309",
+        "struct_name": "МД Первомайск ПА",
+        "direction_uuid": "9d021b71-1ae7-11f0-80dc-00155d235309",
+        "direction_name": "Закрытые обьекты",
+        "include_children": False,
+        "reason": "Точное совпадение, объект закрыт к 2025",
+    },
+    "НГУ": {
+        "struct_uuid": "9d2c91e6-1ae7-11f0-80dc-00155d235309",
+        "struct_name": "НГУ",
+        "include_children": False,
+        "reason": "Точное совпадение, направление не задано",
+    },
+    "МД ООН": {
+        "struct_uuid": "9d2c8fb1-1ae7-11f0-80dc-00155d235309",
+        "struct_name": "МД ООН",
+        "direction_uuid": "9d2c848e-1ae7-11f0-80dc-00155d235309",
+        "direction_name": "Производство",
+        "include_children": False,
+        "reason": "Отдельный от 'МД ООН 2025'",
+    },
+    "МД ВООЗ": {
+        "struct_uuid": "9d2c90c9-1ae7-11f0-80dc-00155d235309",
+        "struct_name": "МД ВООЗ",
+        "direction_uuid": "9d2c848e-1ae7-11f0-80dc-00155d235309",
+        "direction_name": "Производство",
+        "include_children": False,
+        "reason": "Отдельный от 'МД ВООЗ  2025'",
+    },
+    "ЕМС": {
+        "struct_uuid": "9d2c92f3-1ae7-11f0-80dc-00155d235309",
+        "struct_name": "ЕМС малий",
+        "direction_uuid": "9d2c848e-1ae7-11f0-80dc-00155d235309",
+        "direction_name": "Производство",
+        "include_children": False,
+        "reason": "В Excel короткое 'ЕМС', в 1С — 'ЕМС малий'",
+    },
+    "Форд Тягач": {
+        "struct_uuid": "9dc44b0c-1ae7-11f0-80dc-00155d235309",
+        "struct_name": "Тягач Форд  1842Т",
+        "include_children": False,
+        "reason": "В 1С 'Тягач Форд  1842Т' с двумя пробелами",
+    },
+    "MAN Blue KA1783HI": {
+        "struct_uuid": "9de72248-1ae7-11f0-80dc-00155d235309",
+        "struct_name": "MAN blue № 1 KA1783HI",
+        "include_children": False,
+        "reason": "В Excel 'MAN Blue KA1783HI', в 1С — 'MAN blue № 1 KA1783HI'",
+    },
+    "MAN green KA2790IE": {
+        "struct_uuid": "9de7226d-1ae7-11f0-80dc-00155d235309",
+        "struct_name": "MAN green KA2790IE",
+        "include_children": False,
+        "reason": "Точное совпадение",
+    },
     # МК-филиалы с точным совпадением имени. Направление — Производство (из А_НаправлениеДеятельности подразделения).
     "МК Астарта.Тищенки": {
         "struct_uuid": "a4e02be3-a36b-11f0-8100-00155dce3d04",
@@ -215,6 +397,9 @@ TOTAL_ROW_KEYWORDS = [
 # в каталог А_Статьи_PL не попадает.
 EXTRA_COMMENT_NAMES = {
     "Затраты ЦО",
+    # Комментарий финансиста, попавший в столбец B как "статья" в 2025 (Май-Август).
+    # Содержит арифметику и опечатку "рахсод" — точно не статья каталога.
+    "Доход 3,7+0,7-рахсод  8,8-4,5",
 }
 
 # Алиасы названий PL-статей в Excel → каноничное имя в Catalog.А_Статьи_PL.
@@ -222,6 +407,25 @@ EXTRA_COMMENT_NAMES = {
 # не создавался как новая статья, а сворачивался в существующую "Аренда сторонней техники".
 ARTICLE_NAME_ALIASES = {
     "Арена сторонней техники": "Аренда сторонней техники",
+    # 2024-варианты для существующей "Штраф/ мат помощь":
+    "Штраф, Материальная помощь": "Штраф/ мат помощь",
+    "Штраф/ мат.помощ": "Штраф/ мат помощь",
+    # 2026-05-21: финансист пометил на удаление дубль "Штраф" (000000060),
+    # все варианты сводим в единую статью "Штраф/ мат помощь" (000000059).
+    "Штраф": "Штраф/ мат помощь",
+}
+
+# Deny-list имён PL-статей, которые НЕЛЬЗЯ создавать в Catalog.А_Статьи_PL при заливке.
+# Используется как защита от случайного восстановления статьи, которую финансист удалил.
+# Проверяется в 11_upload_articles.py перед mgr.СоздатьЭлемент().
+#
+# Если в Excel встречается такое имя — оно ДОЛЖНО быть покрыто ARTICLE_NAME_ALIASES
+# (сворачиваться в каноничную статью). Если алиаса нет, а имя в deny-list — скрипт
+# пропустит создание со SKIP-BLOCKED.
+#
+# Сравнение по точному имени (case-insensitive, с обрезкой пробелов).
+BLOCKED_ARTICLE_NAMES = {
+    "Штраф",  # 2026-05-21 удалена; вместо неё → "Штраф/ мат помощь"
 }
 
 PL_GROUP_NAMES = [

@@ -66,7 +66,7 @@ Ai_Olap (_Rarzrabotki/Olap/Ai_Olap/)
 | `СтатьиДвиженияДенежныхСредств` | 9 | Dim_DDS_Articles | Dim_DDS_Articles |
 | `СтатьиРасходов` | 8 | Dim_Expense_Articles | Dim_Expense_Articles |
 | `СтатьиДоходов` | 8 | Dim_Income_Articles | Dim_Income_Articles |
-| `А_Статьи_PL` | 10 | Dim_PL_Articles | Dim_PL_Articles |
+| `А_Статьи_PL` | 11 (з 2026-05-21 + `ТипСтатьи`) | Dim_PL_Articles | Dim_PL_Articles |
 | `А_ГруппаСтатей_PL` | 8 | Dim_PL_ArticleGroups | Dim_PL_ArticleGroups |
 
 **Util** (2):

@@ -1,6 +1,6 @@
 {
   "pipeline_id": "fact_pnl",
-  "description": "Fact_PnL idempotent reload from РегистрСведений.А_ОтчетPL_Свод for a single month",
+  "description": "Fact_PnL idempotent reload from РегистрСведений.А_ОтчетPL_Свод (Stage v2 2026-05-05). 9 native FK + 2 snowflake (Direction/PL_Group) + 6 resources + Analytics + Source enum.",
   "schedule": "0 2 1 * *",
   "steps": [
     {
@@ -8,7 +8,7 @@
       "extractor": {
         "type": "raw_sql",
         "auto_period_params": true,
-        "raw_sql": "SELECT r._RecorderRRef AS Recorder_PL_ID, r._Fld55984RRef AS Source, d._Date_Time AS Period, r._Fld55971RRef AS Organization_ID, r._Fld55972RRef AS Department_ID, r._Fld55973RRef AS Direction_ID, r._Fld55974RRef AS PL_Article_ID, r._Fld55975RRef AS PL_Group_ID, r._Fld55976RRef AS DDS_Article_ID, r._Fld55977RRef AS Counterparty_ID, r._Fld55985RRef AS Income_Article_ID, r._Fld55986RRef AS Expense_Article_ID, r._Fld55987RRef AS Currency_ID, r._Fld55988 AS Exchange_Rate, r._Fld55979 AS Sum_Plan_Grn, r._Fld55980 AS Sum_Plan_F1_Grn, r._Fld55981 AS Sum_Plan_F2_Grn, r._Fld55982 AS Sum_ERP_Grn, r._Fld55983 AS Sum_Kazna_Grn, r._Fld55978_RRRef AS Source_Recorder_ID FROM _InfoRg55970 r INNER JOIN _Document56011 d ON d._IDRRef = r._RecorderRRef WHERE r._Active = 0x01 AND r._Fld55971RRef = 0x80D3000C29BBAC2311E653F06BEE36B2 AND d._Date_Time >= ? AND d._Date_Time < ?"
+        "raw_sql": "SELECT r._RecorderRRef AS Recorder_PL_ID, r._Fld55984RRef AS Source, d._Date_Time AS Period, r._Fld55971RRef AS Organization_ID, r._Fld55972RRef AS Department_ID, COALESCE(NULLIF(dept._Fld54614RRef, 0x00000000000000000000000000000000), 0x00000000000000000000000000000001) AS Direction_ID, r._Fld55974RRef AS PL_Article_ID, COALESCE(NULLIF(art._Fld55817RRef, 0x00000000000000000000000000000000), 0x00000000000000000000000000000001) AS PL_Group_ID, r._Fld55976RRef AS DDS_Article_ID, r._Fld55977RRef AS Counterparty_ID, r._Fld56045RRef AS Individual_ID, r._Fld56040RRef AS Income_Article_ID, r._Fld56041RRef AS Expense_Article_ID, r._Fld55978_RRRef AS Document_ID, r._Fld56046 AS Analytics, r._Fld56047 AS Comment, r._Fld55981 AS Sum_F1_Excel, r._Fld55980 AS Sum_F2_Excel, r._Fld55979 AS Sum_Excel, r._Fld56042 AS Sum_F1, r._Fld56043 AS Sum_F2, r._Fld55982 AS Sum_Fact FROM _InfoRg55970 r INNER JOIN _Document56011 d ON d._IDRRef = r._RecorderRRef LEFT JOIN _Reference540 dept ON dept._IDRRef = r._Fld55972RRef LEFT JOIN _Reference55814 art ON art._IDRRef = r._Fld55974RRef WHERE r._Active = 0x01 AND r._Fld55971RRef = 0x80D3000C29BBAC2311E653F06BEE36B2 AND d._Date_Time >= ? AND d._Date_Time < ?"
       },
       "transformer": {
         "steps": ["varbinary_to_uuid", "enum_resolver", "period_offset_fix", "column_mapper"],
@@ -28,16 +28,18 @@
               "PL_Group_ID": "PL_Group_ID",
               "DDS_Article_ID": "DDS_Article_ID",
               "Counterparty_ID": "Counterparty_ID",
+              "Individual_ID": "Individual_ID",
               "Income_Article_ID": "Income_Article_ID",
               "Expense_Article_ID": "Expense_Article_ID",
-              "Currency_ID": "Currency_ID",
-              "Exchange_Rate": "Exchange_Rate",
-              "Sum_Plan_Grn": "Sum_Plan_Grn",
-              "Sum_Plan_F1_Grn": "Sum_Plan_F1_Grn",
-              "Sum_Plan_F2_Grn": "Sum_Plan_F2_Grn",
-              "Sum_ERP_Grn": "Sum_ERP_Grn",
-              "Sum_Kazna_Grn": "Sum_Kazna_Grn",
-              "Source_Recorder_ID": "Source_Recorder_ID"
+              "Document_ID": "Document_ID",
+              "Analytics": "Analytics",
+              "Comment": "Comment",
+              "Sum_F1_Excel": "Sum_F1_Excel",
+              "Sum_F2_Excel": "Sum_F2_Excel",
+              "Sum_Excel": "Sum_Excel",
+              "Sum_F1": "Sum_F1",
+              "Sum_F2": "Sum_F2",
+              "Sum_Fact": "Sum_Fact"
             }
           }
         }

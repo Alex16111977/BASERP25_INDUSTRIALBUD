@@ -1,0 +1,79 @@
+table Организации
+	lineageTag: 5aa89228-a636-4c19-acc8-40d2d8e905cc
+
+	column Organization_ID
+		dataType: string
+		isHidden
+		lineageTag: d02ec9f6-0054-4abc-a68a-f4d186c725dd
+		summarizeBy: none
+		sourceColumn: Organization_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column Organization_Code
+		dataType: string
+		isHidden
+		lineageTag: e4291b54-10b2-44a7-97e2-8b8d6c7f4bb7
+		summarizeBy: none
+		sourceColumn: Organization_Code
+
+		annotation SummarizationSetBy = Automatic
+
+	column Организация
+		dataType: string
+		lineageTag: c1539d05-b541-4cc0-91b3-368a4dc33d6e
+		summarizeBy: none
+		sourceColumn: Organization_Name
+
+		annotation SummarizationSetBy = Automatic
+
+	column Parent_ID
+		dataType: string
+		isHidden
+		lineageTag: 73851740-4f8a-4151-aeff-bb239d3026cb
+		summarizeBy: none
+		sourceColumn: Parent_ID
+
+		annotation SummarizationSetBy = Automatic
+
+	column ЭтоГруппа
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 872be625-1872-4c70-965a-bfef8b8090b6
+		summarizeBy: none
+		sourceColumn: Is_Group
+
+		annotation SummarizationSetBy = Automatic
+
+	column ПометкаУдаления
+		dataType: boolean
+		isHidden
+		formatString: """TRUE"";""TRUE"";""FALSE"""
+		lineageTag: 23fc2c31-aa0d-4359-ab07-8e6ec822e617
+		summarizeBy: none
+		sourceColumn: Marked_For_Deletion
+
+		annotation SummarizationSetBy = Automatic
+
+	column Loaded_At
+		dataType: dateTime
+		isHidden
+		formatString: General Date
+		lineageTag: 2813787e-0ee2-4f89-8f7d-bd7839640d98
+		summarizeBy: none
+		sourceColumn: Loaded_At
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Dim_Organizations = m
+		mode: import
+		source =
+				let
+				    Источник = Sql.Database("SQLSERVER", "OlapBASERP"),
+				    dbo_Dim_Organizations = Источник{[Schema="dbo",Item="Dim_Organizations"]}[Data]
+				in
+				    dbo_Dim_Organizations
+
+	annotation PBI_ResultType = Table
+

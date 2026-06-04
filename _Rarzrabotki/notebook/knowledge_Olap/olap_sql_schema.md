@@ -257,9 +257,14 @@ UNION 2 справочників 1С: `БанковскиеСчетаОрган�
 
 #### Dim_PL_Articles
 ```sql
-+ Sort_Order int NULL          -- з реквізиту Сорт
-+ Group_ID   char(32) NULL     -- FK на Dim_PL_ArticleGroups
++ Sort_Order  int          NULL  -- з реквізиту Сорт
++ Group_ID    char(32)     NULL  -- FK на Dim_PL_ArticleGroups
++ Type_Statya nvarchar(50) NULL  -- 2026-05-21: ТипСтатьи (Доход/Расход/ОперационныйИтог/Информационный),
+                                 --              для mirror-знака у Fact_PnL та фільтрів PBIX
 ```
+
+ETL: `pipelines/dim_catalogs.json` step `dim_pl_articles` → `enum_resolver` мапить
+`Перечисление.А_ТипСтатьиPL` через `FROZEN_ENUMS` (`enum_resolver.py`).
 
 ### Список 16 Dim
 
