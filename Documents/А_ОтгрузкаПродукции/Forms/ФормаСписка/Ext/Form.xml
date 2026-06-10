@@ -17,7 +17,6 @@
 		</UsualGroup>
 		<Table name="Список" id="3">
 			<Representation>List</Representation>
-			<CommandBarLocation>None</CommandBarLocation>
 			<DefaultItem>true</DefaultItem>
 			<UseAlternationRowColor>true</UseAlternationRowColor>
 			<InitialTreeView>ExpandTopLevel</InitialTreeView>
@@ -40,9 +39,7 @@
 			<UpdateOnDataChange>Auto</UpdateOnDataChange>
 			<UserSettingsGroup>СписокКомпоновщикНастроекПользовательскиеНастройки</UserSettingsGroup>
 			<ContextMenu name="СписокКонтекстноеМеню" id="4"/>
-			<AutoCommandBar name="СписокКоманднаяПанель" id="5">
-				<Autofill>false</Autofill>
-			</AutoCommandBar>
+			<AutoCommandBar name="СписокКоманднаяПанель" id="5"/>
 			<ExtendedTooltip name="СписокРасширеннаяПодсказка" id="6"/>
 			<SearchStringAddition name="СписокСтрокаПоиска" id="7">
 				<AdditionSource>
@@ -68,6 +65,9 @@
 				<ContextMenu name="СписокУправлениеПоискомКонтекстноеМеню" id="14"/>
 				<ExtendedTooltip name="СписокУправлениеПоискомРасширеннаяПодсказка" id="15"/>
 			</SearchControlAddition>
+			<Events>
+				<Event name="OnActivateRow">СписокПриАктивизацииСтроки</Event>
+			</Events>
 			<ChildItems>
 				<LabelField name="Дата" id="16">
 					<DataPath>Список.Date</DataPath>
@@ -80,22 +80,35 @@
 					<ContextMenu name="НомерКонтекстноеМеню" id="20"/>
 					<ExtendedTooltip name="НомерРасширеннаяПодсказка" id="21"/>
 				</LabelField>
-				<CheckBoxField name="А_НачислятьУслуги" id="34">
-					<DataPath>Список.А_НачислятьУслуги</DataPath>
-					<CheckBoxType>Auto</CheckBoxType>
-					<ContextMenu name="А_НачислятьУслугиКонтекстноеМеню" id="35"/>
-					<ExtendedTooltip name="А_НачислятьУслугиРасширеннаяПодсказка" id="36"/>
-				</CheckBoxField>
-				<CheckBoxField name="А_Необновлять" id="67">
-					<DataPath>Список.А_Необновлять</DataPath>
-					<CheckBoxType>Auto</CheckBoxType>
-					<ContextMenu name="А_НеобновлятьКонтекстноеМеню" id="68"/>
-					<ExtendedTooltip name="А_НеобновлятьРасширеннаяПодсказка" id="69"/>
-				</CheckBoxField>
 				<LabelField name="Подразделение" id="22">
 					<DataPath>Список.Подразделение</DataPath>
 					<ContextMenu name="ПодразделениеКонтекстноеМеню" id="23"/>
 					<ExtendedTooltip name="ПодразделениеРасширеннаяПодсказка" id="24"/>
+				</LabelField>
+				<LabelField name="НазваниеЗаказа" id="28">
+					<DataPath>Список.НазваниеЗаказа</DataPath>
+					<ContextMenu name="НазваниеЗаказаКонтекстноеМеню" id="29"/>
+					<ExtendedTooltip name="НазваниеЗаказаРасширеннаяПодсказка" id="30"/>
+				</LabelField>
+				<LabelField name="Заказчик" id="31">
+					<DataPath>Список.Заказчик</DataPath>
+					<ContextMenu name="ЗаказчикКонтекстноеМеню" id="32"/>
+					<ExtendedTooltip name="ЗаказчикРасширеннаяПодсказка" id="33"/>
+				</LabelField>
+				<LabelField name="КонтрагентЗаказчик" id="43">
+					<DataPath>Список.КонтрагентЗаказчик</DataPath>
+					<ContextMenu name="КонтрагентЗаказчикКонтекстноеМеню" id="44"/>
+					<ExtendedTooltip name="КонтрагентЗаказчикРасширеннаяПодсказка" id="45"/>
+				</LabelField>
+				<LabelField name="СуммаДокумента" id="76">
+					<DataPath>Список.СуммаДокумента</DataPath>
+					<ContextMenu name="СуммаДокументаКонтекстноеМеню" id="77"/>
+					<ExtendedTooltip name="СуммаДокументаРасширеннаяПодсказка" id="78"/>
+				</LabelField>
+				<LabelField name="Организация" id="79">
+					<DataPath>Список.Организация</DataPath>
+					<ContextMenu name="ОрганизацияКонтекстноеМеню" id="80"/>
+					<ExtendedTooltip name="ОрганизацияРасширеннаяПодсказка" id="81"/>
 				</LabelField>
 				<LabelField name="НаправлениеДохода" id="46">
 					<DataPath>Список.НаправлениеДохода</DataPath>
@@ -118,37 +131,6 @@
 					<ContextMenu name="ПодразделениеРасходаКонтекстноеМеню" id="59"/>
 					<ExtendedTooltip name="ПодразделениеРасходаРасширеннаяПодсказка" id="60"/>
 				</LabelField>
-				<LabelField name="Заказчик" id="31">
-					<DataPath>Список.Заказчик</DataPath>
-					<ContextMenu name="ЗаказчикКонтекстноеМеню" id="32"/>
-					<ExtendedTooltip name="ЗаказчикРасширеннаяПодсказка" id="33"/>
-				</LabelField>
-				<LabelField name="КонтрагентЗаказчик" id="43">
-					<DataPath>Список.КонтрагентЗаказчик</DataPath>
-					<ContextMenu name="КонтрагентЗаказчикКонтекстноеМеню" id="44"/>
-					<ExtendedTooltip name="КонтрагентЗаказчикРасширеннаяПодсказка" id="45"/>
-				</LabelField>
-				<CheckBoxField name="СтороннийЗаказчик" id="55">
-					<DataPath>Список.СтороннийЗаказчик</DataPath>
-					<CheckBoxType>Auto</CheckBoxType>
-					<ContextMenu name="СтороннийЗаказчикКонтекстноеМеню" id="56"/>
-					<ExtendedTooltip name="СтороннийЗаказчикРасширеннаяПодсказка" id="57"/>
-				</CheckBoxField>
-				<LabelField name="НазваниеЗаказа" id="28">
-					<DataPath>Список.НазваниеЗаказа</DataPath>
-					<ContextMenu name="НазваниеЗаказаКонтекстноеМеню" id="29"/>
-					<ExtendedTooltip name="НазваниеЗаказаРасширеннаяПодсказка" id="30"/>
-				</LabelField>
-				<LabelField name="Комментарий" id="25">
-					<DataPath>Список.Комментарий</DataPath>
-					<ContextMenu name="КомментарийКонтекстноеМеню" id="26"/>
-					<ExtendedTooltip name="КомментарийРасширеннаяПодсказка" id="27"/>
-				</LabelField>
-				<LabelField name="СтатьяДенежныхСредств" id="61">
-					<DataPath>Список.СтатьяДенежныхСредств</DataPath>
-					<ContextMenu name="СтатьяДенежныхСредствКонтекстноеМеню" id="62"/>
-					<ExtendedTooltip name="СтатьяДенежныхСредствРасширеннаяПодсказка" id="63"/>
-				</LabelField>
 				<LabelField name="НаправлениеРасхода" id="49">
 					<DataPath>Список.НаправлениеРасхода</DataPath>
 					<ContextMenu name="НаправлениеРасходаКонтекстноеМеню" id="50"/>
@@ -159,6 +141,34 @@
 					<ContextMenu name="ПодразделениеЗаказчикКонтекстноеМеню" id="53"/>
 					<ExtendedTooltip name="ПодразделениеЗаказчикРасширеннаяПодсказка" id="54"/>
 				</LabelField>
+				<CheckBoxField name="СтороннийЗаказчик" id="55">
+					<DataPath>Список.СтороннийЗаказчик</DataPath>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="СтороннийЗаказчикКонтекстноеМеню" id="56"/>
+					<ExtendedTooltip name="СтороннийЗаказчикРасширеннаяПодсказка" id="57"/>
+				</CheckBoxField>
+				<LabelField name="СтатьяДенежныхСредств" id="61">
+					<DataPath>Список.СтатьяДенежныхСредств</DataPath>
+					<ContextMenu name="СтатьяДенежныхСредствКонтекстноеМеню" id="62"/>
+					<ExtendedTooltip name="СтатьяДенежныхСредствРасширеннаяПодсказка" id="63"/>
+				</LabelField>
+				<LabelField name="Комментарий" id="25">
+					<DataPath>Список.Комментарий</DataPath>
+					<ContextMenu name="КомментарийКонтекстноеМеню" id="26"/>
+					<ExtendedTooltip name="КомментарийРасширеннаяПодсказка" id="27"/>
+				</LabelField>
+				<CheckBoxField name="А_НачислятьУслуги" id="34">
+					<DataPath>Список.А_НачислятьУслуги</DataPath>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="А_НачислятьУслугиКонтекстноеМеню" id="35"/>
+					<ExtendedTooltip name="А_НачислятьУслугиРасширеннаяПодсказка" id="36"/>
+				</CheckBoxField>
+				<CheckBoxField name="А_Необновлять" id="67">
+					<DataPath>Список.А_Необновлять</DataPath>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="А_НеобновлятьКонтекстноеМеню" id="68"/>
+					<ExtendedTooltip name="А_НеобновлятьРасширеннаяПодсказка" id="69"/>
+				</CheckBoxField>
 				<LabelField name="ДокПриобретениеТоваровУслуг" id="70">
 					<DataPath>Список.ДокПриобретениеТоваровУслуг</DataPath>
 					<ContextMenu name="ДокПриобретениеТоваровУслугКонтекстноеМеню" id="71"/>
@@ -168,16 +178,6 @@
 					<DataPath>Список.ДокРеализацияТоваровУслуг</DataPath>
 					<ContextMenu name="ДокРеализацияТоваровУслугКонтекстноеМеню" id="74"/>
 					<ExtendedTooltip name="ДокРеализацияТоваровУслугРасширеннаяПодсказка" id="75"/>
-				</LabelField>
-				<LabelField name="СуммаДокумента" id="76">
-					<DataPath>Список.СуммаДокумента</DataPath>
-					<ContextMenu name="СуммаДокументаКонтекстноеМеню" id="77"/>
-					<ExtendedTooltip name="СуммаДокументаРасширеннаяПодсказка" id="78"/>
-				</LabelField>
-				<LabelField name="Организация" id="79">
-					<DataPath>Список.Организация</DataPath>
-					<ContextMenu name="ОрганизацияКонтекстноеМеню" id="80"/>
-					<ExtendedTooltip name="ОрганизацияРасширеннаяПодсказка" id="81"/>
 				</LabelField>
 			</ChildItems>
 		</Table>
