@@ -94,6 +94,13 @@ def attr_handler(m):
                 "<v8:Type>cfg:CatalogRef.БанковскиеСчетаОрганизаций</v8:Type>",
                 block)
             assert n == 1, f"{name}: патч типа AnyRef: замен {n}"
+        if name in ("КоличествоЕРП", "КоличествоБух"):
+            # деньги — 2 знака после запятой (у Количество* было 3)
+            block, n = re.subn(
+                r"<v8:FractionDigits>3</v8:FractionDigits>",
+                "<v8:FractionDigits>2</v8:FractionDigits>",
+                block)
+            assert n == 1, f"{name}: патч FractionDigits: замен {n}"
         renamed.append(f"{name}->{new_name}")
     return block
 
