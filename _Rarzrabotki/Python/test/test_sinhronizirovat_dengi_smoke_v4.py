@@ -48,11 +48,18 @@ print(f"Фаза 2: документів={n_dok}")
 FAILS = 0
 statusy = Counter()
 buh0 = 0
+rash_err = 0
 for i in range(n_dok):
     s = obr.ТаблицаДокументов.Получить(i)
     status = str(erp.String(s.Статус))
     key = status.split("(")[0].strip()
     statusy[key] += 1
+    # признак расхождения: Ложь только для спокойных статусов
+    spok = status in ("ОК", "Переказ: синхронно")
+    if bool(s.ЕстьРасхождение) == spok:
+        rash_err += 1
+        if rash_err <= 3:
+            print(f"  FAIL ЕстьРасхождение={s.ЕстьРасхождение} при статусе '{status}'")
     if status.startswith("Переказ: розбіжність суми") and abs(float(s.СуммаБух)) < 0.005 \
             and str(erp.String(s.ДокументБух)).strip():
         buh0 += 1
@@ -69,6 +76,9 @@ if statusy.get("Переказ: синхронно", 0) == 0:
     FAILS += 1
 if buh0 > 0:
     print(f"FAIL: {buh0} переказів з документом Бух, але потоком 0 — рахунок BuhBud не зрезолвлено")
+    FAILS += 1
+if rash_err > 0:
+    print(f"FAIL: {rash_err} рядків з неверным ЕстьРасхождение")
     FAILS += 1
 
 print("РЕЗУЛЬТАТ: " + ("SMOKE OK" if FAILS == 0 else f"FAIL ({FAILS})"))
