@@ -46,23 +46,23 @@
 					<ShowTitle>false</ShowTitle>
 					<ExtendedTooltip name="ГруппаЛевоРасширеннаяПодсказка" id="53"/>
 					<ChildItems>
-						<UsualGroup name="ГруппаДатанОрме" id="56">
+						<UsualGroup name="ГруппаНомерДата" id="56">
 							<Title>
 								<v8:item>
 									<v8:lang>ru</v8:lang>
-									<v8:content>Группа датан орме</v8:content>
+									<v8:content>Номер и дата</v8:content>
 								</v8:item>
 							</Title>
 							<ToolTip>
 								<v8:item>
 									<v8:lang>ru</v8:lang>
-									<v8:content>Группа датан орме</v8:content>
+									<v8:content>Номер и дата</v8:content>
 								</v8:item>
 							</ToolTip>
 							<Behavior>Usual</Behavior>
 							<Representation>None</Representation>
 							<ShowTitle>false</ShowTitle>
-							<ExtendedTooltip name="ГруппаДатанОрмеРасширеннаяПодсказка" id="57"/>
+							<ExtendedTooltip name="ГруппаНомерДатаРасширеннаяПодсказка" id="57"/>
 							<ChildItems>
 								<InputField name="Номер" id="1">
 									<DataPath>Объект.Number</DataPath>
@@ -160,7 +160,7 @@
 				</UsualGroup>
 			</ChildItems>
 		</UsualGroup>
-		<UsualGroup name="Группа3" id="116">
+		<UsualGroup name="ГруппаОказаниеУслуг" id="116">
 			<Title>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
@@ -169,7 +169,7 @@
 			</Title>
 			<Group>AlwaysHorizontal</Group>
 			<Behavior>Usual</Behavior>
-			<ExtendedTooltip name="Группа3РасширеннаяПодсказка" id="117"/>
+			<ExtendedTooltip name="ГруппаОказаниеУслугРасширеннаяПодсказка" id="117"/>
 			<ChildItems>
 				<CheckBoxField name="А_НачислятьУслуги" id="101">
 					<DataPath>Объект.А_НачислятьУслуги</DataPath>
@@ -207,9 +207,9 @@
 				</InputField>
 			</ChildItems>
 		</UsualGroup>
-		<Pages name="Группа1" id="87">
+		<Pages name="ГруппаСтраницы" id="87">
 			<PagesRepresentation>TabsOnTop</PagesRepresentation>
-			<ExtendedTooltip name="Группа1РасширеннаяПодсказка" id="88"/>
+			<ExtendedTooltip name="ГруппаСтраницыРасширеннаяПодсказка" id="88"/>
 			<ChildItems>
 				<Page name="ГруппаОсновная" id="89">
 					<Title>
@@ -228,6 +228,7 @@
 					<ChildItems>
 						<Table name="Состав" id="25">
 							<Representation>List</Representation>
+							<Footer>true</Footer>
 							<AutoInsertNewRow>true</AutoInsertNewRow>
 							<EnableStartDrag>true</EnableStartDrag>
 							<EnableDrag>true</EnableDrag>
@@ -278,6 +279,7 @@
 									</Events>
 								</InputField>
 								<LabelField name="СоставНоменклатураЕдиницаИзмерения" id="60">
+									<DataPath>Объект.Состав.Номенклатура.ЕдиницаИзмерения</DataPath>
 									<EditMode>EnterOnInput</EditMode>
 									<ContextMenu name="СоставНоменклатураЕдиницаИзмеренияКонтекстноеМеню" id="61"/>
 									<ExtendedTooltip name="СоставНоменклатураЕдиницаИзмеренияРасширеннаяПодсказка" id="62"/>
@@ -285,6 +287,7 @@
 								<InputField name="СоставКоличество" id="44">
 									<DataPath>Объект.Состав.Количество</DataPath>
 									<EditMode>EnterOnInput</EditMode>
+									<FooterDataPath>Объект.Состав.TotalКоличество</FooterDataPath>
 									<ContextMenu name="СоставКоличествоКонтекстноеМеню" id="45"/>
 									<ExtendedTooltip name="СоставКоличествоРасширеннаяПодсказка" id="46"/>
 									<Events>
@@ -303,8 +306,21 @@
 								<InputField name="СоставСумма" id="69">
 									<DataPath>Объект.Состав.Сумма</DataPath>
 									<EditMode>EnterOnInput</EditMode>
+									<FooterDataPath>Объект.Состав.TotalСумма</FooterDataPath>
 									<ContextMenu name="СоставСуммаКонтекстноеМеню" id="70"/>
 									<ExtendedTooltip name="СоставСуммаРасширеннаяПодсказка" id="71"/>
+								</InputField>
+								<InputField name="СоставНаправлениеДохода" id="130">
+									<DataPath>Объект.Состав.НаправлениеДохода</DataPath>
+									<Visible>false</Visible>
+									<ContextMenu name="СоставНаправлениеДоходаКонтекстноеМеню" id="131"/>
+									<ExtendedTooltip name="СоставНаправлениеДоходаРасширеннаяПодсказка" id="132"/>
+								</InputField>
+								<InputField name="СоставНаправлениеРасхода" id="133">
+									<DataPath>Объект.Состав.НаправлениеРасхода</DataPath>
+									<Visible>false</Visible>
+									<ContextMenu name="СоставНаправлениеРасходаКонтекстноеМеню" id="134"/>
+									<ExtendedTooltip name="СоставНаправлениеРасходаРасширеннаяПодсказка" id="135"/>
 								</InputField>
 								<InputField name="СоставПримечание" id="47">
 									<DataPath>Объект.Состав.Примечание</DataPath>
@@ -331,10 +347,10 @@
 					</ToolTip>
 					<ExtendedTooltip name="ГруппаЕРПРасширеннаяПодсказка" id="92"/>
 					<ChildItems>
-						<UsualGroup name="Группа2" id="93">
+						<UsualGroup name="ГруппаФлагиЕРП" id="93">
 							<Behavior>Usual</Behavior>
 							<ShowTitle>false</ShowTitle>
-							<ExtendedTooltip name="Группа2РасширеннаяПодсказка" id="94"/>
+							<ExtendedTooltip name="ГруппаФлагиЕРПРасширеннаяПодсказка" id="94"/>
 							<ChildItems>
 								<CheckBoxField name="А_Необновлять" id="98">
 									<DataPath>Объект.А_Необновлять</DataPath>
