@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
 	<AutoSaveDataInSettings>Use</AutoSaveDataInSettings>
 	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
@@ -63,6 +63,17 @@
 					<ContextMenu name="ОкончаниеПериодаКонтекстноеМеню" id="10"/>
 					<ExtendedTooltip name="ОкончаниеПериодаExtendedTooltip" id="11"/>
 				</InputField>
+				<Button name="ФормаВыбратьПериод" id="300">
+					<Type>UsualButton</Type>
+					<CommandName>Form.Command.ВыбратьПериод</CommandName>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>...</v8:content>
+						</v8:item>
+					</Title>
+					<ExtendedTooltip name="ФормаВыбратьПериодРасширеннаяПодсказка" id="301"/>
+				</Button>
 				<InputField name="ФильтрБанковскийСчет" id="200">
 					<DataPath>Объект.ФильтрБанковскийСчет</DataPath>
 					<Title>
@@ -92,29 +103,14 @@
 				</CheckBoxField>
 			</ChildItems>
 		</UsualGroup>
-		<UsualGroup name="ГруппаКнопкиРасхождений" id="16">
-			<Title>
-				<v8:item>
-					<v8:lang>ru</v8:lang>
-					<v8:content>Розбіжності залишків</v8:content>
-				</v8:item>
-			</Title>
-			<Group>AlwaysHorizontal</Group>
-			<Behavior>Usual</Behavior>
-			<ExtendedTooltip name="ГруппаКнопкиРасхожденийExtendedTooltip" id="17"/>
-			<ChildItems>
-				<Button name="КнопкаВыбратьВсе" id="133">
-					<Type>CommandBarButton</Type>
-					<CommandName>Form.Command.ВыбратьВсе</CommandName>
-					<ExtendedTooltip name="КнопкаВыбратьВсеExtendedTooltip" id="138"/>
-				</Button>
-				<Button name="КнопкаСнятьВыделение" id="134">
-					<Type>CommandBarButton</Type>
-					<CommandName>Form.Command.СнятьВыделение</CommandName>
-					<ExtendedTooltip name="КнопкаСнятьВыделениеExtendedTooltip" id="139"/>
-				</Button>
-			</ChildItems>
-		</UsualGroup>
+		<LabelField name="НадписьРезюме" id="302">
+			<DataPath>НадписьРезюме</DataPath>
+			<TitleLocation>None</TitleLocation>
+			<AutoMaxWidth>false</AutoMaxWidth>
+			<HorizontalStretch>true</HorizontalStretch>
+			<ContextMenu name="НадписьРезюмеКонтекстноеМеню" id="303"/>
+			<ExtendedTooltip name="НадписьРезюмеРасширеннаяПодсказка" id="304"/>
+		</LabelField>
 		<Table name="ТаблицаРасхожденийФорма" id="40">
 			<ChangeRowSet>false</ChangeRowSet>
 			<ChangeRowOrder>false</ChangeRowOrder>
@@ -128,7 +124,47 @@
 			</Title>
 			<RowFilter xsi:nil="true"/>
 			<ContextMenu name="ТаблицаРасхожденийФормаКонтекстноеМеню" id="41"/>
-			<AutoCommandBar name="ТаблицаРасхожденийФормаКоманднаяПанель" id="43"/>
+			<AutoCommandBar name="ТаблицаРасхожденийФормаКоманднаяПанель" id="43">
+				<Autofill>false</Autofill>
+				<ChildItems>
+					<Button name="ТРАнализТекущегоСчета" id="310">
+						<Type>CommandBarButton</Type>
+						<Representation>Text</Representation>
+						<CommandName>Form.Command.АнализТекущегоСчета</CommandName>
+						<ExtendedTooltip name="ТРАнализТекущегоСчетаРасширеннаяПодсказка" id="311"/>
+					</Button>
+					<ButtonGroup name="ТРГруппаФлаги" id="312">
+						<Title>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Прапори</v8:content>
+							</v8:item>
+						</Title>
+						<ExtendedTooltip name="ТРГруппаФлагиРасширеннаяПодсказка" id="313"/>
+						<ChildItems>
+							<Button name="ТРВыбратьВсе" id="314">
+								<Type>CommandBarButton</Type>
+								<CommandName>Form.Command.ВыбратьВсе</CommandName>
+								<Picture>
+									<xr:Ref>StdPicture.CheckAll</xr:Ref>
+									<xr:LoadTransparent>true</xr:LoadTransparent>
+								</Picture>
+								<ExtendedTooltip name="ТРВыбратьВсеРасширеннаяПодсказка" id="315"/>
+							</Button>
+							<Button name="ТРСнятьВыделение" id="316">
+								<Type>CommandBarButton</Type>
+								<CommandName>Form.Command.СнятьВыделение</CommandName>
+								<ExtendedTooltip name="ТРСнятьВыделениеРасширеннаяПодсказка" id="317"/>
+							</Button>
+							<Button name="ТРИнвертироватьВыделение" id="318">
+								<Type>CommandBarButton</Type>
+								<CommandName>Form.Command.ИнвертироватьВыделение</CommandName>
+								<ExtendedTooltip name="ТРИнвертироватьВыделениеРасширеннаяПодсказка" id="319"/>
+							</Button>
+						</ChildItems>
+					</ButtonGroup>
+				</ChildItems>
+			</AutoCommandBar>
 			<ExtendedTooltip name="ТаблицаРасхожденийФормаExtendedTooltip" id="42"/>
 			<SearchStringAddition name="ТаблицаРасхожденийФормаСтрокаПоиска" id="140">
 				<AdditionSource>
@@ -337,7 +373,48 @@
 			</Title>
 			<RowFilter xsi:nil="true"/>
 			<ContextMenu name="ТаблицаДокументовФормаКонтекстноеМеню" id="91"/>
-			<AutoCommandBar name="ТаблицаДокументовФормаКоманднаяПанель" id="93"/>
+			<AutoCommandBar name="ТаблицаДокументовФормаКоманднаяПанель" id="93">
+				<Autofill>false</Autofill>
+				<ChildItems>
+					<Button name="ТДДействиеПоСтроке" id="320">
+						<Type>CommandBarButton</Type>
+						<Representation>Text</Representation>
+						<CommandName>Form.Command.ДействиеПоСтроке</CommandName>
+						<ExtendedTooltip name="ТДДействиеПоСтрокеРасширеннаяПодсказка" id="321"/>
+					</Button>
+					<Button name="ТДОткрытьДокументЕРП" id="322">
+						<Type>CommandBarButton</Type>
+						<Representation>Text</Representation>
+						<CommandName>Form.Command.ОткрытьДокументЕРП</CommandName>
+						<ExtendedTooltip name="ТДОткрытьДокументЕРПРасширеннаяПодсказка" id="323"/>
+					</Button>
+					<ButtonGroup name="ТДГруппаФлаги" id="324">
+						<Title>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Прапори</v8:content>
+							</v8:item>
+						</Title>
+						<ExtendedTooltip name="ТДГруппаФлагиРасширеннаяПодсказка" id="325"/>
+						<ChildItems>
+							<Button name="ТДОтметитьВыделенные" id="326">
+								<Type>CommandBarButton</Type>
+								<CommandName>Form.Command.ОтметитьВыделенные</CommandName>
+								<Picture>
+									<xr:Ref>StdPicture.CheckAll</xr:Ref>
+									<xr:LoadTransparent>true</xr:LoadTransparent>
+								</Picture>
+								<ExtendedTooltip name="ТДОтметитьВыделенныеРасширеннаяПодсказка" id="327"/>
+							</Button>
+							<Button name="ТДСнятьОтметкиВыделенных" id="328">
+								<Type>CommandBarButton</Type>
+								<CommandName>Form.Command.СнятьОтметкиВыделенных</CommandName>
+								<ExtendedTooltip name="ТДСнятьОтметкиВыделенныхРасширеннаяПодсказка" id="329"/>
+							</Button>
+						</ChildItems>
+					</ButtonGroup>
+				</ChildItems>
+			</AutoCommandBar>
 			<ExtendedTooltip name="ТаблицаДокументовФормаExtendedTooltip" id="92"/>
 			<SearchStringAddition name="ТаблицаДокументовФормаСтрокаПоиска" id="149">
 				<AdditionSource>
@@ -490,6 +567,21 @@
 				<Field>Объект.ФильтрБанковскийСчет</Field>
 			</Save>
 		</Attribute>
+		<Attribute name="НадписьРезюме" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Резюме</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
 	</Attributes>
 	<Commands>
 		<Command name="Сформировать" id="1">
@@ -554,6 +646,87 @@
 				</v8:item>
 			</Title>
 			<Action>СнятьВыделение</Action>
+		</Command>
+		<Command name="ВыбратьПериод" id="6">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Вибрати період</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Вибрати стандартний період (місяць, квартал, рік...)</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ВыбратьПериод</Action>
+		</Command>
+		<Command name="АнализТекущегоСчета" id="7">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Аналіз поточного рахунку</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Проаналізувати документи рахунку поточного рядка</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>АнализТекущегоСчета</Action>
+		</Command>
+		<Command name="ИнвертироватьВыделение" id="8">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Інвертувати</v8:content>
+				</v8:item>
+			</Title>
+			<Action>ИнвертироватьВыделение</Action>
+		</Command>
+		<Command name="ДействиеПоСтроке" id="9">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Виконати дію рядка</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Виконати дію поточного рядка (розпровести/провести/на обмін)</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ДействиеПоСтроке</Action>
+		</Command>
+		<Command name="ОткрытьДокументЕРП" id="10">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Відкрити документ ЕРП</v8:content>
+				</v8:item>
+			</Title>
+			<Action>ОткрытьДокументЕРП</Action>
+		</Command>
+		<Command name="ОтметитьВыделенные" id="11">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Відмітити виділені</v8:content>
+				</v8:item>
+			</Title>
+			<Action>ОтметитьВыделенные</Action>
+		</Command>
+		<Command name="СнятьОтметкиВыделенных" id="12">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Зняти відмітки виділених</v8:content>
+				</v8:item>
+			</Title>
+			<Action>СнятьОтметкиВыделенных</Action>
 		</Command>
 	</Commands>
 </Form>
