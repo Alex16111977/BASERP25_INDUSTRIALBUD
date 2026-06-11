@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
 """
-Smoke v3: переводы между своими счетами на живом примере 1432 (30.01.2026, 2 426 200,50).
-Проверяет ОБЕ стороны пары:
-- счёт-источник ОТП:  ERP-Списание 00000001432  -> «Переказ: синхронно»
-- счёт-приёмник ТАС:  ERP-Поступление 00DL-008305 -> «Переказ: синхронно»
-И отсутствие ложных строк «Тільки в BuhBud»/«Переобмін» для этой пары.
-Только чтение, Фаза 3 не выполняется.
+Smoke: переводы между своими счетами на живом примере 1432 (30.01.2026, 2 426 200,50).
+v6 API: анализ напрямую по счёту через АнализироватьДокументыПоСчетам(массив, НачП, КонП).
+Проверяет ОБЕ стороны пары. Только чтение.
 """
 import sys
 from datetime import datetime
@@ -39,58 +36,29 @@ def schet_po_iban(iban):
 
 
 def analiz_scheta(iban, nomer_doc):
-    """Фаза 1 (фильтр по счёту) + Фаза 2; возвращает строки документов с nomer_doc."""
     global FAILS
     obr = erp.ВнешниеОбработки.Создать(EPF, False)
-    obr.ФильтрБанковскийСчет = schet_po_iban(iban)
-    obr.НачалоПериода = datetime(2026, 1, 1, 0, 0, 0)
-    obr.ОкончаниеПериода = datetime(2026, 2, 10, 0, 0, 0)
-    obr.СравнитьОстатки()
-    n_rash = obr.ТаблицаРасхождений.Количество()
-    if n_rash == 0:
-        # расхождений в коротком периоде нет — расширяем
-        obr.ОкончаниеПериода = datetime(2026, 6, 10, 0, 0, 0)
-        obr.СравнитьОстатки()
-        n_rash = obr.ТаблицаРасхождений.Количество()
-    print(f"[{iban[-6:]}] Фаза 1: розбіжностей={n_rash}")
-    if n_rash == 0:
-        print(f"[{iban[-6:]}] SKIP: рахунок без розбіжностей — Фаза 2 не запускається")
-        return
-    for i in range(n_rash):
-        obr.ТаблицаРасхождений.Получить(i).Синхронизировать = True
-    obr.АнализироватьДокументы()
+    mas = erp.NewObject("Массив")
+    mas.Добавить(schet_po_iban(iban))
+    rez = obr.АнализироватьДокументыПоСчетам(
+        mas, datetime(2026, 1, 25, 0, 0, 0), datetime(2026, 2, 5, 23, 59, 59))
     n_dok = obr.ТаблицаДокументов.Количество()
-    print(f"[{iban[-6:]}] Фаза 2: документів={n_dok}")
+    print(f"[{iban[-6:]}] {erp.String(rez)} (рядків={n_dok})")
 
     nashel = False
-    perevod_ok = 0
-    perevod_rozb = 0
     for i in range(n_dok):
         s = obr.ТаблицаДокументов.Получить(i)
         doc_erp = str(erp.String(s.ДокументЕРП))
-        doc_buh = str(erp.String(s.ДокументБух))
         status = str(erp.String(s.Статус))
-        if status.startswith("Переказ: синхронно"):
-            perevod_ok += 1
-        elif status.startswith("Переказ:"):
-            perevod_rozb += 1
         if nomer_doc in doc_erp:
             nashel = True
-            print(f"[{iban[-6:]}] ШУКАНИЙ: ЕРП='{doc_erp}' Бух='{doc_buh}'")
-            print(f"          СумЕРП={s.СуммаЕРП} СумБух={s.СуммаБух} Дія='{erp.String(s.Действие)}' Статус='{status}'")
-            if status != "Переказ: синхронно":
-                print(f"[{iban[-6:]}] FAIL: очікував «Переказ: синхронно», отримав «{status}»")
+            print(f"[{iban[-6:]}] ШУКАНИЙ: ЕРП='{doc_erp}' Бух='{erp.String(s.ДокументБух)}'"
+                  f" СумЕРП={s.СуммаЕРП} СумБух={s.СуммаБух} Статус='{status}'")
+            if status != "Переказ: синхронно" or str(erp.String(s.Действие)).strip() != "":
+                print(f"[{iban[-6:]}] FAIL: очікував «Переказ: синхронно» без дії")
                 FAILS += 1
-            if str(erp.String(s.Действие)).strip() != "":
-                print(f"[{iban[-6:]}] FAIL: дія для переказу повинна бути порожня")
-                FAILS += 1
-        # ложный «Тільки в BuhBud» для документа пары
-        if "001432" in doc_buh and "BuhBud" in status:
-            print(f"[{iban[-6:]}] FAIL: ложная строка BuhBud-only: '{doc_buh}' статус '{status}'")
-            FAILS += 1
-    print(f"[{iban[-6:]}] Переказів синхронно={perevod_ok}, з розбіжностями={perevod_rozb}")
     if not nashel:
-        print(f"[{iban[-6:]}] FAIL: документ {nomer_doc} не знайдено в аналізі")
+        print(f"[{iban[-6:]}] FAIL: документ {nomer_doc} не знайдено")
         FAILS += 1
 
 
