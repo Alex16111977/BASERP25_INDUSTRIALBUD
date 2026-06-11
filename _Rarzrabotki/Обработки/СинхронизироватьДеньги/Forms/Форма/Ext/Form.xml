@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
 	<AutoSaveDataInSettings>Use</AutoSaveDataInSettings>
 	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
@@ -11,11 +11,11 @@
 				<CommandName>Form.Command.Сформировать</CommandName>
 				<ExtendedTooltip name="КнопкаСформироватьExtendedTooltip" id="135"/>
 			</Button>
-			<Button name="КнопкаАнализВсехРасхождений" id="131">
+			<Button name="КнопкаАнализДокументов" id="131">
 				<Type>CommandBarButton</Type>
 				<Representation>PictureAndText</Representation>
-				<CommandName>Form.Command.АнализВсехРасхождений</CommandName>
-				<ExtendedTooltip name="КнопкаАнализВсехРасхожденийExtendedTooltip" id="136"/>
+				<CommandName>Form.Command.АнализДокументов</CommandName>
+				<ExtendedTooltip name="КнопкаАнализДокументовExtendedTooltip" id="136"/>
 			</Button>
 			<Button name="КнопкаСинхронизировать" id="132">
 				<Type>CommandBarButton</Type>
@@ -63,18 +63,6 @@
 					<ContextMenu name="ОкончаниеПериодаКонтекстноеМеню" id="10"/>
 					<ExtendedTooltip name="ОкончаниеПериодаExtendedTooltip" id="11"/>
 				</InputField>
-				<CheckBoxField name="ПоДням" id="205">
-					<DataPath>Объект.ПоДням</DataPath>
-					<Title>
-						<v8:item>
-							<v8:lang>ru</v8:lang>
-							<v8:content>По днях</v8:content>
-						</v8:item>
-					</Title>
-					<CheckBoxType>Auto</CheckBoxType>
-					<ContextMenu name="ПоДнямКонтекстноеМеню" id="206"/>
-					<ExtendedTooltip name="ПоДнямExtendedTooltip" id="207"/>
-				</CheckBoxField>
 				<InputField name="ФильтрБанковскийСчет" id="200">
 					<DataPath>Объект.ФильтрБанковскийСчет</DataPath>
 					<Title>
@@ -104,17 +92,238 @@
 				</CheckBoxField>
 			</ChildItems>
 		</UsualGroup>
-		<SpreadSheetDocumentField name="РезультатСКД" id="210">
-			<DataPath>РезультатСКД</DataPath>
-			<TitleLocation>None</TitleLocation>
-			<VerticalScrollBar>true</VerticalScrollBar>
-			<HorizontalScrollBar>true</HorizontalScrollBar>
-			<ContextMenu name="РезультатСКДКонтекстноеМеню" id="211"/>
-			<ExtendedTooltip name="РезультатСКДExtendedTooltip" id="212"/>
+		<UsualGroup name="ГруппаКнопкиРасхождений" id="16">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Розбіжності залишків</v8:content>
+				</v8:item>
+			</Title>
+			<Group>AlwaysHorizontal</Group>
+			<Behavior>Usual</Behavior>
+			<ExtendedTooltip name="ГруппаКнопкиРасхожденийExtendedTooltip" id="17"/>
+			<ChildItems>
+				<Button name="КнопкаВыбратьВсе" id="133">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Command.ВыбратьВсе</CommandName>
+					<ExtendedTooltip name="КнопкаВыбратьВсеExtendedTooltip" id="138"/>
+				</Button>
+				<Button name="КнопкаСнятьВыделение" id="134">
+					<Type>CommandBarButton</Type>
+					<CommandName>Form.Command.СнятьВыделение</CommandName>
+					<ExtendedTooltip name="КнопкаСнятьВыделениеExtendedTooltip" id="139"/>
+				</Button>
+			</ChildItems>
+		</UsualGroup>
+		<Table name="ТаблицаРасхожденийФорма" id="40">
+			<ChangeRowSet>false</ChangeRowSet>
+			<ChangeRowOrder>false</ChangeRowOrder>
+			<Footer>true</Footer>
+			<DataPath>Объект.ТаблицаРасхождений</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Розбіжності залишків</v8:content>
+				</v8:item>
+			</Title>
+			<RowFilter xsi:nil="true"/>
+			<ContextMenu name="ТаблицаРасхожденийФормаКонтекстноеМеню" id="41"/>
+			<AutoCommandBar name="ТаблицаРасхожденийФормаКоманднаяПанель" id="43"/>
+			<ExtendedTooltip name="ТаблицаРасхожденийФормаExtendedTooltip" id="42"/>
+			<SearchStringAddition name="ТаблицаРасхожденийФормаСтрокаПоиска" id="140">
+				<AdditionSource>
+					<Item>ТаблицаРасхожденийФорма</Item>
+					<Type>SearchStringRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="ТаблицаРасхожденийФормаСтрокаПоискаКонтекстноеМеню" id="141"/>
+				<ExtendedTooltip name="ТаблицаРасхожденийФормаСтрокаПоискаРасширеннаяПодсказка" id="142"/>
+			</SearchStringAddition>
+			<ViewStatusAddition name="ТаблицаРасхожденийФормаСостояниеПросмотра" id="143">
+				<AdditionSource>
+					<Item>ТаблицаРасхожденийФорма</Item>
+					<Type>ViewStatusRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="ТаблицаРасхожденийФормаСостояниеПросмотраКонтекстноеМеню" id="144"/>
+				<ExtendedTooltip name="ТаблицаРасхожденийФормаСостояниеПросмотраРасширеннаяПодсказка" id="145"/>
+			</ViewStatusAddition>
+			<SearchControlAddition name="ТаблицаРасхожденийФормаУправлениеПоиском" id="146">
+				<AdditionSource>
+					<Item>ТаблицаРасхожденийФорма</Item>
+					<Type>SearchControl</Type>
+				</AdditionSource>
+				<ContextMenu name="ТаблицаРасхожденийФормаУправлениеПоискомКонтекстноеМеню" id="147"/>
+				<ExtendedTooltip name="ТаблицаРасхожденийФормаУправлениеПоискомРасширеннаяПодсказка" id="148"/>
+			</SearchControlAddition>
 			<Events>
-				<Event name="DetailProcessing">РезультатСКДОбработкаРасшифровки</Event>
+				<Event name="Selection">ТаблицаРасхожденийФормаВыбор</Event>
+				<Event name="OnActivateRow">ТаблицаРасхожденийФормаПриАктивизацииСтроки</Event>
 			</Events>
-		</SpreadSheetDocumentField>
+			<ChildItems>
+				<CheckBoxField name="ТРСинхронизировать" id="44">
+					<DataPath>Объект.ТаблицаРасхождений.Синхронизировать</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>V</v8:content>
+						</v8:item>
+					</Title>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="ТРСинхронизироватьКонтекстноеМеню" id="45"/>
+					<ExtendedTooltip name="ТРСинхронизироватьExtendedTooltip" id="46"/>
+				</CheckBoxField>
+				<InputField name="ТРБанковскийСчет" id="50">
+					<DataPath>Объект.ТаблицаРасхождений.БанковскийСчет</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Банківський рахунок</v8:content>
+						</v8:item>
+					</Title>
+					<FixingInTable>Left</FixingInTable>
+					<Width>30</Width>
+					<ContextMenu name="ТРБанковскийСчетКонтекстноеМеню" id="51"/>
+					<ExtendedTooltip name="ТРБанковскийСчетExtendedTooltip" id="52"/>
+				</InputField>
+				<InputField name="ТРНачОстатокЕРП" id="56">
+					<DataPath>Объект.ТаблицаРасхождений.НачОстатокЕРП</DataPath>
+					<Visible>false</Visible>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Поч.ЕРП</v8:content>
+						</v8:item>
+					</Title>
+					<FooterDataPath>Объект.ТаблицаРасхождений.TotalНачОстатокЕРП</FooterDataPath>
+					<Width>12</Width>
+					<MarkNegatives>true</MarkNegatives>
+					<ContextMenu name="ТРНачОстатокЕРПКонтекстноеМеню" id="57"/>
+					<ExtendedTooltip name="ТРНачОстатокЕРПExtendedTooltip" id="58"/>
+				</InputField>
+				<InputField name="ТРНачОстатокБух" id="59">
+					<DataPath>Объект.ТаблицаРасхождений.НачОстатокБух</DataPath>
+					<Visible>false</Visible>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Поч.Бух</v8:content>
+						</v8:item>
+					</Title>
+					<FooterDataPath>Объект.ТаблицаРасхождений.TotalНачОстатокБух</FooterDataPath>
+					<Width>12</Width>
+					<MarkNegatives>true</MarkNegatives>
+					<ContextMenu name="ТРНачОстатокБухКонтекстноеМеню" id="60"/>
+					<ExtendedTooltip name="ТРНачОстатокБухExtendedTooltip" id="61"/>
+				</InputField>
+				<InputField name="ТРПриходЕРП" id="62">
+					<DataPath>Объект.ТаблицаРасхождений.ПриходЕРП</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Прих.ЕРП</v8:content>
+						</v8:item>
+					</Title>
+					<FooterDataPath>Объект.ТаблицаРасхождений.TotalПриходЕРП</FooterDataPath>
+					<Width>12</Width>
+					<MarkNegatives>true</MarkNegatives>
+					<ContextMenu name="ТРПриходЕРПКонтекстноеМеню" id="63"/>
+					<ExtendedTooltip name="ТРПриходЕРПExtendedTooltip" id="64"/>
+				</InputField>
+				<InputField name="ТРПриходБух" id="65">
+					<DataPath>Объект.ТаблицаРасхождений.ПриходБух</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Прих.Бух</v8:content>
+						</v8:item>
+					</Title>
+					<FooterDataPath>Объект.ТаблицаРасхождений.TotalПриходБух</FooterDataPath>
+					<Width>12</Width>
+					<MarkNegatives>true</MarkNegatives>
+					<ContextMenu name="ТРПриходБухКонтекстноеМеню" id="66"/>
+					<ExtendedTooltip name="ТРПриходБухExtendedTooltip" id="67"/>
+				</InputField>
+				<InputField name="ТРРасходЕРП" id="68">
+					<DataPath>Объект.ТаблицаРасхождений.РасходЕРП</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Расх.ЕРП</v8:content>
+						</v8:item>
+					</Title>
+					<FooterDataPath>Объект.ТаблицаРасхождений.TotalРасходЕРП</FooterDataPath>
+					<Width>12</Width>
+					<MarkNegatives>true</MarkNegatives>
+					<ContextMenu name="ТРРасходЕРПКонтекстноеМеню" id="69"/>
+					<ExtendedTooltip name="ТРРасходЕРПExtendedTooltip" id="70"/>
+				</InputField>
+				<InputField name="ТРРасходБух" id="71">
+					<DataPath>Объект.ТаблицаРасхождений.РасходБух</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Расх.Бух</v8:content>
+						</v8:item>
+					</Title>
+					<FooterDataPath>Объект.ТаблицаРасхождений.TotalРасходБух</FooterDataPath>
+					<Width>12</Width>
+					<MarkNegatives>true</MarkNegatives>
+					<ContextMenu name="ТРРасходБухКонтекстноеМеню" id="72"/>
+					<ExtendedTooltip name="ТРРасходБухExtendedTooltip" id="73"/>
+				</InputField>
+				<InputField name="ТРОстатокЕРП" id="74">
+					<DataPath>Объект.ТаблицаРасхождений.ОстатокЕРП</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Кін.ЕРП</v8:content>
+						</v8:item>
+					</Title>
+					<FooterDataPath>Объект.ТаблицаРасхождений.TotalОстатокЕРП</FooterDataPath>
+					<Width>12</Width>
+					<MarkNegatives>true</MarkNegatives>
+					<ContextMenu name="ТРОстатокЕРПКонтекстноеМеню" id="75"/>
+					<ExtendedTooltip name="ТРОстатокЕРПExtendedTooltip" id="76"/>
+				</InputField>
+				<InputField name="ТРОстатокБух" id="77">
+					<DataPath>Объект.ТаблицаРасхождений.ОстатокБух</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Кін.Бух</v8:content>
+						</v8:item>
+					</Title>
+					<FooterDataPath>Объект.ТаблицаРасхождений.TotalОстатокБух</FooterDataPath>
+					<Width>12</Width>
+					<MarkNegatives>true</MarkNegatives>
+					<ContextMenu name="ТРОстатокБухКонтекстноеМеню" id="78"/>
+					<ExtendedTooltip name="ТРОстатокБухExtendedTooltip" id="79"/>
+				</InputField>
+				<InputField name="ТРРазница" id="80">
+					<DataPath>Объект.ТаблицаРасхождений.Разница</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Різниця</v8:content>
+						</v8:item>
+					</Title>
+					<FooterDataPath>Объект.ТаблицаРасхождений.TotalРазница</FooterDataPath>
+					<Width>13</Width>
+					<MarkNegatives>true</MarkNegatives>
+					<ContextMenu name="ТРРазницаКонтекстноеМеню" id="81"/>
+					<ExtendedTooltip name="ТРРазницаExtendedTooltip" id="82"/>
+				</InputField>
+			</ChildItems>
+		</Table>
 		<Table name="ТаблицаДокументовФорма" id="90">
 			<ChangeRowSet>false</ChangeRowSet>
 			<ChangeRowOrder>false</ChangeRowOrder>
@@ -276,30 +485,10 @@
 			<MainAttribute>true</MainAttribute>
 			<Save>
 				<Field>Объект.НачалоПериода</Field>
-				<Field>Объект.ПоДням</Field>
 				<Field>Объект.ОкончаниеПериода</Field>
 				<Field>Объект.ПоказыватьТолькоРасхождения</Field>
 				<Field>Объект.ФильтрБанковскийСчет</Field>
 			</Save>
-		</Attribute>
-		<Attribute name="РезультатСКД" id="2">
-			<Type>
-				<v8:Type xmlns:mxl="http://v8.1c.ru/8.2/data/spreadsheet">mxl:SpreadsheetDocument</v8:Type>
-			</Type>
-		</Attribute>
-		<Attribute name="СчетОтбораДокументов" id="3">
-			<Type>
-				<v8:Type>cfg:CatalogRef.БанковскиеСчетаОрганизаций</v8:Type>
-			</Type>
-		</Attribute>
-		<Attribute name="АдресРасшифровки" id="4">
-			<Type>
-				<v8:Type>xs:string</v8:Type>
-				<v8:StringQualifiers>
-					<v8:Length>0</v8:Length>
-					<v8:AllowedLength>Variable</v8:AllowedLength>
-				</v8:StringQualifiers>
-			</Type>
 		</Attribute>
 	</Attributes>
 	<Commands>
@@ -318,20 +507,20 @@
 			</ToolTip>
 			<Action>Сформировать</Action>
 		</Command>
-		<Command name="АнализВсехРасхождений" id="2">
+		<Command name="АнализДокументов" id="2">
 			<Title>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Аналіз всіх розбіжностей</v8:content>
+					<v8:content>Аналіз документів</v8:content>
 				</v8:item>
 			</Title>
 			<ToolTip>
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Знайти всі рахунки з розбіжностями та проаналізувати їх документи</v8:content>
+					<v8:content>Проаналізувати документи для вибраних розбіжностей</v8:content>
 				</v8:item>
 			</ToolTip>
-			<Action>АнализВсехРасхождений</Action>
+			<Action>АнализДокументов</Action>
 		</Command>
 		<Command name="Синхронизировать" id="3">
 			<Title>
@@ -347,6 +536,24 @@
 				</v8:item>
 			</ToolTip>
 			<Action>Синхронизировать</Action>
+		</Command>
+		<Command name="ВыбратьВсе" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Вибрати всі</v8:content>
+				</v8:item>
+			</Title>
+			<Action>ВыбратьВсе</Action>
+		</Command>
+		<Command name="СнятьВыделение" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Зняти виділення</v8:content>
+				</v8:item>
+			</Title>
+			<Action>СнятьВыделение</Action>
 		</Command>
 	</Commands>
 </Form>
