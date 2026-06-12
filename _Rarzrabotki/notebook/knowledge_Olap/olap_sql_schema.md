@@ -585,3 +585,30 @@ FK: `Dim_Contracts.TipDogovora→Dim_TipyDogovorov.TipDogovora` і
 
 Row counts (verify PASS): Dim_Contracts=8248, Dim_ObjektyRaschetov=14109, Dim_TipyDogovorov=12, Dim_FinAgents=13.
 Повний список тепер **29 таблиць** (+ Dim_TipyDogovorov + Dim_FinAgents).
+
+---
+
+## 2026-06-12 — Dim_VidyKontragentov + 3 колонки Dim_Contracts (виды контрагентов для баланса)
+
+Нова таблиця **`Dim_VidyKontragentov`** (`scripts/ddl_dim_vidy_kontragentov.sql`, idempotent):
+
+| колонка | тип | джерело |
+|---|---|---|
+| `VidKontragenta_ID` | char(32) PK | `_Reference56330._IDRRef` (Справочник.А_ВидыКонтрагентовДляБаланса) |
+| `VidKontragenta_Name` | nvarchar(150) | `_Description` |
+| `Code` | varchar(20) | `_Code` |
+| `Marked_For_Deletion` | bit | `_Marked` |
+| `Loaded_At` | datetime2 DEFAULT | — |
+
+Рядків **6** = 5 предопределённых (Внутригрупповые / Внутренние подразделения /
+Собственники / Внешние / Кредиторы) + синтетичний «(Пусто)» (0x…01).
+
+**`Dim_Contracts` +3 колонки** (guarded ALTER):
+- `VidKontragenta_ID` char(32) — FK → Dim_VidyKontragentov (`_Fld56332RRef` А_ВидКонтрагента)
+- `NapravlenieUslug_ID` char(32) — FK → Dim_Directions (`_Fld56331RRef` А_НаправлениеОказаниеУслуг); у PBIX НЕ используется (см. нижче)
+- `NapravlenieUslug_Name` nvarchar(150) — денорм-имя направления (JOIN `_Reference292`), для PBIX-колонки «Направление (услуги между подр.)» — рішення фінансиста: НЕ окреме вимірювання
+
+Розкладка договорів по видах (== 1С до штуки, verify PASS): Внутригрупповые 331,
+Внутренние підрозділи 1106, Собственники 10, Внешние 7162, Кредиторы 17;
+NapravlenieUslug_* — 1104. FK orphans 0. Повний список тепер **30 таблиць**.
+Verify: `scripts/verify_olap_dim_vid_kontragenta.py` (PASS, динамічні звірки з 1С COM).
