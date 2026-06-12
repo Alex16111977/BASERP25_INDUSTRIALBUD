@@ -24,3 +24,8 @@ GO
 IF COL_LENGTH('dbo.Dim_Contracts', 'NapravlenieUslug_ID') IS NULL
     ALTER TABLE dbo.Dim_Contracts ADD NapravlenieUslug_ID char(32) NULL;
 GO
+-- 2026-06-12 v2: денормализованное имя направления услуг (решение финансиста —
+-- НЕ отдельное измерение, а текстовая колонка как Dept_OkazUslug_Name)
+IF COL_LENGTH('dbo.Dim_Contracts', 'NapravlenieUslug_Name') IS NULL
+    ALTER TABLE dbo.Dim_Contracts ADD NapravlenieUslug_Name nvarchar(150) NULL;
+GO

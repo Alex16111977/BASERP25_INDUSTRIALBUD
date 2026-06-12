@@ -120,6 +120,14 @@ with get_olap_sql() as c:
     if orph_n:
         fail.append(f"{orph_n} Dim_Contracts.NapravlenieUslug_ID без Dim_Directions")
 
+    # имя направления (денорм-колонка для PBIX, v2: вместо отдельного измерения)
+    n_name = cur.execute("""
+        SELECT COUNT(*) FROM Dim_Contracts
+        WHERE NapravlenieUslug_Name IS NOT NULL AND Marked_For_Deletion = 0""").fetchval()
+    print(f"SQL NapravlenieUslug_Name NOT NULL: {n_name} (1С: {com_napr_count})")
+    if n_name != com_napr_count:
+        fail.append(f"NapravlenieUslug_Name: SQL={n_name} != 1С={com_napr_count}")
+
     # 4. кросс-сверка баланса по виду «Внутригрупповые», 2026-01
     sql_vg_ko = cur.execute("""
         SELECT COALESCE(SUM(f.Sum_Close), 0)
