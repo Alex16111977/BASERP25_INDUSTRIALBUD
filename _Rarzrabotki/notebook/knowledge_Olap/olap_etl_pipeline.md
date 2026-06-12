@@ -825,3 +825,27 @@ FK 0 orphans TipDogovora→Dim_TipyDogovorov / FinAgent_ID→Dim_FinAgents; enum
 `verify_olap_balance_raschety.py` має застарілі (до-дрейфові) еталони
 статей (61 165 524,68 …) — для перевірки субконто/FK використовувати
 новий `_kontragent`-скрипт.
+
+---
+
+## 2026-06-12 — step `dim_vidy_kontragentov` + розширення `dim_contracts` (виды контрагентов)
+
+- **WHITELIST** `mapping/refresh_mapping.py` += `Справочник.А_ВидыКонтрагентовДляБаланса`;
+  `refresh_mapping` перегенеровано (аддитивно, дрейфу _Fld немає). Маппінг:
+  довідник `_Reference56330`; договір `_Fld56332RRef` (А_ВидКонтрагента),
+  `_Fld56331RRef` (А_НаправлениеОказаниеУслуг); НаправленияДеятельности `_Reference292`.
+- **Новий step `dim_vidy_kontragentov`** у `pipelines/dim_catalogs.json` (після
+  `dim_fin_agents`, той самий шаблон): raw_sql `_Reference56330` + UNION «(Пусто)»
+  → `Dim_VidyKontragentov`, full_reload, transformer varbinary_to_uuid + column_mapper.
+- **`dim_contracts` raw_sql розширено**: +`d._Fld56332RRef AS ВидКонтрагента`,
+  +`d._Fld56331RRef AS НаправлениеУслуг`, +`nd._Description AS НаправлениеУслугНаим`
+  (LEFT JOIN `_Reference292 nd`); UNION ALL-гілка «(Пусто)» доповнена nullами
+  (порядок колонок!); column_map → `VidKontragenta_ID` / `NapravlenieUslug_ID` /
+  `NapravlenieUslug_Name`.
+- Повний `python main.py` (venv) Success: dim_contracts 8645, dim_vidy_kontragentov 6,
+  fact_balance 45653. Регрес: `test_etl_acceptance_globyno2.py` PASS, повний баланс
+  2026-01 Σ Sum_Close = 0,00 (Актив 338 857 601,40 — жива база дрейфує від канона 288M
+  після перепроведень користувача; Σ=0 тримається).
+- Verify: `scripts/verify_olap_dim_vid_kontragenta.py` — розкладка по видах SQL==1С
+  (динамічно через COM), FK orphans 0, крос-звірка Fact_Balance↔РС по «Внутригрупповые»
+  2026-01 до копійки (0,12), NapravlenieUslug_Name 1104==1С.
