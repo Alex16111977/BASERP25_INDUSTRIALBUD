@@ -1,0 +1,471 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<DataCompositionSchema xmlns="http://v8.1c.ru/8.1/data-composition-system/schema" xmlns:dcscom="http://v8.1c.ru/8.1/data-composition-system/common" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<dataSource>
+		<name>ИсточникДанных1</name>
+		<dataSourceType>Local</dataSourceType>
+	</dataSource>
+	<dataSet xsi:type="DataSetQuery">
+		<name>НаборДанных1</name>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Документ</dataPath>
+			<field>Документ</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Документ</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Номенклатура</dataPath>
+			<field>Номенклатура</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Подразделение</dataPath>
+			<field>Подразделение</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ОбщееНазвание</dataPath>
+			<field>ОбщееНазвание</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Сумма</dataPath>
+			<field>Сумма</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Единица</dataPath>
+			<field>Единица</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>КоличествоСС</dataPath>
+			<field>КоличествоСС</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Количество СС</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Количество</dataPath>
+			<field>Количество</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>СуммаСС</dataPath>
+			<field>СуммаСС</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Сумма СС</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ПроцентОтклонениеСум</dataPath>
+			<field>ПроцентОтклонениеСум</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>% отклонение сум</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>% отклонение сум</v8:content>
+				</v8:item>
+			</title>
+			<valueType>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>12</v8:Digits>
+					<v8:FractionDigits>2</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</valueType>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>РазницаКоличество</dataPath>
+			<field>РазницаКоличество</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Разница количество</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>РазницаСумма</dataPath>
+			<field>РазницаСумма</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Разница сумма</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ПроцентОтклонениеКол</dataPath>
+			<field>ПроцентОтклонениеКол</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>% отклонение кол</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>% отклонение кол</v8:content>
+				</v8:item>
+			</title>
+			<valueType>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>12</v8:Digits>
+					<v8:FractionDigits>2</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</valueType>
+		</field>
+		<dataSource>ИсточникДанных1</dataSource>
+		<query>ВЫБРАТЬ РАЗЛИЧНЫЕ
+	А_СтруктураСебестоимости.Подразделение КАК Подразделение
+ПОМЕСТИТЬ ТзПодр
+ИЗ
+	Справочник.А_СтруктураСебестоимости КАК А_СтруктураСебестоимости
+ГДЕ
+	НЕ А_СтруктураСебестоимости.ПометкаУдаления
+;
+
+////////////////////////////////////////////////////////////////////////////////
+ВЫБРАТЬ
+	ВЫРАЗИТЬ(СебестоимостьТоваров.Регистратор КАК Документ.ПриобретениеТоваровУслуг).Подразделение КАК Подразделение,
+	ВЫРАЗИТЬ(СебестоимостьТоваров.Регистратор КАК Документ.ПриобретениеТоваровУслуг) КАК Документ,
+	СебестоимостьТоваров.АналитикаУчетаНоменклатуры.Номенклатура КАК Номенклатура,
+	СебестоимостьТоваров.АналитикаУчетаНоменклатуры.Номенклатура.А_ОбщееНазваниеНоменклатуры КАК ОбщееНазвание,
+	СебестоимостьТоваров.АналитикаУчетаНоменклатуры.Номенклатура.ЕдиницаИзмерения КАК Единица,
+	СУММА(СебестоимостьТоваров.Количество) КАК Количество,
+	СУММА(СебестоимостьТоваров.СтоимостьБезНДС) КАК Сумма
+ПОМЕСТИТЬ ТзФакт
+ИЗ
+	РегистрНакопления.СебестоимостьТоваров КАК СебестоимостьТоваров
+ГДЕ
+	СебестоимостьТоваров.ВидДвижения = ЗНАЧЕНИЕ(ВидДвиженияНакопления.Приход)
+	И СебестоимостьТоваров.РазделУчета = ЗНАЧЕНИЕ(Перечисление.РазделыУчетаСебестоимостиТоваров.ТоварыНаСкладах)
+	И СебестоимостьТоваров.Регистратор ССЫЛКА Документ.ПриобретениеТоваровУслуг
+	И ВЫРАЗИТЬ(СебестоимостьТоваров.Регистратор КАК Документ.ПриобретениеТоваровУслуг).Подразделение В
+			(ВЫБРАТЬ ТзПодр.Подразделение ИЗ ТзПодр КАК ТзПодр)
+	И (СебестоимостьТоваров.Период МЕЖДУ &amp;НачалоПериода И &amp;КонецПериода
+			ИЛИ &amp;КонецПериода = ДАТАВРЕМЯ(1, 1, 1, 0, 0, 0))
+СГРУППИРОВАТЬ ПО
+	ВЫРАЗИТЬ(СебестоимостьТоваров.Регистратор КАК Документ.ПриобретениеТоваровУслуг).Подразделение,
+	ВЫРАЗИТЬ(СебестоимостьТоваров.Регистратор КАК Документ.ПриобретениеТоваровУслуг),
+	СебестоимостьТоваров.АналитикаУчетаНоменклатуры.Номенклатура,
+	СебестоимостьТоваров.АналитикаУчетаНоменклатуры.Номенклатура.А_ОбщееНазваниеНоменклатуры,
+	СебестоимостьТоваров.АналитикаУчетаНоменклатуры.Номенклатура.ЕдиницаИзмерения
+;
+
+////////////////////////////////////////////////////////////////////////////////
+ВЫБРАТЬ
+	Комплектующие.Ссылка.Подразделение КАК Подразделение,
+	Комплектующие.Ссылка КАК Документ,
+	Комплектующие.ОбщееНазвание КАК ОбщееНазвание,
+	Комплектующие.Номенклатура КАК Номенклатура,
+	Комплектующие.Единица КАК Единица,
+	Комплектующие.Количество КАК КоличествоСС,
+	Комплектующие.Сумма КАК СуммаСС,
+	NULL КАК Сумма,
+	NULL КАК Количество
+ПОМЕСТИТЬ СводнаяТаблица
+ИЗ
+	Справочник.А_СтруктураСебестоимости.Комплектующие КАК Комплектующие
+ГДЕ
+	НЕ Комплектующие.Ссылка.ПометкаУдаления
+
+ОБЪЕДИНИТЬ ВСЕ
+
+ВЫБРАТЬ
+	ТзФакт.Подразделение,
+	ТзФакт.Документ,
+	ТзФакт.ОбщееНазвание,
+	ТзФакт.Номенклатура,
+	ТзФакт.Единица,
+	NULL,
+	NULL,
+	ТзФакт.Сумма,
+	ТзФакт.Количество
+ИЗ
+	ТзФакт КАК ТзФакт
+;
+
+////////////////////////////////////////////////////////////////////////////////
+ВЫБРАТЬ
+	СводнаяТаблица.Подразделение КАК Подразделение,
+	СводнаяТаблица.Документ КАК Документ,
+	СводнаяТаблица.ОбщееНазвание КАК ОбщееНазвание,
+	СводнаяТаблица.Номенклатура КАК Номенклатура,
+	СводнаяТаблица.Единица КАК Единица,
+	СУММА(СводнаяТаблица.КоличествоСС) КАК КоличествоСС,
+	СУММА(СводнаяТаблица.СуммаСС) КАК СуммаСС,
+	СУММА(СводнаяТаблица.Сумма) КАК Сумма,
+	СУММА(СводнаяТаблица.Количество) КАК Количество
+ПОМЕСТИТЬ Сводная
+ИЗ
+	СводнаяТаблица КАК СводнаяТаблица
+СГРУППИРОВАТЬ ПО
+	СводнаяТаблица.Подразделение,
+	СводнаяТаблица.Документ,
+	СводнаяТаблица.Номенклатура,
+	СводнаяТаблица.ОбщееНазвание,
+	СводнаяТаблица.Единица
+;
+
+////////////////////////////////////////////////////////////////////////////////
+ВЫБРАТЬ
+	Сводная.Подразделение КАК Подразделение,
+	Сводная.Документ КАК Документ,
+	Сводная.ОбщееНазвание КАК ОбщееНазвание,
+	Сводная.Номенклатура КАК Номенклатура,
+	Сводная.Единица КАК Единица,
+	Сводная.КоличествоСС КАК КоличествоСС,
+	Сводная.СуммаСС КАК СуммаСС,
+	Сводная.Количество КАК Количество,
+	Сводная.Сумма КАК Сумма,
+	Сводная.Количество - Сводная.КоличествоСС КАК РазницаКоличество,
+	Сводная.Сумма - Сводная.СуммаСС КАК РазницаСумма,
+	ВЫБОР
+		КОГДА Сводная.КоличествоСС = 0
+			ТОГДА NULL
+		ИНАЧЕ (Сводная.Количество - Сводная.КоличествоСС) / Сводная.КоличествоСС * 100
+	КОНЕЦ КАК ПроцентОтклонениеКол,
+	ВЫБОР
+		КОГДА Сводная.СуммаСС = 0
+			ТОГДА NULL
+		ИНАЧЕ (Сводная.Сумма - Сводная.СуммаСС) / Сводная.СуммаСС * 100
+	КОНЕЦ КАК ПроцентОтклонениеСум
+ИЗ
+	Сводная КАК Сводная
+
+УПОРЯДОЧИТЬ ПО
+	Подразделение,
+	ОбщееНазвание,
+	Номенклатура</query>
+	</dataSet>
+	<totalField>
+		<dataPath>Количество</dataPath>
+		<expression>Сумма(Количество)</expression>
+	</totalField>
+	<totalField>
+		<dataPath>КоличествоСС</dataPath>
+		<expression>Сумма(КоличествоСС)</expression>
+	</totalField>
+	<totalField>
+		<dataPath>Сумма</dataPath>
+		<expression>Сумма(Сумма)</expression>
+	</totalField>
+	<totalField>
+		<dataPath>СуммаСС</dataPath>
+		<expression>Сумма(СуммаСС)</expression>
+	</totalField>
+	<totalField>
+		<dataPath>РазницаКоличество</dataPath>
+		<expression>Сумма(Количество)-Сумма(КоличествоСС)</expression>
+		<group>ОбщееНазвание</group>
+		<group>Подразделение</group>
+		<group>ОбщийИтог</group>
+	</totalField>
+	<totalField>
+		<dataPath>РазницаСумма</dataPath>
+		<expression>Сумма(Сумма)-Сумма(СуммаСС)</expression>
+		<group>ОбщееНазвание</group>
+		<group>Подразделение</group>
+		<group>ОбщийИтог</group>
+	</totalField>
+	<totalField>
+		<dataPath>ПроцентОтклонениеКол</dataPath>
+		<expression>Сумма(Количество)/Сумма(КоличествоСС)*100</expression>
+		<group>ОбщееНазвание</group>
+		<group>Подразделение</group>
+		<group>ОбщийИтог</group>
+	</totalField>
+	<totalField>
+		<dataPath>ПроцентОтклонениеСум</dataPath>
+		<expression>Сумма(Сумма)/Сумма(СуммаСС)*100</expression>
+		<group>ОбщееНазвание</group>
+		<group>Подразделение</group>
+		<group>ОбщийИтог</group>
+	</totalField>
+	<parameter>
+		<name>Период</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item><v8:lang>ru</v8:lang><v8:content>Период</v8:content></v8:item>
+		</title>
+		<valueType>
+			<v8:Type>v8:StandardPeriod</v8:Type>
+		</valueType>
+		<value xsi:type="v8:StandardPeriod">
+			<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
+		</value>
+		<useRestriction>false</useRestriction>
+	</parameter>
+	<parameter>
+		<name>НачалоПериода</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item><v8:lang>ru</v8:lang><v8:content>Начало периода</v8:content></v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers><v8:DateFractions>DateTime</v8:DateFractions></v8:DateQualifiers>
+		</valueType>
+		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
+		<useRestriction>true</useRestriction>
+		<expression>&amp;Период.ДатаНачала</expression>
+	</parameter>
+	<parameter>
+		<name>КонецПериода</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item><v8:lang>ru</v8:lang><v8:content>Конец периода</v8:content></v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers><v8:DateFractions>DateTime</v8:DateFractions></v8:DateQualifiers>
+		</valueType>
+		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
+		<useRestriction>true</useRestriction>
+		<expression>&amp;Период.ДатаОкончания</expression>
+	</parameter>
+
+	<settingsVariant>
+		<dcsset:name>Основной</dcsset:name>
+		<dcsset:presentation xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Основной</v8:content>
+			</v8:item>
+			<v8:item>
+				<v8:lang>uk</v8:lang>
+				<v8:content>Основний</v8:content>
+			</v8:item>
+		</dcsset:presentation>
+		<dcsset:settings xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows">
+				<dcsset:dataParameters>
+					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+						<dcscor:parameter>Период</dcscor:parameter>
+						<dcscor:value xsi:type="v8:StandardPeriod">
+							<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
+						</dcscor:value>
+						<dcsset:userSettingID>b00d430c-6e74-4105-9656-63c1baca039e</dcsset:userSettingID>
+					</dcscor:item>
+				</dcsset:dataParameters>
+			<dcsset:selection>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Номенклатура</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Единица</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>КоличествоСС</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Количество</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>РазницаКоличество</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>ПроцентОтклонениеКол</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>СуммаСС</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Сумма</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>РазницаСумма</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>ПроцентОтклонениеСум</dcsset:field>
+				</dcsset:item>
+			</dcsset:selection>
+			<dcsset:conditionalAppearance>
+				<dcsset:item>
+					<dcsset:selection>
+						<dcsset:item>
+							<dcsset:field>ПроцентОтклонениеКол</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>ПроцентОтклонениеСум</dcsset:field>
+						</dcsset:item>
+					</dcsset:selection>
+					<dcsset:filter/>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>Формат</dcscor:parameter>
+							<dcscor:value xsi:type="v8:LocalStringType">
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>ЧДЦ=2</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>ЧДЦ=2</v8:content>
+								</v8:item>
+							</dcscor:value>
+						</dcscor:item>
+					</dcsset:appearance>
+				</dcsset:item>
+			</dcsset:conditionalAppearance>
+			<dcsset:outputParameters>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>МакетОформления</dcscor:parameter>
+					<dcscor:value xsi:type="xs:string">Море</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>ВыводитьПараметрыДанных</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">DontOutput</dcscor:value>
+				</dcscor:item>
+			</dcsset:outputParameters>
+			<dcsset:item xsi:type="dcsset:StructureItemGroup">
+				<dcsset:groupItems>
+					<dcsset:item xsi:type="dcsset:GroupItemField">
+						<dcsset:field>Подразделение</dcsset:field>
+						<dcsset:groupType>Items</dcsset:groupType>
+						<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+						<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+						<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+					</dcsset:item>
+				</dcsset:groupItems>
+				<dcsset:order>
+					<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+				</dcsset:order>
+				<dcsset:selection>
+					<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+				</dcsset:selection>
+				<dcsset:item xsi:type="dcsset:StructureItemGroup">
+					<dcsset:groupItems>
+						<dcsset:item xsi:type="dcsset:GroupItemField">
+							<dcsset:field>ОбщееНазвание</dcsset:field>
+							<dcsset:groupType>Items</dcsset:groupType>
+							<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+							<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+							<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+						</dcsset:item>
+					</dcsset:groupItems>
+					<dcsset:order>
+						<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+					</dcsset:order>
+					<dcsset:selection>
+						<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+					</dcsset:selection>
+					<dcsset:item xsi:type="dcsset:StructureItemGroup">
+						<dcsset:order>
+							<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+						</dcsset:order>
+						<dcsset:selection>
+							<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+						</dcsset:selection>
+					</dcsset:item>
+				</dcsset:item>
+			</dcsset:item>
+		</dcsset:settings>
+	</settingsVariant>
+</DataCompositionSchema>

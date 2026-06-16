@@ -1,0 +1,732 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
+	<AutoSaveDataInSettings>Use</AutoSaveDataInSettings>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+		<Autofill>false</Autofill>
+		<ChildItems>
+			<Button name="КнопкаСформировать" id="130">
+				<Type>CommandBarButton</Type>
+				<Representation>PictureAndText</Representation>
+				<DefaultButton>true</DefaultButton>
+				<CommandName>Form.Command.Сформировать</CommandName>
+				<ExtendedTooltip name="КнопкаСформироватьExtendedTooltip" id="135"/>
+			</Button>
+			<Button name="КнопкаАнализДокументов" id="131">
+				<Type>CommandBarButton</Type>
+				<Representation>PictureAndText</Representation>
+				<CommandName>Form.Command.АнализДокументов</CommandName>
+				<ExtendedTooltip name="КнопкаАнализДокументовExtendedTooltip" id="136"/>
+			</Button>
+			<Button name="КнопкаСинхронизировать" id="132">
+				<Type>CommandBarButton</Type>
+				<Representation>PictureAndText</Representation>
+				<CommandName>Form.Command.Синхронизировать</CommandName>
+				<ExtendedTooltip name="КнопкаСинхронизироватьExtendedTooltip" id="137"/>
+			</Button>
+		</ChildItems>
+	</AutoCommandBar>
+	<Events>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+	</Events>
+	<ChildItems>
+		<UsualGroup name="ГруппаПериод" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Період</v8:content>
+				</v8:item>
+			</Title>
+			<Group>AlwaysHorizontal</Group>
+			<Behavior>Usual</Behavior>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаПериодExtendedTooltip" id="2"/>
+			<ChildItems>
+				<InputField name="НачалоПериода" id="6">
+					<DataPath>Объект.НачалоПериода</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Період з</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="НачалоПериодаКонтекстноеМеню" id="7"/>
+					<ExtendedTooltip name="НачалоПериодаExtendedTooltip" id="8"/>
+				</InputField>
+				<InputField name="ОкончаниеПериода" id="9">
+					<DataPath>Объект.ОкончаниеПериода</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>по</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="ОкончаниеПериодаКонтекстноеМеню" id="10"/>
+					<ExtendedTooltip name="ОкончаниеПериодаExtendedTooltip" id="11"/>
+				</InputField>
+				<Button name="ФормаВыбратьПериод" id="300">
+					<Type>UsualButton</Type>
+					<CommandName>Form.Command.ВыбратьПериод</CommandName>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>...</v8:content>
+						</v8:item>
+					</Title>
+					<ExtendedTooltip name="ФормаВыбратьПериодРасширеннаяПодсказка" id="301"/>
+				</Button>
+				<InputField name="ФильтрКасса" id="200">
+					<DataPath>Объект.ФильтрКасса</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Каса</v8:content>
+						</v8:item>
+					</Title>
+					<Width>30</Width>
+					<ContextMenu name="ФильтрКассаКонтекстноеМеню" id="201"/>
+					<ExtendedTooltip name="ФильтрКассаExtendedTooltip" id="202"/>
+				</InputField>
+				<CheckBoxField name="ПоказыватьТолькоРасхождения" id="158">
+					<DataPath>Объект.ПоказыватьТолькоРасхождения</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Тільки розбіжності</v8:content>
+						</v8:item>
+					</Title>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="ПоказыватьТолькоРасхожденияКонтекстноеМеню" id="159"/>
+					<ExtendedTooltip name="ПоказыватьТолькоРасхожденияРасширеннаяПодсказка" id="160"/>
+					<Events>
+						<Event name="OnChange">ПоказыватьТолькоРасхожденияПриИзменении</Event>
+					</Events>
+				</CheckBoxField>
+			</ChildItems>
+		</UsualGroup>
+		<LabelField name="НадписьРезюме" id="302">
+			<DataPath>НадписьРезюме</DataPath>
+			<TitleLocation>None</TitleLocation>
+			<AutoMaxWidth>false</AutoMaxWidth>
+			<HorizontalStretch>true</HorizontalStretch>
+			<ContextMenu name="НадписьРезюмеКонтекстноеМеню" id="303"/>
+			<ExtendedTooltip name="НадписьРезюмеРасширеннаяПодсказка" id="304"/>
+		</LabelField>
+		<Table name="ТаблицаРасхожденийФорма" id="40">
+			<ChangeRowSet>false</ChangeRowSet>
+			<ChangeRowOrder>false</ChangeRowOrder>
+			<Footer>true</Footer>
+			<DataPath>Объект.ТаблицаРасхождений</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Розбіжності залишків</v8:content>
+				</v8:item>
+			</Title>
+			<RowFilter xsi:nil="true"/>
+			<ContextMenu name="ТаблицаРасхожденийФормаКонтекстноеМеню" id="41"/>
+			<AutoCommandBar name="ТаблицаРасхожденийФормаКоманднаяПанель" id="43">
+				<Autofill>false</Autofill>
+				<ChildItems>
+					<Button name="ТРАнализТекущегоСчета" id="310">
+						<Type>CommandBarButton</Type>
+						<Representation>Text</Representation>
+						<CommandName>Form.Command.АнализТекущегоСчета</CommandName>
+						<ExtendedTooltip name="ТРАнализТекущегоСчетаРасширеннаяПодсказка" id="311"/>
+					</Button>
+					<ButtonGroup name="ТРГруппаФлаги" id="312">
+						<Title>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Прапори</v8:content>
+							</v8:item>
+						</Title>
+						<ExtendedTooltip name="ТРГруппаФлагиРасширеннаяПодсказка" id="313"/>
+						<ChildItems>
+							<Button name="ТРВыбратьВсе" id="314">
+								<Type>CommandBarButton</Type>
+								<CommandName>Form.Command.ВыбратьВсе</CommandName>
+								<Picture>
+									<xr:Ref>StdPicture.CheckAll</xr:Ref>
+									<xr:LoadTransparent>true</xr:LoadTransparent>
+								</Picture>
+								<ExtendedTooltip name="ТРВыбратьВсеРасширеннаяПодсказка" id="315"/>
+							</Button>
+							<Button name="ТРСнятьВыделение" id="316">
+								<Type>CommandBarButton</Type>
+								<CommandName>Form.Command.СнятьВыделение</CommandName>
+								<ExtendedTooltip name="ТРСнятьВыделениеРасширеннаяПодсказка" id="317"/>
+							</Button>
+							<Button name="ТРИнвертироватьВыделение" id="318">
+								<Type>CommandBarButton</Type>
+								<CommandName>Form.Command.ИнвертироватьВыделение</CommandName>
+								<ExtendedTooltip name="ТРИнвертироватьВыделениеРасширеннаяПодсказка" id="319"/>
+							</Button>
+						</ChildItems>
+					</ButtonGroup>
+				</ChildItems>
+			</AutoCommandBar>
+			<ExtendedTooltip name="ТаблицаРасхожденийФормаExtendedTooltip" id="42"/>
+			<SearchStringAddition name="ТаблицаРасхожденийФормаСтрокаПоиска" id="140">
+				<AdditionSource>
+					<Item>ТаблицаРасхожденийФорма</Item>
+					<Type>SearchStringRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="ТаблицаРасхожденийФормаСтрокаПоискаКонтекстноеМеню" id="141"/>
+				<ExtendedTooltip name="ТаблицаРасхожденийФормаСтрокаПоискаРасширеннаяПодсказка" id="142"/>
+			</SearchStringAddition>
+			<ViewStatusAddition name="ТаблицаРасхожденийФормаСостояниеПросмотра" id="143">
+				<AdditionSource>
+					<Item>ТаблицаРасхожденийФорма</Item>
+					<Type>ViewStatusRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="ТаблицаРасхожденийФормаСостояниеПросмотраКонтекстноеМеню" id="144"/>
+				<ExtendedTooltip name="ТаблицаРасхожденийФормаСостояниеПросмотраРасширеннаяПодсказка" id="145"/>
+			</ViewStatusAddition>
+			<SearchControlAddition name="ТаблицаРасхожденийФормаУправлениеПоиском" id="146">
+				<AdditionSource>
+					<Item>ТаблицаРасхожденийФорма</Item>
+					<Type>SearchControl</Type>
+				</AdditionSource>
+				<ContextMenu name="ТаблицаРасхожденийФормаУправлениеПоискомКонтекстноеМеню" id="147"/>
+				<ExtendedTooltip name="ТаблицаРасхожденийФормаУправлениеПоискомРасширеннаяПодсказка" id="148"/>
+			</SearchControlAddition>
+			<Events>
+				<Event name="Selection">ТаблицаРасхожденийФормаВыбор</Event>
+				<Event name="OnActivateRow">ТаблицаРасхожденийФормаПриАктивизацииСтроки</Event>
+			</Events>
+			<ChildItems>
+				<CheckBoxField name="ТРСинхронизировать" id="44">
+					<DataPath>Объект.ТаблицаРасхождений.Синхронизировать</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>V</v8:content>
+						</v8:item>
+					</Title>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="ТРСинхронизироватьКонтекстноеМеню" id="45"/>
+					<ExtendedTooltip name="ТРСинхронизироватьExtendedTooltip" id="46"/>
+				</CheckBoxField>
+				<InputField name="ТРКасса" id="50">
+					<DataPath>Объект.ТаблицаРасхождений.Касса</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Каса</v8:content>
+						</v8:item>
+					</Title>
+					<FixingInTable>Left</FixingInTable>
+					<Width>30</Width>
+					<ContextMenu name="ТРКассаКонтекстноеМеню" id="51"/>
+					<ExtendedTooltip name="ТРКассаExtendedTooltip" id="52"/>
+				</InputField>
+				<InputField name="ТРНачОстатокЕРП" id="56">
+					<DataPath>Объект.ТаблицаРасхождений.НачОстатокЕРП</DataPath>
+					<Visible>false</Visible>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Поч.ЕРП</v8:content>
+						</v8:item>
+					</Title>
+					<FooterDataPath>Объект.ТаблицаРасхождений.TotalНачОстатокЕРП</FooterDataPath>
+					<Width>12</Width>
+					<MarkNegatives>true</MarkNegatives>
+					<ContextMenu name="ТРНачОстатокЕРПКонтекстноеМеню" id="57"/>
+					<ExtendedTooltip name="ТРНачОстатокЕРПExtendedTooltip" id="58"/>
+				</InputField>
+				<InputField name="ТРНачОстатокКазна" id="59">
+					<DataPath>Объект.ТаблицаРасхождений.НачОстатокКазна</DataPath>
+					<Visible>false</Visible>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Поч.Казна</v8:content>
+						</v8:item>
+					</Title>
+					<FooterDataPath>Объект.ТаблицаРасхождений.TotalНачОстатокКазна</FooterDataPath>
+					<Width>12</Width>
+					<MarkNegatives>true</MarkNegatives>
+					<ContextMenu name="ТРНачОстатокКазнаКонтекстноеМеню" id="60"/>
+					<ExtendedTooltip name="ТРНачОстатокКазнаExtendedTooltip" id="61"/>
+				</InputField>
+				<InputField name="ТРПриходЕРП" id="62">
+					<DataPath>Объект.ТаблицаРасхождений.ПриходЕРП</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Прих.ЕРП</v8:content>
+						</v8:item>
+					</Title>
+					<FooterDataPath>Объект.ТаблицаРасхождений.TotalПриходЕРП</FooterDataPath>
+					<Width>12</Width>
+					<MarkNegatives>true</MarkNegatives>
+					<ContextMenu name="ТРПриходЕРПКонтекстноеМеню" id="63"/>
+					<ExtendedTooltip name="ТРПриходЕРПExtendedTooltip" id="64"/>
+				</InputField>
+				<InputField name="ТРПриходКазна" id="65">
+					<DataPath>Объект.ТаблицаРасхождений.ПриходКазна</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Прих.Казна</v8:content>
+						</v8:item>
+					</Title>
+					<FooterDataPath>Объект.ТаблицаРасхождений.TotalПриходКазна</FooterDataPath>
+					<Width>12</Width>
+					<MarkNegatives>true</MarkNegatives>
+					<ContextMenu name="ТРПриходКазнаКонтекстноеМеню" id="66"/>
+					<ExtendedTooltip name="ТРПриходКазнаExtendedTooltip" id="67"/>
+				</InputField>
+				<InputField name="ТРРасходЕРП" id="68">
+					<DataPath>Объект.ТаблицаРасхождений.РасходЕРП</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Расх.ЕРП</v8:content>
+						</v8:item>
+					</Title>
+					<FooterDataPath>Объект.ТаблицаРасхождений.TotalРасходЕРП</FooterDataPath>
+					<Width>12</Width>
+					<MarkNegatives>true</MarkNegatives>
+					<ContextMenu name="ТРРасходЕРПКонтекстноеМеню" id="69"/>
+					<ExtendedTooltip name="ТРРасходЕРПExtendedTooltip" id="70"/>
+				</InputField>
+				<InputField name="ТРРасходКазна" id="71">
+					<DataPath>Объект.ТаблицаРасхождений.РасходКазна</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Расх.Казна</v8:content>
+						</v8:item>
+					</Title>
+					<FooterDataPath>Объект.ТаблицаРасхождений.TotalРасходКазна</FooterDataPath>
+					<Width>12</Width>
+					<MarkNegatives>true</MarkNegatives>
+					<ContextMenu name="ТРРасходКазнаКонтекстноеМеню" id="72"/>
+					<ExtendedTooltip name="ТРРасходКазнаExtendedTooltip" id="73"/>
+				</InputField>
+				<InputField name="ТРОстатокЕРП" id="74">
+					<DataPath>Объект.ТаблицаРасхождений.ОстатокЕРП</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Кін.ЕРП</v8:content>
+						</v8:item>
+					</Title>
+					<FooterDataPath>Объект.ТаблицаРасхождений.TotalОстатокЕРП</FooterDataPath>
+					<Width>12</Width>
+					<MarkNegatives>true</MarkNegatives>
+					<ContextMenu name="ТРОстатокЕРПКонтекстноеМеню" id="75"/>
+					<ExtendedTooltip name="ТРОстатокЕРПExtendedTooltip" id="76"/>
+				</InputField>
+				<InputField name="ТРОстатокКазна" id="77">
+					<DataPath>Объект.ТаблицаРасхождений.ОстатокКазна</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Кін.Казна</v8:content>
+						</v8:item>
+					</Title>
+					<FooterDataPath>Объект.ТаблицаРасхождений.TotalОстатокКазна</FooterDataPath>
+					<Width>12</Width>
+					<MarkNegatives>true</MarkNegatives>
+					<ContextMenu name="ТРОстатокКазнаКонтекстноеМеню" id="78"/>
+					<ExtendedTooltip name="ТРОстатокКазнаExtendedTooltip" id="79"/>
+				</InputField>
+				<InputField name="ТРРазница" id="80">
+					<DataPath>Объект.ТаблицаРасхождений.Разница</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Різниця</v8:content>
+						</v8:item>
+					</Title>
+					<FooterDataPath>Объект.ТаблицаРасхождений.TotalРазница</FooterDataPath>
+					<Width>13</Width>
+					<MarkNegatives>true</MarkNegatives>
+					<ContextMenu name="ТРРазницаКонтекстноеМеню" id="81"/>
+					<ExtendedTooltip name="ТРРазницаExtendedTooltip" id="82"/>
+				</InputField>
+			</ChildItems>
+		</Table>
+		<Table name="ТаблицаДокументовФорма" id="90">
+			<ChangeRowSet>false</ChangeRowSet>
+			<ChangeRowOrder>false</ChangeRowOrder>
+			<Footer>true</Footer>
+			<DataPath>Объект.ТаблицаДокументов</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Документи для синхронізації</v8:content>
+				</v8:item>
+			</Title>
+			<RowFilter xsi:nil="true"/>
+			<ContextMenu name="ТаблицаДокументовФормаКонтекстноеМеню" id="91"/>
+			<AutoCommandBar name="ТаблицаДокументовФормаКоманднаяПанель" id="93">
+				<Autofill>false</Autofill>
+				<ChildItems>
+					<Button name="ТДДействиеПоСтроке" id="320">
+						<Type>CommandBarButton</Type>
+						<Representation>Text</Representation>
+						<CommandName>Form.Command.ДействиеПоСтроке</CommandName>
+						<ExtendedTooltip name="ТДДействиеПоСтрокеРасширеннаяПодсказка" id="321"/>
+					</Button>
+					<Button name="ТДОткрытьДокументЕРП" id="322">
+						<Type>CommandBarButton</Type>
+						<Representation>Text</Representation>
+						<CommandName>Form.Command.ОткрытьДокументЕРП</CommandName>
+						<ExtendedTooltip name="ТДОткрытьДокументЕРПРасширеннаяПодсказка" id="323"/>
+					</Button>
+					<ButtonGroup name="ТДГруппаФлаги" id="324">
+						<Title>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Прапори</v8:content>
+							</v8:item>
+						</Title>
+						<ExtendedTooltip name="ТДГруппаФлагиРасширеннаяПодсказка" id="325"/>
+						<ChildItems>
+							<Button name="ТДОтметитьВыделенные" id="326">
+								<Type>CommandBarButton</Type>
+								<CommandName>Form.Command.ОтметитьВыделенные</CommandName>
+								<Picture>
+									<xr:Ref>StdPicture.CheckAll</xr:Ref>
+									<xr:LoadTransparent>true</xr:LoadTransparent>
+								</Picture>
+								<ExtendedTooltip name="ТДОтметитьВыделенныеРасширеннаяПодсказка" id="327"/>
+							</Button>
+							<Button name="ТДСнятьОтметкиВыделенных" id="328">
+								<Type>CommandBarButton</Type>
+								<CommandName>Form.Command.СнятьОтметкиВыделенных</CommandName>
+								<ExtendedTooltip name="ТДСнятьОтметкиВыделенныхРасширеннаяПодсказка" id="329"/>
+							</Button>
+						</ChildItems>
+					</ButtonGroup>
+				</ChildItems>
+			</AutoCommandBar>
+			<ExtendedTooltip name="ТаблицаДокументовФормаExtendedTooltip" id="92"/>
+			<SearchStringAddition name="ТаблицаДокументовФормаСтрокаПоиска" id="149">
+				<AdditionSource>
+					<Item>ТаблицаДокументовФорма</Item>
+					<Type>SearchStringRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="ТаблицаДокументовФормаСтрокаПоискаКонтекстноеМеню" id="150"/>
+				<ExtendedTooltip name="ТаблицаДокументовФормаСтрокаПоискаРасширеннаяПодсказка" id="151"/>
+			</SearchStringAddition>
+			<ViewStatusAddition name="ТаблицаДокументовФормаСостояниеПросмотра" id="152">
+				<AdditionSource>
+					<Item>ТаблицаДокументовФорма</Item>
+					<Type>ViewStatusRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="ТаблицаДокументовФормаСостояниеПросмотраКонтекстноеМеню" id="153"/>
+				<ExtendedTooltip name="ТаблицаДокументовФормаСостояниеПросмотраРасширеннаяПодсказка" id="154"/>
+			</ViewStatusAddition>
+			<SearchControlAddition name="ТаблицаДокументовФормаУправлениеПоиском" id="155">
+				<AdditionSource>
+					<Item>ТаблицаДокументовФорма</Item>
+					<Type>SearchControl</Type>
+				</AdditionSource>
+				<ContextMenu name="ТаблицаДокументовФормаУправлениеПоискомКонтекстноеМеню" id="156"/>
+				<ExtendedTooltip name="ТаблицаДокументовФормаУправлениеПоискомРасширеннаяПодсказка" id="157"/>
+			</SearchControlAddition>
+			<Events>
+				<Event name="Selection">ТаблицаДокументовФормаВыбор</Event>
+			</Events>
+			<ChildItems>
+				<CheckBoxField name="ТДСинхронизировать" id="94">
+					<DataPath>Объект.ТаблицаДокументов.Синхронизировать</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>V</v8:content>
+						</v8:item>
+					</Title>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="ТДСинхронизироватьКонтекстноеМеню" id="95"/>
+					<ExtendedTooltip name="ТДСинхронизироватьExtendedTooltip" id="96"/>
+				</CheckBoxField>
+				<InputField name="ТДКасса" id="100">
+					<DataPath>Объект.ТаблицаДокументов.Касса</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Каса</v8:content>
+						</v8:item>
+					</Title>
+					<Width>20</Width>
+					<ContextMenu name="ТДКассаКонтекстноеМеню" id="101"/>
+					<ExtendedTooltip name="ТДКассаExtendedTooltip" id="102"/>
+				</InputField>
+				<InputField name="ТДДокументЕРП" id="106">
+					<DataPath>Объект.ТаблицаДокументов.ДокументЕРП</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Документ ЕРП</v8:content>
+						</v8:item>
+					</Title>
+					<Width>35</Width>
+					<ContextMenu name="ТДДокументЕРПКонтекстноеМеню" id="107"/>
+					<ExtendedTooltip name="ТДДокументЕРПExtendedTooltip" id="108"/>
+				</InputField>
+				<InputField name="ТДСуммаЕРП" id="112">
+					<DataPath>Объект.ТаблицаДокументов.СуммаЕРП</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Сума ЕРП</v8:content>
+						</v8:item>
+					</Title>
+					<FooterDataPath>Объект.ТаблицаДокументов.TotalСуммаЕРП</FooterDataPath>
+					<Width>13</Width>
+					<MarkNegatives>true</MarkNegatives>
+					<ContextMenu name="ТДСуммаЕРПКонтекстноеМеню" id="113"/>
+					<ExtendedTooltip name="ТДСуммаЕРПExtendedTooltip" id="114"/>
+				</InputField>
+				<InputField name="ТДДокументКазна" id="109">
+					<DataPath>Объект.ТаблицаДокументов.ДокументКазна</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Документ Казна</v8:content>
+						</v8:item>
+					</Title>
+					<Width>35</Width>
+					<ContextMenu name="ТДДокументКазнаКонтекстноеМеню" id="110"/>
+					<ExtendedTooltip name="ТДДокументКазнаExtendedTooltip" id="111"/>
+				</InputField>
+				<InputField name="ТДСуммаКазна" id="115">
+					<DataPath>Объект.ТаблицаДокументов.СуммаКазна</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Сума Казна</v8:content>
+						</v8:item>
+					</Title>
+					<FooterDataPath>Объект.ТаблицаДокументов.TotalСуммаКазна</FooterDataPath>
+					<Width>13</Width>
+					<MarkNegatives>true</MarkNegatives>
+					<ContextMenu name="ТДСуммаКазнаКонтекстноеМеню" id="116"/>
+					<ExtendedTooltip name="ТДСуммаКазнаExtendedTooltip" id="117"/>
+				</InputField>
+				<InputField name="ТДДействие" id="118">
+					<DataPath>Объект.ТаблицаДокументов.Действие</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Дія</v8:content>
+						</v8:item>
+					</Title>
+					<Width>16</Width>
+					<ContextMenu name="ТДДействиеКонтекстноеМеню" id="119"/>
+					<ExtendedTooltip name="ТДДействиеExtendedTooltip" id="120"/>
+				</InputField>
+				<InputField name="ТДСтатус" id="121">
+					<DataPath>Объект.ТаблицаДокументов.Статус</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Статус</v8:content>
+						</v8:item>
+					</Title>
+					<Width>30</Width>
+					<ContextMenu name="ТДСтатусКонтекстноеМеню" id="122"/>
+					<ExtendedTooltip name="ТДСтатусExtendedTooltip" id="123"/>
+				</InputField>
+			</ChildItems>
+		</Table>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Объект" id="1">
+			<Type>
+				<v8:Type>cfg:ExternalDataProcessorObject.СинхронизироватьДеньгиКасса</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+			<Save>
+				<Field>Объект.НачалоПериода</Field>
+				<Field>Объект.ОкончаниеПериода</Field>
+				<Field>Объект.ПоказыватьТолькоРасхождения</Field>
+				<Field>Объект.ФильтрКасса</Field>
+			</Save>
+		</Attribute>
+		<Attribute name="НадписьРезюме" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Резюме</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="Сформировать" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сформувати</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Порівняти залишки ERP та Казни</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>Сформировать</Action>
+		</Command>
+		<Command name="АнализДокументов" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Аналіз документів</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Проаналізувати документи для вибраних розбіжностей</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>АнализДокументов</Action>
+		</Command>
+		<Command name="Синхронизировать" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Синхронізувати</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Виконати синхронізацію вибраних документів</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>Синхронизировать</Action>
+		</Command>
+		<Command name="ВыбратьВсе" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Вибрати всі</v8:content>
+				</v8:item>
+			</Title>
+			<Action>ВыбратьВсе</Action>
+		</Command>
+		<Command name="СнятьВыделение" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Зняти виділення</v8:content>
+				</v8:item>
+			</Title>
+			<Action>СнятьВыделение</Action>
+		</Command>
+		<Command name="ВыбратьПериод" id="6">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Вибрати період</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Вибрати стандартний період (місяць, квартал, рік...)</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ВыбратьПериод</Action>
+		</Command>
+		<Command name="АнализТекущегоСчета" id="7">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Аналіз поточного рахунку</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Проаналізувати документи рахунку поточного рядка</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>АнализТекущегоСчета</Action>
+		</Command>
+		<Command name="ИнвертироватьВыделение" id="8">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Інвертувати</v8:content>
+				</v8:item>
+			</Title>
+			<Action>ИнвертироватьВыделение</Action>
+		</Command>
+		<Command name="ДействиеПоСтроке" id="9">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Виконати дію рядка</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Виконати дію поточного рядка (розпровести/провести/на обмін)</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ДействиеПоСтроке</Action>
+		</Command>
+		<Command name="ОткрытьДокументЕРП" id="10">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Відкрити документ ЕРП</v8:content>
+				</v8:item>
+			</Title>
+			<Action>ОткрытьДокументЕРП</Action>
+		</Command>
+		<Command name="ОтметитьВыделенные" id="11">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Відмітити виділені</v8:content>
+				</v8:item>
+			</Title>
+			<Action>ОтметитьВыделенные</Action>
+		</Command>
+		<Command name="СнятьОтметкиВыделенных" id="12">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Зняти відмітки виділених</v8:content>
+				</v8:item>
+			</Title>
+			<Action>СнятьОтметкиВыделенных</Action>
+		</Command>
+	</Commands>
+</Form>

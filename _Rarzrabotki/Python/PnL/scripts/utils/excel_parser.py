@@ -8,6 +8,10 @@ import sys
 from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 import config
+try:
+    from . import fake_articles
+except ImportError:  # запуск вне пакета utils
+    import fake_articles
 
 
 # Признак строки-комментария финансиста: число + единица валюты в названии
@@ -63,6 +67,7 @@ def _norm_name(s):
 
 
 _GROUP_NAMES_LC = {_norm_name(g) for g in config.PL_GROUP_NAMES}
+_REPORT_END_LC = {_norm_name(m) for m in getattr(config, "REPORT_END_MARKERS", [])}
 
 
 def classify_row(article: str) -> str:
@@ -83,6 +88,9 @@ def classify_row(article: str) -> str:
         return "summary"
     # Явные подгруппы/комментарии финансиста (точное имя без чисел).
     if s_norm in {_norm_name(x) for x in getattr(config, "EXTRA_COMMENT_NAMES", set())}:
+        return "summary"
+    # Реестр фейк-статей (data/fake_articles.json) — служебные строки финансиста по имени.
+    if fake_articles.match_fake(s):
         return "summary"
     return "detail"
 
@@ -130,6 +138,7 @@ def parse_workbook(xlsx_path: str, month_header: str):
         group_totals = []  # строки-подытоги групп (Excel, как есть)
         general_totals = []  # общие итоги низа листа (Маржинальный доход и т.п.)
         current_group = ""
+        report_ended = False  # стали ли мы ниже финальных итогов листа (рентабельность/прибыль в распоряжении)
         for r_idx in range(config.PL_DATA_START_ROW, ws.max_row + 1):
             article = ws.cell(r_idx, ci_art + 1).value
             if article is None:
@@ -171,6 +180,14 @@ def parse_workbook(xlsx_path: str, month_header: str):
                         "sum_f2": sum_f2 or 0.0,
                         "sum_total": total or 0.0,
                     })
+                # Структурный фильтр фейков: после финальных итогов (рентабельность /
+                # прибыль в распоряжении) detail-строки ниже — служебные заметки финансиста.
+                if _REPORT_END_LC and any(m in _norm_name(s) for m in _REPORT_END_LC):
+                    report_ended = True
+                continue
+
+            # detail-строка ниже финальных итогов листа = служебная заметка финансиста → пропуск.
+            if report_ended:
                 continue
 
             if sum_f1 is None and sum_f2 is None and total is None:
