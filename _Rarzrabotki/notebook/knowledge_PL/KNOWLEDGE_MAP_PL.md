@@ -4,7 +4,7 @@ Notebook ID: af143439-3c76-42f8-a410-6367b5fd609f
 Блокнот: INDUSTRIALBUD_PL
 Зв'язаний блокнот (розробницький): INDUSTRIALBUD (3303acdb-2d7f-4879-9f13-78705ab3fb8c)
 Дата створення маппінгу: 2026-04-22
-Дата останнього upgrade: **2026-05-21 (v3.1 — drill-down Аналитика + регресія Σ-формули зафіксована)**
+Дата останнього upgrade: **2026-06-09 (v3.2 — розріз факту Ф1/Ф2 у А_ОтчетPL + Этап 2 ФормаPL у А_ФинРез_PL + реєстр фейк-статей + фікс форми списку)**
 Фокус: аналітика PL план↔факт для фінансиста з 20-річним досвідом
 
 ### Що додано в v3.1 (2026-05-21 update — поверх v3)
@@ -18,6 +18,23 @@ Notebook ID: af143439-3c76-42f8-a410-6367b5fd609f
 | Дедуп статей PL у пайплайні (`Штраф` → `Штраф/ мат помощь` + BLOCKED-list) | `pl_pipeline_safeguards.md` (новий) | `_Rarzrabotki/Python/PnL/config.py` + `scripts/11_upload_articles.py` |
 | **Mirror-знак за ТипСтатьи у А_ФинРез_PL** → А_ОтчетPL_Свод → Fact_PnL → PL.pbix. P&L = Σ Sum_Fact однією формулою (Доход +, Расход −). Перепроведено 28/28 А_ФинРез_PL. P&L 2024-2026 = -5 522 908,83 ₽ (1С == OLAP до копійки). | `pl_finrez_sign_by_type.md` (новий) | `Documents/А_ФинРез_PL/Ext/ObjectModule.bsl`, `Ai_Olap/pipelines/dim_catalogs.json`, `Ai_Olap/ai_olap/transformers/enum_resolver.py`, `Ai_Olap/mapping/refresh_mapping.py`, SQL `Dim_PL_Articles.Type_Statya`, PBIX partition Dim_PL_Articles M-вираз |
 
+
+### Що додано/змінено в v3.2 (2026-06-09)
+
+| Зміна | Файли документації | Файли коду / даних |
+|---|---|---|
+| **Розріз факту Ф1/Ф2 у звіті А_ОтчетPL** — ресурси `СуммаЕРПФ1`/`СуммаЕРПФ2` + `РазницаФ1`/`РазницаФ2` (план−факт по формі) | `pl_report_architecture_analyst.md` (нова секція) | `Reports/А_ОтчетPL/{Ext/ObjectModule.bsl, Templates/.../Template.xml}` + дзеркало `_Rarzrabotki/Отчеты/А_ОтчетPL` |
+| **Этап 2 ФормаPL: `А_ФинРез_PL` читає `ФормаPL` → `А_ОтчетPL_Свод`** (вимір `ФормаPL` + ресурси `СуммаФ1`/`СуммаФ2` замість евристики ПКО/РКО; mirror-знак збережено) | `../knowledge_ПрочиеРасходы/formapl_finrez_done.md` | `Documents/А_ФинРез_PL/Ext/ObjectModule.bsl` |
+| **Фікс форми списку `Документ.А_ОтчетPL`** (БСП ВариантыОтчетов: був зареєстрований, але без `ManagerModule.ДобавитьКомандыОтчетов`) | `pl_report_architecture_analyst.md` (грабелька 2026-06-09) | `Documents/А_ОтчетPL/Ext/ManagerModule.bsl` (новий) |
+| **Реєстр фейк-статей (Шар 4 захисту pipeline)** — структурний `REPORT_END_MARKERS` («все після підсумків = мусор») + `data/fake_articles.json` | `pl_pipeline_safeguards.md` (Шар 4), `../../Python/PnL/docs/fake_articles_registry.md` | `Python/PnL/{config.py, scripts/utils/excel_parser.py, scripts/utils/fake_articles.py, data/fake_articles.json, scripts/_cleanup_fake_articles.py}` |
+| **Перезаливка Березень+Квітень 2026** з оновленого Excel (ідемпотентно, find-or-create) | `../../Python/PnL/docs/prompt_reload_mar_apr_2026.md` | `Python/PnL/config.py` (EXCEL_FILES) |
+
+**Граблі v3.2:** повторний `02_extract_unique_articles.py` СТИРАЄ uuid статей у JSON → **обов'язково** повторний
+`11_upload_articles.py` ПЕРЕД `08`, інакше `12` заливає `А_ОтчетPL` ПОРОЖНІМИ (`rows=0`). Деталі: `pl_pipeline_safeguards.md`.
+
+**Дані в 1С (2026-06-09):** А_ОтчетPL 2026 — Січ 26 / Лют 28 / Бер 30 / Кві 32 (Бер+Кві перезалиті з факт-Ф1/Ф2;
+суми Бер 294.4M, Кві 214.7M). Orphan `Экспедирование` №000000169 (Кві, Σ=0, лист прихований в оновленому Excel) —
+лишився на **ручне видалення фінансистом**. Каталог А_Статьи_PL: 68 активних (2 фейк-статті `Договір підряду` помічено на видалення).
 
 ## Архітектура upgrade v3 (2026-05-21) — повна історія 2024+2025+2026 Q1
 

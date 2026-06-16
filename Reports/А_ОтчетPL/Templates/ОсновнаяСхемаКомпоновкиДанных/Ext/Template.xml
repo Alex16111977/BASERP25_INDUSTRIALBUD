@@ -144,6 +144,42 @@
 			</valueType>
 		</field>
 		<field xsi:type="DataSetFieldField">
+			<dataPath>СуммаЕРПФ1</dataPath>
+			<field>СуммаЕРПФ1</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сумма ЕРП Ф1 (факт)</v8:content>
+				</v8:item>
+			</title>
+			<valueType>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>15</v8:Digits>
+					<v8:FractionDigits>2</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</valueType>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>СуммаЕРПФ2</dataPath>
+			<field>СуммаЕРПФ2</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сумма ЕРП Ф2 (факт)</v8:content>
+				</v8:item>
+			</title>
+			<valueType>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>15</v8:Digits>
+					<v8:FractionDigits>2</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</valueType>
+		</field>
+		<field xsi:type="DataSetFieldField">
 			<dataPath>СуммаДДСизКазныРасход</dataPath>
 			<field>СуммаДДСизКазныРасход</field>
 			<title xsi:type="v8:LocalStringType">
@@ -185,7 +221,43 @@
 			<title xsi:type="v8:LocalStringType">
 				<v8:item>
 					<v8:lang>ru</v8:lang>
-					<v8:content>Разница (PL − ЕРП)</v8:content>
+					<v8:content>Разница (Excel − ЕРП)</v8:content>
+				</v8:item>
+			</title>
+			<valueType>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>15</v8:Digits>
+					<v8:FractionDigits>2</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</valueType>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>РазницаФ1</dataPath>
+			<field>РазницаФ1</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Разница Ф1 (Excel-ЕРП)</v8:content>
+				</v8:item>
+			</title>
+			<valueType>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>15</v8:Digits>
+					<v8:FractionDigits>2</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</valueType>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>РазницаФ2</dataPath>
+			<field>РазницаФ2</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Разница Ф2 (Excel-ЕРП)</v8:content>
 				</v8:item>
 			</title>
 			<valueType>
@@ -360,6 +432,22 @@
 		<expression>Сумма(СуммаPL) - Сумма(СуммаЕРП)</expression>
 	</totalField>
 	<totalField>
+		<dataPath>СуммаЕРПФ1</dataPath>
+		<expression>Сумма(СуммаЕРПФ1)</expression>
+	</totalField>
+	<totalField>
+		<dataPath>СуммаЕРПФ2</dataPath>
+		<expression>Сумма(СуммаЕРПФ2)</expression>
+	</totalField>
+	<totalField>
+		<dataPath>РазницаФ1</dataPath>
+		<expression>Сумма(СуммаФ1) - Сумма(СуммаЕРПФ1)</expression>
+	</totalField>
+	<totalField>
+		<dataPath>РазницаФ2</dataPath>
+		<expression>Сумма(СуммаФ2) - Сумма(СуммаЕРПФ2)</expression>
+	</totalField>
+	<totalField>
 		<dataPath>СуммаДДСизКазныОборот</dataPath>
 		<expression>Сумма(СуммаДДСизКазныПриход)+Сумма(СуммаДДСизКазныРасход)</expression>
 	</totalField>
@@ -497,7 +585,19 @@
 					<dcsset:field>СуммаЕРП</dcsset:field>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>СуммаЕРПФ1</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>СуммаЕРПФ2</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:field>Разница</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>РазницаФ1</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>РазницаФ2</dcsset:field>
 				</dcsset:item>
 			</dcsset:selection>
 			<dcsset:filter>
@@ -636,7 +736,19 @@
 					<dcsset:field>СуммаЕРП</dcsset:field>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>СуммаЕРПФ1</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>СуммаЕРПФ2</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:field>Разница</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>РазницаФ1</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>РазницаФ2</dcsset:field>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:field>Комментарий</dcsset:field>
@@ -658,6 +770,19 @@
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:viewMode>Normal</dcsset:viewMode>
 					<dcsset:userSettingID>450aed7b-5473-412f-b260-a42ecfdd2a7e</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemGroup">
+					<dcsset:groupType>OrGroup</dcsset:groupType>
+					<dcsset:item xsi:type="dcsset:FilterItemComparison">
+						<dcsset:left xsi:type="dcscor:Field">СуммаPL</dcsset:left>
+						<dcsset:comparisonType>NotEqual</dcsset:comparisonType>
+						<dcsset:right xsi:type="xs:decimal">0</dcsset:right>
+					</dcsset:item>
+					<dcsset:item xsi:type="dcsset:FilterItemComparison">
+						<dcsset:left xsi:type="dcscor:Field">СуммаЕРП</dcsset:left>
+						<dcsset:comparisonType>NotEqual</dcsset:comparisonType>
+						<dcsset:right xsi:type="xs:decimal">0</dcsset:right>
+					</dcsset:item>
 				</dcsset:item>
 			</dcsset:filter>
 			<dcsset:dataParameters>
@@ -692,6 +817,12 @@
 					<dcsset:selection>
 						<dcsset:item>
 							<dcsset:field>Разница</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>РазницаФ1</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>РазницаФ2</dcsset:field>
 						</dcsset:item>
 					</dcsset:selection>
 					<dcsset:filter/>
@@ -730,6 +861,12 @@
 						<dcsset:item>
 							<dcsset:field>СуммаЕРП</dcsset:field>
 						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>СуммаЕРПФ1</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>СуммаЕРПФ2</dcsset:field>
+						</dcsset:item>
 					</dcsset:selection>
 					<dcsset:filter/>
 					<dcsset:appearance>
@@ -757,6 +894,42 @@
 						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 							<dcscor:parameter>Шрифт</dcscor:parameter>
 							<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+						</dcscor:item>
+					</dcsset:appearance>
+				</dcsset:item>
+				<dcsset:item>
+					<dcsset:selection>
+						<dcsset:item>
+							<dcsset:field>Группа</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>СтатьяPL</dcsset:field>
+						</dcsset:item>
+					</dcsset:selection>
+					<dcsset:filter>
+						<dcsset:item xsi:type="dcsset:FilterItemGroup">
+							<dcsset:groupType>OrGroup</dcsset:groupType>
+							<dcsset:item xsi:type="dcsset:FilterItemComparison">
+								<dcsset:left xsi:type="dcscor:Field">Разница</dcsset:left>
+								<dcsset:comparisonType>NotEqual</dcsset:comparisonType>
+								<dcsset:right xsi:type="xs:decimal">0</dcsset:right>
+							</dcsset:item>
+							<dcsset:item xsi:type="dcsset:FilterItemComparison">
+								<dcsset:left xsi:type="dcscor:Field">РазницаФ1</dcsset:left>
+								<dcsset:comparisonType>NotEqual</dcsset:comparisonType>
+								<dcsset:right xsi:type="xs:decimal">0</dcsset:right>
+							</dcsset:item>
+							<dcsset:item xsi:type="dcsset:FilterItemComparison">
+								<dcsset:left xsi:type="dcscor:Field">РазницаФ2</dcsset:left>
+								<dcsset:comparisonType>NotEqual</dcsset:comparisonType>
+								<dcsset:right xsi:type="xs:decimal">0</dcsset:right>
+							</dcsset:item>
+						</dcsset:item>
+					</dcsset:filter>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>ЦветФона</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Color">style:ВыделеннаяКнопкаФон</dcscor:value>
 						</dcscor:item>
 					</dcsset:appearance>
 				</dcsset:item>
@@ -999,7 +1172,19 @@
 					<dcsset:field>СуммаЕРП</dcsset:field>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>СуммаЕРПФ1</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>СуммаЕРПФ2</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:field>Разница</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>РазницаФ1</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>РазницаФ2</dcsset:field>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:field>Комментарий</dcsset:field>
@@ -1014,6 +1199,19 @@
 					<dcsset:left xsi:type="dcscor:Field">НаправлениеДеятельности</dcsset:left>
 					<dcsset:comparisonType>Equal</dcsset:comparisonType>
 					<dcsset:userSettingID>450aed7b-5473-412f-b260-a42ecfdd2a7e</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemGroup">
+					<dcsset:groupType>OrGroup</dcsset:groupType>
+					<dcsset:item xsi:type="dcsset:FilterItemComparison">
+						<dcsset:left xsi:type="dcscor:Field">СуммаPL</dcsset:left>
+						<dcsset:comparisonType>NotEqual</dcsset:comparisonType>
+						<dcsset:right xsi:type="xs:decimal">0</dcsset:right>
+					</dcsset:item>
+					<dcsset:item xsi:type="dcsset:FilterItemComparison">
+						<dcsset:left xsi:type="dcscor:Field">СуммаЕРП</dcsset:left>
+						<dcsset:comparisonType>NotEqual</dcsset:comparisonType>
+						<dcsset:right xsi:type="xs:decimal">0</dcsset:right>
+					</dcsset:item>
 				</dcsset:item>
 			</dcsset:filter>
 			<dcsset:dataParameters>
@@ -1048,6 +1246,12 @@
 					<dcsset:selection>
 						<dcsset:item>
 							<dcsset:field>Разница</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>РазницаФ1</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>РазницаФ2</dcsset:field>
 						</dcsset:item>
 					</dcsset:selection>
 					<dcsset:filter/>
@@ -1086,6 +1290,12 @@
 						<dcsset:item>
 							<dcsset:field>СуммаЕРП</dcsset:field>
 						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>СуммаЕРПФ1</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>СуммаЕРПФ2</dcsset:field>
+						</dcsset:item>
 					</dcsset:selection>
 					<dcsset:filter/>
 					<dcsset:appearance>
@@ -1113,6 +1323,42 @@
 						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
 							<dcscor:parameter>Шрифт</dcscor:parameter>
 							<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+						</dcscor:item>
+					</dcsset:appearance>
+				</dcsset:item>
+				<dcsset:item>
+					<dcsset:selection>
+						<dcsset:item>
+							<dcsset:field>Группа</dcsset:field>
+						</dcsset:item>
+						<dcsset:item>
+							<dcsset:field>СтатьяPL</dcsset:field>
+						</dcsset:item>
+					</dcsset:selection>
+					<dcsset:filter>
+						<dcsset:item xsi:type="dcsset:FilterItemGroup">
+							<dcsset:groupType>OrGroup</dcsset:groupType>
+							<dcsset:item xsi:type="dcsset:FilterItemComparison">
+								<dcsset:left xsi:type="dcscor:Field">Разница</dcsset:left>
+								<dcsset:comparisonType>NotEqual</dcsset:comparisonType>
+								<dcsset:right xsi:type="xs:decimal">0</dcsset:right>
+							</dcsset:item>
+							<dcsset:item xsi:type="dcsset:FilterItemComparison">
+								<dcsset:left xsi:type="dcscor:Field">РазницаФ1</dcsset:left>
+								<dcsset:comparisonType>NotEqual</dcsset:comparisonType>
+								<dcsset:right xsi:type="xs:decimal">0</dcsset:right>
+							</dcsset:item>
+							<dcsset:item xsi:type="dcsset:FilterItemComparison">
+								<dcsset:left xsi:type="dcscor:Field">РазницаФ2</dcsset:left>
+								<dcsset:comparisonType>NotEqual</dcsset:comparisonType>
+								<dcsset:right xsi:type="xs:decimal">0</dcsset:right>
+							</dcsset:item>
+						</dcsset:item>
+					</dcsset:filter>
+					<dcsset:appearance>
+						<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+							<dcscor:parameter>ЦветФона</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Color">style:ВыделеннаяКнопкаФон</dcscor:value>
 						</dcscor:item>
 					</dcsset:appearance>
 				</dcsset:item>

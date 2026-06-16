@@ -1,0 +1,496 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
+	<Title>
+		<v8:item>
+			<v8:lang>ru</v8:lang>
+			<v8:content>Заміна «Неизвестного партнёра»</v8:content>
+		</v8:item>
+	</Title>
+	<Width>200</Width>
+	<Height>40</Height>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+		<ChildItems>
+			<Button name="КнопкаПроанализировать" id="10">
+				<Type>CommandBarButton</Type>
+				<Representation>PictureAndText</Representation>
+				<DefaultButton>true</DefaultButton>
+				<CommandName>Form.Command.Проанализировать</CommandName>
+				<ExtendedTooltip name="КнопкаПроанализироватьРасширеннаяПодсказка" id="11"/>
+			</Button>
+			<Button name="КнопкаЗаменитьВсе" id="12">
+				<Type>CommandBarButton</Type>
+				<Representation>PictureAndText</Representation>
+				<CommandName>Form.Command.ЗаменитьВсе</CommandName>
+				<ExtendedTooltip name="КнопкаЗаменитьВсеРасширеннаяПодсказка" id="13"/>
+			</Button>
+			<Button name="КнопкаДействиеПоСтроке" id="14">
+				<Type>CommandBarButton</Type>
+				<Representation>PictureAndText</Representation>
+				<CommandName>Form.Command.ДействиеПоСтроке</CommandName>
+				<ExtendedTooltip name="КнопкаДействиеПоСтрокеРасширеннаяПодсказка" id="15"/>
+			</Button>
+		</ChildItems>
+	</AutoCommandBar>
+	<Events>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+	</Events>
+	<ChildItems>
+		<UsualGroup name="ГруппаШапка" id="100">
+			<Behavior>Usual</Behavior>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаШапкаРасширеннаяПодсказка" id="101"/>
+			<ChildItems>
+				<InputField name="НеизвестныйПартнер" id="102">
+					<DataPath>НеизвестныйПартнер</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Неизвестный партнер</v8:content>
+						</v8:item>
+					</Title>
+					<Width>40</Width>
+					<ContextMenu name="НеизвестныйПартнерКонтекстноеМеню" id="103"/>
+					<ExtendedTooltip name="НеизвестныйПартнерРасширеннаяПодсказка" id="104"/>
+				</InputField>
+				<InputField name="НадписьРезюме" id="105">
+					<DataPath>НадписьРезюме</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<TitleLocation>None</TitleLocation>
+					<Width>150</Width>
+					<ContextMenu name="НадписьРезюмеКонтекстноеМеню" id="106"/>
+					<ExtendedTooltip name="НадписьРезюмеРасширеннаяПодсказка" id="107"/>
+				</InputField>
+			</ChildItems>
+		</UsualGroup>
+		<Table name="ТаблицаКонтрагентовФорма" id="200">
+			<Representation>List</Representation>
+			<Height>10</Height>
+			<DataPath>ТаблицаКонтрагентов</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Контрагенти з «Неизвестный партнер»</v8:content>
+				</v8:item>
+			</Title>
+			<RowFilter xsi:nil="true"/>
+			<ContextMenu name="ТаблицаКонтрагентовФормаКонтекстноеМеню" id="201"/>
+			<AutoCommandBar name="ТаблицаКонтрагентовФормаКоманднаяПанель" id="202"/>
+			<ExtendedTooltip name="ТаблицаКонтрагентовФормаРасширеннаяПодсказка" id="322"/>
+			<SearchStringAddition name="ТаблицаКонтрагентовФормаСтрокаПоиска" id="203">
+				<AdditionSource>
+					<Item>ТаблицаКонтрагентовФорма</Item>
+					<Type>SearchStringRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="ТаблицаКонтрагентовФормаСтрокаПоискаКонтекстноеМеню" id="204"/>
+				<ExtendedTooltip name="ТаблицаКонтрагентовФормаСтрокаПоискаРасширеннаяПодсказка" id="205"/>
+			</SearchStringAddition>
+			<ViewStatusAddition name="ТаблицаКонтрагентовФормаСостояниеПросмотра" id="206">
+				<AdditionSource>
+					<Item>ТаблицаКонтрагентовФорма</Item>
+					<Type>ViewStatusRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="ТаблицаКонтрагентовФормаСостояниеПросмотраКонтекстноеМеню" id="207"/>
+				<ExtendedTooltip name="ТаблицаКонтрагентовФормаСостояниеПросмотраРасширеннаяПодсказка" id="208"/>
+			</ViewStatusAddition>
+			<SearchControlAddition name="ТаблицаКонтрагентовФормаУправлениеПоиском" id="323">
+				<AdditionSource>
+					<Item>ТаблицаКонтрагентовФорма</Item>
+					<Type>SearchControl</Type>
+				</AdditionSource>
+				<ContextMenu name="ТаблицаКонтрагентовФормаУправлениеПоискомКонтекстноеМеню" id="324"/>
+				<ExtendedTooltip name="ТаблицаКонтрагентовФормаУправлениеПоискомРасширеннаяПодсказка" id="325"/>
+			</SearchControlAddition>
+			<Events>
+				<Event name="OnActivateRow">ТаблицаКонтрагентовФормаПриАктивизацииСтроки</Event>
+			</Events>
+			<ChildItems>
+				<InputField name="ТаблицаКонтрагентовФормаКонтрагент" id="210">
+					<DataPath>ТаблицаКонтрагентов.Контрагент</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Width>40</Width>
+					<ContextMenu name="ТаблицаКонтрагентовФормаКонтрагентКонтекстноеМеню" id="211"/>
+					<ExtendedTooltip name="ТаблицаКонтрагентовФормаКонтрагентРасширеннаяПодсказка" id="212"/>
+				</InputField>
+				<InputField name="ТаблицаКонтрагентовФормаЦелевойПартнер" id="213">
+					<DataPath>ТаблицаКонтрагентов.ЦелевойПартнер</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Цільовий партнер</v8:content>
+						</v8:item>
+					</Title>
+					<Width>40</Width>
+					<ContextMenu name="ТаблицаКонтрагентовФормаЦелевойПартнерКонтекстноеМеню" id="214"/>
+					<ExtendedTooltip name="ТаблицаКонтрагентовФормаЦелевойПартнерРасширеннаяПодсказка" id="215"/>
+				</InputField>
+				<CheckBoxField name="ТаблицаКонтрагентовФормаСоздавать" id="216">
+					<DataPath>ТаблицаКонтрагентов.Создавать</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Створити</v8:content>
+						</v8:item>
+					</Title>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="ТаблицаКонтрагентовФормаСоздаватьКонтекстноеМеню" id="217"/>
+					<ExtendedTooltip name="ТаблицаКонтрагентовФормаСоздаватьРасширеннаяПодсказка" id="218"/>
+				</CheckBoxField>
+				<InputField name="ТаблицаКонтрагентовФормаКолвоСсылок" id="219">
+					<DataPath>ТаблицаКонтрагентов.КолвоСсылок</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Посилань</v8:content>
+						</v8:item>
+					</Title>
+					<Width>10</Width>
+					<ContextMenu name="ТаблицаКонтрагентовФормаКолвоСсылокКонтекстноеМеню" id="220"/>
+					<ExtendedTooltip name="ТаблицаКонтрагентовФормаКолвоСсылокРасширеннаяПодсказка" id="221"/>
+				</InputField>
+				<InputField name="ТаблицаКонтрагентовФормаСтатус" id="222">
+					<DataPath>ТаблицаКонтрагентов.Статус</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Статус</v8:content>
+						</v8:item>
+					</Title>
+					<Width>50</Width>
+					<ContextMenu name="ТаблицаКонтрагентовФормаСтатусКонтекстноеМеню" id="223"/>
+					<ExtendedTooltip name="ТаблицаКонтрагентовФормаСтатусРасширеннаяПодсказка" id="224"/>
+				</InputField>
+			</ChildItems>
+		</Table>
+		<Table name="ТаблицаОбъектовФорма" id="300">
+			<Representation>List</Representation>
+			<Height>8</Height>
+			<DataPath>ТаблицаОбъектов</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Об'єкти з посиланням (по активному контрагенту)</v8:content>
+				</v8:item>
+			</Title>
+			<RowFilter xsi:nil="true"/>
+			<ContextMenu name="ТаблицаОбъектовФормаКонтекстноеМеню" id="301"/>
+			<AutoCommandBar name="ТаблицаОбъектовФормаКоманднаяПанель" id="302"/>
+			<ExtendedTooltip name="ТаблицаОбъектовФормаРасширеннаяПодсказка" id="326"/>
+			<SearchStringAddition name="ТаблицаОбъектовФормаСтрокаПоиска" id="327">
+				<AdditionSource>
+					<Item>ТаблицаОбъектовФорма</Item>
+					<Type>SearchStringRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="ТаблицаОбъектовФормаСтрокаПоискаКонтекстноеМеню" id="328"/>
+				<ExtendedTooltip name="ТаблицаОбъектовФормаСтрокаПоискаРасширеннаяПодсказка" id="329"/>
+			</SearchStringAddition>
+			<ViewStatusAddition name="ТаблицаОбъектовФормаСостояниеПросмотра" id="330">
+				<AdditionSource>
+					<Item>ТаблицаОбъектовФорма</Item>
+					<Type>ViewStatusRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="ТаблицаОбъектовФормаСостояниеПросмотраКонтекстноеМеню" id="331"/>
+				<ExtendedTooltip name="ТаблицаОбъектовФормаСостояниеПросмотраРасширеннаяПодсказка" id="332"/>
+			</ViewStatusAddition>
+			<SearchControlAddition name="ТаблицаОбъектовФормаУправлениеПоиском" id="333">
+				<AdditionSource>
+					<Item>ТаблицаОбъектовФорма</Item>
+					<Type>SearchControl</Type>
+				</AdditionSource>
+				<ContextMenu name="ТаблицаОбъектовФормаУправлениеПоискомКонтекстноеМеню" id="334"/>
+				<ExtendedTooltip name="ТаблицаОбъектовФормаУправлениеПоискомРасширеннаяПодсказка" id="335"/>
+			</SearchControlAddition>
+			<ChildItems>
+				<InputField name="ТаблицаОбъектовФормаОбъект" id="310">
+					<DataPath>ТаблицаОбъектов.Объект</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Об'єкт</v8:content>
+						</v8:item>
+					</Title>
+					<Width>40</Width>
+					<ContextMenu name="ТаблицаОбъектовФормаОбъектКонтекстноеМеню" id="311"/>
+					<ExtendedTooltip name="ТаблицаОбъектовФормаОбъектРасширеннаяПодсказка" id="312"/>
+				</InputField>
+				<InputField name="ТаблицаОбъектовФормаТипОбъекта" id="313">
+					<DataPath>ТаблицаОбъектов.ТипОбъекта</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Тип</v8:content>
+						</v8:item>
+					</Title>
+					<Width>40</Width>
+					<ContextMenu name="ТаблицаОбъектовФормаТипОбъектаКонтекстноеМеню" id="314"/>
+					<ExtendedTooltip name="ТаблицаОбъектовФормаТипОбъектаРасширеннаяПодсказка" id="315"/>
+				</InputField>
+				<InputField name="ТаблицаОбъектовФормаСтатус" id="316">
+					<DataPath>ТаблицаОбъектов.Статус</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Статус</v8:content>
+						</v8:item>
+					</Title>
+					<Width>20</Width>
+					<ContextMenu name="ТаблицаОбъектовФормаСтатусКонтекстноеМеню" id="317"/>
+					<ExtendedTooltip name="ТаблицаОбъектовФормаСтатусРасширеннаяПодсказка" id="318"/>
+				</InputField>
+				<InputField name="ТаблицаОбъектовФормаОшибка" id="319">
+					<DataPath>ТаблицаОбъектов.Ошибка</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Помилка</v8:content>
+						</v8:item>
+					</Title>
+					<Width>40</Width>
+					<ContextMenu name="ТаблицаОбъектовФормаОшибкаКонтекстноеМеню" id="320"/>
+					<ExtendedTooltip name="ТаблицаОбъектовФормаОшибкаРасширеннаяПодсказка" id="321"/>
+				</InputField>
+			</ChildItems>
+		</Table>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="НеизвестныйПартнер" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Неизвестный партнер</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.Партнеры</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="НадписьРезюме" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Резюме</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ТаблицаКонтрагентов" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Контрагенты</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:ValueTable</v8:Type>
+			</Type>
+			<Columns>
+				<Column name="Контрагент" id="1">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Контрагент</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.Контрагенты</v8:Type>
+					</Type>
+				</Column>
+				<Column name="ЦелевойПартнер" id="2">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Целевой партнер</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.Партнеры</v8:Type>
+					</Type>
+				</Column>
+				<Column name="Создавать" id="3">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Создавать</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:boolean</v8:Type>
+					</Type>
+				</Column>
+				<Column name="КолвоСсылок" id="4">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Ссылок</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+							<v8:AllowedSign>Nonnegative</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="Статус" id="5">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Статус</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+			</Columns>
+		</Attribute>
+		<Attribute name="ТаблицаОбъектов" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Найденные объекты</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:ValueTable</v8:Type>
+			</Type>
+			<Columns>
+				<Column name="Объект" id="1">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Объект</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:TypeSet>cfg:AnyRef</v8:TypeSet>
+					</Type>
+				</Column>
+				<Column name="ТипОбъекта" id="2">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Тип объекта</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>150</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="Контрагент" id="3">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Контрагент</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.Контрагенты</v8:Type>
+					</Type>
+				</Column>
+				<Column name="Статус" id="4">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Статус</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+				<Column name="Ошибка" id="5">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Ошибка</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:string</v8:Type>
+						<v8:StringQualifiers>
+							<v8:Length>0</v8:Length>
+							<v8:AllowedLength>Variable</v8:AllowedLength>
+						</v8:StringQualifiers>
+					</Type>
+				</Column>
+			</Columns>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="Проанализировать" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Проаналізувати</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Знайти всі посилання на «Неизвестный партнер»</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>Проанализировать</Action>
+		</Command>
+		<Command name="ЗаменитьВсе" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Замінити всі</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Замінити та згорнути дублі для всіх контрагентів</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ЗаменитьВсе</Action>
+		</Command>
+		<Command name="ДействиеПоСтроке" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Замінити рядок</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Замінити для поточного контрагента</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ДействиеПоСтроке</Action>
+		</Command>
+	</Commands>
+</Form>
