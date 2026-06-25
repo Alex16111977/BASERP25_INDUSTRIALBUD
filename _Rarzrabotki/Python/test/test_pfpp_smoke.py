@@ -2,7 +2,7 @@ import win32com.client, sys, datetime
 if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
 
-ERF = r"C:\Configuration_downloads\BASERP25\.claude\worktrees\stupefied-neumann-346fd7\_build_pfpp\А_ПланФактныйПроизводствоПолный.erf"
+ERF = r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\Отчеты\А_ПланФактныйПроизводствоПолный.erf"
 СС_ИМЯ = "МД МХП ОРІЛЬ / СТІЛ МД МХП ОРІЛЬ"
 
 erp = win32com.client.Dispatch("V83.COMConnector").Connect(
@@ -48,10 +48,17 @@ for k, exp in checks.items():
 print(f"  {'МатВир':14} = {мв:>14}  (эталон ~1711992)  {'OK' if abs(мв-1711992)<2 else 'FAIL'}")
 print(f"  {'МатМонт':14} = {мм:>14}  (эталон 206605)  {'OK' if abs(мм-206605)<0.5 else 'FAIL'}")
 
-print("\n=== ФАКТ (информативно, период <= 30.04.2026) ===")
+print("\n=== ФАКТ (Проект = всё время; місяць = квітень 2026) ===")
 for k in ["ФактЧасПроект", "ФактЧасМесяц", "ЗПнарахПроект", "ЗПнарахМесяц",
           "ВирГрнФактПроект", "МатВирФакт", "МатМонтФакт", "СумГрнФактПроект"]:
     print(f"  {k:18} = {round(float(val(k)),2)}")
+# проект-итоги = all-time эталоны (как Excel V7 и А_ПланФактныйАнализРабот)
+фч = round(float(val("ФактЧасПроект")), 2)
+зп = round(float(val("ЗПнарахПроект")), 2)
+print(f"  -> ФактЧасПроект {'OK' if фч==2229 else 'FAIL'} (эталон 2229)")
+print(f"  -> ЗПнарахПроект  {'OK' if abs(зп-257156.94)<0.5 else 'FAIL'} (эталон 257156.94)")
+if фч != 2229 or abs(зп-257156.94) >= 0.5:
+    ok = False
 
 print("\n=== РЕНДЕР ТабличногоДокумента ===")
 тд = erp.NewObject("ТабличныйДокумент")
