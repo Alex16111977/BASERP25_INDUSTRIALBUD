@@ -134,6 +134,30 @@
 			<title xsi:type="v8:LocalStringType"><v8:item><v8:lang>ru</v8:lang><v8:content>% вик. (грн)</v8:content></v8:item></title>
 			<valueType><v8:Type>xs:decimal</v8:Type><v8:NumberQualifiers><v8:Digits>18</v8:Digits><v8:FractionDigits>2</v8:FractionDigits><v8:AllowedSign>Any</v8:AllowedSign></v8:NumberQualifiers></valueType>
 		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ПланНаФактГрн</dataPath>
+			<field>ПланНаФактГрн</field>
+			<title xsi:type="v8:LocalStringType"><v8:item><v8:lang>ru</v8:lang><v8:content>План на факт, грн</v8:content></v8:item></title>
+			<valueType><v8:Type>xs:decimal</v8:Type><v8:NumberQualifiers><v8:Digits>18</v8:Digits><v8:FractionDigits>2</v8:FractionDigits><v8:AllowedSign>Any</v8:AllowedSign></v8:NumberQualifiers></valueType>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ПрогнозГрн</dataPath>
+			<field>ПрогнозГрн</field>
+			<title xsi:type="v8:LocalStringType"><v8:item><v8:lang>ru</v8:lang><v8:content>Прогноз, грн</v8:content></v8:item></title>
+			<valueType><v8:Type>xs:decimal</v8:Type><v8:NumberQualifiers><v8:Digits>18</v8:Digits><v8:FractionDigits>2</v8:FractionDigits><v8:AllowedSign>Any</v8:AllowedSign></v8:NumberQualifiers></valueType>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ОтклонениеПрогнозГрн</dataPath>
+			<field>ОтклонениеПрогнозГрн</field>
+			<title xsi:type="v8:LocalStringType"><v8:item><v8:lang>ru</v8:lang><v8:content>Відхилення прогноз, грн</v8:content></v8:item></title>
+			<valueType><v8:Type>xs:decimal</v8:Type><v8:NumberQualifiers><v8:Digits>18</v8:Digits><v8:FractionDigits>2</v8:FractionDigits><v8:AllowedSign>Any</v8:AllowedSign></v8:NumberQualifiers></valueType>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ПроцентПрогнозГрн</dataPath>
+			<field>ПроцентПрогнозГрн</field>
+			<title xsi:type="v8:LocalStringType"><v8:item><v8:lang>ru</v8:lang><v8:content>% вик. прогноз</v8:content></v8:item></title>
+			<valueType><v8:Type>xs:decimal</v8:Type><v8:NumberQualifiers><v8:Digits>18</v8:Digits><v8:FractionDigits>2</v8:FractionDigits><v8:AllowedSign>Any</v8:AllowedSign></v8:NumberQualifiers></valueType>
+		</field>
 		<dataSource>ИсточникДанных1</dataSource>
 		<objectName>Детали</objectName>
 	</dataSet>
@@ -185,6 +209,22 @@
 		<dataPath>ПроцентКол</dataPath>
 		<expression>ВЫБОР КОГДА Сумма(ПланКол) = 0 ТОГДА 0 ИНАЧЕ Сумма(ФактКол) / Сумма(ПланКол) * 100 КОНЕЦ</expression>
 	</totalField>
+	<totalField>
+		<dataPath>ПланНаФактГрн</dataPath>
+		<expression>Сумма(ПланНаФактГрн)</expression>
+	</totalField>
+	<totalField>
+		<dataPath>ПрогнозГрн</dataPath>
+		<expression>Сумма(ФактГрн)+Сумма(ПланНаФактГрн)</expression>
+	</totalField>
+	<totalField>
+		<dataPath>ОтклонениеПрогнозГрн</dataPath>
+		<expression>Сумма(ФактГрн)+Сумма(ПланНаФактГрн)-Сумма(ПланГрн)</expression>
+	</totalField>
+	<totalField>
+		<dataPath>ПроцентПрогнозГрн</dataPath>
+		<expression>ВЫБОР КОГДА Сумма(ПланГрн) = 0 ТОГДА 0 ИНАЧЕ (Сумма(ФактГрн)+Сумма(ПланНаФактГрн)) / Сумма(ПланГрн) * 100 КОНЕЦ</expression>
+	</totalField>
 	<parameter>
 		<name>Период</name>
 		<title xsi:type="v8:LocalStringType"><v8:item><v8:lang>ru</v8:lang><v8:content>Период</v8:content></v8:item></title>
@@ -215,14 +255,14 @@
 				<dcsset:item xsi:type="dcsset:SelectedItemField"><dcsset:field>ФактЧасы</dcsset:field></dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField"><dcsset:field>ОтклонениеЧасы</dcsset:field></dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField"><dcsset:field>ПроцентЧасы</dcsset:field></dcsset:item>
-				<dcsset:item xsi:type="dcsset:SelectedItemField"><dcsset:field>ПланКол</dcsset:field></dcsset:item>
-				<dcsset:item xsi:type="dcsset:SelectedItemField"><dcsset:field>ФактКол</dcsset:field></dcsset:item>
-				<dcsset:item xsi:type="dcsset:SelectedItemField"><dcsset:field>ОтклонениеКол</dcsset:field></dcsset:item>
-				<dcsset:item xsi:type="dcsset:SelectedItemField"><dcsset:field>ПроцентКол</dcsset:field></dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField"><dcsset:field>ПланГрн</dcsset:field></dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField"><dcsset:field>ФактГрн</dcsset:field></dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField"><dcsset:field>ОтклонениеГрн</dcsset:field></dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField"><dcsset:field>ПроцентГрн</dcsset:field></dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField"><dcsset:field>ПланНаФактГрн</dcsset:field></dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField"><dcsset:field>ПрогнозГрн</dcsset:field></dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField"><dcsset:field>ОтклонениеПрогнозГрн</dcsset:field></dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField"><dcsset:field>ПроцентПрогнозГрн</dcsset:field></dcsset:item>
 			</dcsset:selection>
 			<dcsset:dataParameters>
 				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
@@ -246,6 +286,7 @@
 						<dcsset:item><dcsset:field>ПроцентЧасы</dcsset:field></dcsset:item>
 						<dcsset:item><dcsset:field>ПроцентКол</dcsset:field></dcsset:item>
 						<dcsset:item><dcsset:field>ПроцентГрн</dcsset:field></dcsset:item>
+					<dcsset:item><dcsset:field>ПроцентПрогнозГрн</dcsset:field></dcsset:item>
 					</dcsset:selection>
 					<dcsset:filter/>
 					<dcsset:appearance>
