@@ -20,13 +20,6 @@
 					<ContextMenu name="КодКонтекстноеМеню" id="2"/>
 					<ExtendedTooltip name="КодРасширеннаяПодсказка" id="3"/>
 				</InputField>
-				<CheckBoxField name="Активная" id="13">
-					<DataPath>Объект.Активная</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<CheckBoxType>Auto</CheckBoxType>
-					<ContextMenu name="АктивнаяКонтекстноеМеню" id="14"/>
-					<ExtendedTooltip name="АктивнаяРасширеннаяПодсказка" id="15"/>
-				</CheckBoxField>
 				<InputField name="Наименование" id="4">
 					<DataPath>Объект.Description</DataPath>
 					<EditMode>EnterOnInput</EditMode>
@@ -62,15 +55,45 @@
 				</InputField>
 			</ChildItems>
 		</UsualGroup>
+		<UsualGroup name="Группа3" id="62">
+			<Group>AlwaysHorizontal</Group>
+			<Behavior>Usual</Behavior>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="Группа3РасширеннаяПодсказка" id="63"/>
+			<ChildItems>
+				<CheckBoxField name="Активная" id="13">
+					<DataPath>Объект.Активная</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="АктивнаяКонтекстноеМеню" id="14"/>
+					<ExtendedTooltip name="АктивнаяРасширеннаяПодсказка" id="15"/>
+				</CheckBoxField>
+				<CheckBoxField name="ВикористовуватиПеревіркуОдиниць" id="64">
+					<DataPath>Объект.ЗастосовуватиПеревіркуОдиниць</DataPath>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="ВикористовуватиПеревіркуОдиницьКонтекстноеМеню" id="65"/>
+					<ExtendedTooltip name="ВикористовуватиПеревіркуОдиницьРасширеннаяПодсказка" id="66"/>
+				</CheckBoxField>
+			</ChildItems>
+		</UsualGroup>
 		<Table name="Комплектующие" id="16">
 			<Representation>List</Representation>
+			<Footer>true</Footer>
 			<AutoInsertNewRow>true</AutoInsertNewRow>
 			<EnableStartDrag>true</EnableStartDrag>
 			<EnableDrag>true</EnableDrag>
 			<DataPath>Объект.Комплектующие</DataPath>
 			<RowFilter xsi:nil="true"/>
 			<ContextMenu name="КомплектующиеКонтекстноеМеню" id="17"/>
-			<AutoCommandBar name="КомплектующиеКоманднаяПанель" id="18"/>
+			<AutoCommandBar name="КомплектующиеКоманднаяПанель" id="18">
+				<ChildItems>
+					<Button name="КомплектующиеЗагрузить" id="51">
+						<Type>CommandBarButton</Type>
+						<CommandName>Form.Command.Загрузить</CommandName>
+						<ExtendedTooltip name="КомплектующиеЗагрузитьРасширеннаяПодсказка" id="52"/>
+					</Button>
+				</ChildItems>
+			</AutoCommandBar>
 			<ExtendedTooltip name="КомплектующиеРасширеннаяПодсказка" id="19"/>
 			<SearchStringAddition name="КомплектующиеСтрокаПоиска" id="20">
 				<AdditionSource>
@@ -103,6 +126,12 @@
 					<ContextMenu name="КомплектующиеНомерСтрокиКонтекстноеМеню" id="30"/>
 					<ExtendedTooltip name="КомплектующиеНомерСтрокиРасширеннаяПодсказка" id="31"/>
 				</LabelField>
+				<InputField name="КомплектующиеЭтап" id="53">
+					<DataPath>Объект.Комплектующие.Этап</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="КомплектующиеЭтапКонтекстноеМеню" id="54"/>
+					<ExtendedTooltip name="КомплектующиеЭтапРасширеннаяПодсказка" id="55"/>
+				</InputField>
 				<InputField name="КомплектующиеОбщееНазвание" id="32">
 					<DataPath>Объект.Комплектующие.ОбщееНазвание</DataPath>
 					<EditMode>EnterOnInput</EditMode>
@@ -112,8 +141,22 @@
 						<Event name="OnChange">КомплектующиеОбщееНазваниеПриИзменении</Event>
 					</Events>
 				</InputField>
+				<InputField name="КомплектующиеНоменклатураСС" id="56">
+					<DataPath>Объект.Комплектующие.НоменклатураСС</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="КомплектующиеНоменклатураССКонтекстноеМеню" id="57"/>
+					<ExtendedTooltip name="КомплектующиеНоменклатураССРасширеннаяПодсказка" id="58"/>
+				</InputField>
+				<InputField name="КомплектующиеЕдиницаСС" id="59">
+					<DataPath>Объект.Комплектующие.ЕдиницаСС</DataPath>
+					<Visible>false</Visible>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="КомплектующиеЕдиницаССКонтекстноеМеню" id="60"/>
+					<ExtendedTooltip name="КомплектующиеЕдиницаССРасширеннаяПодсказка" id="61"/>
+				</InputField>
 				<InputField name="КомплектующиеНоменклатура" id="35">
 					<DataPath>Объект.Комплектующие.Номенклатура</DataPath>
+					<Visible>false</Visible>
 					<EditMode>EnterOnInput</EditMode>
 					<QuickChoice>false</QuickChoice>
 					<ChoiceHistoryOnInput>DontUse</ChoiceHistoryOnInput>
@@ -133,12 +176,14 @@
 				<InputField name="КомплектующиеКоличество" id="41">
 					<DataPath>Объект.Комплектующие.Количество</DataPath>
 					<EditMode>EnterOnInput</EditMode>
+					<FooterDataPath>Объект.Комплектующие.TotalКоличество</FooterDataPath>
 					<ContextMenu name="КомплектующиеКоличествоКонтекстноеМеню" id="42"/>
 					<ExtendedTooltip name="КомплектующиеКоличествоРасширеннаяПодсказка" id="43"/>
 				</InputField>
 				<InputField name="КомплектующиеСумма" id="44">
 					<DataPath>Объект.Комплектующие.Сумма</DataPath>
 					<EditMode>EnterOnInput</EditMode>
+					<FooterDataPath>Объект.Комплектующие.TotalСумма</FooterDataPath>
 					<ContextMenu name="КомплектующиеСуммаКонтекстноеМеню" id="45"/>
 					<ExtendedTooltip name="КомплектующиеСуммаРасширеннаяПодсказка" id="46"/>
 				</InputField>
@@ -154,4 +199,25 @@
 			<SavedData>true</SavedData>
 		</Attribute>
 	</Attributes>
+	<Commands>
+		<Command name="Загрузить" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Загрузить с Exel</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Завантажити з Exel</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Загрузить</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>Загрузить</Action>
+		</Command>
+	</Commands>
 </Form>
