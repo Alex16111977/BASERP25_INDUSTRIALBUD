@@ -1,0 +1,454 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
+	<Title>
+		<v8:item>
+			<v8:lang>ru</v8:lang>
+			<v8:content>Выбор поправок по демонтажу</v8:content>
+		</v8:item>
+	</Title>
+	<WindowOpeningMode>LockOwnerWindow</WindowOpeningMode>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+		<ChildItems>
+			<Button name="ФормаВыбрать" id="126">
+				<Type>CommandBarButton</Type>
+				<DefaultButton>true</DefaultButton>
+				<CommandName>Form.Command.Выбрать</CommandName>
+				<ExtendedTooltip name="ФормаВыбратьРасширеннаяПодсказка" id="127"/>
+			</Button>
+		</ChildItems>
+	</AutoCommandBar>
+	<Events>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+	</Events>
+	<ChildItems>
+		<UsualGroup name="СписокКомпоновщикНастроекПользовательскиеНастройки" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Группа пользовательских настроек</v8:content>
+				</v8:item>
+			</Title>
+			<VerticalStretch>false</VerticalStretch>
+			<Group>Vertical</Group>
+			<Behavior>Usual</Behavior>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="СписокКомпоновщикНастроекПользовательскиеНастройкиРасширеннаяПодсказка" id="2"/>
+		</UsualGroup>
+		<Table name="Список" id="3">
+			<Representation>List</Representation>
+			<SelectionMode>SingleRow</SelectionMode>
+			<UseAlternationRowColor>true</UseAlternationRowColor>
+			<EnableStartDrag>true</EnableStartDrag>
+			<EnableDrag>true</EnableDrag>
+			<FileDragMode>AsFile</FileDragMode>
+			<DataPath>Список</DataPath>
+			<RowPictureDataPath>Список.DefaultPicture</RowPictureDataPath>
+			<SearchStringLocation>None</SearchStringLocation>
+			<SearchControlLocation>None</SearchControlLocation>
+			<AutoRefresh>false</AutoRefresh>
+			<AutoRefreshPeriod>60</AutoRefreshPeriod>
+			<Period>
+				<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
+				<v8:startDate>0001-01-01T00:00:00</v8:startDate>
+				<v8:endDate>0001-01-01T00:00:00</v8:endDate>
+			</Period>
+			<ChoiceFoldersAndItems>Items</ChoiceFoldersAndItems>
+			<RestoreCurrentRow>false</RestoreCurrentRow>
+			<TopLevelParent xsi:nil="true"/>
+			<ShowRoot>true</ShowRoot>
+			<AllowRootChoice>false</AllowRootChoice>
+			<UpdateOnDataChange>Auto</UpdateOnDataChange>
+			<ContextMenu name="СписокКонтекстноеМеню" id="4"/>
+			<AutoCommandBar name="СписокКоманднаяПанель" id="5">
+				<Autofill>false</Autofill>
+			</AutoCommandBar>
+			<ExtendedTooltip name="СписокРасширеннаяПодсказка" id="6"/>
+			<SearchStringAddition name="СписокСтрокаПоиска" id="7">
+				<AdditionSource>
+					<Item>Список</Item>
+					<Type>SearchStringRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="СписокСтрокаПоискаКонтекстноеМеню" id="8"/>
+				<ExtendedTooltip name="СписокСтрокаПоискаРасширеннаяПодсказка" id="9"/>
+			</SearchStringAddition>
+			<ViewStatusAddition name="СписокСостояниеПросмотра" id="10">
+				<AdditionSource>
+					<Item>Список</Item>
+					<Type>ViewStatusRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="СписокСостояниеПросмотраКонтекстноеМеню" id="11"/>
+				<ExtendedTooltip name="СписокСостояниеПросмотраРасширеннаяПодсказка" id="12"/>
+			</ViewStatusAddition>
+			<SearchControlAddition name="СписокУправлениеПоиском" id="13">
+				<AdditionSource>
+					<Item>Список</Item>
+					<Type>SearchControl</Type>
+				</AdditionSource>
+				<ContextMenu name="СписокУправлениеПоискомКонтекстноеМеню" id="14"/>
+				<ExtendedTooltip name="СписокУправлениеПоискомРасширеннаяПодсказка" id="15"/>
+			</SearchControlAddition>
+			<Events>
+				<Event name="Selection">СписокВыбор</Event>
+			</Events>
+			<ChildItems>
+				<LabelField name="Обоснование" id="88">
+					<DataPath>Список.Обоснование</DataPath>
+					<ContextMenu name="ОбоснованиеКонтекстноеМеню" id="89"/>
+					<ExtendedTooltip name="ОбоснованиеРасширеннаяПодсказка" id="90"/>
+				</LabelField>
+				<LabelField name="УсловияПрименения" id="106">
+					<DataPath>Список.УсловияПрименения</DataPath>
+					<ContextMenu name="УсловияПримененияКонтекстноеМеню" id="107"/>
+					<ExtendedTooltip name="УсловияПримененияРасширеннаяПодсказка" id="108"/>
+				</LabelField>
+				<ColumnGroup name="ГруппаКоэффициенты" id="112">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Группа коэффициенты</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Группа коэффициенты</v8:content>
+						</v8:item>
+					</ToolTip>
+					<Group>Horizontal</Group>
+					<ExtendedTooltip name="ГруппаКоэффициентыРасширеннаяПодсказка" id="113"/>
+					<ChildItems>
+						<LabelField name="КоэффициентКОсновнойЗарплате" id="70">
+							<DataPath>Список.КоэффициентКОсновнойЗарплате</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>ОЗ</v8:content>
+								</v8:item>
+							</Title>
+							<ContextMenu name="КоэффициентКОсновнойЗарплатеКонтекстноеМеню" id="71"/>
+							<ExtendedTooltip name="КоэффициентКОсновнойЗарплатеРасширеннаяПодсказка" id="72"/>
+						</LabelField>
+						<ColumnGroup name="ГруппаЭМ" id="116">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Группа ЭМ</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Группа ЭМ</v8:content>
+								</v8:item>
+							</ToolTip>
+							<ExtendedTooltip name="ГруппаЭМРасширеннаяПодсказка" id="117"/>
+							<ChildItems>
+								<LabelField name="КоэффициентКЭксплуатацииМашин" id="82">
+									<DataPath>Список.КоэффициентКЭксплуатацииМашин</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>ЭМ</v8:content>
+										</v8:item>
+									</Title>
+									<ContextMenu name="КоэффициентКЭксплуатацииМашинКонтекстноеМеню" id="83"/>
+									<ExtendedTooltip name="КоэффициентКЭксплуатацииМашинРасширеннаяПодсказка" id="84"/>
+								</LabelField>
+								<LabelField name="КоэффициентКЗарплатеМашинистов" id="67">
+									<DataPath>Список.КоэффициентКЗарплатеМашинистов</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>ЗМ</v8:content>
+										</v8:item>
+									</Title>
+									<ContextMenu name="КоэффициентКЗарплатеМашинистовКонтекстноеМеню" id="68"/>
+									<ExtendedTooltip name="КоэффициентКЗарплатеМашинистовРасширеннаяПодсказка" id="69"/>
+								</LabelField>
+							</ChildItems>
+						</ColumnGroup>
+						<LabelField name="КоэффициентКСтоимостиМатериалов" id="73">
+							<DataPath>Список.КоэффициентКСтоимостиМатериалов</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>СМ</v8:content>
+								</v8:item>
+							</Title>
+							<ContextMenu name="КоэффициентКСтоимостиМатериаловКонтекстноеМеню" id="74"/>
+							<ExtendedTooltip name="КоэффициентКСтоимостиМатериаловРасширеннаяПодсказка" id="75"/>
+						</LabelField>
+						<ColumnGroup name="ГруппаЗТ" id="118">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Группа ЗТ</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Группа ЗТ</v8:content>
+								</v8:item>
+							</ToolTip>
+							<ExtendedTooltip name="ГруппаЗТРасширеннаяПодсказка" id="119"/>
+							<ChildItems>
+								<LabelField name="КоэффициентКТрудозатратамРабочих" id="79">
+									<DataPath>Список.КоэффициентКТрудозатратамРабочих</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>ЗТР</v8:content>
+										</v8:item>
+									</Title>
+									<ContextMenu name="КоэффициентКТрудозатратамРабочихКонтекстноеМеню" id="80"/>
+									<ExtendedTooltip name="КоэффициентКТрудозатратамРабочихРасширеннаяПодсказка" id="81"/>
+								</LabelField>
+								<LabelField name="КоэффициентКТрудозатратамМашинистов" id="76">
+									<DataPath>Список.КоэффициентКТрудозатратамМашинистов</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>ЗТМ</v8:content>
+										</v8:item>
+									</Title>
+									<ContextMenu name="КоэффициентКТрудозатратамМашинистовКонтекстноеМеню" id="77"/>
+									<ExtendedTooltip name="КоэффициентКТрудозатратамМашинистовРасширеннаяПодсказка" id="78"/>
+								</LabelField>
+							</ChildItems>
+						</ColumnGroup>
+					</ChildItems>
+				</ColumnGroup>
+				<ColumnGroup name="ГруппаДобавить" id="114">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Группа добавить</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Группа добавить</v8:content>
+						</v8:item>
+					</ToolTip>
+					<Group>Horizontal</Group>
+					<ExtendedTooltip name="ГруппаДобавитьРасширеннаяПодсказка" id="115"/>
+					<ChildItems>
+						<ColumnGroup name="ГруппаДПЗ" id="120">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Группа ДПЗ</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Группа ДПЗ</v8:content>
+								</v8:item>
+							</ToolTip>
+							<ExtendedTooltip name="ГруппаДПЗРасширеннаяПодсказка" id="121"/>
+							<ChildItems>
+								<LabelField name="ДобавитьКПрямымЗатратам" id="49">
+									<DataPath>Список.ДобавитьКПрямымЗатратам</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>+ПЗ</v8:content>
+										</v8:item>
+									</Title>
+									<ContextMenu name="ДобавитьКПрямымЗатратамКонтекстноеМеню" id="50"/>
+									<ExtendedTooltip name="ДобавитьКПрямымЗатратамРасширеннаяПодсказка" id="51"/>
+								</LabelField>
+								<LabelField name="ДобавитьКОсновнойЗарплате" id="46">
+									<DataPath>Список.ДобавитьКОсновнойЗарплате</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>+ОЗ</v8:content>
+										</v8:item>
+									</Title>
+									<ContextMenu name="ДобавитьКОсновнойЗарплатеКонтекстноеМеню" id="47"/>
+									<ExtendedTooltip name="ДобавитьКОсновнойЗарплатеРасширеннаяПодсказка" id="48"/>
+								</LabelField>
+							</ChildItems>
+						</ColumnGroup>
+						<ColumnGroup name="ГруппаДЭМ" id="122">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Группа ДЭМ</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Группа ДЭМ</v8:content>
+								</v8:item>
+							</ToolTip>
+							<ExtendedTooltip name="ГруппаДЭМРасширеннаяПодсказка" id="123"/>
+							<ChildItems>
+								<LabelField name="ДобавитьКЭксплуатацииМашин" id="61">
+									<DataPath>Список.ДобавитьКЭксплуатацииМашин</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>+ЭМ</v8:content>
+										</v8:item>
+									</Title>
+									<ContextMenu name="ДобавитьКЭксплуатацииМашинКонтекстноеМеню" id="62"/>
+									<ExtendedTooltip name="ДобавитьКЭксплуатацииМашинРасширеннаяПодсказка" id="63"/>
+								</LabelField>
+								<LabelField name="ДобавитьКЗарплатеМашинистов" id="43">
+									<DataPath>Список.ДобавитьКЗарплатеМашинистов</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>+ЗМ</v8:content>
+										</v8:item>
+									</Title>
+									<ContextMenu name="ДобавитьКЗарплатеМашинистовКонтекстноеМеню" id="44"/>
+									<ExtendedTooltip name="ДобавитьКЗарплатеМашинистовРасширеннаяПодсказка" id="45"/>
+								</LabelField>
+							</ChildItems>
+						</ColumnGroup>
+						<LabelField name="ДобавитьКСтоимостиМатериалов" id="52">
+							<DataPath>Список.ДобавитьКСтоимостиМатериалов</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>+СМ</v8:content>
+								</v8:item>
+							</Title>
+							<ContextMenu name="ДобавитьКСтоимостиМатериаловКонтекстноеМеню" id="53"/>
+							<ExtendedTooltip name="ДобавитьКСтоимостиМатериаловРасширеннаяПодсказка" id="54"/>
+						</LabelField>
+						<ColumnGroup name="ГруппаДЗТ" id="124">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Группа ДЗТ</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Группа ДЗТ</v8:content>
+								</v8:item>
+							</ToolTip>
+							<ExtendedTooltip name="ГруппаДЗТРасширеннаяПодсказка" id="125"/>
+							<ChildItems>
+								<LabelField name="ДобавитьКТрудозатратамРабочих" id="58">
+									<DataPath>Список.ДобавитьКТрудозатратамРабочих</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>+ЗТР</v8:content>
+										</v8:item>
+									</Title>
+									<ContextMenu name="ДобавитьКТрудозатратамРабочихКонтекстноеМеню" id="59"/>
+									<ExtendedTooltip name="ДобавитьКТрудозатратамРабочихРасширеннаяПодсказка" id="60"/>
+								</LabelField>
+								<LabelField name="ДобавитьКТрудозатратам" id="55">
+									<DataPath>Список.ДобавитьКТрудозатратам</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>+ЗТМ</v8:content>
+										</v8:item>
+									</Title>
+									<ContextMenu name="ДобавитьКТрудозатратамКонтекстноеМеню" id="56"/>
+									<ExtendedTooltip name="ДобавитьКТрудозатратамРасширеннаяПодсказка" id="57"/>
+								</LabelField>
+							</ChildItems>
+						</ColumnGroup>
+					</ChildItems>
+				</ColumnGroup>
+			</ChildItems>
+		</Table>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Список" id="1">
+			<Type>
+				<v8:Type>cfg:DynamicList</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+			<UseAlways>
+				<Field>Список.IsFolder</Field>
+				<Field>Список.Ref</Field>
+			</UseAlways>
+			<Settings xsi:type="DynamicList">
+				<ManualQuery>true</ManualQuery>
+				<DynamicDataRead>false</DynamicDataRead>
+				<QueryText>ВЫБРАТЬ
+	СправочникСМ_ПоправкиПоТехническимЧастям.Ссылка,
+	СправочникСМ_ПоправкиПоТехническимЧастям.ПометкаУдаления,
+	СправочникСМ_ПоправкиПоТехническимЧастям.Родитель,
+	СправочникСМ_ПоправкиПоТехническимЧастям.ЭтоГруппа,
+	СправочникСМ_ПоправкиПоТехническимЧастям.Код,
+	СправочникСМ_ПоправкиПоТехническимЧастям.Наименование,
+	СправочникСМ_ПоправкиПоТехническимЧастям.ДобавитьКВозврату,
+	СправочникСМ_ПоправкиПоТехническимЧастям.ДобавитьКЗарплатеМашинистов,
+	СправочникСМ_ПоправкиПоТехническимЧастям.ДобавитьКОсновнойЗарплате,
+	СправочникСМ_ПоправкиПоТехническимЧастям.ДобавитьКПрямымЗатратам,
+	СправочникСМ_ПоправкиПоТехническимЧастям.ДобавитьКСтоимостиМатериалов,
+	СправочникСМ_ПоправкиПоТехническимЧастям.ДобавитьКТрудозатратам,
+	СправочникСМ_ПоправкиПоТехническимЧастям.ДобавитьКТрудозатратамРабочих,
+	СправочникСМ_ПоправкиПоТехническимЧастям.ДобавитьКЭксплуатацииМашин,
+	СправочникСМ_ПоправкиПоТехническимЧастям.КоэффициентКВозврату,
+	СправочникСМ_ПоправкиПоТехническимЧастям.КоэффициентКЗарплатеМашинистов,
+	СправочникСМ_ПоправкиПоТехническимЧастям.КоэффициентКОсновнойЗарплате,
+	СправочникСМ_ПоправкиПоТехническимЧастям.КоэффициентКСтоимостиМатериалов,
+	СправочникСМ_ПоправкиПоТехническимЧастям.КоэффициентКТрудозатратамМашинистов,
+	СправочникСМ_ПоправкиПоТехническимЧастям.КоэффициентКТрудозатратамРабочих,
+	СправочникСМ_ПоправкиПоТехническимЧастям.КоэффициентКЭксплуатацииМашин,
+	СправочникСМ_ПоправкиПоТехническимЧастям.НомерСборника,
+	СправочникСМ_ПоправкиПоТехническимЧастям.Обоснование,
+	СправочникСМ_ПоправкиПоТехническимЧастям.СметноНормативнаяБаза,
+	СправочникСМ_ПоправкиПоТехническимЧастям.ТипНормативногоСборника,
+	СправочникСМ_ПоправкиПоТехническимЧастям.УсловияПрименения,
+	СправочникСМ_ПоправкиПоТехническимЧастям.ТипПоправки
+ИЗ
+	Справочник.СМ_ПоправкиПоТехническимЧастям КАК СправочникСМ_ПоправкиПоТехническимЧастям
+ГДЕ
+	СправочникСМ_ПоправкиПоТехническимЧастям.ТипПоправки = &amp;ТипПоправки
+	И СправочникСМ_ПоправкиПоТехническимЧастям.ЭтоГруппа = Ложь</QueryText>
+				<ListSettings>
+					<dcsset:filter>
+						<dcsset:viewMode>Normal</dcsset:viewMode>
+						<dcsset:userSettingID>dfcece9d-5077-440b-b6b3-45a5cb4538eb</dcsset:userSettingID>
+					</dcsset:filter>
+					<dcsset:order>
+						<dcsset:viewMode>Normal</dcsset:viewMode>
+						<dcsset:userSettingID>88619765-ccb3-46c6-ac52-38e9c992ebd4</dcsset:userSettingID>
+					</dcsset:order>
+					<dcsset:conditionalAppearance>
+						<dcsset:viewMode>Normal</dcsset:viewMode>
+						<dcsset:userSettingID>b75fecce-942b-4aed-abc9-e6a02e460fb3</dcsset:userSettingID>
+					</dcsset:conditionalAppearance>
+					<dcsset:itemsViewMode>Normal</dcsset:itemsViewMode>
+					<dcsset:itemsUserSettingID>911b6018-f537-43e8-a417-da56b22f9aec</dcsset:itemsUserSettingID>
+				</ListSettings>
+			</Settings>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="Выбрать" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Выбрать</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Выбрать</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>Выбрать</Action>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+	</Commands>
+</Form>

@@ -1,0 +1,696 @@
+﻿<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Map data</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"></head>
+    <link rel="stylesheet" href="$MapServerName/theme/default/style.css" type="text/css" />
+    <link rel="stylesheet" href="$MapServerName/style.css" type="text/css" />
+	<style type="text/css">
+	<!--
+	html, body {
+	  margin:0;
+	  padding:0;
+	  width:100%;
+	  height:100%;
+	}
+	#map {
+	  position: relative;
+	  min-height: 100%;
+	  /*background-color:#FF0000;*/
+	}
+	* html #map {
+	  height: 100%;
+	}
+	#footer {
+	  position: relative;
+	  margin-top: -2.5em;
+	  height: 2.5em;
+	}
+	.olControlLayerSwitcher .layersDiv {
+       padding-top: 5px;
+       padding-left: 10px;
+       padding-bottom: 5px;
+       padding-right: 65px;
+       background-color: #eae5d8;
+       width: 100%;
+       height: 100%;
+	   color:black;
+	}
+	.olControlOverviewMapElement {
+	    padding: 10px 18px 10px 10px;
+	    background-color: #eae5d8; /*#00008B; */
+    	-moz-border-radius: 1em 0 0 0;
+		border-style:solid;
+		border-width:1px;
+		border-color:#898477;	
+	}
+	#tooltip {
+		position: absolute;
+		font-size: 10px;		
+		background-color: #FCFAEB;
+		width: auto;
+		padding: 0px;		
+		filter:alpha(opacity=90);
+		-moz-opacity: 0.9;
+		opacity: 0.9;
+		font-family:Tahoma, Geneva, sans-serif;
+		z-index: 30000;
+	}
+
+	#tooltip h3, #tooltip div, #tooltip td {
+		margin: 0;		
+		font-size: 11px;
+	}
+
+	#tooltip td {
+		padding: 2px 10px 2px 5px;		
+		vertical-align:top;
+	}	
+	-->
+	</style>
+	
+    <script type="text/javascript" src="$MapServerName/OpenLayers.js"></script>
+    <script type="text/javascript" src="$MapServerName/Custom.js"></script>
+    <script type="text/javascript" src="$MapServerName/jquery.js"></script>
+    
+    <!-- // $HEAD -->
+    
+	<script type="text/javascript">
+        
+			var m_map;
+			var firstLat = 57;
+			var firstLon = 84;
+			var firstZoom = 4;
+			var firstLayerName = "";
+			var geozones_control;
+			var mapLoaded = false;
+			var disable_double_click = false;
+			var disable_double_click_control = null;
+			var LayersWithBackingLayers = [];
+			var geometryLayer = null;
+			var historyLayer = null;
+			var playRouteLayer = null;
+			var geozonesLayer = null;
+			var markersLayer = null;
+			var routes_list = null;
+			var routes_list_pos = null;
+			var play_route_sec = null;
+			var play_route_max = 0;
+			var play_route_k = 1000;
+			var play_route_intervalid = null;
+			var play_route_start_date = null;
+			var play_route_pause = false;
+			var play_route_progress = 0; 
+			var polygon_control = null;
+			var measure_control = null;
+			var infopanel_control = null;
+			var path_control = null;
+			var select_box_control = null;
+						
+			// $VARIABLES
+			
+			OpenLayers.Control.MouseClickControl = OpenLayers.Class(OpenLayers.Control, {                
+                defaultHandlerOptions: {
+                    'single': false,
+                    'double': true,
+                    'pixelTolerance': 0,
+                    'stopSingle': false,
+                    'stopDouble': true
+                },
+                initialize: function(options) {
+                    this.handlerOptions = OpenLayers.Util.extend(
+                        {}, this.defaultHandlerOptions
+                    );
+                    OpenLayers.Control.prototype.initialize.apply(
+                        this, arguments
+                    ); 
+                    this.handler = new OpenLayers.Handler.Click(
+                        this, {                            
+                            'dblclick': this.onDblclick 
+                        }, this.handlerOptions
+                    );
+                },
+                onDblclick: function(evt) {
+					CreateEventProcess('ondblclick_event');					
+                }
+            });
+			
+            function webgis_map_options(opts) {
+				if (typeof opts != 'object') opts = new Object;
+				opts.maxExtent = new OpenLayers.Bounds( - 20037508.3427892, -20037508.3427892, 20037508.3427892, 20037508.3427892);
+				opts.numZoomLevels = 19;
+				opts.maxResolution = 156543.0339;
+				opts.units = 'm';
+				opts.projection = "EPSG:900913";
+				opts.displayProjection = new OpenLayers.Projection("EPSG:4326");				
+				return opts;
+			}
+			
+			function init(){
+                
+				var map_options = webgis_map_options({
+					controls: [],
+					theme: null,
+					eventListeners: {                     
+                        "changebaselayer": mapBaseLayerChanged
+                    }
+				});
+				m_map = new OpenLayers.Map('map', map_options);
+				
+				var layers = new Array;				
+				
+				// $MAPS
+								
+				m_map.addLayers(layers);
+																				
+				m_map.addControl(new OpenLayers.Control.MousePosition());
+				m_map.addControl(new OpenLayers.Control.ScaleLine());
+				m_map.addControl(new OpenLayers.Control.Navigation());				
+				m_map.addControl(new OpenLayers.Control.LayerSwitcher({roundedCorner: true, roundedCornerColor: "#eae5d8"}));
+								
+				var opt = webgis_map_options({
+					controls: [],
+					theme: null
+				});	
+				var overviewControl = new OpenLayers.Control.OverviewMap({
+					mapOptions: opt
+				});				
+				m_map.addControl(overviewControl);
+				
+				geometryLayer = new OpenLayers.Layer.Vector("Geometry", {displayInLayerSwitcher: false});
+				m_map.addLayer(geometryLayer);
+				
+				historyLayer = new OpenLayers.Layer.Vector("History", {displayInLayerSwitcher: false});
+				m_map.addLayer(historyLayer);
+				
+				playRouteLayer = new OpenLayers.Layer.Vector("PlayRouteFeatures", {displayInLayerSwitcher: false});
+				m_map.addLayer(playRouteLayer);
+				
+				geozonesLayer = new OpenLayers.Layer.Vector("AllGeozonLayer", {displayInLayerSwitcher: false});
+				m_map.addLayer(geozonesLayer);               
+				
+				markersLayer = new OpenLayers.Layer.Markers("Markers" , {displayInLayerSwitcher: false});			
+				m_map.addLayer(markersLayer);				
+				
+				select_box_control = new OpenLayers.Control.SelectFeature(
+                    geometryLayer,
+                    {
+                        clickout: false, toggle: false,
+                        multiple: false, hover: false,
+                        box: true,
+						eventListeners: {
+							boxselectionend: function(e) {
+								var ids = '';
+								for (i = 0; i < geometryLayer.selectedFeatures.length; ++i) {
+									f = geometryLayer.selectedFeatures[i];
+									if (f.attributes.id != null) {
+										if (ids == '') {ids = f.attributes.id;}
+										else {ids = ids + ',' + f.attributes.id;}										
+									}
+								}								
+								CreateEventProcess('SelectBoxResult,'+ids);
+								select_box_control.deactivate();								
+							}
+						} 	
+                    }
+                );
+				m_map.addControl(select_box_control);
+				
+				disable_double_click_control = new OpenLayers.Control.MouseClickControl({
+                        handlerOptions: {
+                            'single': false,
+							'double': true,
+							'pixelTolerance': 0,
+							'stopSingle': false,
+							'stopDouble': true
+                        }
+                    });
+				m_map.addControl(disable_double_click_control);
+				disable_double_click_control.deactivate();
+				
+				// $ATTRIBUTES
+				
+				var pt = new OpenLayers.LonLat(firstLon, firstLat);
+				pt.transform(m_map.displayProjection, m_map.getProjectionObject());
+				m_map.setCenter(pt, firstZoom);
+				
+				if (firstLayerName != "") {
+					var find_lays = m_map.getLayersByName(firstLayerName);
+					if (find_lays.length > 0) {
+						m_map.setBaseLayer(find_lays[0]);
+					}
+				}
+				
+				mapLoaded = true;
+												
+				if (disable_double_click) {
+					disable_double_click_control.activate();
+				}				
+
+            }			
+			
+			function mapBaseLayerChanged(event) {				
+				
+				for (var i = 0, len = LayersWithBackingLayers.length; i < len; i++) {
+					if (m_map.baseLayer == LayersWithBackingLayers[i]) {
+						m_map.baseLayer.top_layer.setVisibility(true);
+					} else if (LayersWithBackingLayers[i].top_layer.getVisibility()==true) {
+						LayersWithBackingLayers[i].top_layer.setVisibility(false);
+					}					
+				}
+			
+            }			
+			
+			/* Path */
+			function create_path_control() {
+				
+				disable_double_click = true;
+				disable_double_click_control.activate();
+								
+				var path_layer = new OpenLayers.Layer.Vector("Path creation", {displayInLayerSwitcher: true});
+				m_map.addLayer(path_layer);
+								
+				var default_style = {
+        			fillColor: "#197B30",
+			        fillOpacity: 0.4,
+			        hoverFillColor: "white",
+			        hoverFillOpacity: 0.8,
+			        strokeColor: "#F00",
+			        strokeOpacity: 0.9,
+			        strokeWidth: 3,
+			        strokeLinecap: "round",
+			        hoverStrokeColor: "#FDC689",
+			        hoverStrokeOpacity: 0.5,
+			        hoverStrokeWidth: 0.2,
+			        pointRadius: 4,
+			        hoverPointRadius: 1,
+			        hoverPointUnit: "%",
+			        pointerEvents: "visiblePainted"
+			    }
+								
+				var path_style = OpenLayers.Util.extend({}, default_style);				
+	            
+				var path_last_style = OpenLayers.Util.extend({}, default_style);				
+	            path_last_style.fillColor = "#FF0000";
+	            path_last_style.fillOpacity = 0.9;
+	            path_last_style.hoverFillColor = "red";
+	            path_last_style.pointRadius = 4;
+	            path_last_style.strokeColor = "#FF0000";
+	            path_last_style.strokeWidth = 1; 
+				
+				var polyOptions = {
+                    handlerOptions: {
+                        style: path_style,
+                        lastStyle: path_last_style
+                    }
+                }; 				
+            	path_control = new OpenLayers.Control.DrawFeature(path_layer,
+                                            OpenLayers.Handler.PathRouteEx,
+                                            polyOptions);
+				m_map.addControl(path_control);
+				
+				m_map.events.register('zoomend', this, function() {
+            		if (path_layer && path_control && path_control.handler) { 															
+						path_control.handler.drawFeature();
+					}
+					
+        		});
+				
+				path_control.activate();
+			}
+			
+			function destroy_path_control() {
+				if (path_control) {
+					path_control.deactivate();
+					m_map.removeControl(path_control);
+					path_control = null;
+				}
+				var find_lays = m_map.getLayersByName("Path creation");
+				if (find_lays.length > 0) {
+					m_map.removeLayer(find_lays[0]);
+				}
+			}
+			
+			/* Geozone manage */			
+			function create_geozones_control() {
+				
+				var default_style = {
+        			fillColor: "#197B30",
+			        fillOpacity: 0.4,
+			        hoverFillColor: "white",
+			        hoverFillOpacity: 0.8,
+			        strokeColor: "#004A80",
+			        strokeOpacity: 0.5,
+			        strokeWidth: 1,
+			        strokeLinecap: "round",
+			        hoverStrokeColor: "#FDC689",
+			        hoverStrokeOpacity: 0.5,
+			        hoverStrokeWidth: 0.2,
+			        pointRadius: 4,
+			        hoverPointRadius: 1,
+			        hoverPointUnit: "%",
+			        pointerEvents: "visiblePainted"
+			    }
+								
+				var geozone_style = OpenLayers.Util.extend({}, default_style);				
+	            
+				var geozone_last_style = OpenLayers.Util.extend({}, default_style);				
+	            geozone_last_style.fillColor = "#FF0000";
+	            geozone_last_style.fillOpacity = 0.9;
+	            geozone_last_style.hoverFillColor = "red";
+	            geozone_last_style.pointRadius = 4;
+	            geozone_last_style.strokeColor = "#FF0000";
+	            geozone_last_style.strokeWidth = 1; 
+				
+				var polyOptions = {
+                    handlerOptions: {
+                        style: geozone_style,
+                        lastStyle: geozone_last_style
+                    }
+                }; 				
+            	geozones_control = new OpenLayers.Control.DrawFeature(geozonesLayer,
+                                            OpenLayers.Handler.PolygonEx,
+                                            polyOptions);
+				m_map.addControl(geozones_control);
+				
+				m_map.events.register('zoomend', this, function() {
+            		if (geozonesLayer && geozones_control) geozone_redraw();
+        		});
+				
+				geozones_control.activate();
+			}
+			
+			function destroy_geozones_control() {
+				if (geozones_control) {
+					geozones_control.deactivate();
+					m_map.removeControl(geozones_control);
+					geozones_control = null;
+				}				
+				geozonesLayer.removeAllFeatures();
+			}
+			
+			function geozone_redraw() {
+				if (geozones_control.handler) {
+                	geozones_control.handler.drawFeature();
+            	}
+			}
+			
+			/* Play routes */
+			function PlayRouteHandlier() {
+				var CurPos;
+				
+				if (play_route_pause != true) {				
+				
+					play_route_sec = play_route_sec+play_route_k/10;
+					
+					var current_route_progress = Math.round(play_route_sec/play_route_max*100);
+					if (current_route_progress > play_route_progress) {
+						play_route_progress = current_route_progress;
+						CreateEventProcess('PlayRouteProgress,'+play_route_progress);
+					}
+					
+					var CurDate = new Date(play_route_start_date.getTime() + 1000*play_route_sec);
+					var CurDateStr = ""+CurDate.getDate()+"."+(CurDate.getMonth()+1)+"."+CurDate.getFullYear()+" "+CurDate.getHours()+":"+CurDate.getMinutes();//+":"+CurDate.getSeconds();
+					
+					if (play_route_sec > play_route_max) {
+						StopPlayRoute();
+					}
+					
+					for (var i = 0, len = routes_list.length; i < len; i++) {
+						CurPos = routes_list_pos[i][0];
+						OldPos = CurPos;
+						
+						if (routes_list[i].length <= CurPos+1) {
+							continue;
+						}	
+						
+						while(CurPos < routes_list[i].length && routes_list[i][CurPos][1] < play_route_sec) {
+							CurPos = CurPos+1;
+						}
+						
+						if (CurPos > 0) {
+							CurPos = CurPos-1;
+						}	
+						routes_list_pos[i][0] = CurPos;
+						
+						pointFeature = routes_list_pos[i][1];
+						
+						if (OldPos != CurPos) {
+							pt = routes_list[i][CurPos][0];
+							pointFeature.move(pt);
+												
+							if (routes_list.length == 1) {
+								m_map.setCenter(pt, m_map.getZoom());
+							}
+							
+						}
+						
+						pointFeature.style.label = CurDateStr;
+						// update
+						//pointFeature.layer.drawFeature(pointFeature);
+											
+					}
+				}
+				
+			}
+			
+			function StopPlayRoute() {
+				clearInterval(play_route_intervalid);
+				play_route_intervalid = null;
+				play_route_pause = false;
+
+			}
+			
+			/* Measuring */
+			
+			function StartMeasuring() {
+				// Disable double click
+				if (!disable_double_click_control.active) {
+					disable_double_click_control.activate();
+				}
+				
+				if (!measure_control) {
+				
+					// style the sketch fancy
+					var sketchSymbolizers = {
+						"Point": {
+							pointRadius: 4,
+							graphicName: "square",
+							fillColor: "white",
+							fillOpacity: 1,
+							strokeWidth: 1,
+							strokeOpacity: 1,
+							strokeColor: "#333333"
+						},
+						"Line": {
+							strokeWidth: 3,
+							strokeOpacity: 1,
+							strokeColor: "#666666",
+							strokeDashstyle: "dash"
+						},
+						"Polygon": {
+							strokeWidth: 2,
+							strokeOpacity: 1,
+							strokeColor: "#666666",
+							fillColor: "red",
+							fillOpacity: 0.3
+						}
+					};
+					var style = new OpenLayers.Style();
+					style.addRules([
+						new OpenLayers.Rule({symbolizer: sketchSymbolizers})
+					]);
+					var styleMap = new OpenLayers.StyleMap({"default": style});
+					
+					measure_control = new OpenLayers.Control.Measure(
+						OpenLayers.Handler.Path, {
+							persist: true,
+							handlerOptions: {
+								layerOptions: {styleMap: styleMap}
+							}
+						}
+					);
+					
+					measure_control.geodesic = true;
+					
+					measure_control.events.on({
+						"measure": handleMeasuring,
+						"measurepartial": handleMeasuring
+					});
+					m_map.addControl(measure_control);
+				}
+				
+				if (!infopanel_control) {
+					infopanel_control = new OpenLayers.Control.InfoPanel();
+					m_map.addControl(infopanel_control);
+				}
+				
+				measure_control.activate();
+				infopanel_control.activate();
+
+			}
+			
+			function StopMeasuring() {
+				
+				if (!disable_double_click) {
+					disable_double_click_control.deactivate();
+				}
+				
+				infopanel_control.div.innerHTML = "";
+				
+				measure_control.deactivate();				
+				infopanel_control.deactivate();
+				
+			}
+
+			function handleMeasuring(event) {
+				var geometry = event.geometry;
+				var units = event.units;
+				var units_rus;
+				var measure = event.measure;
+				if (units == "m") {
+					units_rus = "м";
+				} else {					
+					units_rus = "км";
+				}
+				var out = "<b>Длина: " + measure.toFixed(3).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ")
+					+ " " + units_rus;
+				
+				infopanel_control.div.innerHTML = out;				
+			}
+			
+			/* Area measuring */
+			
+			function StartMeasuringArea() {
+				// Disable double click
+				if (!disable_double_click_control.active) {
+					disable_double_click_control.activate();
+				}
+				
+				if (!polygon_control) {
+				
+					// style the sketch fancy
+					var sketchSymbolizers = {
+						"Point": {
+							pointRadius: 4,
+							graphicName: "square",
+							fillColor: "white",
+							fillOpacity: 1,
+							strokeWidth: 1,
+							strokeOpacity: 1,
+							strokeColor: "#333333"
+						},
+						"Line": {
+							strokeWidth: 3,
+							strokeOpacity: 1,
+							strokeColor: "#666666",
+							strokeDashstyle: "dash"
+						},
+						"Polygon": {
+							strokeWidth: 2,
+							strokeOpacity: 1,
+							strokeColor: "#666666",
+							fillColor: "red",
+							fillOpacity: 0.3
+						}
+					};
+					var style = new OpenLayers.Style();
+					style.addRules([
+						new OpenLayers.Rule({symbolizer: sketchSymbolizers})
+					]);
+					var styleMap = new OpenLayers.StyleMap({"default": style});
+					
+					polygon_control = new OpenLayers.Control.Measure(
+						OpenLayers.Handler.Polygon, {
+							persist: true,
+							handlerOptions: {
+								layerOptions: {styleMap: styleMap}
+							}
+						}
+					);
+					polygon_control.geodesic = true;
+					
+					polygon_control.events.on({
+						"measure": handleMeasurements,
+						"measurepartial": handleMeasurements
+					});
+					m_map.addControl(polygon_control);
+				}
+				
+				if (!infopanel_control) {
+					infopanel_control = new OpenLayers.Control.InfoPanel();
+					m_map.addControl(infopanel_control);
+				}
+				
+				polygon_control.activate();
+				infopanel_control.activate();
+
+			}
+			
+			function StopMeasuringArea() {
+				
+				if (!disable_double_click) {
+					disable_double_click_control.deactivate();
+				}
+				
+				infopanel_control.div.innerHTML = "";
+				
+				polygon_control.deactivate();				
+				infopanel_control.deactivate();
+				
+			}
+
+			function handleMeasurements(event) {
+				var geometry = event.geometry;
+				var units = event.units;
+				var units_rus;
+				var measure = event.measure;
+				var measure_ga = 0;
+				if (units == "m") {
+					measure_ga = measure/10000;
+					units_rus = "м";
+				} else {
+					measure_ga = measure*100;
+					units_rus = "км";
+				}
+				var out = "<b>Площадь фигуры: " + measure.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ") 
+					+ " " + units_rus + "<sup>2</sup><br />" + measure_ga.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1 ") + " га</b>";
+				
+				infopanel_control.div.innerHTML = out;				
+			}
+			
+			/* Events */
+						
+			function CreateEventProcess(value) {
+				
+				var input = document.getElementById('event_to_1c');
+				input.value = value;
+								  
+				if(document.createEvent)  // В нормальных браузерах
+				{
+					var evt = document.createEvent('MouseEvents');
+					evt.initMouseEvent('click', true, true, window, 1, 5, 5, 5, 5, false, false, false, false, 0, null);
+					input.dispatchEvent(evt);
+				}
+				else if(document.createEventObject) // Реализация события в IE
+				{
+					var evt = document.createEventObject();
+					input.fireEvent('onclick', evt);
+				}
+				
+				input.value = "";
+
+			}			
+						
+		
+  </script>
+  </head>
+  <body onload="init()" >
+    <div id="map"></div>
+    <div id="footer">
+      <form name="form" method="get" style="visibility:hidden; height:0px; background-color:#FF0000;">
+        <input name="result" type="hidden" value="" />
+        <input id="event_to_1c" name="event_to_1c"  type="hidden" value="" />
+      </form>
+    </div>
+  </body>
+</html>

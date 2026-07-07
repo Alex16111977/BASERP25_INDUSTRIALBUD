@@ -36,6 +36,9 @@
 					<v8:content>Регистратор</v8:content>
 				</v8:item>
 			</title>
+			<attributeUseRestriction>
+				<condition>true</condition>
+			</attributeUseRestriction>
 			<role>
 				<dcscom:periodNumber>1</dcscom:periodNumber>
 				<dcscom:periodType>Main</dcscom:periodType>
@@ -44,12 +47,12 @@
 			<orderExpression>
 				<dcscom:expression>ПериодСекунда</dcscom:expression>
 				<dcscom:orderType>Asc</dcscom:orderType>
-				<dcscom:autoOrder>true</dcscom:autoOrder>
+				<dcscom:autoOrder>false</dcscom:autoOrder>
 			</orderExpression>
 			<orderExpression>
 				<dcscom:expression>Регистратор</dcscom:expression>
 				<dcscom:orderType>Asc</dcscom:orderType>
-				<dcscom:autoOrder>true</dcscom:autoOrder>
+				<dcscom:autoOrder>false</dcscom:autoOrder>
 			</orderExpression>
 		</field>
 		<field xsi:type="DataSetFieldField">
@@ -108,8 +111,55 @@
 				<dcscom:periodType>Main</dcscom:periodType>
 			</role>
 		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ПериодДень</dataPath>
+			<field>ПериодДень</field>
+			<role>
+				<dcscom:periodNumber>3</dcscom:periodNumber>
+				<dcscom:periodType>Additional</dcscom:periodType>
+			</role>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ПериодМесяц</dataPath>
+			<field>ПериодМесяц</field>
+			<role>
+				<dcscom:periodNumber>4</dcscom:periodNumber>
+				<dcscom:periodType>Additional</dcscom:periodType>
+			</role>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ПериодПолугодие</dataPath>
+			<field>ПериодПолугодие</field>
+			<role>
+				<dcscom:periodNumber>6</dcscom:periodNumber>
+				<dcscom:periodType>Additional</dcscom:periodType>
+			</role>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ПериодКвартал</dataPath>
+			<field>ПериодКвартал</field>
+			<role>
+				<dcscom:periodNumber>5</dcscom:periodNumber>
+				<dcscom:periodType>Additional</dcscom:periodType>
+			</role>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ПериодГод</dataPath>
+			<field>ПериодГод</field>
+			<role>
+				<dcscom:periodNumber>7</dcscom:periodNumber>
+				<dcscom:periodType>Additional</dcscom:periodType>
+			</role>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ОрганизацияБухгалтерия</dataPath>
+			<field>ОрганизацияБухгалтерия</field>
+			<role>
+				<dcscom:dimension>true</dcscom:dimension>
+			</role>
+		</field>
 		<dataSource>ИсточникДанных1</dataSource>
-		<query>ВЫБРАТЬ
+		<query>ВЫБРАТЬ РАЗРЕШЕННЫЕ
 	А_ВзаиморасчетыССотрудникамиОстаткиИОбороты.Организация КАК Организация,
 	А_ВзаиморасчетыССотрудникамиОстаткиИОбороты.ФормаPL КАК ФормаPL,
 	А_ВзаиморасчетыССотрудникамиОстаткиИОбороты.Подразделение КАК Подразделение,
@@ -119,7 +169,13 @@
 	А_ВзаиморасчетыССотрудникамиОстаткиИОбороты.СуммаВзаиморасчетовРасход КАК СуммаВзаиморасчетовРасход,
 	А_ВзаиморасчетыССотрудникамиОстаткиИОбороты.СуммаВзаиморасчетовКонечныйОстаток КАК СуммаВзаиморасчетовКонечныйОстаток,
 	А_ВзаиморасчетыССотрудникамиОстаткиИОбороты.Регистратор КАК Регистратор,
-	А_ВзаиморасчетыССотрудникамиОстаткиИОбороты.ПериодСекунда КАК ПериодСекунда
+	А_ВзаиморасчетыССотрудникамиОстаткиИОбороты.ПериодСекунда КАК ПериодСекунда,
+	А_ВзаиморасчетыССотрудникамиОстаткиИОбороты.ПериодДень КАК ПериодДень,
+	А_ВзаиморасчетыССотрудникамиОстаткиИОбороты.ПериодМесяц КАК ПериодМесяц,
+	А_ВзаиморасчетыССотрудникамиОстаткиИОбороты.ПериодКвартал КАК ПериодКвартал,
+	А_ВзаиморасчетыССотрудникамиОстаткиИОбороты.ПериодПолугодие КАК ПериодПолугодие,
+	А_ВзаиморасчетыССотрудникамиОстаткиИОбороты.ПериодГод КАК ПериодГод,
+	А_ВзаиморасчетыССотрудникамиОстаткиИОбороты.ОрганизацияБухгалтерия КАК ОрганизацияБухгалтерия
 ИЗ
 	РегистрНакопления.А_ВзаиморасчетыССотрудниками.ОстаткиИОбороты(, , Авто, , ) КАК А_ВзаиморасчетыССотрудникамиОстаткиИОбороты</query>
 	</dataSet>

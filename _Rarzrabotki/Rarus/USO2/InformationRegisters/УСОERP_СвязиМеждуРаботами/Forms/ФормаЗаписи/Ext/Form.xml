@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
+	<WindowOpeningMode>LockOwnerWindow</WindowOpeningMode>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1"/>
+	<Events>
+		<Event name="AfterWrite">ПослеЗаписи</Event>
+		<Event name="AfterWriteAtServer">ПослеЗаписиНаСервере</Event>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+	</Events>
+	<ChildItems>
+		<InputField name="Период" id="1">
+			<DataPath>Запись.Period</DataPath>
+			<ContextMenu name="ПериодКонтекстноеМеню" id="2"/>
+			<ExtendedTooltip name="ПериодРасширеннаяПодсказка" id="3"/>
+		</InputField>
+		<InputField name="ОбъектСтроительстваПредшественника" id="4">
+			<DataPath>Запись.ОбъектСтроительстваПредшественника</DataPath>
+			<ContextMenu name="ОбъектСтроительстваПредшественникаКонтекстноеМеню" id="5"/>
+			<ExtendedTooltip name="ОбъектСтроительстваПредшественникаРасширеннаяПодсказка" id="6"/>
+			<Events>
+				<Event name="OnChange">ОбъектСтроительстваПредшественникаПриИзменении</Event>
+			</Events>
+		</InputField>
+		<InputField name="РаботаПредшественник" id="7">
+			<DataPath>Запись.РаботаПредшественник</DataPath>
+			<ChoiceParameterLinks>
+				<xr:Link>
+					<xr:Name>Отбор.Владелец</xr:Name>
+					<xr:DataPath xsi:type="xs:string">СценарийПланированияПредшественника</xr:DataPath>
+					<xr:ValueChange>Clear</xr:ValueChange>
+				</xr:Link>
+			</ChoiceParameterLinks>
+			<ContextMenu name="РаботаПредшественникКонтекстноеМеню" id="8"/>
+			<ExtendedTooltip name="РаботаПредшественникРасширеннаяПодсказка" id="9"/>
+			<Events>
+				<Event name="AutoComplete">РаботаПредшественникАвтоПодбор</Event>
+				<Event name="TextEditEnd">РаботаПредшественникОкончаниеВводаТекста</Event>
+			</Events>
+		</InputField>
+		<InputField name="РаботаПоследователь" id="10">
+			<DataPath>Запись.РаботаПоследователь</DataPath>
+			<ContextMenu name="РаботаПоследовательКонтекстноеМеню" id="11"/>
+			<ExtendedTooltip name="РаботаПоследовательРасширеннаяПодсказка" id="12"/>
+		</InputField>
+		<InputField name="ТипЗависимости" id="13">
+			<DataPath>Запись.ТипЗависимости</DataPath>
+			<ContextMenu name="ТипЗависимостиКонтекстноеМеню" id="14"/>
+			<ExtendedTooltip name="ТипЗависимостиРасширеннаяПодсказка" id="15"/>
+		</InputField>
+		<InputField name="Задержка" id="16">
+			<DataPath>Запись.Задержка</DataPath>
+			<ContextMenu name="ЗадержкаКонтекстноеМеню" id="17"/>
+			<ExtendedTooltip name="ЗадержкаРасширеннаяПодсказка" id="18"/>
+		</InputField>
+		<InputField name="ЕдиницаЗадержки" id="19">
+			<DataPath>Запись.ЕдиницаЗадержки</DataPath>
+			<ContextMenu name="ЕдиницаЗадержкиКонтекстноеМеню" id="20"/>
+			<ExtendedTooltip name="ЕдиницаЗадержкиРасширеннаяПодсказка" id="21"/>
+		</InputField>
+		<InputField name="АвторИзмерения" id="22">
+			<DataPath>Запись.АвторИзмерения</DataPath>
+			<ContextMenu name="АвторИзмеренияКонтекстноеМеню" id="23"/>
+			<ExtendedTooltip name="АвторИзмеренияРасширеннаяПодсказка" id="24"/>
+		</InputField>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Запись" id="1">
+			<Type>
+				<v8:Type>cfg:InformationRegisterRecordManager.УСОERP_СвязиМеждуРаботами</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="СценарийПланированияПредшественника" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сценарий планирования предшественника</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.УСОERP_СценарииПланированияПроектовСтроительства</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="Организация" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Организация</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.Организации</v8:Type>
+			</Type>
+		</Attribute>
+	</Attributes>
+	<Parameters>
+		<Parameter name="ОбъектСтроительстваПредшественника">
+			<Type>
+				<v8:Type>cfg:CatalogRef.СМ_ОбъектыСтроительства</v8:Type>
+			</Type>
+		</Parameter>
+		<Parameter name="РаботаПоследователь">
+			<Type>
+				<v8:Type>cfg:CatalogRef.УСОERP_СтроительныеРаботы</v8:Type>
+			</Type>
+		</Parameter>
+		<Parameter name="Организация">
+			<Type>
+				<v8:Type>cfg:CatalogRef.Организации</v8:Type>
+			</Type>
+		</Parameter>
+	</Parameters>
+</Form>

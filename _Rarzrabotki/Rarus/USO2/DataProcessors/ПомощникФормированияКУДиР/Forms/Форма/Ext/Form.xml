@@ -1,0 +1,2884 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
+	<Title>
+		<v8:item>
+			<v8:lang>ru</v8:lang>
+			<v8:content>Помощник формирования Книги доходов и расходов при УСН</v8:content>
+		</v8:item>
+		<v8:item>
+			<v8:lang>en</v8:lang>
+			<v8:content>Ledger of income and expenditure generation for STS wizard</v8:content>
+		</v8:item>
+	</Title>
+	<AutoSaveDataInSettings>Use</AutoSaveDataInSettings>
+	<AutoTitle>false</AutoTitle>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+		<ChildItems>
+			<Button name="ФормаПоясненияКЭтапам" id="28">
+				<Type>CommandBarButton</Type>
+				<CommandName>Form.Command.ПоясненияКЭтапам</CommandName>
+				<ExtendedTooltip name="ФормаПоясненияКЭтапамРасширеннаяПодсказка" id="29"/>
+			</Button>
+			<Button name="ФормаОбновить" id="408">
+				<Type>CommandBarButton</Type>
+				<CommandName>Form.Command.Обновить</CommandName>
+				<LocationInCommandBar>InAdditionalSubmenu</LocationInCommandBar>
+				<ExtendedTooltip name="ФормаОбновитьРасширеннаяПодсказка" id="409"/>
+			</Button>
+		</ChildItems>
+	</AutoCommandBar>
+	<Events>
+		<Event name="OnOpen">ПриОткрытии</Event>
+		<Event name="OnLoadDataFromSettingsAtServer">ПриЗагрузкеДанныхИзНастроекНаСервере</Event>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+	</Events>
+	<ChildItems>
+		<UsualGroup name="ГруппаШапка" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Шапка</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Header</v8:content>
+				</v8:item>
+			</Title>
+			<Group>Vertical</Group>
+			<Behavior>Usual</Behavior>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаШапкаРасширеннаяПодсказка" id="2"/>
+			<ChildItems>
+				<UsualGroup name="ГруппаПараметры" id="26">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Параметры формирования Книги учета доходов и расходов:</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Generation parameters of ledger of income and expenditure:</v8:content>
+						</v8:item>
+					</Title>
+					<Group>Horizontal</Group>
+					<Behavior>Usual</Behavior>
+					<Representation>None</Representation>
+					<ExtendedTooltip name="ГруппаПараметрыРасширеннаяПодсказка" id="27"/>
+					<ChildItems>
+						<UsualGroup name="ГруппаОтборПериод" id="7">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Период</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Period</v8:content>
+								</v8:item>
+							</Title>
+							<Group>Horizontal</Group>
+							<Behavior>Usual</Behavior>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="ГруппаОтборПериодРасширеннаяПодсказка" id="8"/>
+							<ChildItems>
+								<InputField name="НачалоПериода" id="12">
+									<DataPath>ПредставлениеНачалаПериода</DataPath>
+									<ReadOnly>true</ReadOnly>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Период</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Period</v8:content>
+										</v8:item>
+									</Title>
+									<Width>10</Width>
+									<HorizontalStretch>false</HorizontalStretch>
+									<ContextMenu name="НачалоПериодаКонтекстноеМеню" id="13"/>
+									<ExtendedTooltip name="НачалоПериодаExtendedTooltip" id="14"/>
+								</InputField>
+								<LabelDecoration name="ДекорацияТире" id="15">
+									<AutoMaxWidth>false</AutoMaxWidth>
+									<Title formatted="false">
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>—</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>—</v8:content>
+										</v8:item>
+									</Title>
+									<HorizontalAlign>Center</HorizontalAlign>
+									<VerticalAlign>Center</VerticalAlign>
+									<ContextMenu name="ДекорацияТиреКонтекстноеМеню" id="16"/>
+									<ExtendedTooltip name="ДекорацияТиреExtendedTooltip" id="17"/>
+								</LabelDecoration>
+								<InputField name="КонецПериода" id="18">
+									<DataPath>ПредставлениеКонцаПериода</DataPath>
+									<TitleLocation>None</TitleLocation>
+									<Width>14</Width>
+									<HorizontalStretch>false</HorizontalStretch>
+									<ChoiceButton>true</ChoiceButton>
+									<SpinButton>true</SpinButton>
+									<TextEdit>false</TextEdit>
+									<ChoiceButtonPicture>
+										<xr:Ref>StdPicture.InputFieldCalendar</xr:Ref>
+										<xr:LoadTransparent>true</xr:LoadTransparent>
+									</ChoiceButtonPicture>
+									<ContextMenu name="КонецПериодаКонтекстноеМеню" id="19"/>
+									<ExtendedTooltip name="КонецПериодаExtendedTooltip" id="20"/>
+									<Events>
+										<Event name="StartChoice">КонецПериодаНачалоВыбора</Event>
+										<Event name="Tuning">КонецПериодаРегулирование</Event>
+									</Events>
+								</InputField>
+							</ChildItems>
+						</UsualGroup>
+						<InputField name="Организация" id="23">
+							<DataPath>Объект.Организация</DataPath>
+							<HorizontalStretch>false</HorizontalStretch>
+							<ListChoiceMode>true</ListChoiceMode>
+							<ContextMenu name="ОрганизацияКонтекстноеМеню" id="24"/>
+							<ExtendedTooltip name="ОрганизацияРасширеннаяПодсказка" id="25"/>
+							<Events>
+								<Event name="OnChange">ОрганизацияПриИзменении</Event>
+							</Events>
+						</InputField>
+					</ChildItems>
+				</UsualGroup>
+				<UsualGroup name="ГруппаТекущегоОбъектаНалогообложения" id="272">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Текущего объекта налогообложения</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Current taxation object</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Текущий объект налогообложения</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Current taxation object</v8:content>
+						</v8:item>
+					</ToolTip>
+					<Group>Horizontal</Group>
+					<Behavior>Usual</Behavior>
+					<Representation>None</Representation>
+					<ShowTitle>false</ShowTitle>
+					<ExtendedTooltip name="ГруппаТекущегоОбъектаНалогообложенияРасширеннаяПодсказка" id="273"/>
+					<ChildItems>
+						<LabelField name="ПредставлениеОбъектаНалогообложения" id="274">
+							<DataPath>ПредставлениеОбъектаНалогообложения</DataPath>
+							<TitleLocation>None</TitleLocation>
+							<AutoMaxWidth>false</AutoMaxWidth>
+							<TextColor>style:ПоясняющийТекст</TextColor>
+							<ContextMenu name="ПредставлениеОбъектаНалогообложенияКонтекстноеМеню" id="275"/>
+							<ExtendedTooltip name="ПредставлениеОбъектаНалогообложенияРасширеннаяПодсказка" id="276"/>
+						</LabelField>
+					</ChildItems>
+				</UsualGroup>
+				<UsualGroup name="ГруппаРасширенныйНалоговыйПериод" id="522">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Расширенный налоговый период</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Extended fiscal period</v8:content>
+						</v8:item>
+					</Title>
+					<HorizontalStretch>true</HorizontalStretch>
+					<Group>Horizontal</Group>
+					<Behavior>Usual</Behavior>
+					<Representation>None</Representation>
+					<ShowTitle>false</ShowTitle>
+					<BackColor>style:ToolTipBackColor</BackColor>
+					<ExtendedTooltip name="ГруппаРасширенныйНалоговыйПериодРасширеннаяПодсказка" id="523"/>
+					<ChildItems>
+						<LabelDecoration name="ПояснениеРасширенныйНалоговыйПериод" id="524">
+							<Visible>false</Visible>
+							<AutoMaxWidth>false</AutoMaxWidth>
+							<Title formatted="false">
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Период с даты регистрации 01.12.2017 по 31.12.2018 включается в отчет.</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Period from registration date 12/01/2017 until 12/31/2018 is included in report.</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTipRepresentation>Button</ToolTipRepresentation>
+							<ContextMenu name="ПояснениеРасширенныйНалоговыйПериодКонтекстноеМеню" id="525"/>
+							<ExtendedTooltip name="ПояснениеРасширенныйНалоговыйПериодРасширеннаяПодсказка" id="526">
+								<Title formatted="true">
+									<v8:item>
+										<v8:lang>ru</v8:lang>
+										<v8:content>У организаций и ИП, зарегистрированных в декабре, первый налоговый период по УСН длится с даты регистрации до конца следующего года (п.2 ст. 55 НК РФ). Доходы и расходы декабря отражаются в "Книге доходов и расходов" за первый квартал следующего года.</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>en</v8:lang>
+										<v8:content>For companies and IEs registered in December, the first STS fiscal period lasts from the registration date to the end of the next year(cl. 2 art. 55 of the Tax Code of the Russian Federation). Income and expenses for December are recorded in the "Ledger of income and expenses" for the first quarter of the following year.</v8:content>
+									</v8:item>
+								</Title>
+							</ExtendedTooltip>
+						</LabelDecoration>
+					</ChildItems>
+				</UsualGroup>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="ГруппаОсновная" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Основная</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Main</v8:content>
+				</v8:item>
+			</Title>
+			<Group>Vertical</Group>
+			<Behavior>Usual</Behavior>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаОсновнаяРасширеннаяПодсказка" id="4"/>
+			<ChildItems>
+				<UsualGroup name="ГруппаПодготовкаДанныхОбщие" id="30">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Подготовка данных по доходам и расходам
+</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Prepare data on income and expenses
+</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Группа настройки признания доходов и расходов для УСН</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Group of settings of recognition of income and expenses for STS</v8:content>
+						</v8:item>
+					</ToolTip>
+					<Group>Horizontal</Group>
+					<Behavior>Usual</Behavior>
+					<ExtendedTooltip name="ГруппаПодготовкаДанныхОбщиеРасширеннаяПодсказка" id="31"/>
+					<ChildItems>
+						<LabelDecoration name="ДекорацияОтступПодготовкаДанных" id="32">
+							<Visible>false</Visible>
+							<ContextMenu name="ДекорацияОтступПодготовкаДанныхКонтекстноеМеню" id="33"/>
+							<ExtendedTooltip name="ДекорацияОтступПодготовкаДанныхРасширеннаяПодсказка" id="34"/>
+						</LabelDecoration>
+						<UsualGroup name="ГруппаПодготовкаДанных" id="35">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Подготовка данных</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Data preparation</v8:content>
+								</v8:item>
+							</Title>
+							<Group>Vertical</Group>
+							<Behavior>Usual</Behavior>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="ГруппаПодготовкаДанныхРасширеннаяПодсказка" id="36"/>
+							<ChildItems>
+								<UsualGroup name="ГруппаПодготовкаСтатьиРасходов" id="83">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Подготовка статьи расходов</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Prepare expense item</v8:content>
+										</v8:item>
+									</Title>
+									<Group>Vertical</Group>
+									<Behavior>Usual</Behavior>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="ГруппаПодготовкаСтатьиРасходовРасширеннаяПодсказка" id="84"/>
+									<ChildItems>
+										<UsualGroup name="ГруппаНастройкаПризнанияСтатей" id="233">
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Настройка признания статей</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Item recognition setting</v8:content>
+												</v8:item>
+											</Title>
+											<Group>Horizontal</Group>
+											<Behavior>Usual</Behavior>
+											<Representation>None</Representation>
+											<ShowTitle>false</ShowTitle>
+											<ExtendedTooltip name="ГруппаНастройкаПризнанияСтатейРасширеннаяПодсказка" id="234"/>
+											<ChildItems>
+												<LabelDecoration name="ДекорацияОтступНастройкаПризнанияСтатей" id="235">
+													<Width>2</Width>
+													<ContextMenu name="ДекорацияОтступНастройкаПризнанияСтатейКонтекстноеМеню" id="236"/>
+													<ExtendedTooltip name="ДекорацияОтступНастройкаПризнанияСтатейРасширеннаяПодсказка" id="237"/>
+												</LabelDecoration>
+												<LabelDecoration name="ДекорацияНастройкаПризнанияСтатейРасходов" id="91">
+													<AutoMaxWidth>false</AutoMaxWidth>
+													<Title formatted="false">
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Настройка статей расходов</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>Configure expense items</v8:content>
+														</v8:item>
+													</Title>
+													<Hyperlink>true</Hyperlink>
+													<ContextMenu name="ДекорацияНастройкаПризнанияСтатейРасходовКонтекстноеМеню" id="92"/>
+													<ExtendedTooltip name="ДекорацияНастройкаПризнанияСтатейРасходовРасширеннаяПодсказка" id="93"/>
+													<Events>
+														<Event name="Click">ДекорацияНастройкаПризнанияСтатейРасходовНажатие</Event>
+													</Events>
+												</LabelDecoration>
+											</ChildItems>
+										</UsualGroup>
+										<UsualGroup name="ГруппаПояснениеПодготовкаСтатей" id="103">
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Пояснение подготовка статей</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Explanation prepare items</v8:content>
+												</v8:item>
+											</Title>
+											<Group>Horizontal</Group>
+											<Behavior>Usual</Behavior>
+											<Representation>None</Representation>
+											<ShowTitle>false</ShowTitle>
+											<ExtendedTooltip name="ГруппаПояснениеПодготовкаСтатейРасширеннаяПодсказка" id="104"/>
+											<ChildItems>
+												<LabelDecoration name="ДекорацияОтступПояснениеПодготовкиСтатей" id="238">
+													<Width>2</Width>
+													<ContextMenu name="ДекорацияОтступПояснениеПодготовкиСтатейКонтекстноеМеню" id="239"/>
+													<ExtendedTooltip name="ДекорацияОтступПояснениеПодготовкиСтатейРасширеннаяПодсказка" id="240"/>
+												</LabelDecoration>
+												<LabelDecoration name="ПояснениеПодготовкаСтатей" id="115">
+													<AutoMaxWidth>false</AutoMaxWidth>
+													<TextColor>style:ПоясняющийТекст</TextColor>
+													<Title formatted="false">
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Признание расходов для отражения в Книге учета доходов и расходов производится в соответствии с настройками статей расходов. Установленные настройки будут действовать только для текущих операций, для изменения ранее признанных расходов необходимо повторно выполнить признание.</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>Expense recognition for recording in the ledger of income and expenditure is carried out according to expense item settings. Configured settings will be applied only to the current transactions. To change the expenses recognized earlier, recognize them again.</v8:content>
+														</v8:item>
+													</Title>
+													<ContextMenu name="ПояснениеПодготовкаСтатейКонтекстноеМеню" id="116"/>
+													<ExtendedTooltip name="ПояснениеПодготовкаСтатейРасширеннаяПодсказка" id="117"/>
+												</LabelDecoration>
+											</ChildItems>
+										</UsualGroup>
+									</ChildItems>
+								</UsualGroup>
+								<UsualGroup name="ГруппаПодготовкаПорядкаУчетаНоменклатуры" id="254">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Настройка порядка учета номенклатуры</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Set up procedure of product accounting</v8:content>
+										</v8:item>
+									</Title>
+									<Group>Vertical</Group>
+									<Behavior>Usual</Behavior>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="ГруппаПодготовкаПорядкаУчетаНоменклатурыРасширеннаяПодсказка" id="255"/>
+									<ChildItems>
+										<UsualGroup name="ГруппаНастройкаПорядкаУчетаНоменклатуры" id="256">
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Настройка порядка учета номенклатуры</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Set up procedure of product accounting</v8:content>
+												</v8:item>
+											</Title>
+											<Group>Horizontal</Group>
+											<Behavior>Usual</Behavior>
+											<Representation>None</Representation>
+											<ShowTitle>false</ShowTitle>
+											<ExtendedTooltip name="ГруппаНастройкаПорядкаУчетаНоменклатурыРасширеннаяПодсказка" id="257"/>
+											<ChildItems>
+												<LabelDecoration name="ДекорацияОтступНастройкаПорядкаУчетаНоменклатуры" id="258">
+													<Width>2</Width>
+													<ContextMenu name="ДекорацияОтступНастройкаПорядкаУчетаНоменклатурыКонтекстноеМеню" id="259"/>
+													<ExtendedTooltip name="ДекорацияОтступНастройкаПорядкаУчетаНоменклатурыРасширеннаяПодсказка" id="260"/>
+												</LabelDecoration>
+												<LabelDecoration name="ДекорацияНастройкаПорядкаУчетаНоменклатуры" id="261">
+													<AutoMaxWidth>false</AutoMaxWidth>
+													<Title formatted="false">
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Настройка порядка учета номенклатуры</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>Set up procedure of product accounting</v8:content>
+														</v8:item>
+													</Title>
+													<Hyperlink>true</Hyperlink>
+													<ContextMenu name="ДекорацияНастройкаПорядкаУчетаНоменклатурыКонтекстноеМеню" id="262"/>
+													<ExtendedTooltip name="ДекорацияНастройкаПорядкаУчетаНоменклатурыРасширеннаяПодсказка" id="263"/>
+													<Events>
+														<Event name="Click">ДекорацияНастройкаГруппНоменклатурыНажатие</Event>
+													</Events>
+												</LabelDecoration>
+											</ChildItems>
+										</UsualGroup>
+										<UsualGroup name="ГруппаПояснениеПодготовкаПорядкаУчетаНоменклатуры" id="264">
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Пояснение подготовка порядка учета номенклатуры</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Explanation preparing procedure of product accounting</v8:content>
+												</v8:item>
+											</Title>
+											<Group>Horizontal</Group>
+											<Behavior>Usual</Behavior>
+											<Representation>None</Representation>
+											<ShowTitle>false</ShowTitle>
+											<ExtendedTooltip name="ГруппаПояснениеПодготовкаПорядкаУчетаНоменклатурыРасширеннаяПодсказка" id="265"/>
+											<ChildItems>
+												<LabelDecoration name="ДекорацияОтступПояснениеПодготовкиПорядкаУчетаНоменклатуры" id="266">
+													<Width>2</Width>
+													<ContextMenu name="ДекорацияОтступПояснениеПодготовкиПорядкаУчетаНоменклатурыКонтекстноеМеню" id="267"/>
+													<ExtendedTooltip name="ДекорацияОтступПояснениеПодготовкиПорядкаУчетаНоменклатурыРасширеннаяПодсказка" id="268"/>
+												</LabelDecoration>
+												<LabelDecoration name="ПояснениеПодготовкаПорядкаУчетаНоменклатуры" id="269">
+													<AutoMaxWidth>false</AutoMaxWidth>
+													<TextColor>style:ПоясняющийТекст</TextColor>
+													<Title formatted="false">
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Для материалов требуется выполнение только двух условий признания (поступление расходов и оплата). Материалами считаются позиции номенклатуры, учет по которым ведется на субсчетах счета 10 "Материалы". Номенклатура, учет по которой ведется на субсчетах счета 08, считается ВНА и будет признаваться по правилам признания амортизируемого имущества.</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>Only two conditions of recognition (expense receipt and payment) are required for materials. Materials are the items of products recorded on subaccounts of account 10 "Materials". Products recorded on subaccounts of account 08 are considered to be CA and will be recognized according to the rules of depreciable asset recognition. </v8:content>
+														</v8:item>
+													</Title>
+													<ContextMenu name="ПояснениеПодготовкаПорядкаУчетаНоменклатурыКонтекстноеМеню" id="270"/>
+													<ExtendedTooltip name="ПояснениеПодготовкаПорядкаУчетаНоменклатурыРасширеннаяПодсказка" id="271"/>
+												</LabelDecoration>
+											</ChildItems>
+										</UsualGroup>
+									</ChildItems>
+								</UsualGroup>
+								<UsualGroup name="ГруппаПодготовкаДанныхСторноДоходов" id="435">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Подготовка данных сторно доходов</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Prepare storno income data</v8:content>
+										</v8:item>
+									</Title>
+									<ToolTip>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Группа подготовка данных сторно доходов</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Group preparation of storno income data</v8:content>
+										</v8:item>
+									</ToolTip>
+									<Group>Vertical</Group>
+									<Behavior>Usual</Behavior>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="ГруппаПодготовкаДанныхСторноДоходовРасширеннаяПодсказка" id="436"/>
+									<ChildItems>
+										<UsualGroup name="ГруппаСторноДоходов" id="437">
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Сторно доходов</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Storno income</v8:content>
+												</v8:item>
+											</Title>
+											<ToolTip>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Группа сторно доходов</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Group storno income</v8:content>
+												</v8:item>
+											</ToolTip>
+											<Behavior>Usual</Behavior>
+											<Representation>None</Representation>
+											<ShowTitle>false</ShowTitle>
+											<ExtendedTooltip name="ГруппаСторноДоходовРасширеннаяПодсказка" id="438"/>
+											<ChildItems>
+												<Pages name="КартинкиСторноДоходов" id="452">
+													<Title>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Картинки сторно доходов</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>Pictures income storno</v8:content>
+														</v8:item>
+													</Title>
+													<ToolTip>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Картинки сторно доходов</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>Pictures income storno</v8:content>
+														</v8:item>
+													</ToolTip>
+													<PagesRepresentation>None</PagesRepresentation>
+													<ExtendedTooltip name="КартинкиСторноДоходовРасширеннаяПодсказка" id="453"/>
+													<ChildItems>
+														<Page name="СторноДоходовНеВыполнено" id="454">
+															<Title>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Сторно доходов не выполнено</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Income is not reversed</v8:content>
+																</v8:item>
+															</Title>
+															<ShowTitle>false</ShowTitle>
+															<ExtendedTooltip name="СторноДоходовНеВыполненоРасширеннаяПодсказка" id="455"/>
+															<ChildItems>
+																<PictureDecoration name="Декорация62" id="456">
+																	<AutoMaxWidth>false</AutoMaxWidth>
+																	<MaxWidth>2</MaxWidth>
+																	<Picture>
+																		<xr:Ref>CommonPicture.НеВыполнено</xr:Ref>
+																		<xr:LoadTransparent>false</xr:LoadTransparent>
+																	</Picture>
+																	<FileDragMode>AsFile</FileDragMode>
+																	<ContextMenu name="Декорация62КонтекстноеМеню" id="457"/>
+																	<ExtendedTooltip name="Декорация62РасширеннаяПодсказка" id="458"/>
+																</PictureDecoration>
+															</ChildItems>
+														</Page>
+														<Page name="СторноДоходовВыполняется" id="459">
+															<Title>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Сторно доходов выполняется</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Storno income is in progress</v8:content>
+																</v8:item>
+															</Title>
+															<ShowTitle>false</ShowTitle>
+															<ExtendedTooltip name="СторноДоходовВыполняетсяРасширеннаяПодсказка" id="460"/>
+															<ChildItems>
+																<PictureDecoration name="Декорация63" id="461">
+																	<AutoMaxWidth>false</AutoMaxWidth>
+																	<MaxWidth>2</MaxWidth>
+																	<Picture>
+																		<xr:Ref>CommonPicture.НезавершившаясяПроверка</xr:Ref>
+																		<xr:LoadTransparent>false</xr:LoadTransparent>
+																	</Picture>
+																	<FileDragMode>AsFile</FileDragMode>
+																	<ContextMenu name="Декорация63КонтекстноеМеню" id="462"/>
+																	<ExtendedTooltip name="Декорация63РасширеннаяПодсказка" id="463"/>
+																</PictureDecoration>
+															</ChildItems>
+														</Page>
+														<Page name="СторноДоходовВыполненоУспешно" id="464">
+															<Title>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Сторно доходов выполнено успешно</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Storno income is completed successfully</v8:content>
+																</v8:item>
+															</Title>
+															<ToolTip>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Сторно доходов выполнено успешно</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Storno income is completed successfully</v8:content>
+																</v8:item>
+															</ToolTip>
+															<ShowTitle>false</ShowTitle>
+															<ExtendedTooltip name="СторноДоходовВыполненоУспешноРасширеннаяПодсказка" id="465"/>
+															<ChildItems>
+																<PictureDecoration name="Декорация64" id="466">
+																	<AutoMaxWidth>false</AutoMaxWidth>
+																	<MaxWidth>2</MaxWidth>
+																	<Picture>
+																		<xr:Ref>CommonPicture.ВыполненоУспешно</xr:Ref>
+																		<xr:LoadTransparent>false</xr:LoadTransparent>
+																	</Picture>
+																	<FileDragMode>AsFile</FileDragMode>
+																	<ContextMenu name="Декорация64КонтекстноеМеню" id="467"/>
+																	<ExtendedTooltip name="Декорация64РасширеннаяПодсказка" id="468"/>
+																</PictureDecoration>
+															</ChildItems>
+														</Page>
+														<Page name="СторноДоходовВыполненоСОшибками" id="469">
+															<Title>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Сторно доходов выполнено с ошибками</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Storno income is completed with errors</v8:content>
+																</v8:item>
+															</Title>
+															<ToolTip>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Сторно доходов выполнено с ошибками</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Storno income is completed with errors</v8:content>
+																</v8:item>
+															</ToolTip>
+															<ShowTitle>false</ShowTitle>
+															<ExtendedTooltip name="СторноДоходовВыполненоСОшибкамиРасширеннаяПодсказка" id="470"/>
+															<ChildItems>
+																<PictureDecoration name="Декорация65" id="471">
+																	<AutoMaxWidth>false</AutoMaxWidth>
+																	<MaxWidth>2</MaxWidth>
+																	<Picture>
+																		<xr:Ref>CommonPicture.ВыполненоСОшибками</xr:Ref>
+																		<xr:LoadTransparent>false</xr:LoadTransparent>
+																	</Picture>
+																	<FileDragMode>AsFile</FileDragMode>
+																	<ContextMenu name="Декорация65КонтекстноеМеню" id="472"/>
+																	<ExtendedTooltip name="Декорация65РасширеннаяПодсказка" id="473"/>
+																</PictureDecoration>
+															</ChildItems>
+														</Page>
+														<Page name="СторноДоходовОжидается" id="474">
+															<Title>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Сторно доходов ожидается</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Storno income is expected</v8:content>
+																</v8:item>
+															</Title>
+															<ToolTip>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Сторно доходов ожидается</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Storno income is expected</v8:content>
+																</v8:item>
+															</ToolTip>
+															<Group>HorizontalIfPossible</Group>
+															<ExtendedTooltip name="СторноДоходовОжидаетсяРасширеннаяПодсказка" id="475"/>
+															<ChildItems>
+																<PictureDecoration name="Декорация66" id="476">
+																	<AutoMaxWidth>false</AutoMaxWidth>
+																	<MaxWidth>2</MaxWidth>
+																	<Picture>
+																		<xr:Ref>CommonPicture.ОжидаетВыполнения</xr:Ref>
+																		<xr:LoadTransparent>false</xr:LoadTransparent>
+																	</Picture>
+																	<FileDragMode>AsFile</FileDragMode>
+																	<ContextMenu name="Декорация66КонтекстноеМеню" id="477"/>
+																	<ExtendedTooltip name="Декорация66РасширеннаяПодсказка" id="478"/>
+																</PictureDecoration>
+															</ChildItems>
+														</Page>
+													</ChildItems>
+												</Pages>
+												<LabelDecoration name="ДекорацияСторноДоходов" id="479">
+													<MaxWidth>44</MaxWidth>
+													<HorizontalStretch>true</HorizontalStretch>
+													<Title formatted="false">
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Сторно доходов КУДиР</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>LIE storno income</v8:content>
+														</v8:item>
+													</Title>
+													<ContextMenu name="ДекорацияСторноДоходовКонтекстноеМеню" id="480"/>
+													<ExtendedTooltip name="ДекорацияСторноДоходовРасширеннаяПодсказка" id="481"/>
+												</LabelDecoration>
+												<Pages name="ДействияСторноДоходов" id="482">
+													<Title>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Действия сторно доходов</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>Actions income storno</v8:content>
+														</v8:item>
+													</Title>
+													<GroupHorizontalAlign>Right</GroupHorizontalAlign>
+													<PagesRepresentation>None</PagesRepresentation>
+													<ExtendedTooltip name="ДействияСторноДоходовРасширеннаяПодсказка" id="483"/>
+													<ChildItems>
+														<Page name="ДействиеСторноДоходовВыполнить" id="484">
+															<Title>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Действие сторно доходов выполнить</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Action income storno perform</v8:content>
+																</v8:item>
+															</Title>
+															<ShowTitle>false</ShowTitle>
+															<ExtendedTooltip name="ДействиеСторноДоходовВыполнитьРасширеннаяПодсказка" id="485"/>
+															<ChildItems>
+																<LabelDecoration name="ДекорацияСторноДоходовВыполнить" id="486">
+																	<AutoMaxWidth>false</AutoMaxWidth>
+																	<TextColor>style:ЦветГиперссылки</TextColor>
+																	<Title formatted="false">
+																		<v8:item>
+																			<v8:lang>ru</v8:lang>
+																			<v8:content>Выполнить</v8:content>
+																		</v8:item>
+																		<v8:item>
+																			<v8:lang>en</v8:lang>
+																			<v8:content>Perform</v8:content>
+																		</v8:item>
+																	</Title>
+																	<Hyperlink>true</Hyperlink>
+																	<ContextMenu name="ДекорацияСторноДоходовВыполнитьКонтекстноеМеню" id="487"/>
+																	<ExtendedTooltip name="ДекорацияСторноДоходовВыполнитьРасширеннаяПодсказка" id="488"/>
+																	<Events>
+																		<Event name="Click">ДействиеСторноДоходовНажатие</Event>
+																	</Events>
+																</LabelDecoration>
+															</ChildItems>
+														</Page>
+														<Page name="ДействиеСторноДоходовВыполняется" id="489">
+															<Title>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Действие сторно доходов выполняется</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Action income storno is performed</v8:content>
+																</v8:item>
+															</Title>
+															<Group>Horizontal</Group>
+															<ShowTitle>false</ShowTitle>
+															<ExtendedTooltip name="ДействиеСторноДоходовВыполняетсяРасширеннаяПодсказка" id="490"/>
+															<ChildItems>
+																<LabelDecoration name="ДекорацияСторноДоходовОтменить" id="491">
+																	<AutoMaxWidth>false</AutoMaxWidth>
+																	<TextColor>style:ЦветГиперссылки</TextColor>
+																	<Title formatted="false">
+																		<v8:item>
+																			<v8:lang>ru</v8:lang>
+																			<v8:content>Отменить</v8:content>
+																		</v8:item>
+																		<v8:item>
+																			<v8:lang>en</v8:lang>
+																			<v8:content>Cancel</v8:content>
+																		</v8:item>
+																	</Title>
+																	<Hyperlink>true</Hyperlink>
+																	<ContextMenu name="ДекорацияСторноДоходовОтменитьКонтекстноеМеню" id="492"/>
+																	<ExtendedTooltip name="ДекорацияСторноДоходовОтменитьРасширеннаяПодсказка" id="493"/>
+																	<Events>
+																		<Event name="Click">ДействиеСторноДоходовОтменитьНажатие</Event>
+																	</Events>
+																</LabelDecoration>
+															</ChildItems>
+														</Page>
+														<Page name="ДействиеСторноДоходовОжидается" id="494">
+															<Title>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Действие сторно доходов ожидается</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Action income storno is expected</v8:content>
+																</v8:item>
+															</Title>
+															<Group>HorizontalIfPossible</Group>
+															<ExtendedTooltip name="ДействиеСторноДоходовОжидаетсяРасширеннаяПодсказка" id="495"/>
+															<ChildItems>
+																<LabelDecoration name="ДекорацияСторноДоходовОжидается" id="496">
+																	<AutoMaxWidth>false</AutoMaxWidth>
+																	<TextColor>style:ЦветТекстаНеактуальногоСписка</TextColor>
+																	<Title formatted="false">
+																		<v8:item>
+																			<v8:lang>ru</v8:lang>
+																			<v8:content>Ожидается</v8:content>
+																		</v8:item>
+																		<v8:item>
+																			<v8:lang>en</v8:lang>
+																			<v8:content>Expected</v8:content>
+																		</v8:item>
+																	</Title>
+																	<ContextMenu name="ДекорацияСторноДоходовОжидаетсяКонтекстноеМеню" id="497"/>
+																	<ExtendedTooltip name="ДекорацияСторноДоходовОжидаетсяРасширеннаяПодсказка" id="498"/>
+																	<Events>
+																		<Event name="Click">ДействиеРасчетНалогаНажатие</Event>
+																	</Events>
+																</LabelDecoration>
+															</ChildItems>
+														</Page>
+														<Page name="ДействиеСторноДоходовНеТребуется" id="499">
+															<Title>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Действие сторно доходов не требуется</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Action income storno is not required</v8:content>
+																</v8:item>
+															</Title>
+															<ToolTip>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Сторно доходов не требуется</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Storno income is not required</v8:content>
+																</v8:item>
+															</ToolTip>
+															<Group>HorizontalIfPossible</Group>
+															<ExtendedTooltip name="ДействиеСторноДоходовНеТребуетсяРасширеннаяПодсказка" id="500"/>
+															<ChildItems>
+																<LabelDecoration name="ДекорацияСторноДоходовНеТребуется" id="501">
+																	<AutoMaxWidth>false</AutoMaxWidth>
+																	<TextColor>style:ЦветНедоступногоТекста</TextColor>
+																	<Title formatted="false">
+																		<v8:item>
+																			<v8:lang>ru</v8:lang>
+																			<v8:content>Не требуется</v8:content>
+																		</v8:item>
+																		<v8:item>
+																			<v8:lang>en</v8:lang>
+																			<v8:content>Not required</v8:content>
+																		</v8:item>
+																	</Title>
+																	<ContextMenu name="ДекорацияСторноДоходовНеТребуетсяКонтекстноеМеню" id="502"/>
+																	<ExtendedTooltip name="ДекорацияСторноДоходовНеТребуетсяРасширеннаяПодсказка" id="503"/>
+																</LabelDecoration>
+															</ChildItems>
+														</Page>
+													</ChildItems>
+												</Pages>
+											</ChildItems>
+										</UsualGroup>
+										<UsualGroup name="ГруппаПредупреждениеОНеобходимостиБолееРаннегоСторно" id="439">
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Предупреждение о необходимости более раннего сторно</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Warning about the necessity of earlier storno </v8:content>
+												</v8:item>
+											</Title>
+											<Group>Horizontal</Group>
+											<Behavior>Usual</Behavior>
+											<Representation>None</Representation>
+											<ShowTitle>false</ShowTitle>
+											<ExtendedTooltip name="ГруппаПредупреждениеОНеобходимостиБолееРаннегоСторноРасширеннаяПодсказка" id="440"/>
+											<ChildItems>
+												<LabelField name="ПредупреждениеБолееРаннегоСторно" id="449">
+													<DataPath>ПредупреждениеБолееРаннегоСторно</DataPath>
+													<TitleLocation>None</TitleLocation>
+													<ContextMenu name="ПредупреждениеБолееРаннегоСторноКонтекстноеМеню" id="450"/>
+													<ExtendedTooltip name="ПредупреждениеБолееРаннегоСторноРасширеннаяПодсказка" id="451"/>
+												</LabelField>
+											</ChildItems>
+										</UsualGroup>
+										<UsualGroup name="ГруппаПояснениеПодготовкаСторноДоходов" id="441">
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Пояснение подготовка сторно доходов</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Explanation prepare storno income</v8:content>
+												</v8:item>
+											</Title>
+											<ToolTip>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Группа пояснение подготовка сторно доходов</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Group explanation prepare storno income</v8:content>
+												</v8:item>
+											</ToolTip>
+											<Group>Horizontal</Group>
+											<Behavior>Usual</Behavior>
+											<Representation>None</Representation>
+											<ShowTitle>false</ShowTitle>
+											<ExtendedTooltip name="ГруппаПояснениеПодготовкаСторноДоходовРасширеннаяПодсказка" id="442"/>
+											<ChildItems>
+												<LabelDecoration name="ДекорацияОтступПояснениеПодготовкиСторноДоходов" id="443">
+													<Width>2</Width>
+													<ContextMenu name="ДекорацияОтступПояснениеПодготовкиСторноДоходовКонтекстноеМеню" id="444"/>
+													<ExtendedTooltip name="ДекорацияОтступПояснениеПодготовкиСторноДоходовРасширеннаяПодсказка" id="445"/>
+												</LabelDecoration>
+												<LabelDecoration name="ПояснениеПодготовкаСторноДоходов" id="446">
+													<AutoMaxWidth>false</AutoMaxWidth>
+													<TextColor>style:ПоясняющийТекст</TextColor>
+													<Title formatted="false">
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Автоматическое сторнирование доходов по деятельности ЕНВД и комиссионным товарам, ранее записанных в Книгу учета доходов и расходов.</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>Automatic storno of income from UTII activity and consigned goods previously written to the Ledger of income and expenditure.</v8:content>
+														</v8:item>
+													</Title>
+													<ContextMenu name="ПояснениеПодготовкаСторноДоходовКонтекстноеМеню" id="447"/>
+													<ExtendedTooltip name="ПояснениеПодготовкаСторноДоходовРасширеннаяПодсказка" id="448"/>
+												</LabelDecoration>
+											</ChildItems>
+										</UsualGroup>
+									</ChildItems>
+								</UsualGroup>
+								<UsualGroup name="ГруппаПодготовкаАвтоматическоеПризнаниеРасходов" id="89">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Подготовка автоматическое признание расходов</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Prepare automatic expense recognition</v8:content>
+										</v8:item>
+									</Title>
+									<Group>Vertical</Group>
+									<Behavior>Usual</Behavior>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="ГруппаПодготовкаАвтоматическоеПризнаниеРасходовРасширеннаяПодсказка" id="90"/>
+									<ChildItems>
+										<UsualGroup name="ГруппаАвтоматическоеПризнаниеРасходов" id="133">
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Автоматическое признание расходов</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Automatic recognition of expenses</v8:content>
+												</v8:item>
+											</Title>
+											<Group>Horizontal</Group>
+											<Behavior>Usual</Behavior>
+											<Representation>None</Representation>
+											<ShowTitle>false</ShowTitle>
+											<ExtendedTooltip name="ГруппаАвтоматическоеПризнаниеРасходовРасширеннаяПодсказка" id="134"/>
+											<ChildItems>
+												<Pages name="КартинкиПризнаниеРасходов" id="135">
+													<Title>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Картинки признание расходов</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>Pictures expense recognition </v8:content>
+														</v8:item>
+													</Title>
+													<ToolTip>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Картинки распределение материалов и работ на продукцию</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>Pictures distribution of materials and works for products</v8:content>
+														</v8:item>
+													</ToolTip>
+													<PagesRepresentation>None</PagesRepresentation>
+													<ExtendedTooltip name="КартинкиПризнаниеРасходовРасширеннаяПодсказка" id="136"/>
+													<ChildItems>
+														<Page name="ПризнаниеРасходовНеВыполнено" id="137">
+															<Title>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Признание расходов не выполнено</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Expenses are not recognized </v8:content>
+																</v8:item>
+															</Title>
+															<ShowTitle>false</ShowTitle>
+															<ExtendedTooltip name="ПризнаниеРасходовНеВыполненоРасширеннаяПодсказка" id="138"/>
+															<ChildItems>
+																<PictureDecoration name="Декорация51" id="139">
+																	<AutoMaxWidth>false</AutoMaxWidth>
+																	<MaxWidth>2</MaxWidth>
+																	<Picture>
+																		<xr:Ref>CommonPicture.НеВыполнено</xr:Ref>
+																		<xr:LoadTransparent>false</xr:LoadTransparent>
+																	</Picture>
+																	<FileDragMode>AsFile</FileDragMode>
+																	<ContextMenu name="Декорация51КонтекстноеМеню" id="140"/>
+																	<ExtendedTooltip name="Декорация51ExtendedTooltip" id="141"/>
+																</PictureDecoration>
+															</ChildItems>
+														</Page>
+														<Page name="ПризнаниеРасходовВыполняется" id="152">
+															<Title>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Признание расходов выполняется</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Expense recognition is executed</v8:content>
+																</v8:item>
+															</Title>
+															<ToolTip>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Исправление отрицательных остатков товаров ожидает</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Correction of negative stock balance is pending</v8:content>
+																</v8:item>
+															</ToolTip>
+															<ShowTitle>false</ShowTitle>
+															<ExtendedTooltip name="ПризнаниеРасходовВыполняетсяРасширеннаяПодсказка" id="153"/>
+															<ChildItems>
+																<PictureDecoration name="Декорация54" id="154">
+																	<AutoMaxWidth>false</AutoMaxWidth>
+																	<MaxWidth>2</MaxWidth>
+																	<Picture>
+																		<xr:Ref>CommonPicture.НезавершившаясяПроверка</xr:Ref>
+																		<xr:LoadTransparent>false</xr:LoadTransparent>
+																	</Picture>
+																	<FileDragMode>AsFile</FileDragMode>
+																	<ContextMenu name="Декорация54КонтекстноеМеню" id="155"/>
+																	<ExtendedTooltip name="Декорация54ExtendedTooltip" id="156"/>
+																</PictureDecoration>
+															</ChildItems>
+														</Page>
+														<Page name="ПризнаниеРасходовВыполненоУспешно" id="147">
+															<Title>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Признание расходов выполнено успешно</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Expenses are recognized successfully</v8:content>
+																</v8:item>
+															</Title>
+															<ToolTip>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Исправление отрицательных остатков товаров ожидает</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Correction of negative stock balance is pending</v8:content>
+																</v8:item>
+															</ToolTip>
+															<ShowTitle>false</ShowTitle>
+															<ExtendedTooltip name="ПризнаниеРасходовВыполненоУспешноРасширеннаяПодсказка" id="148"/>
+															<ChildItems>
+																<PictureDecoration name="Декорация53" id="149">
+																	<AutoMaxWidth>false</AutoMaxWidth>
+																	<MaxWidth>2</MaxWidth>
+																	<Picture>
+																		<xr:Ref>CommonPicture.ВыполненоУспешно</xr:Ref>
+																		<xr:LoadTransparent>false</xr:LoadTransparent>
+																	</Picture>
+																	<FileDragMode>AsFile</FileDragMode>
+																	<ContextMenu name="Декорация53КонтекстноеМеню" id="150"/>
+																	<ExtendedTooltip name="Декорация53ExtendedTooltip" id="151"/>
+																</PictureDecoration>
+															</ChildItems>
+														</Page>
+														<Page name="ПризнаниеРасходовВыполненоСОшибками" id="157">
+															<Title>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Признание расходов выполнено с ошибками</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Errors occurred while recognizing expenses</v8:content>
+																</v8:item>
+															</Title>
+															<ToolTip>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Исправление отрицательных остатков товаров ожидает</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Correction of negative stock balance is pending</v8:content>
+																</v8:item>
+															</ToolTip>
+															<ShowTitle>false</ShowTitle>
+															<ExtendedTooltip name="ПризнаниеРасходовВыполненоСОшибкамиРасширеннаяПодсказка" id="158"/>
+															<ChildItems>
+																<PictureDecoration name="Декорация55" id="159">
+																	<AutoMaxWidth>false</AutoMaxWidth>
+																	<MaxWidth>2</MaxWidth>
+																	<Picture>
+																		<xr:Ref>CommonPicture.ВыполненоСОшибками</xr:Ref>
+																		<xr:LoadTransparent>false</xr:LoadTransparent>
+																	</Picture>
+																	<FileDragMode>AsFile</FileDragMode>
+																	<ContextMenu name="Декорация55КонтекстноеМеню" id="160"/>
+																	<ExtendedTooltip name="Декорация55ExtendedTooltip" id="161"/>
+																</PictureDecoration>
+															</ChildItems>
+														</Page>
+														<Page name="ПризнаниеРасходовОжидается" id="410">
+															<Title>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Признание расходов ожидается</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Expense recognition is expected</v8:content>
+																</v8:item>
+															</Title>
+															<Group>HorizontalIfPossible</Group>
+															<ExtendedTooltip name="ПризнаниеРасходовОжидаетсяРасширеннаяПодсказка" id="411"/>
+															<ChildItems>
+																<PictureDecoration name="Декорация60" id="412">
+																	<AutoMaxWidth>false</AutoMaxWidth>
+																	<MaxWidth>2</MaxWidth>
+																	<Picture>
+																		<xr:Ref>CommonPicture.ОжидаетВыполнения</xr:Ref>
+																		<xr:LoadTransparent>false</xr:LoadTransparent>
+																	</Picture>
+																	<FileDragMode>AsFile</FileDragMode>
+																	<ContextMenu name="Декорация60КонтекстноеМеню" id="413"/>
+																	<ExtendedTooltip name="Декорация60РасширеннаяПодсказка" id="414"/>
+																</PictureDecoration>
+															</ChildItems>
+														</Page>
+													</ChildItems>
+												</Pages>
+												<LabelDecoration name="ДекорацияПризнаниеРасходов" id="94">
+													<MaxWidth>44</MaxWidth>
+													<HorizontalStretch>true</HorizontalStretch>
+													<Title formatted="false">
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Автоматическое признание расходов</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>Automatic recognition of expenses</v8:content>
+														</v8:item>
+													</Title>
+													<Hyperlink>true</Hyperlink>
+													<ContextMenu name="ДекорацияПризнаниеРасходовКонтекстноеМеню" id="95"/>
+													<ExtendedTooltip name="ДекорацияПризнаниеРасходовРасширеннаяПодсказка" id="96"/>
+													<Events>
+														<Event name="Click">ДекорацияПризнаниеРасходовНажатие</Event>
+													</Events>
+												</LabelDecoration>
+												<Pages name="ДействияПризнаниеРасходов" id="162">
+													<Title>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Действия признание расходов</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>Actions expense recognition</v8:content>
+														</v8:item>
+													</Title>
+													<GroupHorizontalAlign>Right</GroupHorizontalAlign>
+													<PagesRepresentation>None</PagesRepresentation>
+													<ExtendedTooltip name="ДействияПризнаниеРасходовРасширеннаяПодсказка" id="163"/>
+													<ChildItems>
+														<Page name="ДействиеПризнаниеРасходовВыполнить" id="164">
+															<Title>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Действие признание расходов выполнить</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Action expense recognition execute</v8:content>
+																</v8:item>
+															</Title>
+															<ShowTitle>false</ShowTitle>
+															<ExtendedTooltip name="ДействиеПризнаниеРасходовВыполнитьРасширеннаяПодсказка" id="165"/>
+															<ChildItems>
+																<LabelDecoration name="ДекорацияПризнаниеРасходовВыполнить" id="166">
+																	<AutoMaxWidth>false</AutoMaxWidth>
+																	<TextColor>style:ЦветГиперссылки</TextColor>
+																	<Title formatted="false">
+																		<v8:item>
+																			<v8:lang>ru</v8:lang>
+																			<v8:content>Выполнить</v8:content>
+																		</v8:item>
+																		<v8:item>
+																			<v8:lang>en</v8:lang>
+																			<v8:content>Perform</v8:content>
+																		</v8:item>
+																	</Title>
+																	<Hyperlink>true</Hyperlink>
+																	<ContextMenu name="ДекорацияПризнаниеРасходовВыполнитьКонтекстноеМеню" id="167"/>
+																	<ExtendedTooltip name="ДекорацияПризнаниеРасходовВыполнитьРасширеннаяПодсказка" id="168"/>
+																	<Events>
+																		<Event name="Click">ДействиеПризнаниеРасходовНажатие</Event>
+																	</Events>
+																</LabelDecoration>
+															</ChildItems>
+														</Page>
+														<Page name="ДействиеПризнаниеРасходовВыполняется" id="169">
+															<Title>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Действие признание расходов выполняется</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Action expense recognition is in progress</v8:content>
+																</v8:item>
+															</Title>
+															<Group>Horizontal</Group>
+															<ShowTitle>false</ShowTitle>
+															<ExtendedTooltip name="ДействиеПризнаниеРасходовВыполняетсяРасширеннаяПодсказка" id="170"/>
+															<ChildItems>
+																<LabelDecoration name="ДекорацияПризнаниеРасходовОтменить" id="200">
+																	<AutoMaxWidth>false</AutoMaxWidth>
+																	<TextColor>style:ЦветГиперссылки</TextColor>
+																	<Title formatted="false">
+																		<v8:item>
+																			<v8:lang>ru</v8:lang>
+																			<v8:content>Отменить</v8:content>
+																		</v8:item>
+																		<v8:item>
+																			<v8:lang>en</v8:lang>
+																			<v8:content>Cancel</v8:content>
+																		</v8:item>
+																	</Title>
+																	<Hyperlink>true</Hyperlink>
+																	<ContextMenu name="ДекорацияПризнаниеРасходовОтменитьКонтекстноеМеню" id="201"/>
+																	<ExtendedTooltip name="ДекорацияПризнаниеРасходовОтменитьРасширеннаяПодсказка" id="202"/>
+																	<Events>
+																		<Event name="Click">ДействиеПризнаниеРасходовОтменитьНажатие</Event>
+																	</Events>
+																</LabelDecoration>
+															</ChildItems>
+														</Page>
+														<Page name="ДействиеПризнаниеРасходовОжидается" id="425">
+															<Title>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Действие признание расходов ожидается</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Action expense recognition pending</v8:content>
+																</v8:item>
+															</Title>
+															<Group>HorizontalIfPossible</Group>
+															<ExtendedTooltip name="ДействиеПризнаниеРасходовОжидаетсяРасширеннаяПодсказка" id="426"/>
+															<ChildItems>
+																<LabelDecoration name="ДекорацияПризнаниеРасходовОжидается" id="427">
+																	<AutoMaxWidth>false</AutoMaxWidth>
+																	<TextColor>style:ЦветТекстаНеактуальногоСписка</TextColor>
+																	<Title formatted="false">
+																		<v8:item>
+																			<v8:lang>ru</v8:lang>
+																			<v8:content>Ожидается</v8:content>
+																		</v8:item>
+																		<v8:item>
+																			<v8:lang>en</v8:lang>
+																			<v8:content>Expected</v8:content>
+																		</v8:item>
+																	</Title>
+																	<ContextMenu name="ДекорацияПризнаниеРасходовОжидаетсяКонтекстноеМеню" id="428"/>
+																	<ExtendedTooltip name="ДекорацияПризнаниеРасходовОжидаетсяРасширеннаяПодсказка" id="429"/>
+																</LabelDecoration>
+															</ChildItems>
+														</Page>
+														<Page name="ДействиеПризнаниеРасходовНеТребуется" id="430">
+															<Title>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Действие расчет налога не требуется</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Action tax calculation is not required</v8:content>
+																</v8:item>
+															</Title>
+															<Group>HorizontalIfPossible</Group>
+															<ExtendedTooltip name="ДействиеПризнаниеРасходовНеТребуетсяРасширеннаяПодсказка" id="431"/>
+															<ChildItems>
+																<LabelDecoration name="ДекорацияПризнаниеРасходовНеТребуется" id="432">
+																	<AutoMaxWidth>false</AutoMaxWidth>
+																	<TextColor>style:ЦветНедоступногоТекста</TextColor>
+																	<Title formatted="false">
+																		<v8:item>
+																			<v8:lang>ru</v8:lang>
+																			<v8:content>Не требуется</v8:content>
+																		</v8:item>
+																		<v8:item>
+																			<v8:lang>en</v8:lang>
+																			<v8:content>Not required</v8:content>
+																		</v8:item>
+																	</Title>
+																	<ContextMenu name="ДекорацияПризнаниеРасходовНеТребуетсяКонтекстноеМеню" id="433"/>
+																	<ExtendedTooltip name="ДекорацияПризнаниеРасходовНеТребуетсяРасширеннаяПодсказка" id="434"/>
+																</LabelDecoration>
+															</ChildItems>
+														</Page>
+													</ChildItems>
+												</Pages>
+											</ChildItems>
+										</UsualGroup>
+										<UsualGroup name="ГруппаПредупреждениеОНеобходимостиБолееРаннегоПризнания" id="277">
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Предупреждение о необходимости более раннего признания</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Warning about the necessity of earlier recognition</v8:content>
+												</v8:item>
+											</Title>
+											<Group>Horizontal</Group>
+											<Behavior>Usual</Behavior>
+											<Representation>None</Representation>
+											<ShowTitle>false</ShowTitle>
+											<ExtendedTooltip name="ГруппаПредупреждениеОНеобходимостиБолееРаннегоПризнанияРасширеннаяПодсказка" id="278"/>
+											<ChildItems>
+												<LabelField name="ПредупреждениеБолееРаннегоПризнания" id="279">
+													<DataPath>ПредупреждениеБолееРаннегоПризнания</DataPath>
+													<TitleLocation>None</TitleLocation>
+													<AutoMaxWidth>false</AutoMaxWidth>
+													<AutoMaxHeight>false</AutoMaxHeight>
+													<MaxHeight>2</MaxHeight>
+													<VerticalStretch>true</VerticalStretch>
+													<TextColor>style:ОтметкаОтрицательногоВыполненияЗадачи</TextColor>
+													<ContextMenu name="ПредупреждениеБолееРаннегоПризнанияКонтекстноеМеню" id="280"/>
+													<ExtendedTooltip name="ПредупреждениеБолееРаннегоПризнанияРасширеннаяПодсказка" id="281"/>
+												</LabelField>
+											</ChildItems>
+										</UsualGroup>
+										<UsualGroup name="ГруппаПояснениеПодготовкаАвтоматическоеПризнаниеРасходов" id="105">
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Пояснение подготовка автоматическое признание расходов</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Explain prepare automatic expense recognition</v8:content>
+												</v8:item>
+											</Title>
+											<Group>Horizontal</Group>
+											<Behavior>Usual</Behavior>
+											<Representation>None</Representation>
+											<ShowTitle>false</ShowTitle>
+											<ExtendedTooltip name="ГруппаПояснениеПодготовкаАвтоматическоеПризнаниеРасходовРасширеннаяПодсказка" id="106"/>
+											<ChildItems>
+												<LabelDecoration name="ДекорацияОтступПояснениеПодготовкиАвтоматическогоПризнания" id="241">
+													<Width>2</Width>
+													<ContextMenu name="ДекорацияОтступПояснениеПодготовкиАвтоматическогоПризнанияКонтекстноеМеню" id="242"/>
+													<ExtendedTooltip name="ДекорацияОтступПояснениеПодготовкиАвтоматическогоПризнанияРасширеннаяПодсказка" id="243"/>
+												</LabelDecoration>
+												<LabelDecoration name="ПояснениеПодготовкаАвтоматическоеПризнаниеРасходов" id="118">
+													<AutoMaxWidth>false</AutoMaxWidth>
+													<TextColor>style:ПоясняющийТекст</TextColor>
+													<Title formatted="false">
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Автоматическое признание расходов для отражения в Книге учета доходов и расходов.</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>Automated expense recognition for recording in the ledger of income and expenditure</v8:content>
+														</v8:item>
+													</Title>
+													<ContextMenu name="ПояснениеПодготовкаАвтоматическоеПризнаниеРасходовКонтекстноеМеню" id="119"/>
+													<ExtendedTooltip name="ПояснениеПодготовкаАвтоматическоеПризнаниеРасходовРасширеннаяПодсказка" id="120"/>
+												</LabelDecoration>
+											</ChildItems>
+										</UsualGroup>
+									</ChildItems>
+								</UsualGroup>
+								<UsualGroup name="ГруппаКорректировкаОтражения" id="504">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Корректировка отражения</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Recording adjustment</v8:content>
+										</v8:item>
+									</Title>
+									<Group>Vertical</Group>
+									<Behavior>Usual</Behavior>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="ГруппаКорректировкаОтраженияРасширеннаяПодсказка" id="505"/>
+									<ChildItems>
+										<UsualGroup name="ГруппаНастройкаКорректировкиОтражения" id="506">
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Настройка корректировки отражения</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Set up recording adjustment</v8:content>
+												</v8:item>
+											</Title>
+											<Group>Horizontal</Group>
+											<Behavior>Usual</Behavior>
+											<Representation>None</Representation>
+											<ShowTitle>false</ShowTitle>
+											<ExtendedTooltip name="ГруппаНастройкаКорректировкиОтраженияРасширеннаяПодсказка" id="507"/>
+											<ChildItems>
+												<LabelDecoration name="ДекорацияОтступНастройкаКорректировкиОтражения" id="508">
+													<Width>2</Width>
+													<ContextMenu name="ДекорацияОтступНастройкаКорректировкиОтраженияКонтекстноеМеню" id="509"/>
+													<ExtendedTooltip name="ДекорацияОтступНастройкаКорректировкиОтраженияРасширеннаяПодсказка" id="510"/>
+												</LabelDecoration>
+												<LabelDecoration name="ДекорацияНастройкаКорректировкиОтражения" id="511">
+													<AutoMaxWidth>false</AutoMaxWidth>
+													<Title formatted="false">
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Проверка отражения прочих доходов и расходов</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>Check recording of other income and expenses</v8:content>
+														</v8:item>
+													</Title>
+													<Hyperlink>true</Hyperlink>
+													<ContextMenu name="ДекорацияНастройкаКорректировкиОтраженияКонтекстноеМеню" id="512"/>
+													<ExtendedTooltip name="ДекорацияНастройкаКорректировкиОтраженияРасширеннаяПодсказка" id="513"/>
+													<Events>
+														<Event name="Click">ДекорацияНастройкаКорректировкиОтраженияНажатие</Event>
+													</Events>
+												</LabelDecoration>
+											</ChildItems>
+										</UsualGroup>
+										<UsualGroup name="ГруппаПояснениеКорректировкаОтражения" id="514">
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Пояснение корректировка отражения</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Explanation recording adjustment</v8:content>
+												</v8:item>
+											</Title>
+											<Group>Horizontal</Group>
+											<Behavior>Usual</Behavior>
+											<Representation>None</Representation>
+											<ShowTitle>false</ShowTitle>
+											<ExtendedTooltip name="ГруппаПояснениеКорректировкаОтраженияРасширеннаяПодсказка" id="515"/>
+											<ChildItems>
+												<LabelDecoration name="ДекорацияОтступПояснениеКорректировкиОтражения" id="516">
+													<Width>2</Width>
+													<ContextMenu name="ДекорацияОтступПояснениеКорректировкиОтраженияКонтекстноеМеню" id="517"/>
+													<ExtendedTooltip name="ДекорацияОтступПояснениеКорректировкиОтраженияРасширеннаяПодсказка" id="518"/>
+												</LabelDecoration>
+												<LabelDecoration name="ПояснениеКорректировкаОтражения" id="519">
+													<AutoMaxWidth>false</AutoMaxWidth>
+													<TextColor>style:ПоясняющийТекст</TextColor>
+													<Title formatted="false">
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Проверка отражения прочих доходов и расходов в КУДиР. При необходимости можно внести корректировки.</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>Check records of other income and expenses in LIE. You can correct it if necessary.</v8:content>
+														</v8:item>
+													</Title>
+													<ContextMenu name="ПояснениеКорректировкаОтраженияКонтекстноеМеню" id="520"/>
+													<ExtendedTooltip name="ПояснениеКорректировкаОтраженияРасширеннаяПодсказка" id="521"/>
+												</LabelDecoration>
+											</ChildItems>
+										</UsualGroup>
+									</ChildItems>
+								</UsualGroup>
+								<UsualGroup name="ГруппаПодготовкаРасчетНалога" id="289">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Подготовка расчет налога</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Prepare tax calculation</v8:content>
+										</v8:item>
+									</Title>
+									<Group>Vertical</Group>
+									<Behavior>Usual</Behavior>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="ГруппаПодготовкаРасчетНалогаРасширеннаяПодсказка" id="290"/>
+									<ChildItems>
+										<UsualGroup name="ГруппаРасчетНалога" id="291">
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Расчет налога</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Tax calculation</v8:content>
+												</v8:item>
+											</Title>
+											<Group>Horizontal</Group>
+											<Behavior>Usual</Behavior>
+											<Representation>None</Representation>
+											<ShowTitle>false</ShowTitle>
+											<ExtendedTooltip name="ГруппаРасчетНалогаРасширеннаяПодсказка" id="292"/>
+											<ChildItems>
+												<Pages name="КартинкиРасчетНалога" id="293">
+													<Title>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Картинки расчет налога</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>Pictures tax calculation</v8:content>
+														</v8:item>
+													</Title>
+													<PagesRepresentation>None</PagesRepresentation>
+													<ExtendedTooltip name="КартинкиРасчетНалогаРасширеннаяПодсказка" id="294"/>
+													<ChildItems>
+														<Page name="РасчетНалогаНеВыполнен" id="295">
+															<Title>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Расчет налога не выполнен</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Tax is not calculated</v8:content>
+																</v8:item>
+															</Title>
+															<ShowTitle>false</ShowTitle>
+															<ExtendedTooltip name="РасчетНалогаНеВыполненРасширеннаяПодсказка" id="296"/>
+															<ChildItems>
+																<PictureDecoration name="Декорация52" id="297">
+																	<AutoMaxWidth>false</AutoMaxWidth>
+																	<MaxWidth>2</MaxWidth>
+																	<Picture>
+																		<xr:Ref>CommonPicture.НеВыполнено</xr:Ref>
+																		<xr:LoadTransparent>false</xr:LoadTransparent>
+																	</Picture>
+																	<FileDragMode>AsFile</FileDragMode>
+																	<ContextMenu name="Декорация52КонтекстноеМеню" id="298"/>
+																	<ExtendedTooltip name="Декорация52РасширеннаяПодсказка" id="299"/>
+																</PictureDecoration>
+															</ChildItems>
+														</Page>
+														<Page name="РасчетНалогаВыполняется" id="300">
+															<Title>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Расчет налога выполняется</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Tax is calculated</v8:content>
+																</v8:item>
+															</Title>
+															<ShowTitle>false</ShowTitle>
+															<ExtendedTooltip name="РасчетНалогаВыполняетсяРасширеннаяПодсказка" id="301"/>
+															<ChildItems>
+																<PictureDecoration name="Декорация56" id="302">
+																	<AutoMaxWidth>false</AutoMaxWidth>
+																	<MaxWidth>2</MaxWidth>
+																	<Picture>
+																		<xr:Ref>CommonPicture.НезавершившаясяПроверка</xr:Ref>
+																		<xr:LoadTransparent>false</xr:LoadTransparent>
+																	</Picture>
+																	<FileDragMode>AsFile</FileDragMode>
+																	<ContextMenu name="Декорация56КонтекстноеМеню" id="303"/>
+																	<ExtendedTooltip name="Декорация56РасширеннаяПодсказка" id="304"/>
+																</PictureDecoration>
+															</ChildItems>
+														</Page>
+														<Page name="РасчетНалогаВыполненУспешно" id="305">
+															<Title>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Расчет налога выполнен успешно</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Tax is calculated successfully</v8:content>
+																</v8:item>
+															</Title>
+															<ShowTitle>false</ShowTitle>
+															<ExtendedTooltip name="РасчетНалогаВыполненУспешноРасширеннаяПодсказка" id="306"/>
+															<ChildItems>
+																<PictureDecoration name="Декорация57" id="307">
+																	<AutoMaxWidth>false</AutoMaxWidth>
+																	<MaxWidth>2</MaxWidth>
+																	<Picture>
+																		<xr:Ref>CommonPicture.ВыполненоУспешно</xr:Ref>
+																		<xr:LoadTransparent>false</xr:LoadTransparent>
+																	</Picture>
+																	<FileDragMode>AsFile</FileDragMode>
+																	<ContextMenu name="Декорация57КонтекстноеМеню" id="308"/>
+																	<ExtendedTooltip name="Декорация57РасширеннаяПодсказка" id="309"/>
+																</PictureDecoration>
+															</ChildItems>
+														</Page>
+														<Page name="РасчетНалогаВыполненСОшибками" id="310">
+															<Title>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Расчет налога выполнен с ошибками</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Tax is calculated with errors</v8:content>
+																</v8:item>
+															</Title>
+															<ShowTitle>false</ShowTitle>
+															<ExtendedTooltip name="РасчетНалогаВыполненСОшибкамиРасширеннаяПодсказка" id="311"/>
+															<ChildItems>
+																<PictureDecoration name="Декорация58" id="312">
+																	<AutoMaxWidth>false</AutoMaxWidth>
+																	<MaxWidth>2</MaxWidth>
+																	<Picture>
+																		<xr:Ref>CommonPicture.ВыполненоСОшибками</xr:Ref>
+																		<xr:LoadTransparent>false</xr:LoadTransparent>
+																	</Picture>
+																	<FileDragMode>AsFile</FileDragMode>
+																	<ContextMenu name="Декорация58КонтекстноеМеню" id="313"/>
+																	<ExtendedTooltip name="Декорация58РасширеннаяПодсказка" id="314"/>
+																</PictureDecoration>
+															</ChildItems>
+														</Page>
+														<Page name="РасчетНалогаНеТребуется" id="394">
+															<Title>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Расчет налога не требуется</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Tax calculation is not required</v8:content>
+																</v8:item>
+															</Title>
+															<Group>HorizontalIfPossible</Group>
+															<ExtendedTooltip name="РасчетНалогаНеТребуетсяРасширеннаяПодсказка" id="395"/>
+															<ChildItems>
+																<PictureDecoration name="Декорация59" id="396">
+																	<Width>2</Width>
+																	<Height>1</Height>
+																	<FileDragMode>AsFile</FileDragMode>
+																	<ContextMenu name="Декорация59КонтекстноеМеню" id="397"/>
+																	<ExtendedTooltip name="Декорация59РасширеннаяПодсказка" id="398"/>
+																</PictureDecoration>
+															</ChildItems>
+														</Page>
+														<Page name="РасчетНалогаОжидается" id="415">
+															<Title>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Расчет налога ожидается</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Tax calculation is expected</v8:content>
+																</v8:item>
+															</Title>
+															<ShowTitle>false</ShowTitle>
+															<ExtendedTooltip name="РасчетНалогаОжидаетсяРасширеннаяПодсказка" id="416"/>
+															<ChildItems>
+																<PictureDecoration name="Декорация61" id="417">
+																	<AutoMaxWidth>false</AutoMaxWidth>
+																	<MaxWidth>2</MaxWidth>
+																	<Picture>
+																		<xr:Ref>CommonPicture.ОжидаетВыполнения</xr:Ref>
+																		<xr:LoadTransparent>false</xr:LoadTransparent>
+																	</Picture>
+																	<FileDragMode>AsFile</FileDragMode>
+																	<ContextMenu name="Декорация61КонтекстноеМеню" id="418"/>
+																	<ExtendedTooltip name="Декорация61РасширеннаяПодсказка" id="419"/>
+																</PictureDecoration>
+															</ChildItems>
+														</Page>
+													</ChildItems>
+												</Pages>
+												<LabelDecoration name="ДекорацияРасчетНалога" id="315">
+													<MaxWidth>43</MaxWidth>
+													<HorizontalStretch>true</HorizontalStretch>
+													<Title formatted="false">
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Расчет налога</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>Tax calculation</v8:content>
+														</v8:item>
+													</Title>
+													<Hyperlink>true</Hyperlink>
+													<ContextMenu name="ДекорацияРасчетНалогаКонтекстноеМеню" id="316"/>
+													<ExtendedTooltip name="ДекорацияРасчетНалогаРасширеннаяПодсказка" id="317"/>
+													<Events>
+														<Event name="Click">ДекорацияРасчетНалогаНажатие</Event>
+													</Events>
+												</LabelDecoration>
+												<Pages name="ДействияРасчетНалога" id="345">
+													<Title>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Действия признание расходов</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>Actions expense recognition</v8:content>
+														</v8:item>
+													</Title>
+													<GroupHorizontalAlign>Right</GroupHorizontalAlign>
+													<PagesRepresentation>None</PagesRepresentation>
+													<ExtendedTooltip name="ДействияРасчетНалогаРасширеннаяПодсказка" id="346"/>
+													<ChildItems>
+														<Page name="ДействиеРасчетНалогаВыполнить" id="347">
+															<Title>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Действие расчет налога выполнить</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Action calculate tax perform</v8:content>
+																</v8:item>
+															</Title>
+															<ShowTitle>false</ShowTitle>
+															<ExtendedTooltip name="ДействиеРасчетНалогаВыполнитьРасширеннаяПодсказка" id="348"/>
+															<ChildItems>
+																<LabelDecoration name="ДекорацияРасчетНалогаВыполнить" id="349">
+																	<AutoMaxWidth>false</AutoMaxWidth>
+																	<TextColor>style:ЦветГиперссылки</TextColor>
+																	<Title formatted="false">
+																		<v8:item>
+																			<v8:lang>ru</v8:lang>
+																			<v8:content>Выполнить</v8:content>
+																		</v8:item>
+																		<v8:item>
+																			<v8:lang>en</v8:lang>
+																			<v8:content>Perform</v8:content>
+																		</v8:item>
+																	</Title>
+																	<Hyperlink>true</Hyperlink>
+																	<ContextMenu name="ДекорацияРасчетНалогаВыполнитьКонтекстноеМеню" id="350"/>
+																	<ExtendedTooltip name="ДекорацияРасчетНалогаВыполнитьРасширеннаяПодсказка" id="351"/>
+																	<Events>
+																		<Event name="Click">ДействиеРасчетНалогаНажатие</Event>
+																	</Events>
+																</LabelDecoration>
+															</ChildItems>
+														</Page>
+														<Page name="ДействиеРасчетНалогаВыполняется" id="352">
+															<Title>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Действие расчет налога выполняется</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Action tax calculation is in progress</v8:content>
+																</v8:item>
+															</Title>
+															<Group>Horizontal</Group>
+															<ShowTitle>false</ShowTitle>
+															<ExtendedTooltip name="ДействиеРасчетНалогаВыполняетсяРасширеннаяПодсказка" id="353"/>
+															<ChildItems>
+																<LabelDecoration name="ДекорацияРасчетНалогаВыполняется" id="354">
+																	<AutoMaxWidth>false</AutoMaxWidth>
+																	<TextColor>style:ЦветГиперссылки</TextColor>
+																	<Title formatted="false">
+																		<v8:item>
+																			<v8:lang>ru</v8:lang>
+																			<v8:content>Отменить</v8:content>
+																		</v8:item>
+																		<v8:item>
+																			<v8:lang>en</v8:lang>
+																			<v8:content>Cancel</v8:content>
+																		</v8:item>
+																	</Title>
+																	<Hyperlink>true</Hyperlink>
+																	<ContextMenu name="ДекорацияРасчетНалогаВыполняетсяКонтекстноеМеню" id="355"/>
+																	<ExtendedTooltip name="ДекорацияРасчетНалогаВыполняетсяРасширеннаяПодсказка" id="356"/>
+																	<Events>
+																		<Event name="Click">ДействиеРасчетНалогаОтменитьНажатие</Event>
+																	</Events>
+																</LabelDecoration>
+															</ChildItems>
+														</Page>
+														<Page name="ДействиеРасчетНалогаНеТребуется" id="389">
+															<Title>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Действие расчет налога не требуется</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Action tax calculation is not required</v8:content>
+																</v8:item>
+															</Title>
+															<Group>HorizontalIfPossible</Group>
+															<ExtendedTooltip name="ДействиеРасчетНалогаНеТребуетсяРасширеннаяПодсказка" id="390"/>
+															<ChildItems>
+																<LabelDecoration name="ДекорацияРасчетНалогаНеТребуется" id="391">
+																	<AutoMaxWidth>false</AutoMaxWidth>
+																	<TextColor>style:ЦветНедоступногоТекста</TextColor>
+																	<Title formatted="false">
+																		<v8:item>
+																			<v8:lang>ru</v8:lang>
+																			<v8:content>Не требуется</v8:content>
+																		</v8:item>
+																		<v8:item>
+																			<v8:lang>en</v8:lang>
+																			<v8:content>Not required</v8:content>
+																		</v8:item>
+																	</Title>
+																	<ContextMenu name="ДекорацияРасчетНалогаНеТребуетсяКонтекстноеМеню" id="392"/>
+																	<ExtendedTooltip name="ДекорацияРасчетНалогаНеТребуетсяРасширеннаяПодсказка" id="393"/>
+																</LabelDecoration>
+															</ChildItems>
+														</Page>
+														<Page name="ДействиеРасчетНалогаОжидается" id="420">
+															<Title>
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Действие расчет налога ожидается</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Action tax calculation is pending</v8:content>
+																</v8:item>
+															</Title>
+															<ShowTitle>false</ShowTitle>
+															<ExtendedTooltip name="ДействиеРасчетНалогаОжидаетсяРасширеннаяПодсказка" id="421"/>
+															<ChildItems>
+																<LabelDecoration name="ДекорацияРасчетНалогаОжидается" id="422">
+																	<AutoMaxWidth>false</AutoMaxWidth>
+																	<TextColor>style:ЦветТекстаНеактуальногоСписка</TextColor>
+																	<Title formatted="false">
+																		<v8:item>
+																			<v8:lang>ru</v8:lang>
+																			<v8:content>Ожидается</v8:content>
+																		</v8:item>
+																		<v8:item>
+																			<v8:lang>en</v8:lang>
+																			<v8:content>Expected</v8:content>
+																		</v8:item>
+																	</Title>
+																	<ContextMenu name="ДекорацияРасчетНалогаОжидаетсяКонтекстноеМеню" id="423"/>
+																	<ExtendedTooltip name="ДекорацияРасчетНалогаОжидаетсяРасширеннаяПодсказка" id="424"/>
+																	<Events>
+																		<Event name="Click">ДействиеРасчетНалогаНажатие</Event>
+																	</Events>
+																</LabelDecoration>
+															</ChildItems>
+														</Page>
+													</ChildItems>
+												</Pages>
+											</ChildItems>
+										</UsualGroup>
+										<UsualGroup name="ГруппаПояснениеПодготовкаРасчетНалога" id="372">
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Пояснение подготовка расчет налога</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Explanation preparation tax calculation</v8:content>
+												</v8:item>
+											</Title>
+											<Group>Horizontal</Group>
+											<Behavior>Usual</Behavior>
+											<Representation>None</Representation>
+											<ShowTitle>false</ShowTitle>
+											<ExtendedTooltip name="ГруппаПояснениеПодготовкаРасчетНалогаРасширеннаяПодсказка" id="373"/>
+											<ChildItems>
+												<LabelDecoration name="ДекорацияОтступПояснениеПодготовкиРасчетаНалога" id="374">
+													<Width>2</Width>
+													<ContextMenu name="ДекорацияОтступПояснениеПодготовкиРасчетаНалогаКонтекстноеМеню" id="375"/>
+													<ExtendedTooltip name="ДекорацияОтступПояснениеПодготовкиРасчетаНалогаРасширеннаяПодсказка" id="376"/>
+												</LabelDecoration>
+												<LabelField name="ПояснениеРасчетНалога" id="386">
+													<DataPath>ПояснениеРасчетНалога</DataPath>
+													<TitleLocation>None</TitleLocation>
+													<AutoMaxWidth>false</AutoMaxWidth>
+													<TextColor>style:ПоясняющийТекст</TextColor>
+													<ContextMenu name="ПояснениеРасчетНалогаКонтекстноеМеню" id="387"/>
+													<ExtendedTooltip name="ПояснениеРасчетНалогаРасширеннаяПодсказка" id="388"/>
+												</LabelField>
+											</ChildItems>
+										</UsualGroup>
+									</ChildItems>
+								</UsualGroup>
+							</ChildItems>
+						</UsualGroup>
+					</ChildItems>
+				</UsualGroup>
+				<UsualGroup name="ГруппаПроверкаДанныхОбщие" id="37">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Проверка и анализ книги учета доходов и расходов</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Check and analysis of ledger of income and expenditure</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Группа проверки и подготовки данных по УСН</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Group of STS data check and preparation </v8:content>
+						</v8:item>
+					</ToolTip>
+					<Group>Horizontal</Group>
+					<Behavior>Usual</Behavior>
+					<ExtendedTooltip name="ГруппаПроверкаДанныхОбщиеРасширеннаяПодсказка" id="38"/>
+					<ChildItems>
+						<LabelDecoration name="ДекорацияОтступПроверкаДанных" id="39">
+							<Width>1</Width>
+							<ContextMenu name="ДекорацияОтступПроверкаДанныхКонтекстноеМеню" id="40"/>
+							<ExtendedTooltip name="ДекорацияОтступПроверкаДанныхРасширеннаяПодсказка" id="41"/>
+						</LabelDecoration>
+						<UsualGroup name="ГруппаПроверкаДанных" id="42">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Проверка данных</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Data validation</v8:content>
+								</v8:item>
+							</Title>
+							<Group>Vertical</Group>
+							<Behavior>Usual</Behavior>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="ГруппаПроверкаДанныхРасширеннаяПодсказка" id="43"/>
+							<ChildItems>
+								<UsualGroup name="ГруппаПроверкаРасходы" id="215">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Проверка расходы</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Check expenses</v8:content>
+										</v8:item>
+									</Title>
+									<Group>Vertical</Group>
+									<Behavior>Usual</Behavior>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="ГруппаПроверкаРасходыРасширеннаяПодсказка" id="216"/>
+									<ChildItems>
+										<UsualGroup name="ГруппаПроверкаОткрытиеРасходы" id="226">
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Проверка открытие расходы</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Check open expenses</v8:content>
+												</v8:item>
+											</Title>
+											<Group>Horizontal</Group>
+											<Behavior>Usual</Behavior>
+											<Representation>None</Representation>
+											<ShowTitle>false</ShowTitle>
+											<ExtendedTooltip name="ГруппаПроверкаОткрытиеРасходыРасширеннаяПодсказка" id="227"/>
+											<ChildItems>
+												<UsualGroup name="ГруппаПроверкаОткрытиеРасходы1" id="282">
+													<Title>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Проверка открытие расходы 1</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>Check open expenses 1</v8:content>
+														</v8:item>
+													</Title>
+													<Group>Vertical</Group>
+													<Behavior>Usual</Behavior>
+													<Representation>None</Representation>
+													<ShowTitle>false</ShowTitle>
+													<ExtendedTooltip name="ГруппаПроверкаОткрытиеРасходы1РасширеннаяПодсказка" id="283"/>
+													<ChildItems>
+														<LabelDecoration name="ДекорацияОткрытьРасходыПоСебестоимости" id="217">
+															<AutoMaxWidth>false</AutoMaxWidth>
+															<Title formatted="false">
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Расходы по товарам</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Expenses on goods</v8:content>
+																</v8:item>
+															</Title>
+															<Hyperlink>true</Hyperlink>
+															<ContextMenu name="ДекорацияОткрытьРасходыПоСебестоимостиКонтекстноеМеню" id="218"/>
+															<ExtendedTooltip name="ДекорацияОткрытьРасходыПоСебестоимостиРасширеннаяПодсказка" id="219"/>
+															<Events>
+																<Event name="Click">ДекорацияОткрытьРасходыПоСебестоимостиНажатие</Event>
+															</Events>
+														</LabelDecoration>
+														<LabelDecoration name="ДекорацияОткрытьРасходы" id="223">
+															<AutoMaxWidth>false</AutoMaxWidth>
+															<Title formatted="false">
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Прочие расходы</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Other expenses</v8:content>
+																</v8:item>
+															</Title>
+															<Hyperlink>true</Hyperlink>
+															<ContextMenu name="ДекорацияОткрытьРасходыКонтекстноеМеню" id="224"/>
+															<ExtendedTooltip name="ДекорацияОткрытьРасходыРасширеннаяПодсказка" id="225"/>
+															<Events>
+																<Event name="Click">ДекорацияОткрытьРасходыНажатие</Event>
+															</Events>
+														</LabelDecoration>
+													</ChildItems>
+												</UsualGroup>
+												<UsualGroup name="ГруппаПроверкаОткрытиеРасходы2" id="284">
+													<Title>
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Группа проверка открытие расходы по себестоимости</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>Group check opening cost expenses </v8:content>
+														</v8:item>
+													</Title>
+													<Group>Vertical</Group>
+													<Behavior>Usual</Behavior>
+													<Representation>None</Representation>
+													<ShowTitle>false</ShowTitle>
+													<ExtendedTooltip name="ГруппаПроверкаОткрытиеРасходы2РасширеннаяПодсказка" id="285"/>
+													<ChildItems>
+														<LabelDecoration name="ДекорацияОткрытьРасходыПоМатериалам" id="286">
+															<AutoMaxWidth>false</AutoMaxWidth>
+															<Title formatted="false">
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Расходы по материалам</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Expenses on materials</v8:content>
+																</v8:item>
+															</Title>
+															<Hyperlink>true</Hyperlink>
+															<ContextMenu name="ДекорацияОткрытьРасходыПоМатериаламКонтекстноеМеню" id="287"/>
+															<ExtendedTooltip name="ДекорацияОткрытьРасходыПоМатериаламРасширеннаяПодсказка" id="288"/>
+															<Events>
+																<Event name="Click">ДекорацияОткрытьРасходыПоМатериаламНажатие</Event>
+															</Events>
+														</LabelDecoration>
+														<LabelDecoration name="ДекорацияОткрытьРасходыПоАмортизации" id="220">
+															<AutoMaxWidth>false</AutoMaxWidth>
+															<Title formatted="false">
+																<v8:item>
+																	<v8:lang>ru</v8:lang>
+																	<v8:content>Расходы по ОС и НМА</v8:content>
+																</v8:item>
+																<v8:item>
+																	<v8:lang>en</v8:lang>
+																	<v8:content>Expenses for FA and IA</v8:content>
+																</v8:item>
+															</Title>
+															<Hyperlink>true</Hyperlink>
+															<ContextMenu name="ДекорацияОткрытьРасходыПоАмортизацииКонтекстноеМеню" id="221"/>
+															<ExtendedTooltip name="ДекорацияОткрытьРасходыПоАмортизацииРасширеннаяПодсказка" id="222"/>
+															<Events>
+																<Event name="Click">ДекорацияОткрытьРасходыПоАмортизацииНажатие</Event>
+															</Events>
+														</LabelDecoration>
+													</ChildItems>
+												</UsualGroup>
+											</ChildItems>
+										</UsualGroup>
+										<UsualGroup name="ГруппаПояснениеПроверкаРасходы" id="228">
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Пояснение проверка расходы</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Explanation check expenses</v8:content>
+												</v8:item>
+											</Title>
+											<Group>Vertical</Group>
+											<Behavior>Usual</Behavior>
+											<Representation>None</Representation>
+											<ShowTitle>false</ShowTitle>
+											<ExtendedTooltip name="ГруппаПояснениеПроверкаРасходыРасширеннаяПодсказка" id="229"/>
+											<ChildItems>
+												<LabelDecoration name="ПояснениеПроверкаРасходы" id="230">
+													<AutoMaxWidth>false</AutoMaxWidth>
+													<TextColor>style:ПоясняющийТекст</TextColor>
+													<Title formatted="false">
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Анализ условий признания расходов, отраженных в Книге учета доходов и расходов.</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>Analysis of conditions of recognizing expenses recorded in the ledger of income and expenditure.</v8:content>
+														</v8:item>
+													</Title>
+													<ContextMenu name="ПояснениеПроверкаРасходыКонтекстноеМеню" id="231"/>
+													<ExtendedTooltip name="ПояснениеПроверкаРасходыРасширеннаяПодсказка" id="232"/>
+												</LabelDecoration>
+											</ChildItems>
+										</UsualGroup>
+									</ChildItems>
+								</UsualGroup>
+								<UsualGroup name="ГруппаПроверкаСписокЗаписейКУДиР" id="75">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Проверка список записей КУДиР</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Check LIE entry list</v8:content>
+										</v8:item>
+									</Title>
+									<Group>Vertical</Group>
+									<Behavior>Usual</Behavior>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="ГруппаПроверкаСписокЗаписейКУДиРРасширеннаяПодсказка" id="76"/>
+									<ChildItems>
+										<LabelDecoration name="ДекорацияОткрытьСписокЗаписейКУДиР" id="80">
+											<AutoMaxWidth>false</AutoMaxWidth>
+											<Title formatted="false">
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Записи КУДиР</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>LIE entries</v8:content>
+												</v8:item>
+											</Title>
+											<ToolTip>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Записи книги книги учета доходов и расходов</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Entries of ledger of income and expenditure</v8:content>
+												</v8:item>
+											</ToolTip>
+											<Hyperlink>true</Hyperlink>
+											<ContextMenu name="ДекорацияОткрытьСписокЗаписейКУДиРКонтекстноеМеню" id="81"/>
+											<ExtendedTooltip name="ДекорацияОткрытьСписокЗаписейКУДиРРасширеннаяПодсказка" id="82"/>
+											<Events>
+												<Event name="Click">ДекорацияОткрытьСписокЗаписейКУДиРНажатие</Event>
+											</Events>
+										</LabelDecoration>
+										<UsualGroup name="ГруппаПояснениеПроверкаСписокЗаписейКУДиР" id="113">
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Пояснение проверка список записей КУДиР</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Explanation check LIE entry list</v8:content>
+												</v8:item>
+											</Title>
+											<Group>Vertical</Group>
+											<Behavior>Usual</Behavior>
+											<Representation>None</Representation>
+											<ShowTitle>false</ShowTitle>
+											<ExtendedTooltip name="ГруппаПояснениеПроверкаСписокЗаписейКУДиРРасширеннаяПодсказка" id="114"/>
+											<ChildItems>
+												<LabelDecoration name="ПояснениеПроверкаСписокЗаписейКУДиР" id="130">
+													<AutoMaxWidth>false</AutoMaxWidth>
+													<TextColor>style:ПоясняющийТекст</TextColor>
+													<Title formatted="false">
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Просмотр корректирующих записей книги учета доходов и расходов.</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>View correcting entries of the income and expenditure ledger.</v8:content>
+														</v8:item>
+													</Title>
+													<ContextMenu name="ПояснениеПроверкаСписокЗаписейКУДиРКонтекстноеМеню" id="131"/>
+													<ExtendedTooltip name="ПояснениеПроверкаСписокЗаписейКУДиРРасширеннаяПодсказка" id="132"/>
+												</LabelDecoration>
+											</ChildItems>
+										</UsualGroup>
+									</ChildItems>
+								</UsualGroup>
+							</ChildItems>
+						</UsualGroup>
+					</ChildItems>
+				</UsualGroup>
+				<UsualGroup name="ГруппаОтчетностьОбщая" id="44">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Отчетность по УСН</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>STS reporting</v8:content>
+						</v8:item>
+					</Title>
+					<Group>Horizontal</Group>
+					<Behavior>Usual</Behavior>
+					<ExtendedTooltip name="ГруппаОтчетностьОбщаяРасширеннаяПодсказка" id="45"/>
+					<ChildItems>
+						<LabelDecoration name="ДекорацияВыгрузкаДанных" id="46">
+							<Width>1</Width>
+							<ContextMenu name="ДекорацияВыгрузкаДанныхКонтекстноеМеню" id="47"/>
+							<ExtendedTooltip name="ДекорацияВыгрузкаДанныхРасширеннаяПодсказка" id="48"/>
+						</LabelDecoration>
+						<UsualGroup name="ГруппаОтчетность" id="49">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Отчетность</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Reporting</v8:content>
+								</v8:item>
+							</Title>
+							<Group>Vertical</Group>
+							<Behavior>Usual</Behavior>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="ГруппаОтчетностьРасширеннаяПодсказка" id="50"/>
+							<ChildItems>
+								<UsualGroup name="ГруппаОтчетность1" id="404">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Отчетность 1</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Reporting 1</v8:content>
+										</v8:item>
+									</Title>
+									<Group>Horizontal</Group>
+									<Behavior>Usual</Behavior>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="ГруппаОтчетность1РасширеннаяПодсказка" id="405"/>
+									<ChildItems>
+										<UsualGroup name="ГруппаОтчетностьКнигаУчетаДоходовИРасходов" id="51">
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Отчетность книга учета доходов и расходов</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Reporting ledger of income and expenditure </v8:content>
+												</v8:item>
+											</Title>
+											<Group>Horizontal</Group>
+											<Behavior>Usual</Behavior>
+											<Representation>None</Representation>
+											<ShowTitle>false</ShowTitle>
+											<ExtendedTooltip name="ГруппаОтчетностьКнигаУчетаДоходовИРасходовРасширеннаяПодсказка" id="52"/>
+											<ChildItems>
+												<LabelDecoration name="ДекорацияОткрытьОтчетКнигаУчетаДоходовИРасходов" id="55">
+													<AutoMaxWidth>false</AutoMaxWidth>
+													<Title formatted="false">
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Книга учета доходов и расходов</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>Ledger of income and expenditure</v8:content>
+														</v8:item>
+													</Title>
+													<Hyperlink>true</Hyperlink>
+													<ContextMenu name="ДекорацияОткрытьОтчетКнигаУчетаДоходовИРасходовКонтекстноеМеню" id="56"/>
+													<ExtendedTooltip name="ДекорацияОткрытьОтчетКнигаУчетаДоходовИРасходовРасширеннаяПодсказка" id="57"/>
+													<Events>
+														<Event name="Click">ДекорацияОткрытьОтчетКнигаУчетаДоходовИРасходовНажатие</Event>
+													</Events>
+												</LabelDecoration>
+											</ChildItems>
+										</UsualGroup>
+										<UsualGroup name="ГруппаОтчетностьСправкаРасчетНалогаУСН" id="399">
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Отчетность справка расчет налога УСН</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Reporting detailed calculation STS tax calculation</v8:content>
+												</v8:item>
+											</Title>
+											<ToolTip>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Справка расчет налога УСН</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>STS tax detailed calculation</v8:content>
+												</v8:item>
+											</ToolTip>
+											<Group>Horizontal</Group>
+											<Behavior>Usual</Behavior>
+											<Representation>None</Representation>
+											<ShowTitle>false</ShowTitle>
+											<ExtendedTooltip name="ГруппаОтчетностьСправкаРасчетНалогаУСНРасширеннаяПодсказка" id="400"/>
+											<ChildItems>
+												<LabelDecoration name="ДекорацияОткрытьОтчетСправкаРасчетНалогаУСН" id="401">
+													<AutoMaxWidth>false</AutoMaxWidth>
+													<Title formatted="false">
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Справка расчет налога УСН</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>STS tax detailed calculation</v8:content>
+														</v8:item>
+													</Title>
+													<Hyperlink>true</Hyperlink>
+													<ContextMenu name="ДекорацияОткрытьОтчетСправкаРасчетНалогаУСНКонтекстноеМеню" id="402"/>
+													<ExtendedTooltip name="ДекорацияОткрытьОтчетСправкаРасчетНалогаУСНРасширеннаяПодсказка" id="403"/>
+													<Events>
+														<Event name="Click">ДекорацияОткрытьОтчетСправкаРасчетНалогаУСННажатие</Event>
+													</Events>
+												</LabelDecoration>
+											</ChildItems>
+										</UsualGroup>
+									</ChildItems>
+								</UsualGroup>
+								<UsualGroup name="ГруппаОтчетность2" id="406">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Отчетность 2</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Reporting 2</v8:content>
+										</v8:item>
+									</Title>
+									<Group>Horizontal</Group>
+									<Behavior>Usual</Behavior>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="ГруппаОтчетность2РасширеннаяПодсказка" id="407"/>
+									<ChildItems>
+										<UsualGroup name="ГруппаОтчетностьДекларацияПоУСН" id="53">
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Отчетность декларация по УСН</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Reporting STS declaration</v8:content>
+												</v8:item>
+											</Title>
+											<Group>Horizontal</Group>
+											<Behavior>Usual</Behavior>
+											<Representation>None</Representation>
+											<ShowTitle>false</ShowTitle>
+											<ExtendedTooltip name="ГруппаОтчетностьДекларацияПоУСНРасширеннаяПодсказка" id="54"/>
+											<ChildItems>
+												<LabelDecoration name="ДекорацияОткрытьОтчетДекларацияПоУСН" id="58">
+													<AutoMaxWidth>false</AutoMaxWidth>
+													<Title formatted="false">
+														<v8:item>
+															<v8:lang>ru</v8:lang>
+															<v8:content>Декларация по УСН</v8:content>
+														</v8:item>
+														<v8:item>
+															<v8:lang>en</v8:lang>
+															<v8:content>STS declaration</v8:content>
+														</v8:item>
+													</Title>
+													<Hyperlink>true</Hyperlink>
+													<ContextMenu name="ДекорацияОткрытьОтчетДекларацияПоУСНКонтекстноеМеню" id="59"/>
+													<ExtendedTooltip name="ДекорацияОткрытьОтчетДекларацияПоУСНРасширеннаяПодсказка" id="60"/>
+													<Events>
+														<Event name="Click">ДекорацияОткрытьОтчетДекларацияПоУСННажатие</Event>
+													</Events>
+												</LabelDecoration>
+											</ChildItems>
+										</UsualGroup>
+									</ChildItems>
+								</UsualGroup>
+							</ChildItems>
+						</UsualGroup>
+					</ChildItems>
+				</UsualGroup>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="ГруппаПодвал" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Подвал</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Footer</v8:content>
+				</v8:item>
+			</Title>
+			<Group>Vertical</Group>
+			<Behavior>Usual</Behavior>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаПодвалРасширеннаяПодсказка" id="6"/>
+		</UsualGroup>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Объект" id="1">
+			<Type>
+				<v8:Type>cfg:DataProcessorObject.ПомощникФормированияКУДиР</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+			<Save>
+				<Field>Объект.КонецПериода</Field>
+				<Field>Объект.НачалоПериода</Field>
+				<Field>Объект.Организация</Field>
+			</Save>
+		</Attribute>
+		<Attribute name="ПоказатьПоясненияКЭтапам" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Показать пояснения к этапам</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Show explanations to steps</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+			<Save>
+				<Field>ПоказатьПоясненияКЭтапам</Field>
+			</Save>
+		</Attribute>
+		<Attribute name="ПредставлениеНачалаПериода" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Представление начала периода</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Period start presentation</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>100</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ПредставлениеКонцаПериода" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Представление начала периода</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Period start presentation</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>100</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="СтатусАвтоматическогоПризнанияРасходов" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Статус автоматического признания расходов</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Status of automatic expense recognition</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>1</v8:Digits>
+					<v8:FractionDigits>0</v8:FractionDigits>
+					<v8:AllowedSign>Nonnegative</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ПредставлениеОбъектаНалогообложения" id="6">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Представление объекта налогообложения</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Taxation object presentation</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>100</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ПредупреждениеБолееРаннегоПризнания" id="7">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Предупреждение более раннего признания</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Warning of earlier recognition</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>200</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ПояснениеРасчетНалога" id="8">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Пояснение расчет налога</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Explanation tax calculation</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>100</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="СтатусРасчетаНалога" id="9">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Статус расчета налога</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Tax calculation status</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>1</v8:Digits>
+					<v8:FractionDigits>0</v8:FractionDigits>
+					<v8:AllowedSign>Nonnegative</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ПрименяетсяУСНДоходыМинусРасходы" id="10">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Применяется УСНДоходы минус расходы</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>STS is applied Income minus expenses</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ПредупреждениеБолееРаннегоСторно" id="11">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Предупреждение более раннего сторно</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Warning of the earlier storno</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>200</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="СтатусСторноДоходов" id="12">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Статус сторно доходов</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Status storno income</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>1</v8:Digits>
+					<v8:FractionDigits>0</v8:FractionDigits>
+					<v8:AllowedSign>Nonnegative</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="НалоговыйПериодПропущен" id="13">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Налоговый период пропущен</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Fiscal period is missed</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="НалоговыйПериодРасширен" id="14">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Налоговый период расширен</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Fiscal period is extended</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="НачалоНалоговогоПериода" id="15">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Начало налогового периода</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Beginning of fiscal period</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="ПоясненияКЭтапам" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Показать пояснения к этапам</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Show explanations to steps</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Пояснения к этапам</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Explanation of steps</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ПоясненияКЭтапам</Action>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="Обновить" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Обновить</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Update</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Обновить</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Update</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Picture>
+				<xr:Ref>StdPicture.Refresh</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>Обновить</Action>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+	</Commands>
+</Form>

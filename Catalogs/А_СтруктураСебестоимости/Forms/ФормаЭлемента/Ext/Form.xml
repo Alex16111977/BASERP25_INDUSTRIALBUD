@@ -33,6 +33,11 @@
 					<ContextMenu name="НаименованиеКонтекстноеМеню" id="5"/>
 					<ExtendedTooltip name="НаименованиеРасширеннаяПодсказка" id="6"/>
 				</InputField>
+				<InputField name="А_КоличествоМодулей" id="110">
+					<DataPath>Объект.А_КоличествоМодулей</DataPath>
+					<ContextMenu name="А_КоличествоМодулейКонтекстноеМеню" id="111"/>
+					<ExtendedTooltip name="А_КоличествоМодулейРасширеннаяПодсказка" id="112"/>
+				</InputField>
 			</ChildItems>
 		</UsualGroup>
 		<UsualGroup name="Группа2" id="49">
@@ -42,15 +47,6 @@
 			<ShowTitle>false</ShowTitle>
 			<ExtendedTooltip name="Группа2РасширеннаяПодсказка" id="50"/>
 			<ChildItems>
-				<InputField name="Склад" id="10">
-					<DataPath>Объект.Склад</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<ContextMenu name="СкладКонтекстноеМеню" id="11"/>
-					<ExtendedTooltip name="СкладРасширеннаяПодсказка" id="12"/>
-					<Events>
-						<Event name="OnChange">СкладПриИзменении</Event>
-					</Events>
-				</InputField>
 				<InputField name="Подразделение" id="7">
 					<DataPath>Объект.Подразделение</DataPath>
 					<EditMode>EnterOnInput</EditMode>
@@ -60,107 +56,286 @@
 						<Event name="OnChange">ПодразделениеПриИзменении</Event>
 					</Events>
 				</InputField>
+				<InputField name="Склад" id="10">
+					<DataPath>Объект.Склад</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="СкладКонтекстноеМеню" id="11"/>
+					<ExtendedTooltip name="СкладРасширеннаяПодсказка" id="12"/>
+					<Events>
+						<Event name="OnChange">СкладПриИзменении</Event>
+					</Events>
+				</InputField>
 			</ChildItems>
 		</UsualGroup>
-		<Table name="Комплектующие" id="16">
-			<Representation>List</Representation>
-			<Footer>true</Footer>
-			<AutoInsertNewRow>true</AutoInsertNewRow>
-			<EnableStartDrag>true</EnableStartDrag>
-			<EnableDrag>true</EnableDrag>
-			<DataPath>Объект.Комплектующие</DataPath>
-			<RowFilter xsi:nil="true"/>
-			<ContextMenu name="КомплектующиеКонтекстноеМеню" id="17"/>
-			<AutoCommandBar name="КомплектующиеКоманднаяПанель" id="18">
-				<ChildItems>
-					<Button name="КомплектующиеЗагрузить" id="51">
-						<Type>CommandBarButton</Type>
-						<CommandName>Form.Command.Загрузить</CommandName>
-						<ExtendedTooltip name="КомплектующиеЗагрузитьРасширеннаяПодсказка" id="52"/>
-					</Button>
-				</ChildItems>
-			</AutoCommandBar>
-			<ExtendedTooltip name="КомплектующиеРасширеннаяПодсказка" id="19"/>
-			<SearchStringAddition name="КомплектующиеСтрокаПоиска" id="20">
-				<AdditionSource>
-					<Item>Комплектующие</Item>
-					<Type>SearchStringRepresentation</Type>
-				</AdditionSource>
-				<ContextMenu name="КомплектующиеСтрокаПоискаКонтекстноеМеню" id="21"/>
-				<ExtendedTooltip name="КомплектующиеСтрокаПоискаРасширеннаяПодсказка" id="22"/>
-			</SearchStringAddition>
-			<ViewStatusAddition name="КомплектующиеСостояниеПросмотра" id="23">
-				<AdditionSource>
-					<Item>Комплектующие</Item>
-					<Type>ViewStatusRepresentation</Type>
-				</AdditionSource>
-				<ContextMenu name="КомплектующиеСостояниеПросмотраКонтекстноеМеню" id="24"/>
-				<ExtendedTooltip name="КомплектующиеСостояниеПросмотраРасширеннаяПодсказка" id="25"/>
-			</ViewStatusAddition>
-			<SearchControlAddition name="КомплектующиеУправлениеПоиском" id="26">
-				<AdditionSource>
-					<Item>Комплектующие</Item>
-					<Type>SearchControl</Type>
-				</AdditionSource>
-				<ContextMenu name="КомплектующиеУправлениеПоискомКонтекстноеМеню" id="27"/>
-				<ExtendedTooltip name="КомплектующиеУправлениеПоискомРасширеннаяПодсказка" id="28"/>
-			</SearchControlAddition>
+		<UsualGroup name="Группа3" id="102">
+			<Behavior>Usual</Behavior>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="Группа3РасширеннаяПодсказка" id="103"/>
 			<ChildItems>
-				<LabelField name="КомплектующиеНомерСтроки" id="29">
-					<DataPath>Объект.Комплектующие.LineNumber</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<ContextMenu name="КомплектующиеНомерСтрокиКонтекстноеМеню" id="30"/>
-					<ExtendedTooltip name="КомплектующиеНомерСтрокиРасширеннаяПодсказка" id="31"/>
-				</LabelField>
-				<InputField name="КомплектующиеЭтап" id="53">
-					<DataPath>Объект.Комплектующие.Этап</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<ContextMenu name="КомплектующиеЭтапКонтекстноеМеню" id="54"/>
-					<ExtendedTooltip name="КомплектующиеЭтапРасширеннаяПодсказка" id="55"/>
+				<InputField name="СкладПроизводство" id="107">
+					<DataPath>Объект.СкладПроизводство</DataPath>
+					<ContextMenu name="СкладПроизводствоКонтекстноеМеню" id="108"/>
+					<ExtendedTooltip name="СкладПроизводствоРасширеннаяПодсказка" id="109"/>
 				</InputField>
-				<InputField name="КомплектующиеОбщееНазвание" id="32">
-					<DataPath>Объект.Комплектующие.ОбщееНазвание</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<ContextMenu name="КомплектующиеОбщееНазваниеКонтекстноеМеню" id="33"/>
-					<ExtendedTooltip name="КомплектующиеОбщееНазваниеРасширеннаяПодсказка" id="34"/>
-					<Events>
-						<Event name="OnChange">КомплектующиеОбщееНазваниеПриИзменении</Event>
-					</Events>
-				</InputField>
-				<InputField name="КомплектующиеНоменклатура" id="35">
-					<DataPath>Объект.Комплектующие.Номенклатура</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<QuickChoice>false</QuickChoice>
-					<ChoiceHistoryOnInput>DontUse</ChoiceHistoryOnInput>
-					<ContextMenu name="КомплектующиеНоменклатураКонтекстноеМеню" id="36"/>
-					<ExtendedTooltip name="КомплектующиеНоменклатураРасширеннаяПодсказка" id="37"/>
-					<Events>
-						<Event name="OnChange">КомплектующиеНоменклатураПриИзменении</Event>
-						<Event name="StartChoice">КомплектующиеНоменклатураНачалоВыбора</Event>
-					</Events>
-				</InputField>
-				<InputField name="КомплектующиеЕдиница" id="38">
-					<DataPath>Объект.Комплектующие.Единица</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<ContextMenu name="КомплектующиеЕдиницаКонтекстноеМеню" id="39"/>
-					<ExtendedTooltip name="КомплектующиеЕдиницаРасширеннаяПодсказка" id="40"/>
-				</InputField>
-				<InputField name="КомплектующиеКоличество" id="41">
-					<DataPath>Объект.Комплектующие.Количество</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<FooterDataPath>Объект.Комплектующие.TotalКоличество</FooterDataPath>
-					<ContextMenu name="КомплектующиеКоличествоКонтекстноеМеню" id="42"/>
-					<ExtendedTooltip name="КомплектующиеКоличествоРасширеннаяПодсказка" id="43"/>
-				</InputField>
-				<InputField name="КомплектующиеСумма" id="44">
-					<DataPath>Объект.Комплектующие.Сумма</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<FooterDataPath>Объект.Комплектующие.TotalСумма</FooterDataPath>
-					<ContextMenu name="КомплектующиеСуммаКонтекстноеМеню" id="45"/>
-					<ExtendedTooltip name="КомплектующиеСуммаРасширеннаяПодсказка" id="46"/>
+				<InputField name="СкладМонтаж" id="104">
+					<DataPath>Объект.СкладМонтаж</DataPath>
+					<ContextMenu name="СкладМонтажКонтекстноеМеню" id="105"/>
+					<ExtendedTooltip name="СкладМонтажРасширеннаяПодсказка" id="106"/>
 				</InputField>
 			</ChildItems>
-		</Table>
+		</UsualGroup>
+		<Pages name="ГруппаСтраницы" id="56">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Группа страницы</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Группа страницы</v8:content>
+				</v8:item>
+			</ToolTip>
+			<PagesRepresentation>TabsOnTop</PagesRepresentation>
+			<ExtendedTooltip name="ГруппаСтраницыРасширеннаяПодсказка" id="57"/>
+			<ChildItems>
+				<Page name="СтраницаКомплектующие" id="58">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Комплектующие</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Страница комплектующие</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="СтраницаКомплектующиеРасширеннаяПодсказка" id="59"/>
+					<ChildItems>
+						<Table name="Комплектующие" id="16">
+							<Representation>List</Representation>
+							<Footer>true</Footer>
+							<AutoInsertNewRow>true</AutoInsertNewRow>
+							<EnableStartDrag>true</EnableStartDrag>
+							<EnableDrag>true</EnableDrag>
+							<DataPath>Объект.Комплектующие</DataPath>
+							<RowFilter xsi:nil="true"/>
+							<ContextMenu name="КомплектующиеКонтекстноеМеню" id="17"/>
+							<AutoCommandBar name="КомплектующиеКоманднаяПанель" id="18">
+								<ChildItems>
+									<Button name="КомплектующиеЗагрузить" id="51">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.Загрузить</CommandName>
+										<ExtendedTooltip name="КомплектующиеЗагрузитьРасширеннаяПодсказка" id="52"/>
+									</Button>
+								</ChildItems>
+							</AutoCommandBar>
+							<ExtendedTooltip name="КомплектующиеРасширеннаяПодсказка" id="19"/>
+							<SearchStringAddition name="КомплектующиеСтрокаПоиска" id="20">
+								<AdditionSource>
+									<Item>Комплектующие</Item>
+									<Type>SearchStringRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="КомплектующиеСтрокаПоискаКонтекстноеМеню" id="21"/>
+								<ExtendedTooltip name="КомплектующиеСтрокаПоискаРасширеннаяПодсказка" id="22"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="КомплектующиеСостояниеПросмотра" id="23">
+								<AdditionSource>
+									<Item>Комплектующие</Item>
+									<Type>ViewStatusRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="КомплектующиеСостояниеПросмотраКонтекстноеМеню" id="24"/>
+								<ExtendedTooltip name="КомплектующиеСостояниеПросмотраРасширеннаяПодсказка" id="25"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="КомплектующиеУправлениеПоиском" id="26">
+								<AdditionSource>
+									<Item>Комплектующие</Item>
+									<Type>SearchControl</Type>
+								</AdditionSource>
+								<ContextMenu name="КомплектующиеУправлениеПоискомКонтекстноеМеню" id="27"/>
+								<ExtendedTooltip name="КомплектующиеУправлениеПоискомРасширеннаяПодсказка" id="28"/>
+							</SearchControlAddition>
+							<ChildItems>
+								<LabelField name="КомплектующиеНомерСтроки" id="29">
+									<DataPath>Объект.Комплектующие.LineNumber</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КомплектующиеНомерСтрокиКонтекстноеМеню" id="30"/>
+									<ExtendedTooltip name="КомплектующиеНомерСтрокиРасширеннаяПодсказка" id="31"/>
+								</LabelField>
+								<InputField name="КомплектующиеЭтап" id="53">
+									<DataPath>Объект.Комплектующие.Этап</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КомплектующиеЭтапКонтекстноеМеню" id="54"/>
+									<ExtendedTooltip name="КомплектующиеЭтапРасширеннаяПодсказка" id="55"/>
+								</InputField>
+								<CheckBoxField name="КомплектующиеНаВыезде" id="96">
+									<DataPath>Объект.Комплектующие.НаВыезде</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<CheckBoxType>Auto</CheckBoxType>
+									<ContextMenu name="КомплектующиеНаВыездеКонтекстноеМеню" id="97"/>
+									<ExtendedTooltip name="КомплектующиеНаВыездеРасширеннаяПодсказка" id="98"/>
+								</CheckBoxField>
+								<InputField name="КомплектующиеОбщееНазвание" id="32">
+									<DataPath>Объект.Комплектующие.ОбщееНазвание</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КомплектующиеОбщееНазваниеКонтекстноеМеню" id="33"/>
+									<ExtendedTooltip name="КомплектующиеОбщееНазваниеРасширеннаяПодсказка" id="34"/>
+									<Events>
+										<Event name="OnChange">КомплектующиеОбщееНазваниеПриИзменении</Event>
+									</Events>
+								</InputField>
+								<InputField name="КомплектующиеНоменклатура" id="35">
+									<DataPath>Объект.Комплектующие.Номенклатура</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<QuickChoice>false</QuickChoice>
+									<ChoiceHistoryOnInput>DontUse</ChoiceHistoryOnInput>
+									<ContextMenu name="КомплектующиеНоменклатураКонтекстноеМеню" id="36"/>
+									<ExtendedTooltip name="КомплектующиеНоменклатураРасширеннаяПодсказка" id="37"/>
+									<Events>
+										<Event name="OnChange">КомплектующиеНоменклатураПриИзменении</Event>
+										<Event name="StartChoice">КомплектующиеНоменклатураНачалоВыбора</Event>
+									</Events>
+								</InputField>
+								<InputField name="КомплектующиеЕдиница" id="38">
+									<DataPath>Объект.Комплектующие.Единица</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КомплектующиеЕдиницаКонтекстноеМеню" id="39"/>
+									<ExtendedTooltip name="КомплектующиеЕдиницаРасширеннаяПодсказка" id="40"/>
+								</InputField>
+								<InputField name="КомплектующиеКоличество" id="41">
+									<DataPath>Объект.Комплектующие.Количество</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<FooterDataPath>Объект.Комплектующие.TotalКоличество</FooterDataPath>
+									<ContextMenu name="КомплектующиеКоличествоКонтекстноеМеню" id="42"/>
+									<ExtendedTooltip name="КомплектующиеКоличествоРасширеннаяПодсказка" id="43"/>
+								</InputField>
+								<InputField name="КомплектующиеСумма" id="44">
+									<DataPath>Объект.Комплектующие.Сумма</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<FooterDataPath>Объект.Комплектующие.TotalСумма</FooterDataPath>
+									<ContextMenu name="КомплектующиеСуммаКонтекстноеМеню" id="45"/>
+									<ExtendedTooltip name="КомплектующиеСуммаРасширеннаяПодсказка" id="46"/>
+								</InputField>
+							</ChildItems>
+						</Table>
+					</ChildItems>
+				</Page>
+				<Page name="СтраницаРаботы" id="60">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Работы</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Страница работы</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="СтраницаРаботыРасширеннаяПодсказка" id="61"/>
+					<ChildItems>
+						<Table name="Работы" id="62">
+							<Footer>true</Footer>
+							<AutoInsertNewRow>true</AutoInsertNewRow>
+							<EnableStartDrag>true</EnableStartDrag>
+							<EnableDrag>true</EnableDrag>
+							<DataPath>Объект.Работы</DataPath>
+							<RowFilter xsi:nil="true"/>
+							<ContextMenu name="РаботыКонтекстноеМеню" id="63"/>
+							<AutoCommandBar name="РаботыКоманднаяПанель" id="64"/>
+							<ExtendedTooltip name="РаботыРасширеннаяПодсказка" id="65"/>
+							<SearchStringAddition name="РаботыСтрокаПоиска" id="66">
+								<AdditionSource>
+									<Item>Работы</Item>
+									<Type>SearchStringRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="РаботыСтрокаПоискаКонтекстноеМеню" id="67"/>
+								<ExtendedTooltip name="РаботыСтрокаПоискаРасширеннаяПодсказка" id="68"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="РаботыСостояниеПросмотра" id="69">
+								<AdditionSource>
+									<Item>Работы</Item>
+									<Type>ViewStatusRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="РаботыСостояниеПросмотраКонтекстноеМеню" id="70"/>
+								<ExtendedTooltip name="РаботыСостояниеПросмотраРасширеннаяПодсказка" id="71"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="РаботыУправлениеПоиском" id="72">
+								<AdditionSource>
+									<Item>Работы</Item>
+									<Type>SearchControl</Type>
+								</AdditionSource>
+								<ContextMenu name="РаботыУправлениеПоискомКонтекстноеМеню" id="73"/>
+								<ExtendedTooltip name="РаботыУправлениеПоискомРасширеннаяПодсказка" id="74"/>
+							</SearchControlAddition>
+							<ChildItems>
+								<LabelField name="РаботыНомерСтроки" id="75">
+									<DataPath>Объект.Работы.LineNumber</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="РаботыНомерСтрокиКонтекстноеМеню" id="76"/>
+									<ExtendedTooltip name="РаботыНомерСтрокиРасширеннаяПодсказка" id="77"/>
+								</LabelField>
+								<InputField name="РаботыЭтап" id="90">
+									<DataPath>Объект.Работы.Этап</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="РаботыЭтапКонтекстноеМеню" id="91"/>
+									<ExtendedTooltip name="РаботыЭтапРасширеннаяПодсказка" id="92"/>
+								</InputField>
+								<CheckBoxField name="РаботыНаВыезде" id="93">
+									<DataPath>Объект.Работы.НаВыезде</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<CheckBoxType>Auto</CheckBoxType>
+									<ContextMenu name="РаботыНаВыездеКонтекстноеМеню" id="94"/>
+									<ExtendedTooltip name="РаботыНаВыездеРасширеннаяПодсказка" id="95"/>
+								</CheckBoxField>
+								<InputField name="РаботыРабота" id="78">
+									<DataPath>Объект.Работы.Работа</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="РаботыРаботаКонтекстноеМеню" id="79"/>
+									<ExtendedTooltip name="РаботыРаботаРасширеннаяПодсказка" id="80"/>
+								</InputField>
+								<InputField name="РаботыЕдиница" id="99">
+									<DataPath>Объект.Работы.Единица</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="РаботыЕдиницаКонтекстноеМеню" id="100"/>
+									<ExtendedTooltip name="РаботыЕдиницаРасширеннаяПодсказка" id="101"/>
+								</InputField>
+								<InputField name="РаботыКоличество" id="81">
+									<DataPath>Объект.Работы.Количество</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<FooterDataPath>Объект.Работы.TotalКоличество</FooterDataPath>
+									<ContextMenu name="РаботыКоличествоКонтекстноеМеню" id="82"/>
+									<ExtendedTooltip name="РаботыКоличествоРасширеннаяПодсказка" id="83"/>
+									<Events>
+										<Event name="OnChange">РаботыКоличествоПриИзменении</Event>
+									</Events>
+								</InputField>
+								<InputField name="РаботыЦена" id="84">
+									<DataPath>Объект.Работы.Цена</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="РаботыЦенаКонтекстноеМеню" id="85"/>
+									<ExtendedTooltip name="РаботыЦенаРасширеннаяПодсказка" id="86"/>
+									<Events>
+										<Event name="OnChange">РаботыЦенаПриИзменении</Event>
+									</Events>
+								</InputField>
+								<InputField name="РаботыСумма" id="87">
+									<DataPath>Объект.Работы.Сумма</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<FooterDataPath>Объект.Работы.TotalСумма</FooterDataPath>
+									<ContextMenu name="РаботыСуммаКонтекстноеМеню" id="88"/>
+									<ExtendedTooltip name="РаботыСуммаРасширеннаяПодсказка" id="89"/>
+								</InputField>
+							</ChildItems>
+						</Table>
+					</ChildItems>
+				</Page>
+			</ChildItems>
+		</Pages>
 	</ChildItems>
 	<Attributes>
 		<Attribute name="Объект" id="1">

@@ -1,0 +1,571 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
+	<WindowOpeningMode>LockOwnerWindow</WindowOpeningMode>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1"/>
+	<Events>
+		<Event name="AfterWrite">ПослеЗаписи</Event>
+		<Event name="NotificationProcessing">ОбработкаОповещения</Event>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+	</Events>
+	<ChildItems>
+		<InputField name="Организация" id="1">
+			<DataPath>Запись.Организация</DataPath>
+			<AutoMaxWidth>false</AutoMaxWidth>
+			<MaxWidth>54</MaxWidth>
+			<ListChoiceMode>true</ListChoiceMode>
+			<ContextMenu name="ОрганизацияКонтекстноеМеню" id="2"/>
+			<ExtendedTooltip name="ОрганизацияExtendedTooltip" id="41"/>
+			<Events>
+				<Event name="OnChange">ОрганизацияПриИзменении</Event>
+			</Events>
+		</InputField>
+		<UsualGroup name="ГруппаВзаимозависимогоЛица" id="162">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Взаимозависимого лица</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Interdependent person</v8:content>
+				</v8:item>
+			</Title>
+			<Group>Horizontal</Group>
+			<Behavior>Usual</Behavior>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаВзаимозависимогоЛицаРасширеннаяПодсказка" id="163"/>
+			<ChildItems>
+				<InputField name="ВзаимозависимоеЛицоЯвляетсяОрганизацией" id="164">
+					<DataPath>ВзаимозависимоеЛицоЯвляетсяОрганизацией</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Взаимозависимое лицо</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Interdependent person</v8:content>
+						</v8:item>
+					</Title>
+					<ListChoiceMode>true</ListChoiceMode>
+					<ChoiceList>
+						<xr:Item>
+							<xr:Presentation/>
+							<xr:CheckState>0</xr:CheckState>
+							<xr:Value xsi:type="FormChoiceListDesTimeValue">
+								<Presentation>
+									<v8:item>
+										<v8:lang>ru</v8:lang>
+										<v8:content>контрагент</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>en</v8:lang>
+										<v8:content>counterparty</v8:content>
+									</v8:item>
+								</Presentation>
+								<Value xsi:type="xs:boolean">false</Value>
+							</xr:Value>
+						</xr:Item>
+						<xr:Item>
+							<xr:Presentation/>
+							<xr:CheckState>0</xr:CheckState>
+							<xr:Value xsi:type="FormChoiceListDesTimeValue">
+								<Presentation>
+									<v8:item>
+										<v8:lang>ru</v8:lang>
+										<v8:content>организация</v8:content>
+									</v8:item>
+									<v8:item>
+										<v8:lang>en</v8:lang>
+										<v8:content>company</v8:content>
+									</v8:item>
+								</Presentation>
+								<Value xsi:type="xs:boolean">true</Value>
+							</xr:Value>
+						</xr:Item>
+					</ChoiceList>
+					<ContextMenu name="ВзаимозависимоеЛицоЯвляетсяОрганизациейКонтекстноеМеню" id="165"/>
+					<ExtendedTooltip name="ВзаимозависимоеЛицоЯвляетсяОрганизациейРасширеннаяПодсказка" id="166"/>
+					<Events>
+						<Event name="OnChange">ВзаимозависимоеЛицоЯвляетсяОрганизациейПриИзменении</Event>
+					</Events>
+				</InputField>
+				<InputField name="Контрагент" id="5">
+					<DataPath>Запись.Контрагент</DataPath>
+					<TitleLocation>None</TitleLocation>
+					<OpenButton>true</OpenButton>
+					<ContextMenu name="КонтрагентКонтекстноеМеню" id="6"/>
+					<ExtendedTooltip name="КонтрагентExtendedTooltip" id="42"/>
+					<Events>
+						<Event name="OnChange">КонтрагентПриИзменении</Event>
+					</Events>
+				</InputField>
+			</ChildItems>
+		</UsualGroup>
+		<LabelField name="ИнформацияОРегистрации" id="197">
+			<DataPath>ИнформацияОРегистрации</DataPath>
+			<TitleLocation>None</TitleLocation>
+			<ContextMenu name="ИнформацияОРегистрацииКонтекстноеМеню" id="198"/>
+			<ExtendedTooltip name="ИнформацияОРегистрацииРасширеннаяПодсказка" id="199"/>
+			<Events>
+				<Event name="Click">ИнформацияОРегистрацииНажатие</Event>
+			</Events>
+		</LabelField>
+		<UsualGroup name="ГруппаПериодДействияСведений" id="34">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Период действия сведений</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Data validity period</v8:content>
+				</v8:item>
+			</Title>
+			<Group>Horizontal</Group>
+			<Behavior>Usual</Behavior>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаПериодДействияСведенийExtendedTooltip" id="43"/>
+			<ChildItems>
+				<InputField name="Период" id="30">
+					<DataPath>Запись.Period</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Действует с</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Valid from</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="ПериодКонтекстноеМеню" id="31"/>
+					<ExtendedTooltip name="ПериодExtendedTooltip" id="44"/>
+					<Events>
+						<Event name="OnChange">ПериодПриИзменении</Event>
+					</Events>
+				</InputField>
+				<LabelField name="СведенияДействуютПо" id="32">
+					<DataPath>СведенияДействуютПо</DataPath>
+					<Enabled>false</Enabled>
+					<TitleLocation>None</TitleLocation>
+					<AutoMaxWidth>false</AutoMaxWidth>
+					<ContextMenu name="СведенияДействуютПоКонтекстноеМеню" id="33"/>
+					<ExtendedTooltip name="СведенияДействуютПоExtendedTooltip" id="45"/>
+				</LabelField>
+			</ChildItems>
+		</UsualGroup>
+		<InputField name="ТипВзаимозависимости" id="7">
+			<DataPath>Запись.ТипВзаимозависимости</DataPath>
+			<AutoMaxWidth>false</AutoMaxWidth>
+			<MaxWidth>54</MaxWidth>
+			<DropListWidth>50</DropListWidth>
+			<ContextMenu name="ТипВзаимозависимостиКонтекстноеМеню" id="8"/>
+			<ExtendedTooltip name="ТипВзаимозависимостиExtendedTooltip" id="46"/>
+		</InputField>
+		<UsualGroup name="ГруппаСведения" id="28">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сведения</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Information</v8:content>
+				</v8:item>
+			</Title>
+			<Group>Horizontal</Group>
+			<Behavior>Usual</Behavior>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаСведенияExtendedTooltip" id="47"/>
+			<ChildItems>
+				<UsualGroup name="ГруппаУчетнаяПолитикаКонтрагента" id="108">
+					<ReadOnly>true</ReadOnly>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Учетная политика контрагента</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Counterparty accounting policy</v8:content>
+						</v8:item>
+					</Title>
+					<Group>Vertical</Group>
+					<Behavior>Usual</Behavior>
+					<Collapsed>true</Collapsed>
+					<ControlRepresentation>Picture</ControlRepresentation>
+					<ExtendedTooltip name="ГруппаУчетнаяПолитикаКонтрагентаРасширеннаяПодсказка" id="109"/>
+					<ChildItems>
+						<UsualGroup name="ГруппаИзмененияУчетнойПолитики" id="143">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Изменения учетной политики</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Accounting policy changes</v8:content>
+								</v8:item>
+							</Title>
+							<Group>Horizontal</Group>
+							<Behavior>Usual</Behavior>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="ГруппаИзмененияУчетнойПолитикиРасширеннаяПодсказка" id="144"/>
+							<ChildItems>
+								<InputField name="ДатаНачалаДействияУчетнойПолитики" id="145">
+									<DataPath>ЗаписьДанныхКонтрагента.Period</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Применяется с</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Applied from</v8:content>
+										</v8:item>
+									</Title>
+									<ContextMenu name="ДатаНачалаДействияУчетнойПолитикиКонтекстноеМеню" id="146"/>
+									<ExtendedTooltip name="ДатаНачалаДействияУчетнойПолитикиРасширеннаяПодсказка" id="147"/>
+									<Events>
+										<Event name="StartChoice">ДатаНачалаДействияУчетнойПолитикиНачалоВыбора</Event>
+									</Events>
+								</InputField>
+								<LabelDecoration name="ДекорацияИзменениеУчетнойПолитикиКонтрагента" id="140">
+									<Visible>false</Visible>
+									<AutoMaxWidth>false</AutoMaxWidth>
+									<Title formatted="false">
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Изменить</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Change</v8:content>
+										</v8:item>
+									</Title>
+									<Hyperlink>true</Hyperlink>
+									<ContextMenu name="ДекорацияИзменениеУчетнойПолитикиКонтрагентаКонтекстноеМеню" id="141"/>
+									<ExtendedTooltip name="ДекорацияИзменениеУчетнойПолитикиКонтрагентаРасширеннаяПодсказка" id="142"/>
+									<Events>
+										<Event name="Click">ДекорацияИзменениеУчетнойПолитикиКонтрагентаНажатие</Event>
+									</Events>
+								</LabelDecoration>
+								<LabelDecoration name="ДекорацияНазначениеУчетнойПолитикиКонтрагента" id="148">
+									<Visible>false</Visible>
+									<AutoMaxWidth>false</AutoMaxWidth>
+									<Title formatted="false">
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Назначить</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Assign</v8:content>
+										</v8:item>
+									</Title>
+									<Hyperlink>true</Hyperlink>
+									<ContextMenu name="ДекорацияНазначениеУчетнойПолитикиКонтрагентаКонтекстноеМеню" id="149"/>
+									<ExtendedTooltip name="ДекорацияНазначениеУчетнойПолитикиКонтрагентаРасширеннаяПодсказка" id="150"/>
+									<Events>
+										<Event name="Click">ДекорацияИзменениеУчетнойПолитикиКонтрагентаНажатие</Event>
+									</Events>
+								</LabelDecoration>
+								<LabelField name="СведенияДействуютПоУчетнойПолитики" id="200">
+									<DataPath>СведенияДействуютПоУчетнойПолитики</DataPath>
+									<Enabled>false</Enabled>
+									<TitleLocation>None</TitleLocation>
+									<Width>33</Width>
+									<HorizontalStretch>false</HorizontalStretch>
+									<ContextMenu name="СведенияДействуютПоУчетнойПолитикиКонтекстноеМеню" id="201"/>
+									<ExtendedTooltip name="СведенияДействуютПоУчетнойПолитикиРасширеннаяПодсказка" id="202"/>
+								</LabelField>
+							</ChildItems>
+						</UsualGroup>
+						<Pages name="ГруппаСтраницыУчетнойПолитики" id="170">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Страницы учетной политики</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Accounting policy pages</v8:content>
+								</v8:item>
+							</Title>
+							<PagesRepresentation>None</PagesRepresentation>
+							<ExtendedTooltip name="ГруппаСтраницыУчетнойПолитикиРасширеннаяПодсказка" id="171"/>
+							<ChildItems>
+								<Page name="ГруппаСтраницаЮридическогоЛица" id="172">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Страница юридического лица</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Business entity page</v8:content>
+										</v8:item>
+									</Title>
+									<ExtendedTooltip name="ГруппаСтраницаЮридическогоЛицаРасширеннаяПодсказка" id="173"/>
+									<ChildItems>
+										<CheckBoxField name="ЗаписьДанныхКонтрагентаЯвляетсяПлательщикомНалогаНаПрибыль" id="176">
+											<DataPath>ЗаписьДанныхКонтрагента.ЯвляетсяПлательщикомНалогаНаПрибыль</DataPath>
+											<TitleLocation>Right</TitleLocation>
+											<CheckBoxType>Auto</CheckBoxType>
+											<ContextMenu name="ЗаписьДанныхКонтрагентаЯвляетсяПлательщикомНалогаНаПрибыльКонтекстноеМеню" id="177"/>
+											<ExtendedTooltip name="ЗаписьДанныхКонтрагентаЯвляетсяПлательщикомНалогаНаПрибыльРасширеннаяПодсказка" id="178"/>
+										</CheckBoxField>
+										<CheckBoxField name="ЗаписьДанныхКонтрагентаЯвляетсяПлательщикомНДПИ" id="179">
+											<DataPath>ЗаписьДанныхКонтрагента.ЯвляетсяПлательщикомНДПИ</DataPath>
+											<TitleLocation>Right</TitleLocation>
+											<CheckBoxType>Auto</CheckBoxType>
+											<ContextMenu name="ЗаписьДанныхКонтрагентаЯвляетсяПлательщикомНДПИКонтекстноеМеню" id="180"/>
+											<ExtendedTooltip name="ЗаписьДанныхКонтрагентаЯвляетсяПлательщикомНДПИРасширеннаяПодсказка" id="181"/>
+										</CheckBoxField>
+										<CheckBoxField name="ЗаписьДанныхКонтрагентаЯвляетсяПлательщикомЕСХН" id="182">
+											<DataPath>ЗаписьДанныхКонтрагента.ЯвляетсяПлательщикомЕСХН</DataPath>
+											<TitleLocation>Right</TitleLocation>
+											<CheckBoxType>Auto</CheckBoxType>
+											<ContextMenu name="ЗаписьДанныхКонтрагентаЯвляетсяПлательщикомЕСХНКонтекстноеМеню" id="183"/>
+											<ExtendedTooltip name="ЗаписьДанныхКонтрагентаЯвляетсяПлательщикомЕСХНРасширеннаяПодсказка" id="184"/>
+										</CheckBoxField>
+										<CheckBoxField name="ЗаписьДанныхКонтрагентаЯвляетсяПлательщикомЕНВД" id="185">
+											<DataPath>ЗаписьДанныхКонтрагента.ЯвляетсяПлательщикомЕНВД</DataPath>
+											<TitleLocation>Right</TitleLocation>
+											<CheckBoxType>Auto</CheckBoxType>
+											<ContextMenu name="ЗаписьДанныхКонтрагентаЯвляетсяПлательщикомЕНВДКонтекстноеМеню" id="186"/>
+											<ExtendedTooltip name="ЗаписьДанныхКонтрагентаЯвляетсяПлательщикомЕНВДРасширеннаяПодсказка" id="187"/>
+										</CheckBoxField>
+										<CheckBoxField name="ЗаписьДанныхКонтрагентаЗарегистрированВОЭЗ" id="188">
+											<DataPath>ЗаписьДанныхКонтрагента.ЗарегистрированВОЭЗ</DataPath>
+											<TitleLocation>Right</TitleLocation>
+											<CheckBoxType>Auto</CheckBoxType>
+											<ContextMenu name="ЗаписьДанныхКонтрагентаЗарегистрированВОЭЗКонтекстноеМеню" id="189"/>
+											<ExtendedTooltip name="ЗаписьДанныхКонтрагентаЗарегистрированВОЭЗРасширеннаяПодсказка" id="190"/>
+										</CheckBoxField>
+									</ChildItems>
+								</Page>
+								<Page name="ГруппаСтраницаФизическогоЛица" id="174">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Страница физического лица</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Individual page</v8:content>
+										</v8:item>
+									</Title>
+									<ExtendedTooltip name="ГруппаСтраницаФизическогоЛицаРасширеннаяПодсказка" id="175"/>
+									<ChildItems>
+										<InputField name="ЗаписьДанныхКонтрагентаКодВидаДеятельностиФизическогоЛица" id="191">
+											<DataPath>ЗаписьДанныхКонтрагента.КодВидаДеятельностиФизическогоЛица</DataPath>
+											<AutoMaxWidth>false</AutoMaxWidth>
+											<MaxWidth>54</MaxWidth>
+											<HorizontalStretch>true</HorizontalStretch>
+											<ListChoiceMode>true</ListChoiceMode>
+											<ContextMenu name="ЗаписьДанныхКонтрагентаКодВидаДеятельностиФизическогоЛицаКонтекстноеМеню" id="192"/>
+											<ExtendedTooltip name="ЗаписьДанныхКонтрагентаКодВидаДеятельностиФизическогоЛицаРасширеннаяПодсказка" id="193"/>
+										</InputField>
+										<InputField name="ЗаписьДанныхКонтрагентаФизическоеЛицо" id="194">
+											<DataPath>ЗаписьДанныхКонтрагента.ФизическоеЛицо</DataPath>
+											<AutoMaxWidth>false</AutoMaxWidth>
+											<MaxWidth>54</MaxWidth>
+											<ContextMenu name="ЗаписьДанныхКонтрагентаФизическоеЛицоКонтекстноеМеню" id="195"/>
+											<ExtendedTooltip name="ЗаписьДанныхКонтрагентаФизическоеЛицоРасширеннаяПодсказка" id="196"/>
+										</InputField>
+									</ChildItems>
+								</Page>
+								<Page name="ГруппаСтраницаОрганизации" id="203">
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Страница организации</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Company page</v8:content>
+										</v8:item>
+									</Title>
+									<ExtendedTooltip name="ГруппаСтраницаОрганизацииРасширеннаяПодсказка" id="204"/>
+									<ChildItems>
+										<LabelDecoration name="ДекорацияРедактированиеУчетнойПолитикиНеДоступно" id="205">
+											<AutoMaxWidth>false</AutoMaxWidth>
+											<Title formatted="false">
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Для организации редактирование учетной политики возможно только непосредственно из элемента справочника.</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Editing accounting policy for a company is available only from the catalog item itself.</v8:content>
+												</v8:item>
+											</Title>
+											<ContextMenu name="ДекорацияРедактированиеУчетнойПолитикиНеДоступноКонтекстноеМеню" id="206"/>
+											<ExtendedTooltip name="ДекорацияРедактированиеУчетнойПолитикиНеДоступноРасширеннаяПодсказка" id="207"/>
+										</LabelDecoration>
+									</ChildItems>
+								</Page>
+							</ChildItems>
+						</Pages>
+						<LabelDecoration name="ДекорацияИсторияИзмененийУчетнойПолитикиКонтрагента" id="135">
+							<AutoMaxWidth>false</AutoMaxWidth>
+							<Title formatted="false">
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Редактирование учетной политики</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Edit accounting policy</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Открыть историю изменения данных по взаимозависимому лицу</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Open change history of the interdependent person</v8:content>
+								</v8:item>
+							</ToolTip>
+							<Hyperlink>true</Hyperlink>
+							<ContextMenu name="ДекорацияИсторияИзмененийУчетнойПолитикиКонтрагентаКонтекстноеМеню" id="136"/>
+							<ExtendedTooltip name="ДекорацияИсторияИзмененийУчетнойПолитикиКонтрагентаРасширеннаяПодсказка" id="137"/>
+							<Events>
+								<Event name="Click">ДекорацияИсторияИзмененийУчетнойПолитикиКонтрагентаНажатие</Event>
+							</Events>
+						</LabelDecoration>
+					</ChildItems>
+				</UsualGroup>
+			</ChildItems>
+		</UsualGroup>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Запись" id="1">
+			<Type>
+				<v8:Type>cfg:InformationRegisterRecordManager.ВзаимозависимыеЛица</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="СведенияДействуютПо" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сведения действуют по</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Information is valid until</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>20</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ИнформацияОРегистрации" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Информация о регистрации</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Information on registration</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ВзаимозависимоеЛицоЯвляетсяОрганизацией" id="7">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Взаимозависимое лицо является организацией</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Interdependent person is a company</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ЭтоФизЛицо" id="17">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Это физ лицо</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>This is an individual</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ЗаписьДанныхКонтрагента" id="6">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Запись данных контрагента</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Record counterparty data </v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:InformationRegisterRecordManager.ДанныеПоКонтрагентамКонтролируемыхСделок</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="СведенияДействуютПоУчетнойПолитики" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сведения действуют по учетной политики</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Information is valid for the accounting policy </v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>20</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+	</Attributes>
+	<Parameters>
+		<Parameter name="ПериодДанныхКонтрагента">
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+		</Parameter>
+	</Parameters>
+</Form>

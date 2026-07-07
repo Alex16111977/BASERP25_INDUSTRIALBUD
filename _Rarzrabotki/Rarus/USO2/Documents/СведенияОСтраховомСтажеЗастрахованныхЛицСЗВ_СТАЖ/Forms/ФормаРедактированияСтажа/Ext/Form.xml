@@ -1,0 +1,1728 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
+	<AutoTitle>false</AutoTitle>
+	<Customizable>false</Customizable>
+	<CommandBarLocation>Bottom</CommandBarLocation>
+	<VerticalScroll>useIfNecessary</VerticalScroll>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+		<HorizontalAlign>Right</HorizontalAlign>
+		<ChildItems>
+			<Button name="ФормаОк" id="154">
+				<Type>CommandBarButton</Type>
+				<DefaultButton>true</DefaultButton>
+				<CommandName>Form.Command.ОК</CommandName>
+				<ExtendedTooltip name="ФормаОкExtendedTooltip" id="165"/>
+			</Button>
+			<Button name="ФормаОтмена" id="157">
+				<Type>CommandBarButton</Type>
+				<CommandName>Form.Command.Отмена</CommandName>
+				<ExtendedTooltip name="ФормаОтменаExtendedTooltip" id="166"/>
+			</Button>
+		</ChildItems>
+	</AutoCommandBar>
+	<Events>
+		<Event name="NotificationProcessing">ОбработкаОповещения</Event>
+		<Event name="BeforeClose">ПередЗакрытием</Event>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+	</Events>
+	<ChildItems>
+		<UsualGroup name="ИнфонадписьЗаголовокКарточкиГруппа" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Инфонадпись заголовок карточки группа</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Help text title cards group</v8:content>
+				</v8:item>
+			</Title>
+			<Group>Horizontal</Group>
+			<Behavior>Usual</Behavior>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ИнфонадписьЗаголовокКарточкиГруппаExtendedTooltip" id="167"/>
+			<ChildItems>
+				<LabelField name="ИнфонадписьЗаголовокКарточки" id="2">
+					<DataPath>ИнфонадписьЗаголовокКарточки</DataPath>
+					<TitleLocation>None</TitleLocation>
+					<Width>22</Width>
+					<HorizontalStretch>false</HorizontalStretch>
+					<TextColor>style:ПоясняющийТекст</TextColor>
+					<Font ref="sys:DefaultGUIFont" height="10" kind="WindowsFont"/>
+					<ContextMenu name="ИнфонадписьЗаголовокКарточкиКонтекстноеМеню" id="3"/>
+					<ExtendedTooltip name="ИнфонадписьЗаголовокКарточкиExtendedTooltip" id="168"/>
+				</LabelField>
+				<Button name="РедактироватьДанныеФизическогоЛица" id="163">
+					<Type>Hyperlink</Type>
+					<CommandName>Form.Command.РедактироватьДанныеФизическогоЛица</CommandName>
+					<ExtendedTooltip name="РедактироватьДанныеФизическогоЛицаExtendedTooltip" id="175"/>
+				</Button>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="ФИОГруппа" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>ФИО группа</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Full name group</v8:content>
+				</v8:item>
+			</Title>
+			<Group>Horizontal</Group>
+			<Behavior>Usual</Behavior>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ФИОГруппаExtendedTooltip" id="169"/>
+			<ChildItems>
+				<InputField name="Фамилия" id="5">
+					<DataPath>Фамилия</DataPath>
+					<Width>16</Width>
+					<ContextMenu name="ФамилияКонтекстноеМеню" id="6"/>
+					<ExtendedTooltip name="ФамилияExtendedTooltip" id="170"/>
+					<Events>
+						<Event name="OnChange">ФамилияПриИзменении</Event>
+					</Events>
+				</InputField>
+				<InputField name="Имя" id="7">
+					<DataPath>Имя</DataPath>
+					<Width>15</Width>
+					<ContextMenu name="ИмяКонтекстноеМеню" id="8"/>
+					<ExtendedTooltip name="ИмяExtendedTooltip" id="171"/>
+					<Events>
+						<Event name="OnChange">ИмяПриИзменении</Event>
+					</Events>
+				</InputField>
+				<InputField name="Отчество" id="9">
+					<DataPath>Отчество</DataPath>
+					<Width>15</Width>
+					<ContextMenu name="ОтчествоКонтекстноеМеню" id="10"/>
+					<ExtendedTooltip name="ОтчествоExtendedTooltip" id="172"/>
+					<Events>
+						<Event name="OnChange">ОтчествоПриИзменении</Event>
+					</Events>
+				</InputField>
+				<InputField name="СтраховойНомерПФР" id="14">
+					<DataPath>СтраховойНомерПФР</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>СНИЛС</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>IIAN</v8:content>
+						</v8:item>
+					</Title>
+					<HorizontalStretch>false</HorizontalStretch>
+					<Mask>999-999-999 99</Mask>
+					<ContextMenu name="СтраховойНомерПФРКонтекстноеМеню" id="15"/>
+					<ExtendedTooltip name="СтраховойНомерПФРExtendedTooltip" id="174"/>
+					<Events>
+						<Event name="OnChange">СтраховойНомерПФРПриИзменении</Event>
+					</Events>
+				</InputField>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="СведенияОбУвольненииГруппа" id="347">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сведения об увольнении группа</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Termination of employment information group</v8:content>
+				</v8:item>
+			</Title>
+			<Group>Vertical</Group>
+			<Behavior>Usual</Behavior>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="СведенияОбУвольненииГруппаРасширеннаяПодсказка" id="348"/>
+			<ChildItems>
+				<CheckBoxField name="СотрудникУволен" id="349">
+					<DataPath>СотрудникУволен</DataPath>
+					<TitleLocation>Right</TitleLocation>
+					<CheckBoxType>Auto</CheckBoxType>
+					<ContextMenu name="СотрудникУволенКонтекстноеМеню" id="350"/>
+					<ExtendedTooltip name="СотрудникУволенРасширеннаяПодсказка" id="351"/>
+				</CheckBoxField>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="ЗаписиОСтажеЗаголовокГруппа" id="162">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Записи о стаже заголовок группа</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Entries of length of service header group</v8:content>
+				</v8:item>
+			</Title>
+			<Group>Vertical</Group>
+			<Behavior>Usual</Behavior>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ЗаписиОСтажеЗаголовокГруппаРасширеннаяПодсказка" id="207"/>
+		</UsualGroup>
+		<Table name="ЗаписиОСтаже" id="74">
+			<Representation>List</Representation>
+			<HeightInTableRows>2</HeightInTableRows>
+			<AutoInsertNewRow>true</AutoInsertNewRow>
+			<EnableStartDrag>true</EnableStartDrag>
+			<EnableDrag>true</EnableDrag>
+			<FileDragMode>AsFile</FileDragMode>
+			<DataPath>ЗаписиОСтаже</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Записи о стаже</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Records of service</v8:content>
+				</v8:item>
+			</Title>
+			<TitleTextColor>style:ПоясняющийТекст</TitleTextColor>
+			<TitleFont ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+			<CommandSet>
+				<ExcludedCommand>Copy</ExcludedCommand>
+				<ExcludedCommand>CopyToClipboard</ExcludedCommand>
+				<ExcludedCommand>EndEdit</ExcludedCommand>
+				<ExcludedCommand>SortListAsc</ExcludedCommand>
+				<ExcludedCommand>SortListDesc</ExcludedCommand>
+			</CommandSet>
+			<SearchStringLocation>None</SearchStringLocation>
+			<ViewStatusLocation>None</ViewStatusLocation>
+			<SearchControlLocation>None</SearchControlLocation>
+			<RowFilter xsi:nil="true"/>
+			<ContextMenu name="ЗаписиОСтажеКонтекстноеМеню" id="75"/>
+			<AutoCommandBar name="ЗаписиОСтажеКоманднаяПанель" id="76">
+				<ChildItems>
+					<Button name="ЗаписиОСтажеОтменитьИсправленияПоСтажу" id="158">
+						<Type>CommandBarButton</Type>
+						<CommandName>Form.Command.ОтменитьИсправленияПоСтажу</CommandName>
+						<Title>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Отменить исправления</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>en</v8:lang>
+								<v8:content>Cancel changes</v8:content>
+							</v8:item>
+						</Title>
+						<ExtendedTooltip name="ЗаписиОСтажеОтменитьИсправленияПоСтажуExtendedTooltip" id="208"/>
+					</Button>
+				</ChildItems>
+			</AutoCommandBar>
+			<ExtendedTooltip name="ЗаписиОСтажеExtendedTooltip" id="209"/>
+			<SearchStringAddition name="ЗаписиОСтажеСтрокаПоиска" id="338">
+				<AdditionSource>
+					<Item>ЗаписиОСтаже</Item>
+					<Type>SearchStringRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="ЗаписиОСтажеСтрокаПоискаКонтекстноеМеню" id="339"/>
+				<ExtendedTooltip name="ЗаписиОСтажеСтрокаПоискаРасширеннаяПодсказка" id="340"/>
+			</SearchStringAddition>
+			<ViewStatusAddition name="ЗаписиОСтажеСостояниеПросмотра" id="341">
+				<AdditionSource>
+					<Item>ЗаписиОСтаже</Item>
+					<Type>ViewStatusRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="ЗаписиОСтажеСостояниеПросмотраКонтекстноеМеню" id="342"/>
+				<ExtendedTooltip name="ЗаписиОСтажеСостояниеПросмотраРасширеннаяПодсказка" id="343"/>
+			</ViewStatusAddition>
+			<SearchControlAddition name="ЗаписиОСтажеУправлениеПоиском" id="344">
+				<AdditionSource>
+					<Item>ЗаписиОСтаже</Item>
+					<Type>SearchControl</Type>
+				</AdditionSource>
+				<ContextMenu name="ЗаписиОСтажеУправлениеПоискомКонтекстноеМеню" id="345"/>
+				<ExtendedTooltip name="ЗаписиОСтажеУправлениеПоискомРасширеннаяПодсказка" id="346"/>
+			</SearchControlAddition>
+			<Events>
+				<Event name="OnEditEnd">ЗаписиОСтажеПриОкончанииРедактирования</Event>
+				<Event name="BeforeDeleteRow">ЗаписиОСтажеПередУдалением</Event>
+				<Event name="OnActivateRow">ЗаписиОСтажеПриАктивизацииСтроки</Event>
+				<Event name="OnStartEdit">ЗаписиОСтажеПриНачалеРедактирования</Event>
+				<Event name="AfterDeleteRow">ЗаписиОСтажеПослеУдаления</Event>
+			</Events>
+			<ChildItems>
+				<ColumnGroup name="ЗаписиОСтажеНомера" id="77">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>№ №</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>No.</v8:content>
+						</v8:item>
+					</Title>
+					<ShowInHeader>true</ShowInHeader>
+					<ExtendedTooltip name="ЗаписиОСтажеНомераExtendedTooltip" id="210"/>
+					<ChildItems>
+						<InputField name="ЗаписиОСтажеНомерОсновнойЗаписи" id="122">
+							<DataPath>ЗаписиОСтаже.НомерОсновнойЗаписи</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>№ осн./доп.</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Main/add. No.</v8:content>
+								</v8:item>
+							</Title>
+							<EditMode>EnterOnInput</EditMode>
+							<ShowInHeader>false</ShowInHeader>
+							<HorizontalStretch>false</HorizontalStretch>
+							<ContextMenu name="ЗаписиОСтажеНомерОсновнойЗаписиКонтекстноеМеню" id="123"/>
+							<ExtendedTooltip name="ЗаписиОСтажеНомерОсновнойЗаписиExtendedTooltip" id="211"/>
+						</InputField>
+						<InputField name="ЗаписиОСтажеНомерДополнительнойЗаписи" id="124">
+							<DataPath>ЗаписиОСтаже.НомерДополнительнойЗаписи</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<ShowInHeader>false</ShowInHeader>
+							<ContextMenu name="ЗаписиОСтажеНомерДополнительнойЗаписиКонтекстноеМеню" id="125"/>
+							<ExtendedTooltip name="ЗаписиОСтажеНомерДополнительнойЗаписиExtendedTooltip" id="212"/>
+						</InputField>
+					</ChildItems>
+				</ColumnGroup>
+				<ColumnGroup name="ЗаписиОСтажеПериод" id="82">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Период</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Period</v8:content>
+						</v8:item>
+					</Title>
+					<ShowInHeader>true</ShowInHeader>
+					<ExtendedTooltip name="ЗаписиОСтажеПериодExtendedTooltip" id="213"/>
+					<ChildItems>
+						<InputField name="ЗаписиОСтажеДатаНачалаПериода" id="126">
+							<DataPath>ЗаписиОСтаже.ДатаНачалаПериода</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Начало</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Start</v8:content>
+								</v8:item>
+							</Title>
+							<EditMode>EnterOnInput</EditMode>
+							<ShowInHeader>false</ShowInHeader>
+							<ContextMenu name="ЗаписиОСтажеДатаНачалаПериодаКонтекстноеМеню" id="127"/>
+							<ExtendedTooltip name="ЗаписиОСтажеДатаНачалаПериодаExtendedTooltip" id="214"/>
+						</InputField>
+						<InputField name="ЗаписиОСтажеДатаОкончанияПериода" id="128">
+							<DataPath>ЗаписиОСтаже.ДатаОкончанияПериода</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Окончание</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>End</v8:content>
+								</v8:item>
+							</Title>
+							<EditMode>EnterOnInput</EditMode>
+							<ShowInHeader>false</ShowInHeader>
+							<ContextMenu name="ЗаписиОСтажеДатаОкончанияПериодаКонтекстноеМеню" id="129"/>
+							<ExtendedTooltip name="ЗаписиОСтажеДатаОкончанияПериодаExtendedTooltip" id="215"/>
+						</InputField>
+					</ChildItems>
+				</ColumnGroup>
+				<ColumnGroup name="ЗаписиОСтажеТерриториальныеУсловияГруппа" id="87">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Тер. условия</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Site conditions</v8:content>
+						</v8:item>
+					</Title>
+					<ShowInHeader>true</ShowInHeader>
+					<ExtendedTooltip name="ЗаписиОСтажеТерриториальныеУсловияГруппаExtendedTooltip" id="216"/>
+					<ChildItems>
+						<InputField name="ЗаписиОСтажеТерриториальныеУсловия" id="130">
+							<DataPath>ЗаписиОСтаже.ТерриториальныеУсловия</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Код</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Code</v8:content>
+								</v8:item>
+							</Title>
+							<EditMode>EnterOnInput</EditMode>
+							<ShowInHeader>false</ShowInHeader>
+							<ContextMenu name="ЗаписиОСтажеТерриториальныеУсловияКонтекстноеМеню" id="131"/>
+							<ExtendedTooltip name="ЗаписиОСтажеТерриториальныеУсловияExtendedTooltip" id="217"/>
+						</InputField>
+						<InputField name="ЗаписиОСтажеПараметрТерриториальныхУсловий" id="132">
+							<DataPath>ЗаписиОСтаже.ПараметрТерриториальныхУсловий</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Ставка</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Rate</v8:content>
+								</v8:item>
+							</Title>
+							<EditMode>EnterOnInput</EditMode>
+							<ShowInHeader>false</ShowInHeader>
+							<ContextMenu name="ЗаписиОСтажеПараметрТерриториальныхУсловийКонтекстноеМеню" id="133"/>
+							<ExtendedTooltip name="ЗаписиОСтажеПараметрТерриториальныхУсловийExtendedTooltip" id="218"/>
+						</InputField>
+					</ChildItems>
+				</ColumnGroup>
+				<ColumnGroup name="ЗаписиОСтажеУсловияТруда" id="92">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Условия труда</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Working conditions</v8:content>
+						</v8:item>
+					</Title>
+					<Width>10</Width>
+					<Group>Horizontal</Group>
+					<ExtendedTooltip name="ЗаписиОСтажеУсловияТрудаРасширеннаяПодсказка" id="219"/>
+					<ChildItems>
+						<InputField name="ЗаписиОСтажеОсобыеУсловияТруда" id="134">
+							<DataPath>ЗаписиОСтаже.ОсобыеУсловияТруда</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Особ. условия</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Spec. conditions</v8:content>
+								</v8:item>
+							</Title>
+							<EditMode>EnterOnInput</EditMode>
+							<Width>11</Width>
+							<HorizontalStretch>false</HorizontalStretch>
+							<ContextMenu name="ЗаписиОСтажеОсобыеУсловияТрудаКонтекстноеМеню" id="135"/>
+							<ExtendedTooltip name="ЗаписиОСтажеОсобыеУсловияТрудаРасширеннаяПодсказка" id="220"/>
+						</InputField>
+						<InputField name="ЗаписиОСтажеКодПозицииСписка" id="136">
+							<DataPath>ЗаписиОСтаже.КодПозицииСписка</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<Width>15</Width>
+							<HorizontalStretch>false</HorizontalStretch>
+							<ContextMenu name="ЗаписиОСтажеКодПозицииСпискаКонтекстноеМеню" id="137"/>
+							<ExtendedTooltip name="ЗаписиОСтажеКодПозицииСпискаРасширеннаяПодсказка" id="221"/>
+						</InputField>
+					</ChildItems>
+				</ColumnGroup>
+				<ColumnGroup name="ЗаписиОСтажеИсчисляемыйСтаж" id="97">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Исчисляемый стаж</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Estimated length of service</v8:content>
+						</v8:item>
+					</Title>
+					<ShowInHeader>true</ShowInHeader>
+					<ExtendedTooltip name="ЗаписиОСтажеИсчисляемыйСтажРасширеннаяПодсказка" id="222"/>
+					<ChildItems>
+						<InputField name="ЗаписиОСтажеОснованиеИсчисляемогоСтажа" id="138">
+							<DataPath>ЗаписиОСтаже.ОснованиеИсчисляемогоСтажа</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Основание</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Basis</v8:content>
+								</v8:item>
+							</Title>
+							<EditMode>EnterOnInput</EditMode>
+							<ShowInHeader>false</ShowInHeader>
+							<ContextMenu name="ЗаписиОСтажеОснованиеИсчисляемогоСтажаКонтекстноеМеню" id="139"/>
+							<ExtendedTooltip name="ЗаписиОСтажеОснованиеИсчисляемогоСтажаРасширеннаяПодсказка" id="223"/>
+						</InputField>
+						<InputField name="ЗаписиОСтажеТретийПараметрИсчисляемогоСтажа" id="140">
+							<DataPath>ЗаписиОСтаже.ТретийПараметрИсчисляемогоСтажа</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Параметр</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Parameter</v8:content>
+								</v8:item>
+							</Title>
+							<EditMode>EnterOnInput</EditMode>
+							<ShowInHeader>false</ShowInHeader>
+							<ContextMenu name="ЗаписиОСтажеТретийПараметрИсчисляемогоСтажаКонтекстноеМеню" id="141"/>
+							<ExtendedTooltip name="ЗаписиОСтажеТретийПараметрИсчисляемогоСтажаРасширеннаяПодсказка" id="224"/>
+						</InputField>
+					</ChildItems>
+				</ColumnGroup>
+				<ColumnGroup name="ЗаписиОСтажеДосрочноеНазначениеПенсии" id="102">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Досрочное назначение пенсии</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Early old-age pension granting</v8:content>
+						</v8:item>
+					</Title>
+					<Group>Horizontal</Group>
+					<ShowInHeader>true</ShowInHeader>
+					<ExtendedTooltip name="ЗаписиОСтажеДосрочноеНазначениеПенсииРасширеннаяПодсказка" id="225"/>
+					<ChildItems>
+						<ColumnGroup name="ДосрочноеНазначениеПенсииВтораяКолонка" id="237">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Досрочное назначение пенсии первая колонка</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Early old-age pension granting first column</v8:content>
+								</v8:item>
+							</Title>
+							<ExtendedTooltip name="ДосрочноеНазначениеПенсииВтораяКолонкаРасширеннаяПодсказка" id="238"/>
+							<ChildItems>
+								<InputField name="ЗаписиОСтажеОснованиеВыслугиЛет" id="142">
+									<DataPath>ЗаписиОСтаже.ОснованиеВыслугиЛет</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Осн.</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Bas.</v8:content>
+										</v8:item>
+									</Title>
+									<EditMode>EnterOnInput</EditMode>
+									<ShowInHeader>false</ShowInHeader>
+									<Width>8</Width>
+									<ContextMenu name="ЗаписиОСтажеОснованиеВыслугиЛетКонтекстноеМеню" id="143"/>
+									<ExtendedTooltip name="ЗаписиОСтажеОснованиеВыслугиЛетРасширеннаяПодсказка" id="226"/>
+								</InputField>
+								<InputField name="ЗаписиОСтажеПервыйПараметрВыслугиЛет" id="144">
+									<DataPath>ЗаписиОСтаже.ПервыйПараметрВыслугиЛет</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Месяцы</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Months</v8:content>
+										</v8:item>
+									</Title>
+									<EditMode>EnterOnInput</EditMode>
+									<ShowInHeader>false</ShowInHeader>
+									<ContextMenu name="ЗаписиОСтажеПервыйПараметрВыслугиЛетКонтекстноеМеню" id="145"/>
+									<ExtendedTooltip name="ЗаписиОСтажеПервыйПараметрВыслугиЛетРасширеннаяПодсказка" id="227"/>
+								</InputField>
+							</ChildItems>
+						</ColumnGroup>
+						<ColumnGroup name="ДосрочноеНазначениеПенсииПерваяКолонка" id="235">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Досрочное назначение пенсии первая колонка</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Early old-age pension granting first column</v8:content>
+								</v8:item>
+							</Title>
+							<ExtendedTooltip name="ДосрочноеНазначениеПенсииПерваяКолонкаРасширеннаяПодсказка" id="236"/>
+							<ChildItems>
+								<InputField name="ЗаписиОСтажеВторойПараметрВыслугиЛет" id="146">
+									<DataPath>ЗаписиОСтаже.ВторойПараметрВыслугиЛет</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Дни</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Days</v8:content>
+										</v8:item>
+									</Title>
+									<EditMode>EnterOnInput</EditMode>
+									<ShowInHeader>false</ShowInHeader>
+									<ContextMenu name="ЗаписиОСтажеВторойПараметрВыслугиЛетКонтекстноеМеню" id="147"/>
+									<ExtendedTooltip name="ЗаписиОСтажеВторойПараметрВыслугиЛетРасширеннаяПодсказка" id="228"/>
+								</InputField>
+								<InputField name="ЗаписиОСтажеТретийПараметрВыслугиЛет" id="148">
+									<DataPath>ЗаписиОСтаже.ТретийПараметрВыслугиЛет</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Ставка</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Rate</v8:content>
+										</v8:item>
+									</Title>
+									<EditMode>EnterOnInput</EditMode>
+									<ShowInHeader>false</ShowInHeader>
+									<ContextMenu name="ЗаписиОСтажеТретийПараметрВыслугиЛетКонтекстноеМеню" id="149"/>
+									<ExtendedTooltip name="ЗаписиОСтажеТретийПараметрВыслугиЛетРасширеннаяПодсказка" id="229"/>
+								</InputField>
+							</ChildItems>
+						</ColumnGroup>
+					</ChildItems>
+				</ColumnGroup>
+				<ColumnGroup name="ЗаписиОСтажеФактическиОтработанноеВремя" id="111">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Факт. отраб. время</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Act. hours worked</v8:content>
+						</v8:item>
+					</Title>
+					<ShowInHeader>true</ShowInHeader>
+					<ExtendedTooltip name="ЗаписиОСтажеФактическиОтработанноеВремяРасширеннаяПодсказка" id="230"/>
+					<ChildItems>
+						<InputField name="ЗаписиОСтажеПервыйПараметрИсчисляемогоСтажа" id="150">
+							<DataPath>ЗаписиОСтаже.ПервыйПараметрИсчисляемогоСтажа</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Месяцы</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Months</v8:content>
+								</v8:item>
+							</Title>
+							<EditMode>EnterOnInput</EditMode>
+							<ShowInHeader>false</ShowInHeader>
+							<ContextMenu name="ЗаписиОСтажеПервыйПараметрИсчисляемогоСтажаКонтекстноеМеню" id="151"/>
+							<ExtendedTooltip name="ЗаписиОСтажеПервыйПараметрИсчисляемогоСтажаРасширеннаяПодсказка" id="231"/>
+						</InputField>
+						<InputField name="ЗаписиОСтажеВторойПараметрИсчисляемогоСтажа" id="152">
+							<DataPath>ЗаписиОСтаже.ВторойПараметрИсчисляемогоСтажа</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Дни</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Days</v8:content>
+								</v8:item>
+							</Title>
+							<EditMode>EnterOnInput</EditMode>
+							<ShowInHeader>false</ShowInHeader>
+							<ContextMenu name="ЗаписиОСтажеВторойПараметрИсчисляемогоСтажаКонтекстноеМеню" id="153"/>
+							<ExtendedTooltip name="ЗаписиОСтажеВторойПараметрИсчисляемогоСтажаРасширеннаяПодсказка" id="232"/>
+						</InputField>
+					</ChildItems>
+				</ColumnGroup>
+				<ColumnGroup name="ЗаписиОСтажеГосударственнаяСлужба" id="352">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Гос. служба</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Public service</v8:content>
+						</v8:item>
+					</Title>
+					<ShowInHeader>true</ShowInHeader>
+					<ExtendedTooltip name="ЗаписиОСтажеГосударственнаяСлужбаРасширеннаяПодсказка" id="353"/>
+					<ChildItems>
+						<InputField name="ЗаписиОСтажеЗамещениеГосударственныхМуниципальныхДолжностей" id="354">
+							<DataPath>ЗаписиОСтаже.ЗамещениеГосударственныхМуниципальныхДолжностей</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<ShowInHeader>false</ShowInHeader>
+							<ContextMenu name="ЗаписиОСтажеЗамещениеГосударственныхМуниципальныхДолжностейКонтекстноеМеню" id="355"/>
+							<ExtendedTooltip name="ЗаписиОСтажеЗамещениеГосударственныхМуниципальныхДолжностейРасширеннаяПодсказка" id="356"/>
+						</InputField>
+					</ChildItems>
+				</ColumnGroup>
+			</ChildItems>
+		</Table>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Фамилия" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Фамилия</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Last name</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>40</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+			<Edit>
+				<xr:Common>false</xr:Common>
+				<xr:Value name="Role.ДобавлениеИзменениеПерсУчета">true</xr:Value>
+				<xr:Value name="Role.ПолныеПрава">true</xr:Value>
+			</Edit>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="Имя" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Имя</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Name</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>40</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+			<Edit>
+				<xr:Common>false</xr:Common>
+				<xr:Value name="Role.ДобавлениеИзменениеПерсУчета">true</xr:Value>
+				<xr:Value name="Role.ПолныеПрава">true</xr:Value>
+			</Edit>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="Отчество" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отчество</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Patronymic</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>40</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+			<Edit>
+				<xr:Common>false</xr:Common>
+				<xr:Value name="Role.ДобавлениеИзменениеПерсУчета">true</xr:Value>
+				<xr:Value name="Role.ПолныеПрава">true</xr:Value>
+			</Edit>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="СтраховойНомерПФР" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Страховой номер ПФР</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>PF insurance number</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>14</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+			<Edit>
+				<xr:Common>false</xr:Common>
+				<xr:Value name="Role.ДобавлениеИзменениеПерсУчета">true</xr:Value>
+				<xr:Value name="Role.ПолныеПрава">true</xr:Value>
+			</Edit>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="ИнфонадписьЗаголовокКарточки" id="6">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Инфонадпись заголовок карточки</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Help text card title</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ЗаписиОСтаже" id="16">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Записи о стаже</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Records of service</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:ValueTable</v8:Type>
+			</Type>
+			<Edit>
+				<xr:Common>true</xr:Common>
+				<xr:Value name="Role.ДобавлениеИзменениеПерсУчета">true</xr:Value>
+				<xr:Value name="Role.ПолныеПрава">true</xr:Value>
+			</Edit>
+			<SavedData>true</SavedData>
+			<Columns>
+				<Column name="НомерОсновнойЗаписи" id="1">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>№ осн. записи</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Main record No.</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>3</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+							<v8:AllowedSign>Any</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="НомерДополнительнойЗаписи" id="2">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>№ доп. записи</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Add. record No.</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>3</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+							<v8:AllowedSign>Any</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="ДатаНачалаПериода" id="3">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Начало периода</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Period start</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:dateTime</v8:Type>
+						<v8:DateQualifiers>
+							<v8:DateFractions>Date</v8:DateFractions>
+						</v8:DateQualifiers>
+					</Type>
+				</Column>
+				<Column name="ДатаОкончанияПериода" id="4">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Окончание периода</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Period end</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:dateTime</v8:Type>
+						<v8:DateQualifiers>
+							<v8:DateFractions>Date</v8:DateFractions>
+						</v8:DateQualifiers>
+					</Type>
+				</Column>
+				<Column name="ОсобыеУсловияТруда" id="5">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Особые условия труда</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Special working conditions</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.ОсобыеУсловияТрудаПФР</v8:Type>
+					</Type>
+				</Column>
+				<Column name="КодПозицииСписка" id="6">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Код позиции списка</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>List position code</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.СпискиПрофессийДолжностейЛьготногоПенсионногоОбеспечения</v8:Type>
+					</Type>
+				</Column>
+				<Column name="ОснованиеИсчисляемогоСтажа" id="7">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Осн. исчисл. стажа</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Calculated length of service basis</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.ОснованияИсчисляемогоСтраховогоСтажа</v8:Type>
+					</Type>
+				</Column>
+				<Column name="ПервыйПараметрИсчисляемогоСтажа" id="8">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Первый параметр исчисляемого стажа</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>First parameter of estimated length of service</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>3</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+							<v8:AllowedSign>Any</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="ВторойПараметрИсчисляемогоСтажа" id="9">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Второй параметр исчисляемого стажа</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Estimated length of service second parameter</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>2</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+							<v8:AllowedSign>Any</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="ТретийПараметрИсчисляемогоСтажа" id="10">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Третий параметр исчисляемого стажа</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>The third parameter of estimated length of service </v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.ПараметрыИсчисляемогоСтраховогоСтажа</v8:Type>
+					</Type>
+				</Column>
+				<Column name="ОснованиеВыслугиЛет" id="11">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Основание выслуги лет</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Seniority basis</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.ОснованияДосрочногоНазначенияПенсии</v8:Type>
+					</Type>
+				</Column>
+				<Column name="ПервыйПараметрВыслугиЛет" id="12">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Первый параметр выслуги лет</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>First parameter of seniority</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>4</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+							<v8:AllowedSign>Any</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="ВторойПараметрВыслугиЛет" id="13">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Второй параметр выслуги лет</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Seniority second parameter</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>4</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+							<v8:AllowedSign>Any</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="ТретийПараметрВыслугиЛет" id="14">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Третий параметр выслуги лет</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Seniority third parameter</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>5</v8:Digits>
+							<v8:FractionDigits>2</v8:FractionDigits>
+							<v8:AllowedSign>Any</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="ТерриториальныеУсловия" id="15">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Территориальные условия</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Site conditions</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.ТерриториальныеУсловияПФР</v8:Type>
+					</Type>
+				</Column>
+				<Column name="ПараметрТерриториальныхУсловий" id="16">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Параметр территориальных условий</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Site conditions parameter</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>5</v8:Digits>
+							<v8:FractionDigits>2</v8:FractionDigits>
+							<v8:AllowedSign>Any</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="ИдентификаторИсходнойСтроки" id="17">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Идентификатор исходной строки</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Source line ID</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>5</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+							<v8:AllowedSign>Any</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="ЗамещениеГосударственныхМуниципальныхДолжностей" id="18">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Замещение государственных муниципальных должностей</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Substitute state municipal positions</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.ЗамещениеГосударственныхМуниципальныхДолжностейПФР</v8:Type>
+					</Type>
+				</Column>
+			</Columns>
+		</Attribute>
+		<Attribute name="Сотрудник" id="18">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сотрудник</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Employee</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.ФизическиеЛица</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="РедактируемыйДокументСсылка" id="19">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Редактируемый документ ссылка</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Edited document ref</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:DocumentRef.СведенияОСтраховомСтажеЗастрахованныхЛицСЗВ_СТАЖ</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ФиксСтаж" id="22">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Фикс стаж</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Rec length of service</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="КонтролируемыеПоля" id="23">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Контролируемые поля</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Controlled fields</v8:content>
+				</v8:item>
+			</Title>
+			<Type/>
+		</Attribute>
+		<Attribute name="ИсходныйНомерСтроки" id="17">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Исходный номер строки</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Original line number</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>4</v8:Digits>
+					<v8:FractionDigits>0</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ИзменилисьДанныеФизическогоЛица" id="25">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Изменились данные физического лица</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Individual data was changed</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+			<Edit>
+				<xr:Common>false</xr:Common>
+				<xr:Value name="Role.ДобавлениеИзменениеПерсУчета">true</xr:Value>
+				<xr:Value name="Role.ПолныеПрава">true</xr:Value>
+			</Edit>
+		</Attribute>
+		<Attribute name="Год" id="26">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Год</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Year</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>0</v8:Digits>
+					<v8:FractionDigits>0</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="Организация" id="28">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Организация</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Company</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.Организации</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="СотрудникУволен" id="14">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сотрудник уволен 31 декабря отчетного года</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>The employee was dismissed on December, 31 of the reporting year</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="ДатаВыходаНаПенсию" id="29">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Дата выхода на пенсию</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Retirement date</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+		</Attribute>
+		<ConditionalAppearance>
+			<dcsset:item>
+				<dcsset:selection>
+					<dcsset:item>
+						<dcsset:field>НачисленоСтраховая</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>ДоНачисленоСтраховая</dcsset:field>
+					</dcsset:item>
+				</dcsset:selection>
+				<dcsset:filter>
+					<dcsset:item xsi:type="dcsset:FilterItemComparison">
+						<dcsset:left xsi:type="dcscor:Field">ФиксНачисленныеВзносы</dcsset:left>
+						<dcsset:comparisonType>Equal</dcsset:comparisonType>
+						<dcsset:right xsi:type="xs:boolean">true</dcsset:right>
+					</dcsset:item>
+				</dcsset:filter>
+				<dcsset:appearance>
+					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+						<dcscor:parameter>Шрифт</dcscor:parameter>
+						<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+					</dcscor:item>
+				</dcsset:appearance>
+			</dcsset:item>
+			<dcsset:item>
+				<dcsset:selection>
+					<dcsset:item>
+						<dcsset:field>ЗаписиОСтажеНомерОсновнойЗаписи</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>ЗаписиОСтажеНомерДополнительнойЗаписи</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>ЗаписиОСтажеДатаНачалаПериода</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>ЗаписиОСтажеДатаОкончанияПериода</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>ЗаписиОСтажеТерриториальныеУсловия</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>ЗаписиОСтажеПараметрТерриториальныхУсловий</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>ПачкаСЗВ_6_4ОбъектЗаписиОСтажеОсобыеУсловияТруда</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>ПачкаСЗВ_6_4ОбъектЗаписиОСтажеКодПозицииСписка</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>ПачкаСЗВ_6_4ОбъектЗаписиОСтажеОснованиеИсчисляемогоСтажа</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>ПачкаСЗВ_6_4ОбъектЗаписиОСтажеТретийПараметрИсчисляемогоСтажа</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>ПачкаСЗВ_6_4ОбъектЗаписиОСтажеОснованиеВыслугиЛет</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>ПачкаСЗВ_6_4ОбъектЗаписиОСтажеПервыйПараметрВыслугиЛет</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>ПачкаСЗВ_6_4ОбъектЗаписиОСтажеВторойПараметрВыслугиЛет</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>ПачкаСЗВ_6_4ОбъектЗаписиОСтажеТретийПараметрВыслугиЛет</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>ПачкаСЗВ_6_4ОбъектЗаписиОСтажеПервыйПараметрИсчисляемогоСтажа</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>ПачкаСЗВ_6_4ОбъектЗаписиОСтажеВторойПараметрИсчисляемогоСтажа</dcsset:field>
+					</dcsset:item>
+				</dcsset:selection>
+				<dcsset:filter>
+					<dcsset:item xsi:type="dcsset:FilterItemComparison">
+						<dcsset:left xsi:type="dcscor:Field">ФиксСтаж</dcsset:left>
+						<dcsset:comparisonType>Equal</dcsset:comparisonType>
+						<dcsset:right xsi:type="xs:boolean">true</dcsset:right>
+					</dcsset:item>
+				</dcsset:filter>
+				<dcsset:appearance>
+					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+						<dcscor:parameter>Шрифт</dcscor:parameter>
+						<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+					</dcscor:item>
+				</dcsset:appearance>
+			</dcsset:item>
+			<dcsset:item>
+				<dcsset:selection>
+					<dcsset:item>
+						<dcsset:field>СведенияОЗаработкеКатегорияЗастрахованныхЛиц</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>СведенияОЗаработкеЗаработок</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>СведенияОЗаработкеОблагаетсяВзносамиДоПредельнойВеличины</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>СведенияОЗаработкеОблагаетсяВзносамиСвышеПредельнойВеличины</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>СведенияОЗаработкеПоДоговорамГПХДоПредельнойВеличины</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>СведенияОЗаработкеНаВредныхИТяжелыхРаботахКлассУсловийТруда</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>СведенияОЗаработкеНаВредныхИТяжелыхРаботахПериодПредставление</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>СведенияОЗаработкеНаВредныхИТяжелыхРаботахОблагаетсяВзносамиЗаЗанятыхНаПодземныхИВредныхРаботах</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>СведенияОЗаработкеНаВредныхИТяжелыхРаботахОблагаетсяВзносамиЗаЗанятыхНаТяжелыхИПрочихРаботах</dcsset:field>
+					</dcsset:item>
+				</dcsset:selection>
+				<dcsset:filter>
+					<dcsset:item xsi:type="dcsset:FilterItemComparison">
+						<dcsset:left xsi:type="dcscor:Field">ФиксЗаработок</dcsset:left>
+						<dcsset:comparisonType>Equal</dcsset:comparisonType>
+						<dcsset:right xsi:type="xs:boolean">true</dcsset:right>
+					</dcsset:item>
+				</dcsset:filter>
+				<dcsset:appearance>
+					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+						<dcscor:parameter>Шрифт</dcscor:parameter>
+						<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+					</dcscor:item>
+				</dcsset:appearance>
+			</dcsset:item>
+			<dcsset:item>
+				<dcsset:use>false</dcsset:use>
+				<dcsset:selection>
+					<dcsset:item>
+						<dcsset:field>ДанныеРаздела66ДоначисленоНаОПС</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>ДанныеРаздела66ДоначисленоСтраховая</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>ДанныеРаздела66ДоначисленоНакопительная</dcsset:field>
+					</dcsset:item>
+				</dcsset:selection>
+				<dcsset:filter>
+					<dcsset:item xsi:type="dcsset:FilterItemComparison">
+						<dcsset:left xsi:type="dcscor:Field">КорректирующиеСведения.КорректируемыйПериод</dcsset:left>
+						<dcsset:comparisonType>NotFilled</dcsset:comparisonType>
+					</dcsset:item>
+				</dcsset:filter>
+				<dcsset:appearance>
+					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+						<dcscor:parameter>ТолькоПросмотр</dcscor:parameter>
+						<dcscor:value xsi:type="xs:boolean">true</dcscor:value>
+					</dcscor:item>
+				</dcsset:appearance>
+			</dcsset:item>
+			<dcsset:item>
+				<dcsset:use>false</dcsset:use>
+				<dcsset:selection>
+					<dcsset:item>
+						<dcsset:field>ДанныеРаздела66ДоначисленоСтраховая</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>ДанныеРаздела66ДоначисленоНакопительная</dcsset:field>
+					</dcsset:item>
+				</dcsset:selection>
+				<dcsset:filter>
+					<dcsset:item xsi:type="dcsset:FilterItemComparison">
+						<dcsset:left xsi:type="dcscor:Field">КорректирующиеСведения.КорректируемыйПериод</dcsset:left>
+						<dcsset:comparisonType>GreaterOrEqual</dcsset:comparisonType>
+						<dcsset:right xsi:type="v8:StandardBeginningDate">
+							<v8:variant xsi:type="v8:StandardBeginningDateVariant">Custom</v8:variant>
+							<v8:date>2014-01-01T00:00:00</v8:date>
+						</dcsset:right>
+					</dcsset:item>
+				</dcsset:filter>
+				<dcsset:appearance>
+					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+						<dcscor:parameter>ТолькоПросмотр</dcscor:parameter>
+						<dcscor:value xsi:type="xs:boolean">true</dcscor:value>
+					</dcscor:item>
+				</dcsset:appearance>
+			</dcsset:item>
+			<dcsset:item>
+				<dcsset:use>false</dcsset:use>
+				<dcsset:selection>
+					<dcsset:item>
+						<dcsset:field>ДанныеРаздела66ДоначисленоНаОПС</dcsset:field>
+					</dcsset:item>
+				</dcsset:selection>
+				<dcsset:filter>
+					<dcsset:item xsi:type="dcsset:FilterItemComparison">
+						<dcsset:left xsi:type="dcscor:Field">КорректирующиеСведения.КорректируемыйПериод</dcsset:left>
+						<dcsset:comparisonType>Less</dcsset:comparisonType>
+						<dcsset:right xsi:type="v8:StandardBeginningDate">
+							<v8:variant xsi:type="v8:StandardBeginningDateVariant">Custom</v8:variant>
+							<v8:date>2014-01-01T00:00:00</v8:date>
+						</dcsset:right>
+					</dcsset:item>
+				</dcsset:filter>
+				<dcsset:appearance>
+					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+						<dcscor:parameter>ТолькоПросмотр</dcscor:parameter>
+						<dcscor:value xsi:type="xs:boolean">true</dcscor:value>
+					</dcscor:item>
+				</dcsset:appearance>
+			</dcsset:item>
+		</ConditionalAppearance>
+	</Attributes>
+	<Commands>
+		<Command name="ОК" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>ОК</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>OK </v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>ОК</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>OK </v8:content>
+				</v8:item>
+			</ToolTip>
+			<Use>
+				<xr:Common>false</xr:Common>
+				<xr:Value name="Role.ДобавлениеИзменениеПерсУчета">true</xr:Value>
+				<xr:Value name="Role.ПолныеПрава">true</xr:Value>
+			</Use>
+			<Action>ОК</Action>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="Отмена" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отмена</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Cancel</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отмена</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Cancel</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>Отмена</Action>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="ОтменитьИсправленияПоСтажу" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отменить исправления по стажу</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Cancel corrections of length of service</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отменить исправления по стажу</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Cancel corrections of length of service</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Use>
+				<xr:Common>false</xr:Common>
+				<xr:Value name="Role.ДобавлениеИзменениеПерсУчета">true</xr:Value>
+				<xr:Value name="Role.ПолныеПрава">true</xr:Value>
+			</Use>
+			<Action>ОтменитьИсправленияПоСтажу</Action>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="РедактироватьДанныеФизическогоЛица" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Редактировать карточку сотрудника</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Edit employee card</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Редактировать данные физического лица</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Edit individual's data</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Use>
+				<xr:Common>true</xr:Common>
+				<xr:Value name="Role.ДобавлениеИзменениеПерсУчета">true</xr:Value>
+				<xr:Value name="Role.ПолныеПрава">true</xr:Value>
+			</Use>
+			<Action>РедактироватьДанныеФизическогоЛица</Action>
+			<ModifiesSavedData>true</ModifiesSavedData>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+	</Commands>
+	<Parameters>
+		<Parameter name="АдресВоВременномХранилище">
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Parameter>
+		<Parameter name="РедактируемыйДокументСсылка">
+			<Type>
+				<v8:Type>cfg:DocumentRef.ПачкаДокументовСЗВ_6_4</v8:Type>
+				<v8:Type>cfg:DocumentRef.ПачкаДокументовСЗВ_6_1</v8:Type>
+				<v8:Type>cfg:DocumentRef.ПачкаДокументовСЗВ_6_3</v8:Type>
+				<v8:Type>cfg:DocumentRef.РеестрСЗВ_6_2</v8:Type>
+				<v8:Type>cfg:DocumentRef.ПачкаРазделов6РасчетаРСВ_1</v8:Type>
+			</Type>
+			<KeyParameter>true</KeyParameter>
+		</Parameter>
+		<Parameter name="Сотрудник">
+			<Type>
+				<v8:Type>cfg:CatalogRef.ФизическиеЛица</v8:Type>
+			</Type>
+			<KeyParameter>true</KeyParameter>
+		</Parameter>
+		<Parameter name="ИсходныйНомерСтроки">
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>14</v8:Digits>
+					<v8:FractionDigits>0</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</Type>
+			<KeyParameter>true</KeyParameter>
+		</Parameter>
+		<Parameter name="Период">
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+		</Parameter>
+		<Parameter name="ТипСведенийСЗВ">
+			<Type>
+				<v8:Type>cfg:EnumRef.ТипыСведенийСЗВ</v8:Type>
+			</Type>
+		</Parameter>
+		<Parameter name="Организация">
+			<Type>
+				<v8:Type>cfg:CatalogRef.Организации</v8:Type>
+			</Type>
+		</Parameter>
+		<Parameter name="ИспользоватьНовыйКлассификаторПараметровСтажа">
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Parameter>
+		<Parameter name="НеОтображатьОшибки">
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Parameter>
+		<Parameter name="ОтменаИсправленийДоступна">
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Parameter>
+		<Parameter name="ДатаВыходаНаПенсию">
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+		</Parameter>
+		<Parameter name="Год">
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>4</v8:Digits>
+					<v8:FractionDigits>0</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</Type>
+		</Parameter>
+	</Parameters>
+</Form>

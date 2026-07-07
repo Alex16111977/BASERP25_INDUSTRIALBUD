@@ -1,0 +1,383 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
+	<WindowOpeningMode>LockOwnerWindow</WindowOpeningMode>
+	<CommandBarLocation>Bottom</CommandBarLocation>
+	<CommandSet>
+		<ExcludedCommand>CustomizeForm</ExcludedCommand>
+		<ExcludedCommand>Delete</ExcludedCommand>
+		<ExcludedCommand>Help</ExcludedCommand>
+	</CommandSet>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+		<HorizontalAlign>Right</HorizontalAlign>
+		<Autofill>false</Autofill>
+		<ChildItems>
+			<Button name="ФормаЗаписатьИЗакрыть" id="104">
+				<Type>CommandBarButton</Type>
+				<DefaultButton>true</DefaultButton>
+				<CommandName>Form.StandardCommand.WriteAndClose</CommandName>
+				<Title>
+					<v8:item>
+						<v8:lang>ru</v8:lang>
+						<v8:content>ОК</v8:content>
+					</v8:item>
+					<v8:item>
+						<v8:lang>en</v8:lang>
+						<v8:content>OK </v8:content>
+					</v8:item>
+				</Title>
+				<ExtendedTooltip name="ФормаЗаписатьИЗакрытьРасширеннаяПодсказка" id="105"/>
+			</Button>
+			<Button name="ФормаОтмена" id="106">
+				<Type>CommandBarButton</Type>
+				<CommandName>Form.Command.Отмена</CommandName>
+				<ExtendedTooltip name="ФормаОтменаРасширеннаяПодсказка" id="107"/>
+			</Button>
+		</ChildItems>
+	</AutoCommandBar>
+	<Events>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+		<Event name="BeforeWriteAtServer">ПередЗаписьюНаСервере</Event>
+	</Events>
+	<ChildItems>
+		<InputField name="Организация" id="1">
+			<DataPath>Запись.Организация</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Для организации</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>For company</v8:content>
+				</v8:item>
+			</Title>
+			<ContextMenu name="ОрганизацияКонтекстноеМеню" id="2"/>
+			<ExtendedTooltip name="ОрганизацияРасширеннаяПодсказка" id="69"/>
+			<Events>
+				<Event name="OnChange">ОрганизацияПриИзменении</Event>
+			</Events>
+		</InputField>
+		<InputField name="ОбъектНаблюдения" id="33">
+			<DataPath>Запись.ОбъектНаблюдения</DataPath>
+			<ContextMenu name="ОбъектНаблюденияКонтекстноеМеню" id="34"/>
+			<ExtendedTooltip name="ОбъектНаблюденияРасширеннаяПодсказка" id="70"/>
+			<Events>
+				<Event name="OnChange">ОбъектНаблюденияПриИзменении</Event>
+			</Events>
+		</InputField>
+		<InputField name="ДетализацияОбъектаНаблюдения" id="40">
+			<DataPath>Запись.ДетализацияОбъектаНаблюдения</DataPath>
+			<ChooseType>false</ChooseType>
+			<ContextMenu name="ДетализацияОбъектаНаблюденияКонтекстноеМеню" id="41"/>
+			<ExtendedTooltip name="ДетализацияОбъектаНаблюденияРасширеннаяПодсказка" id="71"/>
+			<Events>
+				<Event name="ChoiceProcessing">ДетализацияОбъектаНаблюденияОбработкаВыбора</Event>
+			</Events>
+		</InputField>
+		<UsualGroup name="ЗаголовокОтбор" id="24">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отбор</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Picking</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отбор</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Picking</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Group>Vertical</Group>
+			<Behavior>Usual</Behavior>
+			<ExtendedTooltip name="ЗаголовокОтборРасширеннаяПодсказка" id="77"/>
+			<ChildItems>
+				<Table name="Отборы" id="25">
+					<Representation>Tree</Representation>
+					<InitialTreeView>ExpandAllLevels</InitialTreeView>
+					<EnableStartDrag>true</EnableStartDrag>
+					<EnableDrag>true</EnableDrag>
+					<FileDragMode>AsFile</FileDragMode>
+					<DataPath>Настройки.Settings.Filter</DataPath>
+					<CommandSet>
+						<ExcludedCommand>HierarchicalList</ExcludedCommand>
+						<ExcludedCommand>List</ExcludedCommand>
+						<ExcludedCommand>Tree</ExcludedCommand>
+						<ExcludedCommand>UserSettingItemProperties</ExcludedCommand>
+					</CommandSet>
+					<SearchStringLocation>None</SearchStringLocation>
+					<ViewStatusLocation>None</ViewStatusLocation>
+					<SearchControlLocation>None</SearchControlLocation>
+					<ViewMode>All</ViewMode>
+					<SettingsNamedItemDetailedRepresentation>false</SettingsNamedItemDetailedRepresentation>
+					<ContextMenu name="ОтборыКонтекстноеМеню" id="26"/>
+					<AutoCommandBar name="ОтборыКоманднаяПанель" id="27"/>
+					<ExtendedTooltip name="ОтборыРасширеннаяПодсказка" id="78"/>
+					<SearchStringAddition name="ОтборыСтрокаПоиска" id="79">
+						<AdditionSource>
+							<Item>Отборы</Item>
+							<Type>SearchStringRepresentation</Type>
+						</AdditionSource>
+						<ContextMenu name="ОтборыСтрокаПоискаКонтекстноеМеню" id="80"/>
+						<ExtendedTooltip name="ОтборыСтрокаПоискаРасширеннаяПодсказка" id="81"/>
+					</SearchStringAddition>
+					<ViewStatusAddition name="ОтборыСостояниеПросмотра" id="82">
+						<AdditionSource>
+							<Item>Отборы</Item>
+							<Type>ViewStatusRepresentation</Type>
+						</AdditionSource>
+						<ContextMenu name="ОтборыСостояниеПросмотраКонтекстноеМеню" id="83"/>
+						<ExtendedTooltip name="ОтборыСостояниеПросмотраРасширеннаяПодсказка" id="84"/>
+					</ViewStatusAddition>
+					<SearchControlAddition name="ОтборыУправлениеПоиском" id="85">
+						<AdditionSource>
+							<Item>Отборы</Item>
+							<Type>SearchControl</Type>
+						</AdditionSource>
+						<ContextMenu name="ОтборыУправлениеПоискомКонтекстноеМеню" id="86"/>
+						<ExtendedTooltip name="ОтборыУправлениеПоискомРасширеннаяПодсказка" id="87"/>
+					</SearchControlAddition>
+					<ChildItems>
+						<CheckBoxField name="ОтборИспользование" id="42">
+							<DataPath>Настройки.Settings.Filter.Use</DataPath>
+							<TitleLocation>None</TitleLocation>
+							<EditMode>Directly</EditMode>
+							<CheckBoxType>Auto</CheckBoxType>
+							<ContextMenu name="ОтборИспользованиеКонтекстноеМеню" id="43"/>
+							<ExtendedTooltip name="ОтборИспользованиеРасширеннаяПодсказка" id="88"/>
+						</CheckBoxField>
+						<ColumnGroup name="ОтборГруппаКолонок" id="44">
+							<ExtendedTooltip name="ОтборГруппаКолонокРасширеннаяПодсказка" id="89"/>
+							<ChildItems>
+								<ColumnGroup name="ОтборГруппаКолонок2" id="48">
+									<Group>Horizontal</Group>
+									<ExtendedTooltip name="ОтборГруппаКолонок2РасширеннаяПодсказка" id="90"/>
+									<ChildItems>
+										<ColumnGroup name="ОтборГруппаКолонок3" id="51">
+											<Group>InCell</Group>
+											<ExtendedTooltip name="ОтборГруппаКолонок3РасширеннаяПодсказка" id="91"/>
+											<ChildItems>
+												<PictureField name="ОтборКартинкаЛевогоЗначения" id="52">
+													<DataPath>Настройки.Settings.Filter.LeftValuePicture</DataPath>
+													<ShowInHeader>false</ShowInHeader>
+													<ShowInFooter>false</ShowInFooter>
+													<FileDragMode>AsFile</FileDragMode>
+													<ContextMenu name="ОтборКартинкаЛевогоЗначенияКонтекстноеМеню" id="53"/>
+													<ExtendedTooltip name="ОтборКартинкаЛевогоЗначенияРасширеннаяПодсказка" id="92"/>
+												</PictureField>
+												<InputField name="ОтборЛевоеЗначение" id="54">
+													<DataPath>Настройки.Settings.Filter.LeftValue</DataPath>
+													<EditMode>EnterOnInput</EditMode>
+													<Width>10</Width>
+													<HorizontalStretch>true</HorizontalStretch>
+													<ContextMenu name="ОтборЛевоеЗначениеКонтекстноеМеню" id="55"/>
+													<ExtendedTooltip name="ОтборЛевоеЗначениеРасширеннаяПодсказка" id="93"/>
+												</InputField>
+											</ChildItems>
+										</ColumnGroup>
+										<InputField name="ОтборВидСравнения" id="56">
+											<DataPath>Настройки.Settings.Filter.ComparisonType</DataPath>
+											<EditMode>EnterOnInput</EditMode>
+											<Width>5</Width>
+											<HorizontalStretch>true</HorizontalStretch>
+											<ContextMenu name="ОтборВидСравненияКонтекстноеМеню" id="57"/>
+											<ExtendedTooltip name="ОтборВидСравненияРасширеннаяПодсказка" id="94"/>
+										</InputField>
+										<ColumnGroup name="ОтборГруппаКолонок4" id="58">
+											<Group>InCell</Group>
+											<ExtendedTooltip name="ОтборГруппаКолонок4РасширеннаяПодсказка" id="95"/>
+											<ChildItems>
+												<PictureField name="ОтборКартинкаПравогоЗначения" id="59">
+													<DataPath>Настройки.Settings.Filter.RightValuePicture</DataPath>
+													<ShowInHeader>false</ShowInHeader>
+													<ShowInFooter>false</ShowInFooter>
+													<FileDragMode>AsFile</FileDragMode>
+													<ContextMenu name="ОтборКартинкаПравогоЗначенияКонтекстноеМеню" id="60"/>
+													<ExtendedTooltip name="ОтборКартинкаПравогоЗначенияРасширеннаяПодсказка" id="96"/>
+												</PictureField>
+												<InputField name="ОтборПравоеЗначение" id="61">
+													<DataPath>Настройки.Settings.Filter.RightValue</DataPath>
+													<EditMode>EnterOnInput</EditMode>
+													<Width>10</Width>
+													<HorizontalStretch>true</HorizontalStretch>
+													<ChoiceFoldersAndItems>FoldersAndItems</ChoiceFoldersAndItems>
+													<ContextMenu name="ОтборПравоеЗначениеКонтекстноеМеню" id="62"/>
+													<ExtendedTooltip name="ОтборПравоеЗначениеРасширеннаяПодсказка" id="97"/>
+													<Events>
+														<Event name="StartChoice">ОтборыПравоеЗначениеНачалоВыбора</Event>
+													</Events>
+												</InputField>
+											</ChildItems>
+										</ColumnGroup>
+										<InputField name="ОтборДата" id="63">
+											<DataPath>Настройки.Settings.Filter.Date</DataPath>
+											<EditMode>EnterOnInput</EditMode>
+											<Width>10</Width>
+											<HorizontalStretch>true</HorizontalStretch>
+											<ContextMenu name="ОтборДатаКонтекстноеМеню" id="64"/>
+											<ExtendedTooltip name="ОтборДатаРасширеннаяПодсказка" id="98"/>
+										</InputField>
+									</ChildItems>
+								</ColumnGroup>
+								<InputField name="ОтборТипГруппы" id="49">
+									<DataPath>Настройки.Settings.Filter.GroupType</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ОтборТипГруппыКонтекстноеМеню" id="50"/>
+									<ExtendedTooltip name="ОтборТипГруппыРасширеннаяПодсказка" id="99"/>
+								</InputField>
+							</ChildItems>
+						</ColumnGroup>
+						<ColumnGroup name="ОтборГруппаКолонок1" id="45">
+							<ExtendedTooltip name="ОтборГруппаКолонок1РасширеннаяПодсказка" id="100"/>
+							<ChildItems>
+								<InputField name="ОтборПрименение" id="65">
+									<DataPath>Настройки.Settings.Filter.Application</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<Width>5</Width>
+									<HorizontalStretch>true</HorizontalStretch>
+									<ContextMenu name="ОтборПрименениеКонтекстноеМеню" id="66"/>
+									<ExtendedTooltip name="ОтборПрименениеРасширеннаяПодсказка" id="101"/>
+								</InputField>
+								<InputField name="ОтборРежимОтображения" id="67">
+									<DataPath>Настройки.Settings.Filter.ViewMode</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<Width>5</Width>
+									<HorizontalStretch>true</HorizontalStretch>
+									<ContextMenu name="ОтборРежимОтображенияКонтекстноеМеню" id="68"/>
+									<ExtendedTooltip name="ОтборРежимОтображенияРасширеннаяПодсказка" id="102"/>
+								</InputField>
+							</ChildItems>
+						</ColumnGroup>
+						<InputField name="ОтборПредставление" id="46">
+							<DataPath>Настройки.Settings.Filter.Presentation</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="ОтборПредставлениеКонтекстноеМеню" id="47"/>
+							<ExtendedTooltip name="ОтборПредставлениеРасширеннаяПодсказка" id="103"/>
+						</InputField>
+					</ChildItems>
+				</Table>
+			</ChildItems>
+		</UsualGroup>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Запись" id="1">
+			<Type>
+				<v8:Type>cfg:InformationRegisterRecordManager.НастройкаЗаполненияСвободныхСтрокФормСтатистики</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="Настройки" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Настройки</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Settings</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>dcsset:SettingsComposer</v8:Type>
+			</Type>
+			<SavedData>true</SavedData>
+			<UseAlways>
+				<Field>Настройки.FixedSettings</Field>
+				<Field>Настройки.Settings</Field>
+				<Field>Настройки.Settings.ConditionalAppearance</Field>
+				<Field>Настройки.Settings.DataParameters</Field>
+				<Field>Настройки.Settings.HasConditionalAppearance</Field>
+				<Field>Настройки.Settings.HasFilter</Field>
+				<Field>Настройки.Settings.HasOrder</Field>
+				<Field>Настройки.Settings.HasOutputParameters</Field>
+				<Field>Настройки.Settings.HasSelection</Field>
+				<Field>Настройки.Settings.ItemConditionalAppearance</Field>
+				<Field>Настройки.Settings.ItemDataParameters</Field>
+				<Field>Настройки.Settings.ItemFilter</Field>
+				<Field>Настройки.Settings.ItemGroupFields</Field>
+				<Field>Настройки.Settings.ItemOrder</Field>
+				<Field>Настройки.Settings.ItemOutputParameters</Field>
+				<Field>Настройки.Settings.ItemSelection</Field>
+				<Field>Настройки.Settings.ItemUserFields</Field>
+				<Field>Настройки.Settings.Order</Field>
+				<Field>Настройки.Settings.OutputParameters</Field>
+				<Field>Настройки.Settings.ReportStructure</Field>
+				<Field>Настройки.Settings.ReportStructurePicture</Field>
+				<Field>Настройки.Settings.Selection</Field>
+				<Field>Настройки.Settings.Use</Field>
+				<Field>Настройки.Settings.UserFields</Field>
+				<Field>Настройки.UserSettings</Field>
+			</UseAlways>
+		</Attribute>
+		<Attribute name="ОписанияТиповВидовСубконто" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Описания типов видов субконто</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Descriptions of extra dimension types</v8:content>
+				</v8:item>
+			</Title>
+			<Type/>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="ДетальнаяИнформацияОПоказателях" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Какие сведения об этом объекте содержатся в формах статистики?</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>What information about this object can be found in the statistics forms?</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Детальная информация о показателях</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Indicator detailed information </v8:content>
+				</v8:item>
+			</ToolTip>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="Отмена" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отмена</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Cancel</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отмена</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Cancel</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>Отмена</Action>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+	</Commands>
+</Form>

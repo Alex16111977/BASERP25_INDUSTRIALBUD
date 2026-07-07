@@ -674,3 +674,21 @@ FROM AccumulationRegister.ТоварыНаСкладах.Turnovers(&StartDate, &
 ---
 
 *Last updated: April 2026*
+
+---
+
+## Agent skills
+
+> Конфигурация инженерных скилов плагина `mattpocock-skills` (личная установка в `~/.claude/skills/`). Меняется правкой `docs/agents/*.md`; повторный запуск `/setup-matt-pocock-skills` нужен только для смены трекера или сброса.
+
+### Issue tracker
+
+Задачи и PRD ведутся как локальные markdown-файлы в `.scratch/<feature-slug>/` (GitHub Issues не используется). См. `docs/agents/issue-tracker.md`.
+
+### Triage labels
+
+Канонический словарь меток (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`); статус задачи пишется строкой `Status:` в её файле. См. `docs/agents/triage-labels.md`.
+
+### Domain docs
+
+Single-context: `CONTEXT.md` + `docs/adr/` в корне репозитория (создаются лениво скилами `grill-with-docs` / `domain-modeling`). См. `docs/agents/domain.md`.

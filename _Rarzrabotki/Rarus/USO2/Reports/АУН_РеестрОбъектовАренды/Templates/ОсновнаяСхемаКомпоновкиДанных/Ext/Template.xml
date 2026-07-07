@@ -1,0 +1,426 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<DataCompositionSchema xmlns="http://v8.1c.ru/8.1/data-composition-system/schema" xmlns:dcscom="http://v8.1c.ru/8.1/data-composition-system/common" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<dataSource>
+		<name>ИсточникДанных1</name>
+		<dataSourceType>Local</dataSourceType>
+	</dataSource>
+	<dataSet xsi:type="DataSetQuery">
+		<name>СтатусыОбъектовАренды</name>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ОбъектАренды</dataPath>
+			<field>ОбъектАренды</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Объект недвижимости</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Ставка</dataPath>
+			<field>Ставка</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Ставка</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Услуга</dataPath>
+			<field>Услуга</field>
+			<inputParameters>
+				<dcscor:item>
+					<dcscor:parameter>ПараметрыВыбора</dcscor:parameter>
+					<dcscor:value xsi:type="dcscor:ChoiceParameters">
+						<dcscor:item>
+							<dcscor:choiceParameter>Отбор.АУН_УслугаАренды</dcscor:choiceParameter>
+							<dcscor:value xsi:type="xs:boolean">true</dcscor:value>
+						</dcscor:item>
+					</dcscor:value>
+				</dcscor:item>
+			</inputParameters>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Площадь</dataPath>
+			<field>Площадь</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Площадь</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>СпособНачисления</dataPath>
+			<field>СпособНачисления</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Контрагент</dataPath>
+			<field>Контрагент</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Контрагент</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Договор</dataPath>
+			<field>Договор</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ЗаключениеДоговора</dataPath>
+			<field>ЗаключениеДоговора</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>АналитикаУчетаПоПартнерам</dataPath>
+			<field>АналитикаУчетаПоПартнерам</field>
+		</field>
+		<dataSource>ИсточникДанных1</dataSource>
+		<query>ВЫБРАТЬ
+	АУН_ОбъектыАренды.Ссылка КАК ОбъектАренды
+ПОМЕСТИТЬ ВТОбъектыАренды
+ИЗ
+	Справочник.АУН_ОбъектыНедвижимости КАК АУН_ОбъектыАренды
+;
+
+////////////////////////////////////////////////////////////////////////////////
+ВЫБРАТЬ
+	АУН_СтавкиСрезПоследних.Услуга,
+	АУН_СтавкиСрезПоследних.ОбъектАренды,
+	АУН_СтавкиСрезПоследних.Ставка,
+	АУН_СтавкиСрезПоследних.СпособНачисления,
+	АУН_СтавкиСрезПоследних.Площадь,
+	АУН_СтавкиСрезПоследних.Договор
+ПОМЕСТИТЬ ВТСтавки
+ИЗ
+	РегистрСведений.АУН_Ставки.СрезПоследних КАК АУН_СтавкиСрезПоследних
+;
+
+////////////////////////////////////////////////////////////////////////////////
+ВЫБРАТЬ
+	АУН_СтатусыОбъектовАрендыСрезПоследних.Услуга КАК Услуга,
+	АУН_СтатусыОбъектовАрендыСрезПоследних.ОбъектАренды,
+	ВТСтавки.Ставка КАК Ставка,
+	АУН_СтатусыОбъектовАрендыСрезПоследних.Договор,
+	АУН_СтатусыОбъектовАрендыСрезПоследних.Договор.Контрагент КАК Контрагент,
+	АУН_СтатусыОбъектовАрендыСрезПоследних.ДатаОкончанияАренды КАК ДатаОкончанияПоле,
+	ВТСтавки.СпособНачисления
+ПОМЕСТИТЬ ВТСтатусыОбъектовАренды
+ИЗ
+	РегистрСведений.АУН_СтатусыОбъектовАренды.СрезПоследних(, НЕ ОбъектАренды = ЗНАЧЕНИЕ(Справочник.АУН_ОбъектыНедвижимости.ПустаяСсылка)) КАК АУН_СтатусыОбъектовАрендыСрезПоследних
+		ЛЕВОЕ СОЕДИНЕНИЕ ВТСтавки КАК ВТСтавки
+		ПО АУН_СтатусыОбъектовАрендыСрезПоследних.ОбъектАренды = ВТСтавки.ОбъектАренды
+			И АУН_СтатусыОбъектовАрендыСрезПоследних.Услуга = ВТСтавки.Услуга
+			И АУН_СтатусыОбъектовАрендыСрезПоследних.Договор = ВТСтавки.Договор
+ГДЕ
+	АУН_СтатусыОбъектовАрендыСрезПоследних.ДатаНачалаАренды &lt;= &amp;ПериодНД
+	И (&amp;ПериодНД &lt;= АУН_СтатусыОбъектовАрендыСрезПоследних.ДатаОкончанияАренды
+			ИЛИ АУН_СтатусыОбъектовАрендыСрезПоследних.ДатаОкончанияАренды = ДАТАВРЕМЯ(1, 1, 1, 0, 0, 0))
+;
+
+////////////////////////////////////////////////////////////////////////////////
+ВЫБРАТЬ
+	ВТОбъектыАренды.ОбъектАренды,
+	ВТОбъектыАренды.ОбъектАренды.ОбщаяПлощадь КАК Площадь,
+	ВТСтатусыОбъектовАренды.Услуга,
+	ВТСтатусыОбъектовАренды.Договор,
+	ВТСтатусыОбъектовАренды.Контрагент,
+	ВТСтатусыОбъектовАренды.СпособНачисления,
+	ВТСтатусыОбъектовАренды.Ставка
+ИЗ
+	ВТОбъектыАренды КАК ВТОбъектыАренды
+		ЛЕВОЕ СОЕДИНЕНИЕ ВТСтатусыОбъектовАренды КАК ВТСтатусыОбъектовАренды
+		ПО ВТОбъектыАренды.ОбъектАренды = ВТСтатусыОбъектовАренды.ОбъектАренды</query>
+	</dataSet>
+	<dataSet xsi:type="DataSetQuery">
+		<name>ПлодащиПоДоговору</name>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ОбъектАренды</dataPath>
+			<field>ОбъектАренды</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Объект недвижимости</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ПлощадьПоДоговору</dataPath>
+			<field>ПлощадьПоДоговору</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Площадь по договору</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Договор</dataPath>
+			<field>Договор</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ЗаключениеДоговора</dataPath>
+			<field>ЗаключениеДоговора</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Услуга</dataPath>
+			<field>Услуга</field>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>АналитикаУчетаПоПартнерам</dataPath>
+			<field>АналитикаУчетаПоПартнерам</field>
+		</field>
+		<dataSource>ИсточникДанных1</dataSource>
+		<query>ВЫБРАТЬ РАЗРЕШЕННЫЕ
+	АУН_СтавкиСрезПоследних.ОбъектАренды,
+	АУН_СтавкиСрезПоследних.Площадь КАК ПлощадьПоДоговору,
+	АУН_СтавкиСрезПоследних.Договор
+ИЗ
+	РегистрСведений.АУН_СтатусыОбъектовАренды.СрезПоследних(, Услуга.АУН_УслугаАренды) КАК АУН_СтатусыОбъектовАрендыСрезПоследних
+		ВНУТРЕННЕЕ СОЕДИНЕНИЕ РегистрСведений.АУН_Ставки.СрезПоследних(, Услуга.АУН_УслугаАренды) КАК АУН_СтавкиСрезПоследних
+		ПО АУН_СтатусыОбъектовАрендыСрезПоследних.ОбъектАренды = АУН_СтавкиСрезПоследних.ОбъектАренды
+			И АУН_СтатусыОбъектовАрендыСрезПоследних.Договор = АУН_СтавкиСрезПоследних.Договор
+ГДЕ
+	АУН_СтатусыОбъектовАрендыСрезПоследних.ДатаНачалаАренды &lt;= &amp;ПериодНД
+	И (КОНЕЦПЕРИОДА(АУН_СтатусыОбъектовАрендыСрезПоследних.ДатаОкончанияАренды, ДЕНЬ) &gt;= &amp;ПериодНД
+			ИЛИ АУН_СтатусыОбъектовАрендыСрезПоследних.ДатаОкончанияАренды = ДАТАВРЕМЯ(1, 1, 1, 0, 0, 0))</query>
+	</dataSet>
+	<dataSet xsi:type="DataSetQuery">
+		<name>Площадь</name>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ОбъектАренды</dataPath>
+			<field>ОбъектАренды</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Объект недвижимости</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ПлощадьРесурс</dataPath>
+			<field>ПлощадьРесурс</field>
+			<useRestriction>
+				<field>true</field>
+				<condition>true</condition>
+				<group>true</group>
+				<order>true</order>
+			</useRestriction>
+		</field>
+		<dataSource>ИсточникДанных1</dataSource>
+		<query>ВЫБРАТЬ
+	АУН_ОбъектыНедвижимости.Ссылка КАК ОбъектАренды,
+	АУН_ОбъектыНедвижимости.ОбщаяПлощадь КАК ПлощадьРесурс
+ИЗ
+	Справочник.АУН_ОбъектыНедвижимости КАК АУН_ОбъектыНедвижимости</query>
+	</dataSet>
+	<dataSetLink>
+		<sourceDataSet>СтатусыОбъектовАренды</sourceDataSet>
+		<destinationDataSet>ПлодащиПоДоговору</destinationDataSet>
+		<sourceExpression>ОбъектАренды</sourceExpression>
+		<destinationExpression>ОбъектАренды</destinationExpression>
+	</dataSetLink>
+	<dataSetLink>
+		<sourceDataSet>СтатусыОбъектовАренды</sourceDataSet>
+		<destinationDataSet>Площадь</destinationDataSet>
+		<sourceExpression>ОбъектАренды</sourceExpression>
+		<destinationExpression>ОбъектАренды</destinationExpression>
+	</dataSetLink>
+	<dataSetLink>
+		<sourceDataSet>СтатусыОбъектовАренды</sourceDataSet>
+		<destinationDataSet>ПлодащиПоДоговору</destinationDataSet>
+		<sourceExpression>Договор</sourceExpression>
+		<destinationExpression>Договор</destinationExpression>
+	</dataSetLink>
+	<totalField>
+		<dataPath>ПлощадьПоДоговору</dataPath>
+		<expression>Сумма(ЕстьNULL(ПлощадьПоДоговору, 0))</expression>
+	</totalField>
+	<totalField>
+		<dataPath>Площадь</dataPath>
+		<expression>Сумма(ПлощадьРесурс)</expression>
+	</totalField>
+	<parameter>
+		<name>Период</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Период</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>Date</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
+		<useRestriction>false</useRestriction>
+		<inputParameters>
+			<dcscor:item>
+				<dcscor:parameter>ФорматРедактирования</dcscor:parameter>
+				<dcscor:value xsi:type="xs:string">ДФ=dd.MM.yyyy</dcscor:value>
+			</dcscor:item>
+		</inputParameters>
+		<use>Always</use>
+	</parameter>
+	<parameter>
+		<name>ПериодНД</name>
+		<title xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Период НД</v8:content>
+			</v8:item>
+		</title>
+		<valueType>
+			<v8:Type>xs:dateTime</v8:Type>
+			<v8:DateQualifiers>
+				<v8:DateFractions>DateTime</v8:DateFractions>
+			</v8:DateQualifiers>
+		</valueType>
+		<value xsi:type="xs:dateTime">0001-01-01T00:00:00</value>
+		<useRestriction>true</useRestriction>
+	</parameter>
+	<settingsVariant>
+		<dcsset:name>Основной</dcsset:name>
+		<dcsset:presentation xsi:type="v8:LocalStringType">
+			<v8:item>
+				<v8:lang>ru</v8:lang>
+				<v8:content>Реестр объектов недвижимости</v8:content>
+			</v8:item>
+		</dcsset:presentation>
+		<dcsset:settings xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows">
+			<dcsset:selection>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Площадь</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>ПлощадьПоДоговору</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Услуга</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>Ставка</dcsset:field>
+				</dcsset:item>
+				<dcsset:viewMode>Normal</dcsset:viewMode>
+				<dcsset:userSettingID>a5cdd70c-ed57-49f9-8d2c-89954084012b</dcsset:userSettingID>
+			</dcsset:selection>
+			<dcsset:filter>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">ОбъектАренды</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:right xsi:type="dcscor:DesignTimeValue">Справочник.АУН_ОбъектыНедвижимости.ПустаяСсылка</dcsset:right>
+					<dcsset:userSettingID>ef3f1475-1359-4d4e-b5c6-f15ea6d40d33</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Услуга</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:right xsi:type="dcscor:DesignTimeValue">Справочник.Номенклатура.ПустаяСсылка</dcsset:right>
+					<dcsset:userSettingID>5260b5ff-fae8-460c-9469-ac985f54e929</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:FilterItemComparison">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:left xsi:type="dcscor:Field">Статус</dcsset:left>
+					<dcsset:comparisonType>Equal</dcsset:comparisonType>
+					<dcsset:userSettingID>637e27e6-16ca-4031-84fa-d63f633777aa</dcsset:userSettingID>
+				</dcsset:item>
+				<dcsset:viewMode>Normal</dcsset:viewMode>
+				<dcsset:userSettingID>2f972e4a-8ec7-4eca-96e5-01eae182dafd</dcsset:userSettingID>
+			</dcsset:filter>
+			<dcsset:dataParameters>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>Период</dcscor:parameter>
+					<dcscor:value xsi:type="v8:StandardBeginningDate">
+						<v8:variant xsi:type="v8:StandardBeginningDateVariant">BeginningOfThisDay</v8:variant>
+					</dcscor:value>
+					<dcsset:userSettingID>d0ca4efd-2324-4868-b218-ef5c1906c620</dcsset:userSettingID>
+				</dcscor:item>
+			</dcsset:dataParameters>
+			<dcsset:order>
+				<dcsset:item xsi:type="dcsset:OrderItemField">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:field>ОбъектАренды</dcsset:field>
+					<dcsset:orderType>Asc</dcsset:orderType>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:OrderItemField">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:field>Услуга</dcsset:field>
+					<dcsset:orderType>Asc</dcsset:orderType>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:OrderItemField">
+					<dcsset:use>false</dcsset:use>
+					<dcsset:field>Статус</dcsset:field>
+					<dcsset:orderType>Asc</dcsset:orderType>
+				</dcsset:item>
+				<dcsset:viewMode>Normal</dcsset:viewMode>
+				<dcsset:userSettingID>6b502fef-bcd6-422e-b3ad-0ad578ddff26</dcsset:userSettingID>
+			</dcsset:order>
+			<dcsset:conditionalAppearance>
+				<dcsset:viewMode>Normal</dcsset:viewMode>
+				<dcsset:userSettingID>55e3f2b6-1b77-4b85-baf1-09fff30acd7e</dcsset:userSettingID>
+			</dcsset:conditionalAppearance>
+			<dcsset:outputParameters>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>МакетОформления</dcscor:parameter>
+					<dcscor:value xsi:type="xs:string">Основной</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>ВыводитьЗаголовок</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">Output</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>Заголовок</dcscor:parameter>
+					<dcscor:value xsi:type="v8:LocalStringType">
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Реестр объектов недвижимости</v8:content>
+						</v8:item>
+					</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>ВыводитьПараметрыДанных</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">DontOutput</dcscor:value>
+				</dcscor:item>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:use>false</dcscor:use>
+					<dcscor:parameter>ВыводитьОтбор</dcscor:parameter>
+					<dcscor:value xsi:type="dcsset:DataCompositionTextOutputType">DontOutput</dcscor:value>
+				</dcscor:item>
+			</dcsset:outputParameters>
+			<dcsset:item xsi:type="dcsset:StructureItemGroup">
+				<dcsset:groupItems>
+					<dcsset:item xsi:type="dcsset:GroupItemField">
+						<dcsset:field>ОбъектАренды</dcsset:field>
+						<dcsset:groupType>Hierarchy</dcsset:groupType>
+						<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+						<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+						<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+					</dcsset:item>
+				</dcsset:groupItems>
+				<dcsset:order>
+					<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+				</dcsset:order>
+				<dcsset:selection>
+					<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+				</dcsset:selection>
+				<dcsset:item xsi:type="dcsset:StructureItemGroup">
+					<dcsset:order>
+						<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+					</dcsset:order>
+					<dcsset:selection>
+						<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+					</dcsset:selection>
+				</dcsset:item>
+			</dcsset:item>
+			<dcsset:itemsViewMode>Normal</dcsset:itemsViewMode>
+			<dcsset:itemsUserSettingID>10be2bab-9be8-4b61-938d-2308509a8a0e</dcsset:itemsUserSettingID>
+		</dcsset:settings>
+	</settingsVariant>
+</DataCompositionSchema>

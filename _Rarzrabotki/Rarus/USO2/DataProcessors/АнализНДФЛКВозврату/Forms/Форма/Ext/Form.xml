@@ -1,0 +1,290 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+		<Autofill>false</Autofill>
+	</AutoCommandBar>
+	<ChildItems>
+		<LabelDecoration name="ИнфоНадпись" id="4">
+			<AutoMaxWidth>false</AutoMaxWidth>
+			<Title formatted="false">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Анализ возврата сумм, невыплаченных из-за отсутствия заявлений на возврат излишне удержанного НДФЛ</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Analysis of the amount return unpaid due to missing applications for return of overdeducted PIT </v8:content>
+				</v8:item>
+			</Title>
+			<ContextMenu name="ИнфоНадписьКонтекстноеМеню" id="5"/>
+			<ExtendedTooltip name="ИнфоНадписьРасширеннаяПодсказка" id="6"/>
+		</LabelDecoration>
+		<InputField name="Организация" id="1">
+			<DataPath>Объект.Организация</DataPath>
+			<EditMode>EnterOnInput</EditMode>
+			<HorizontalStretch>false</HorizontalStretch>
+			<ContextMenu name="ОрганизацияКонтекстноеМеню" id="2"/>
+			<ExtendedTooltip name="ОрганизацияРасширеннаяПодсказка" id="3"/>
+			<Events>
+				<Event name="OnChange">ОрганизацияПриИзменении</Event>
+			</Events>
+		</InputField>
+		<LabelField name="РезультатАнализаПоОрганизации" id="40">
+			<DataPath>Объект.РезультатАнализаПоОрганизации</DataPath>
+			<TitleLocation>None</TitleLocation>
+			<Height>2</Height>
+			<VerticalStretch>false</VerticalStretch>
+			<ContextMenu name="РезультатАнализаПоОрганизацииКонтекстноеМеню" id="41"/>
+			<ExtendedTooltip name="РезультатАнализаПоОрганизацииРасширеннаяПодсказка" id="42"/>
+		</LabelField>
+		<Button name="АнализПоСотрудникам" id="7">
+			<Type>UsualButton</Type>
+			<CommandName>Form.Command.АнализПоСотрудникам</CommandName>
+			<ExtendedTooltip name="АнализПоСотрудникамРасширеннаяПодсказка" id="8"/>
+		</Button>
+		<Table name="РезультатыАнализаПоСотрудникам" id="9">
+			<Representation>Tree</Representation>
+			<ReadOnly>true</ReadOnly>
+			<ChangeRowSet>false</ChangeRowSet>
+			<ChangeRowOrder>false</ChangeRowOrder>
+			<AutoInsertNewRow>true</AutoInsertNewRow>
+			<EnableStartDrag>true</EnableStartDrag>
+			<EnableDrag>true</EnableDrag>
+			<FileDragMode>AsFile</FileDragMode>
+			<DataPath>Объект.РезультатыАнализаПоСотрудникам</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Результаты анализа по сотрудникам</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Analysis results by employees</v8:content>
+				</v8:item>
+			</Title>
+			<ContextMenu name="РезультатыАнализаПоСотрудникамКонтекстноеМеню" id="10"/>
+			<AutoCommandBar name="РезультатыАнализаПоСотрудникамКоманднаяПанель" id="11">
+				<Autofill>false</Autofill>
+			</AutoCommandBar>
+			<ExtendedTooltip name="РезультатыАнализаПоСотрудникамРасширеннаяПодсказка" id="12"/>
+			<SearchStringAddition name="РезультатыАнализаПоСотрудникамСтрокаПоиска" id="13">
+				<AdditionSource>
+					<Item>РезультатыАнализаПоСотрудникам</Item>
+					<Type>SearchStringRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="РезультатыАнализаПоСотрудникамСтрокаПоискаКонтекстноеМеню" id="14"/>
+				<ExtendedTooltip name="РезультатыАнализаПоСотрудникамСтрокаПоискаРасширеннаяПодсказка" id="15"/>
+			</SearchStringAddition>
+			<ViewStatusAddition name="РезультатыАнализаПоСотрудникамСостояниеПросмотра" id="16">
+				<AdditionSource>
+					<Item>РезультатыАнализаПоСотрудникам</Item>
+					<Type>ViewStatusRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="РезультатыАнализаПоСотрудникамСостояниеПросмотраКонтекстноеМеню" id="17"/>
+				<ExtendedTooltip name="РезультатыАнализаПоСотрудникамСостояниеПросмотраРасширеннаяПодсказка" id="18"/>
+			</ViewStatusAddition>
+			<SearchControlAddition name="РезультатыАнализаПоСотрудникамУправлениеПоиском" id="19">
+				<AdditionSource>
+					<Item>РезультатыАнализаПоСотрудникам</Item>
+					<Type>SearchControl</Type>
+				</AdditionSource>
+				<ContextMenu name="РезультатыАнализаПоСотрудникамУправлениеПоискомКонтекстноеМеню" id="20"/>
+				<ExtendedTooltip name="РезультатыАнализаПоСотрудникамУправлениеПоискомРасширеннаяПодсказка" id="21"/>
+			</SearchControlAddition>
+			<Events>
+				<Event name="Selection">РезультатыАнализаПоСотрудникамВыбор</Event>
+			</Events>
+			<ChildItems>
+				<InputField name="РезультатыАнализаСотрудник" id="22">
+					<DataPath>Объект.РезультатыАнализаПоСотрудникам.СотрудникДокумент</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="РезультатыАнализаСотрудникКонтекстноеМеню" id="23"/>
+					<ExtendedTooltip name="РезультатыАнализаСотрудникРасширеннаяПодсказка" id="24"/>
+				</InputField>
+				<ColumnGroup name="СуммаКВыплате" id="49">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Сумма к выплате</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Payment amount</v8:content>
+						</v8:item>
+					</Title>
+					<Group>Horizontal</Group>
+					<ShowInHeader>true</ShowInHeader>
+					<ExtendedTooltip name="СуммаКВыплатеРасширеннаяПодсказка" id="50"/>
+					<ChildItems>
+						<InputField name="РезультатыАнализаПоСотрудникамЗаниженаТекст" id="43">
+							<DataPath>Объект.РезультатыАнализаПоСотрудникам.ЗаниженаТекст</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<ShowInHeader>false</ShowInHeader>
+							<Width>10</Width>
+							<Font ref="style:NormalTextFont" bold="false" italic="true" underline="false" strikeout="false" kind="StyleItem"/>
+							<ContextMenu name="РезультатыАнализаПоСотрудникамЗаниженаТекстКонтекстноеМеню" id="44"/>
+							<ExtendedTooltip name="РезультатыАнализаПоСотрудникамЗаниженаТекстРасширеннаяПодсказка" id="45"/>
+						</InputField>
+						<InputField name="РезультатыАнализаСуммаКВыплатеЗанижена" id="28">
+							<DataPath>Объект.РезультатыАнализаПоСотрудникам.СуммаКВыплатеЗанижена</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<ShowInHeader>false</ShowInHeader>
+							<Width>10</Width>
+							<ContextMenu name="РезультатыАнализаСуммаКВыплатеЗаниженаКонтекстноеМеню" id="29"/>
+							<ExtendedTooltip name="РезультатыАнализаСуммаКВыплатеЗаниженаРасширеннаяПодсказка" id="30"/>
+						</InputField>
+						<InputField name="РезультатыАнализаПоСотрудникамВозвращенаТекст" id="46">
+							<DataPath>Объект.РезультатыАнализаПоСотрудникам.ВозвращенаТекст</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<ShowInHeader>false</ShowInHeader>
+							<Width>10</Width>
+							<Font ref="style:NormalTextFont" bold="false" italic="true" underline="false" strikeout="false" kind="StyleItem"/>
+							<ContextMenu name="РезультатыАнализаПоСотрудникамВозвращенаТекстКонтекстноеМеню" id="47"/>
+							<ExtendedTooltip name="РезультатыАнализаПоСотрудникамВозвращенаТекстРасширеннаяПодсказка" id="48"/>
+						</InputField>
+						<InputField name="РезультатыАнализаСуммаКВыплатеВозвращена" id="31">
+							<DataPath>Объект.РезультатыАнализаПоСотрудникам.СуммаКВыплатеВозвращена</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<ShowInHeader>false</ShowInHeader>
+							<Width>10</Width>
+							<ContextMenu name="РезультатыАнализаСуммаКВыплатеВозвращенаКонтекстноеМеню" id="32"/>
+							<ExtendedTooltip name="РезультатыАнализаСуммаКВыплатеВозвращенаРасширеннаяПодсказка" id="33"/>
+						</InputField>
+					</ChildItems>
+				</ColumnGroup>
+			</ChildItems>
+		</Table>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Объект" id="1">
+			<Type>
+				<v8:Type>cfg:DataProcessorObject.АнализНДФЛКВозврату</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+			<Columns>
+				<AdditionalColumns table="Объект.РезультатыАнализаПоСотрудникам">
+					<Column name="СотрудникДокумент" id="1">
+						<Title>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Сотрудник/Документ</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>en</v8:lang>
+								<v8:content>Employee/Document</v8:content>
+							</v8:item>
+						</Title>
+						<Type>
+							<v8:Type>cfg:CatalogRef.ФизическиеЛица</v8:Type>
+							<v8:TypeSet>cfg:DocumentRef</v8:TypeSet>
+						</Type>
+					</Column>
+					<Column name="СуммаКВыплатеЗанижена" id="3">
+						<Title>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Сумма к выплате занижена</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>en</v8:lang>
+								<v8:content>Amount for payment is understated</v8:content>
+							</v8:item>
+						</Title>
+						<Type>
+							<v8:Type>xs:decimal</v8:Type>
+							<v8:NumberQualifiers>
+								<v8:Digits>13</v8:Digits>
+								<v8:FractionDigits>2</v8:FractionDigits>
+								<v8:AllowedSign>Any</v8:AllowedSign>
+							</v8:NumberQualifiers>
+						</Type>
+					</Column>
+					<Column name="СуммаКВыплатеВозвращена" id="4">
+						<Title>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Сумма к выплате возвращена</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>en</v8:lang>
+								<v8:content>Amount for payment is returned</v8:content>
+							</v8:item>
+						</Title>
+						<Type>
+							<v8:Type>xs:decimal</v8:Type>
+							<v8:NumberQualifiers>
+								<v8:Digits>13</v8:Digits>
+								<v8:FractionDigits>2</v8:FractionDigits>
+								<v8:AllowedSign>Any</v8:AllowedSign>
+							</v8:NumberQualifiers>
+						</Type>
+					</Column>
+					<Column name="ЗаниженаТекст" id="2">
+						<Title>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Занижена текст</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>en</v8:lang>
+								<v8:content>Understated text  </v8:content>
+							</v8:item>
+						</Title>
+						<Type>
+							<v8:Type>xs:string</v8:Type>
+							<v8:StringQualifiers>
+								<v8:Length>0</v8:Length>
+								<v8:AllowedLength>Variable</v8:AllowedLength>
+							</v8:StringQualifiers>
+						</Type>
+					</Column>
+					<Column name="ВозвращенаТекст" id="5">
+						<Title>
+							<v8:item>
+								<v8:lang>ru</v8:lang>
+								<v8:content>Возвращена текст</v8:content>
+							</v8:item>
+							<v8:item>
+								<v8:lang>en</v8:lang>
+								<v8:content>Returned text</v8:content>
+							</v8:item>
+						</Title>
+						<Type>
+							<v8:Type>xs:string</v8:Type>
+							<v8:StringQualifiers>
+								<v8:Length>0</v8:Length>
+								<v8:AllowedLength>Variable</v8:AllowedLength>
+							</v8:StringQualifiers>
+						</Type>
+					</Column>
+				</AdditionalColumns>
+			</Columns>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="АнализПоСотрудникам" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Анализ по сотрудникам</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Analysis by employees</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Анализ по сотрудникам</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Analysis by employees</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>АнализПоСотрудникам</Action>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+	</Commands>
+</Form>

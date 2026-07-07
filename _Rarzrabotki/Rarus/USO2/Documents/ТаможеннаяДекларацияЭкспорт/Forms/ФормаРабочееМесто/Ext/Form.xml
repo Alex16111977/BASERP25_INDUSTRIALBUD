@@ -1,0 +1,483 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
+	<Title>
+		<v8:item>
+			<v8:lang>ru</v8:lang>
+			<v8:content>Таможенные декларации на экспорт</v8:content>
+		</v8:item>
+		<v8:item>
+			<v8:lang>en</v8:lang>
+			<v8:content>Customs declarations for export</v8:content>
+		</v8:item>
+	</Title>
+	<AutoTitle>false</AutoTitle>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+		<Autofill>false</Autofill>
+	</AutoCommandBar>
+	<Events>
+		<Event name="NotificationProcessing">ОбработкаОповещения</Event>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+	</Events>
+	<ChildItems>
+		<UsualGroup name="ГруппаОтбор" id="249">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отбор</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Picking</v8:content>
+				</v8:item>
+			</Title>
+			<Behavior>Usual</Behavior>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаОтборРасширеннаяПодсказка" id="250"/>
+			<ChildItems>
+				<InputField name="ОрганизацияОтбор" id="138">
+					<DataPath>ОрганизацияОтбор</DataPath>
+					<TitleLocation>Left</TitleLocation>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Отбор по организации</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Filter by company</v8:content>
+						</v8:item>
+					</ToolTip>
+					<Width>28</Width>
+					<HorizontalStretch>false</HorizontalStretch>
+					<ClearButton>true</ClearButton>
+					<InputHint>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Все</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>All</v8:content>
+						</v8:item>
+					</InputHint>
+					<ContextMenu name="ОрганизацияОтборКонтекстноеМеню" id="139"/>
+					<ExtendedTooltip name="ОрганизацияОтборРасширеннаяПодсказка" id="140"/>
+					<Events>
+						<Event name="OnChange">ОрганизацияОтборПриИзменении</Event>
+					</Events>
+				</InputField>
+				<InputField name="Контрагент" id="246">
+					<DataPath>Контрагент</DataPath>
+					<ClearButton>true</ClearButton>
+					<OpenButton>false</OpenButton>
+					<InputHint>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Все</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>All</v8:content>
+						</v8:item>
+					</InputHint>
+					<ContextMenu name="КонтрагентКонтекстноеМеню" id="247"/>
+					<ExtendedTooltip name="КонтрагентРасширеннаяПодсказка" id="248"/>
+					<Events>
+						<Event name="OnChange">КонтрагентПриИзменении</Event>
+					</Events>
+				</InputField>
+				<InputField name="ДатаРеализации" id="243">
+					<DataPath>ДатаРеализации</DataPath>
+					<ClearButton>true</ClearButton>
+					<ContextMenu name="ДатаРеализацииКонтекстноеМеню" id="244"/>
+					<ExtendedTooltip name="ДатаРеализацииРасширеннаяПодсказка" id="245"/>
+					<Events>
+						<Event name="OnChange">ДатаРеализацииПриИзменении</Event>
+					</Events>
+				</InputField>
+			</ChildItems>
+		</UsualGroup>
+		<Table name="КОформлению" id="5">
+			<Representation>List</Representation>
+			<ChangeRowSet>false</ChangeRowSet>
+			<UseAlternationRowColor>true</UseAlternationRowColor>
+			<EnableStartDrag>true</EnableStartDrag>
+			<FileDragMode>AsFile</FileDragMode>
+			<DataPath>КОформлению</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>К оформлению</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>To register</v8:content>
+				</v8:item>
+			</Title>
+			<AutoRefresh>false</AutoRefresh>
+			<AutoRefreshPeriod>60</AutoRefreshPeriod>
+			<Period>
+				<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
+				<v8:startDate>0001-01-01T00:00:00</v8:startDate>
+				<v8:endDate>0001-01-01T00:00:00</v8:endDate>
+			</Period>
+			<ChoiceFoldersAndItems>Items</ChoiceFoldersAndItems>
+			<RestoreCurrentRow>false</RestoreCurrentRow>
+			<TopLevelParent xsi:nil="true"/>
+			<ShowRoot>true</ShowRoot>
+			<AllowRootChoice>false</AllowRootChoice>
+			<UpdateOnDataChange>Auto</UpdateOnDataChange>
+			<ContextMenu name="КОформлениюКонтекстноеМеню" id="6"/>
+			<AutoCommandBar name="КОформлениюКоманднаяПанель" id="7">
+				<ChildItems>
+					<Button name="СформироватьТаможеннуюДекларациюЭкспорт" id="68">
+						<Type>CommandBarButton</Type>
+						<Representation>PictureAndText</Representation>
+						<CommandName>Form.Command.СформироватьТаможеннуюДекларациюЭкспорт</CommandName>
+						<Picture>
+							<xr:Ref>CommonPicture.ОформитьПродажу</xr:Ref>
+							<xr:LoadTransparent>false</xr:LoadTransparent>
+						</Picture>
+						<ExtendedTooltip name="СформироватьТаможеннуюДекларациюЭкспортРасширеннаяПодсказка" id="69"/>
+					</Button>
+				</ChildItems>
+			</AutoCommandBar>
+			<ExtendedTooltip name="КОформлениюРасширеннаяПодсказка" id="8"/>
+			<SearchStringAddition name="КОформлениюСтрокаПоиска" id="9">
+				<AdditionSource>
+					<Item>КОформлению</Item>
+					<Type>SearchStringRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="КОформлениюСтрокаПоискаКонтекстноеМеню" id="12"/>
+				<ExtendedTooltip name="КОформлениюСтрокаПоискаРасширеннаяПодсказка" id="13"/>
+			</SearchStringAddition>
+			<ViewStatusAddition name="КОформлениюСостояниеПросмотра" id="14">
+				<AdditionSource>
+					<Item>КОформлению</Item>
+					<Type>ViewStatusRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="КОформлениюСостояниеПросмотраКонтекстноеМеню" id="17"/>
+				<ExtendedTooltip name="КОформлениюСостояниеПросмотраРасширеннаяПодсказка" id="18"/>
+			</ViewStatusAddition>
+			<SearchControlAddition name="КОформлениюУправлениеПоиском" id="19">
+				<AdditionSource>
+					<Item>КОформлению</Item>
+					<Type>SearchControl</Type>
+				</AdditionSource>
+				<ContextMenu name="КОформлениюУправлениеПоискомКонтекстноеМеню" id="22"/>
+				<ExtendedTooltip name="КОформлениюУправлениеПоискомРасширеннаяПодсказка" id="23"/>
+			</SearchControlAddition>
+			<Events>
+				<Event name="Selection">КОформлениюВыбор</Event>
+			</Events>
+			<ChildItems>
+				<LabelField name="КОформлениюОрганизация" id="213">
+					<DataPath>КОформлению.Организация</DataPath>
+					<ContextMenu name="КОформлениюОрганизацияКонтекстноеМеню" id="214"/>
+					<ExtendedTooltip name="КОформлениюОрганизацияРасширеннаяПодсказка" id="215"/>
+				</LabelField>
+				<LabelField name="КОформлениюКонтрагент" id="210">
+					<DataPath>КОформлению.Контрагент</DataPath>
+					<ContextMenu name="КОформлениюКонтрагентКонтекстноеМеню" id="211"/>
+					<ExtendedTooltip name="КОформлениюКонтрагентРасширеннаяПодсказка" id="212"/>
+				</LabelField>
+				<LabelField name="КОформлениюРеализацияЭкспорт" id="216">
+					<DataPath>КОформлению.РеализацияЭкспорт</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Реализация</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Sales</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="КОформлениюРеализацияЭкспортКонтекстноеМеню" id="217"/>
+					<ExtendedTooltip name="КОформлениюРеализацияЭкспортРасширеннаяПодсказка" id="218"/>
+				</LabelField>
+				<LabelField name="КОформлениюДатаРеализации" id="207">
+					<DataPath>КОформлению.ДатаРеализации</DataPath>
+					<Width>13</Width>
+					<ContextMenu name="КОформлениюДатаРеализацииКонтекстноеМеню" id="208"/>
+					<ExtendedTooltip name="КОформлениюДатаРеализацииРасширеннаяПодсказка" id="209"/>
+				</LabelField>
+				<LabelField name="КОформлениюСуммаДокумента" id="219">
+					<DataPath>КОформлению.СуммаДокумента</DataPath>
+					<ContextMenu name="КОформлениюСуммаДокументаКонтекстноеМеню" id="220"/>
+					<ExtendedTooltip name="КОформлениюСуммаДокументаРасширеннаяПодсказка" id="221"/>
+				</LabelField>
+				<LabelField name="КОформлениюВалюта" id="204">
+					<DataPath>КОформлению.Валюта</DataPath>
+					<ContextMenu name="КОформлениюВалютаКонтекстноеМеню" id="205"/>
+					<ExtendedTooltip name="КОформлениюВалютаРасширеннаяПодсказка" id="206"/>
+				</LabelField>
+			</ChildItems>
+		</Table>
+		<LabelField name="СмТакжеВРаботе" id="251">
+			<DataPath>СмТакжеВРаботе</DataPath>
+			<TitleLocation>None</TitleLocation>
+			<AutoMaxWidth>false</AutoMaxWidth>
+			<ContextMenu name="СмТакжеВРаботеКонтекстноеМеню" id="252"/>
+			<ExtendedTooltip name="СмТакжеВРаботеРасширеннаяПодсказка" id="253"/>
+			<Events>
+				<Event name="URLProcessing">СмТакжеВРаботеОбработкаНавигационнойСсылки</Event>
+			</Events>
+		</LabelField>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="КОформлению" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>К оформлению</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>To register</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:DynamicList</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+			<UseAlways>
+				<Field>КОформлению.РеализацияЭкспорт</Field>
+			</UseAlways>
+			<Settings xsi:type="DynamicList">
+				<ManualQuery>true</ManualQuery>
+				<DynamicDataRead>true</DynamicDataRead>
+				<QueryText>ВЫБРАТЬ РАЗРЕШЕННЫЕ
+	РегистрСведенийТаможенныеДекларацииЭкспортКРегистрации.РеализацияЭкспорт,
+	РегистрСведенийТаможенныеДекларацииЭкспортКРегистрации.СуммаДокумента,
+	РегистрСведенийТаможенныеДекларацииЭкспортКРегистрации.Контрагент,
+	РегистрСведенийТаможенныеДекларацииЭкспортКРегистрации.ДатаРеализации,
+	РегистрСведенийТаможенныеДекларацииЭкспортКРегистрации.Валюта,
+	РегистрСведенийТаможенныеДекларацииЭкспортКРегистрации.Организация
+ИЗ
+	РегистрСведений.ТаможенныеДекларацииЭкспортКРегистрации КАК РегистрСведенийТаможенныеДекларацииЭкспортКРегистрации
+		ВНУТРЕННЕЕ СОЕДИНЕНИЕ Справочник.Организации КАК Организации
+		ПО РегистрСведенийТаможенныеДекларацииЭкспортКРегистрации.Организация = Организации.Ссылка</QueryText>
+				<MainTable>InformationRegister.ТаможенныеДекларацииЭкспортКРегистрации</MainTable>
+				<ListSettings>
+					<dcsset:filter>
+						<dcsset:viewMode>Normal</dcsset:viewMode>
+						<dcsset:userSettingID>dfcece9d-5077-440b-b6b3-45a5cb4538eb</dcsset:userSettingID>
+					</dcsset:filter>
+					<dcsset:order>
+						<dcsset:viewMode>Normal</dcsset:viewMode>
+						<dcsset:userSettingID>88619765-ccb3-46c6-ac52-38e9c992ebd4</dcsset:userSettingID>
+					</dcsset:order>
+					<dcsset:conditionalAppearance>
+						<dcsset:viewMode>Normal</dcsset:viewMode>
+						<dcsset:userSettingID>b75fecce-942b-4aed-abc9-e6a02e460fb3</dcsset:userSettingID>
+					</dcsset:conditionalAppearance>
+					<dcsset:itemsViewMode>Normal</dcsset:itemsViewMode>
+					<dcsset:itemsUserSettingID>911b6018-f537-43e8-a417-da56b22f9aec</dcsset:itemsUserSettingID>
+				</ListSettings>
+			</Settings>
+		</Attribute>
+		<Attribute name="СписокТаможенныеДекларацииЭкспорт" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Таможенные декларации на экспорт</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Customs declarations for export</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:DynamicList</v8:Type>
+			</Type>
+			<UseAlways>
+				<Field>СписокТаможенныеДекларацииЭкспорт.Ссылка</Field>
+			</UseAlways>
+			<Settings xsi:type="DynamicList">
+				<ManualQuery>true</ManualQuery>
+				<DynamicDataRead>true</DynamicDataRead>
+				<QueryText>ВЫБРАТЬ
+	ВЫРАЗИТЬ(ТаможеннаяДекларацияЭкспорт.Номер КАК СТРОКА(29)) КАК Номер,
+	ТаможеннаяДекларацияЭкспорт.Дата КАК Дата,
+	ТаможеннаяДекларацияЭкспорт.Организация КАК Организация,
+	ТаможеннаяДекларацияЭкспорт.КодОперации,
+	ТаможеннаяДекларацияЭкспорт.Комментарий,
+	ТаможеннаяДекларацияЭкспорт.СборСопроводительныхДокументовЗавершен,
+	ТаможеннаяДекларацияЭкспорт.Ссылка КАК Ссылка
+ИЗ
+	Документ.ТаможеннаяДекларацияЭкспорт КАК ТаможеннаяДекларацияЭкспорт</QueryText>
+				<MainTable>Document.ТаможеннаяДекларацияЭкспорт</MainTable>
+				<ListSettings>
+					<dcsset:order>
+						<dcsset:viewMode>Normal</dcsset:viewMode>
+						<dcsset:userSettingID>88619765-ccb3-46c6-ac52-38e9c992ebd4</dcsset:userSettingID>
+					</dcsset:order>
+					<dcsset:conditionalAppearance>
+						<dcsset:viewMode>Normal</dcsset:viewMode>
+					</dcsset:conditionalAppearance>
+					<dcsset:itemsViewMode>Normal</dcsset:itemsViewMode>
+					<dcsset:itemsUserSettingID>911b6018-f537-43e8-a417-da56b22f9aec</dcsset:itemsUserSettingID>
+				</ListSettings>
+			</Settings>
+		</Attribute>
+		<Attribute name="ОтборТаможенныхДеклараций" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отбор таможенных деклараций</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Customs declaration filter</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>1</v8:Digits>
+					<v8:FractionDigits>0</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ОрганизацияОтбор" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Организация</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Company</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.Организации</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ОрганизацияСохраненноеЗначение" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Организация сохраненное значение</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Company saved value</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.Организации</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="Контрагент" id="6">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Контрагент</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Counterparty</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.Контрагенты</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ДатаРеализации" id="7">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Дата реализации</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Sale date</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="КОформлениюКоличество" id="8">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>К оформлению количество</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>For registration quantity</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>10</v8:Digits>
+					<v8:FractionDigits>0</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ПараметрыПодключаемыхКоманд" id="9">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Параметры подключаемых команд</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Connected command parameters</v8:content>
+				</v8:item>
+			</Title>
+			<Type/>
+		</Attribute>
+		<Attribute name="СмТакжеВРаботе" id="10">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>К оформлению</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>To register</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8ui:FormattedString</v8:Type>
+			</Type>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="СформироватьТаможеннуюДекларациюЭкспорт" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сформировать таможенную декларацию</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Generate customs declaration</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сформировать таможенную декларацию экспорт</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Generate customs declaration export</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>СформироватьТаможеннуюДекларациюЭкспорт</Action>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+	</Commands>
+</Form>

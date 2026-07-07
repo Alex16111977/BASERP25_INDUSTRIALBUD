@@ -1,0 +1,845 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
+	<Width>95</Width>
+	<Height>30</Height>
+	<WindowOpeningMode>LockOwnerWindow</WindowOpeningMode>
+	<AutoTitle>false</AutoTitle>
+	<CommandBarLocation>Bottom</CommandBarLocation>
+	<VerticalScroll>useIfNecessary</VerticalScroll>
+	<CommandSet>
+		<ExcludedCommand>Abort</ExcludedCommand>
+		<ExcludedCommand>Cancel</ExcludedCommand>
+		<ExcludedCommand>Ignore</ExcludedCommand>
+		<ExcludedCommand>No</ExcludedCommand>
+		<ExcludedCommand>OK</ExcludedCommand>
+		<ExcludedCommand>RestoreValues</ExcludedCommand>
+		<ExcludedCommand>Retry</ExcludedCommand>
+		<ExcludedCommand>SaveValues</ExcludedCommand>
+		<ExcludedCommand>Yes</ExcludedCommand>
+	</CommandSet>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+		<HorizontalAlign>Right</HorizontalAlign>
+		<Autofill>false</Autofill>
+		<ChildItems>
+			<Button name="ФормаОК" id="65">
+				<Type>CommandBarButton</Type>
+				<DefaultButton>true</DefaultButton>
+				<CommandName>Form.Command.ОК</CommandName>
+				<ExtendedTooltip name="ФормаОКРасширеннаяПодсказка" id="66"/>
+			</Button>
+			<Button name="ФормаОтмена" id="67">
+				<Type>CommandBarButton</Type>
+				<CommandName>Form.Command.Отмена</CommandName>
+				<ExtendedTooltip name="ФормаОтменаРасширеннаяПодсказка" id="68"/>
+			</Button>
+		</ChildItems>
+	</AutoCommandBar>
+	<Events>
+		<Event name="BeforeClose">ПередЗакрытием</Event>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+	</Events>
+	<ChildItems>
+		<InputField name="ДатаКалькуляцииСтажей" id="85">
+			<DataPath>ДатаКалькуляцииСтажей</DataPath>
+			<SkipOnInput>true</SkipOnInput>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Расчет на</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Calculation as of</v8:content>
+				</v8:item>
+			</Title>
+			<Width>10</Width>
+			<HorizontalStretch>false</HorizontalStretch>
+			<ContextMenu name="ДатаКалькуляцииСтажейКонтекстноеМеню" id="86"/>
+			<ExtendedTooltip name="ДатаКалькуляцииСтажейРасширеннаяПодсказка" id="87"/>
+			<Events>
+				<Event name="OnChange">ДатаКалькуляцииСтажейПриИзменении</Event>
+			</Events>
+		</InputField>
+		<UsualGroup name="ПанелиГруппа" id="75">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Панели инструментов</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Toolbars</v8:content>
+				</v8:item>
+			</Title>
+			<Group>AlwaysHorizontal</Group>
+			<Behavior>Usual</Behavior>
+			<Representation>None</Representation>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ПанелиГруппаРасширеннаяПодсказка" id="76"/>
+			<ChildItems>
+				<UsualGroup name="ВидыСтажаГруппа" id="53">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Выбрать стажи для расчета</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Select service lengths for calculation</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTipRepresentation>ShowTop</ToolTipRepresentation>
+					<HorizontalStretch>true</HorizontalStretch>
+					<Group>AlwaysHorizontal</Group>
+					<Behavior>Collapsible</Behavior>
+					<Collapsed>true</Collapsed>
+					<Representation>None</Representation>
+					<ExtendedTooltip name="ВидыСтажаГруппаРасширеннаяПодсказка" id="54">
+						<AutoMaxWidth>false</AutoMaxWidth>
+					</ExtendedTooltip>
+					<ChildItems>
+						<UsualGroup name="ВидыСтажаЛеваяГруппа" id="81">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Стажи первая</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Service lengths first</v8:content>
+								</v8:item>
+							</Title>
+							<Group>Vertical</Group>
+							<Behavior>Usual</Behavior>
+							<Representation>None</Representation>
+							<United>false</United>
+							<ShowTitle>false</ShowTitle>
+							<ThroughAlign>Use</ThroughAlign>
+							<ExtendedTooltip name="ВидыСтажаЛеваяГруппаРасширеннаяПодсказка" id="82"/>
+						</UsualGroup>
+						<UsualGroup name="ВидыСтажаПраваяГруппа" id="83">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Стажи вторая</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Service lengths second</v8:content>
+								</v8:item>
+							</Title>
+							<Group>Vertical</Group>
+							<Behavior>Usual</Behavior>
+							<Representation>None</Representation>
+							<United>false</United>
+							<ShowTitle>false</ShowTitle>
+							<ThroughAlign>Use</ThroughAlign>
+							<ExtendedTooltip name="ВидыСтажаПраваяГруппаРасширеннаяПодсказка" id="84"/>
+						</UsualGroup>
+					</ChildItems>
+				</UsualGroup>
+				<CommandBar name="КоманднаяПанельТрудовойДеятельностиГруппа" id="77">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Командная панель</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Command bar </v8:content>
+						</v8:item>
+					</Title>
+					<CommandSource>Item.ТрудоваяДеятельностьФизическихЛиц</CommandSource>
+					<ExtendedTooltip name="КоманднаяПанельТрудовойДеятельностиГруппаРасширеннаяПодсказка" id="78"/>
+					<ChildItems>
+						<Button name="ТрудоваяДеятельностьФизическихЛицДобавить" id="79">
+							<Type>CommandBarButton</Type>
+							<CommandName>Form.Item.ТрудоваяДеятельностьФизическихЛиц.StandardCommand.Add</CommandName>
+							<LocationInCommandBar>InAdditionalSubmenu</LocationInCommandBar>
+							<ExtendedTooltip name="ТрудоваяДеятельностьФизическихЛицДобавитьРасширеннаяПодсказка" id="80"/>
+						</Button>
+						<Button name="ТрудоваяДеятельностьФизическихЛицИзменитьФорму" id="69">
+							<Type>CommandBarButton</Type>
+							<CommandName>Form.StandardCommand.CustomizeForm</CommandName>
+							<ExtendedTooltip name="ТрудоваяДеятельностьФизическихЛицИзменитьФормуРасширеннаяПодсказка" id="70"/>
+						</Button>
+						<Button name="ТрудоваяДеятельностьФизическихЛицСправка" id="71">
+							<Type>CommandBarButton</Type>
+							<CommandName>Form.StandardCommand.Help</CommandName>
+							<ExtendedTooltip name="ТрудоваяДеятельностьФизическихЛицСправкаРасширеннаяПодсказка" id="72"/>
+						</Button>
+					</ChildItems>
+				</CommandBar>
+			</ChildItems>
+		</UsualGroup>
+		<Table name="ТрудоваяДеятельностьФизическихЛиц" id="1">
+			<CommandBarLocation>None</CommandBarLocation>
+			<ChangeRowOrder>false</ChangeRowOrder>
+			<HeaderHeight>2</HeaderHeight>
+			<Footer>true</Footer>
+			<AutoInsertNewRow>true</AutoInsertNewRow>
+			<EnableStartDrag>true</EnableStartDrag>
+			<EnableDrag>true</EnableDrag>
+			<FileDragMode>AsFile</FileDragMode>
+			<DataPath>ТрудоваяДеятельностьФизическихЛиц</DataPath>
+			<CommandSet>
+				<ExcludedCommand>Copy</ExcludedCommand>
+				<ExcludedCommand>MoveDown</ExcludedCommand>
+				<ExcludedCommand>MoveUp</ExcludedCommand>
+				<ExcludedCommand>ShowRowRearrangement</ExcludedCommand>
+				<ExcludedCommand>SortListAsc</ExcludedCommand>
+				<ExcludedCommand>SortListDesc</ExcludedCommand>
+			</CommandSet>
+			<ToolTipRepresentation>ShowBottom</ToolTipRepresentation>
+			<RowFilter xsi:nil="true"/>
+			<ContextMenu name="ТрудоваяДеятельностьФизическихЛицКонтекстноеМеню" id="2"/>
+			<AutoCommandBar name="ТрудоваяДеятельностьФизическихЛицКоманднаяПанель" id="3"/>
+			<ExtendedTooltip name="ТрудоваяДеятельностьФизическихЛицРасширеннаяПодсказка" id="4">
+				<AutoMaxWidth>false</AutoMaxWidth>
+			</ExtendedTooltip>
+			<SearchStringAddition name="ТрудоваяДеятельностьФизическихЛицСтрокаПоиска" id="5">
+				<AdditionSource>
+					<Item>ТрудоваяДеятельностьФизическихЛиц</Item>
+					<Type>SearchStringRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="ТрудоваяДеятельностьФизическихЛицСтрокаПоискаКонтекстноеМеню" id="6"/>
+				<ExtendedTooltip name="ТрудоваяДеятельностьФизическихЛицСтрокаПоискаРасширеннаяПодсказка" id="7"/>
+			</SearchStringAddition>
+			<ViewStatusAddition name="ТрудоваяДеятельностьФизическихЛицСостояниеПросмотра" id="8">
+				<AdditionSource>
+					<Item>ТрудоваяДеятельностьФизическихЛиц</Item>
+					<Type>ViewStatusRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="ТрудоваяДеятельностьФизическихЛицСостояниеПросмотраКонтекстноеМеню" id="9"/>
+				<ExtendedTooltip name="ТрудоваяДеятельностьФизическихЛицСостояниеПросмотраРасширеннаяПодсказка" id="10"/>
+			</ViewStatusAddition>
+			<SearchControlAddition name="ТрудоваяДеятельностьФизическихЛицУправлениеПоиском" id="11">
+				<AdditionSource>
+					<Item>ТрудоваяДеятельностьФизическихЛиц</Item>
+					<Type>SearchControl</Type>
+				</AdditionSource>
+				<ContextMenu name="ТрудоваяДеятельностьФизическихЛицУправлениеПоискомКонтекстноеМеню" id="12"/>
+				<ExtendedTooltip name="ТрудоваяДеятельностьФизическихЛицУправлениеПоискомРасширеннаяПодсказка" id="13"/>
+			</SearchControlAddition>
+			<Events>
+				<Event name="OnEditEnd">ТрудоваяДеятельностьФизическихЛицПриОкончанииРедактирования</Event>
+				<Event name="BeforeEditEnd">ТрудоваяДеятельностьФизическихЛицПередОкончаниемРедактирования</Event>
+				<Event name="OnStartEdit">ТрудоваяДеятельностьФизическихЛицПриНачалеРедактирования</Event>
+				<Event name="AfterDeleteRow">ТрудоваяДеятельностьФизическихЛицПослеУдаления</Event>
+			</Events>
+			<ChildItems>
+				<ColumnGroup name="ТрудоваяДеятельностьФизическихЛицПериодГруппа" id="73">
+					<EnableContentChange>true</EnableContentChange>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Период</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Period</v8:content>
+						</v8:item>
+					</Title>
+					<Group>Horizontal</Group>
+					<ShowInHeader>true</ShowInHeader>
+					<FixingInTable>Left</FixingInTable>
+					<ExtendedTooltip name="ТрудоваяДеятельностьФизическихЛицПериодГруппаРасширеннаяПодсказка" id="74"/>
+					<ChildItems>
+						<InputField name="ТрудоваяДеятельностьФизическихЛицДатаНачала" id="35">
+							<DataPath>ТрудоваяДеятельностьФизическихЛиц.ДатаНачала</DataPath>
+							<SkipOnInput>true</SkipOnInput>
+							<EditMode>EnterOnInput</EditMode>
+							<ShowInHeader>false</ShowInHeader>
+							<ShowInFooter>false</ShowInFooter>
+							<Width>7</Width>
+							<AutoMaxWidth>false</AutoMaxWidth>
+							<HorizontalStretch>false</HorizontalStretch>
+							<ChoiceButton>false</ChoiceButton>
+							<ContextMenu name="ТрудоваяДеятельностьФизическихЛицДатаНачалаКонтекстноеМеню" id="36"/>
+							<ExtendedTooltip name="ТрудоваяДеятельностьФизическихЛицДатаНачалаРасширеннаяПодсказка" id="37"/>
+							<Events>
+								<Event name="OnChange">ТрудоваяДеятельностьФизическихЛицДатаНачалаПриИзменении</Event>
+							</Events>
+						</InputField>
+						<InputField name="ТрудоваяДеятельностьФизическихЛицДатаОкончания" id="38">
+							<DataPath>ТрудоваяДеятельностьФизическихЛиц.ДатаОкончания</DataPath>
+							<EditMode>EnterOnInput</EditMode>
+							<ShowInHeader>false</ShowInHeader>
+							<ShowInFooter>false</ShowInFooter>
+							<Width>7</Width>
+							<AutoMaxWidth>false</AutoMaxWidth>
+							<HorizontalStretch>false</HorizontalStretch>
+							<ChoiceButton>false</ChoiceButton>
+							<ContextMenu name="ТрудоваяДеятельностьФизическихЛицДатаОкончанияКонтекстноеМеню" id="39"/>
+							<ExtendedTooltip name="ТрудоваяДеятельностьФизическихЛицДатаОкончанияРасширеннаяПодсказка" id="40"/>
+						</InputField>
+					</ChildItems>
+				</ColumnGroup>
+				<ColumnGroup name="ТрудоваяДеятельностьФизическихЛицПериодРаботыГруппа" id="55">
+					<UserVisible>
+						<xr:Common>false</xr:Common>
+					</UserVisible>
+					<EnableContentChange>true</EnableContentChange>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Стаж трудовой деятельности</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Labor activity service length</v8:content>
+						</v8:item>
+					</Title>
+					<Group>Horizontal</Group>
+					<ExtendedTooltip name="ТрудоваяДеятельностьФизическихЛицПериодРаботыГруппаРасширеннаяПодсказка" id="56"/>
+					<ChildItems>
+						<InputField name="ТрудоваяДеятельностьФизическихЛицПериодРаботыЛет" id="14">
+							<DataPath>ТрудоваяДеятельностьФизическихЛиц.ПериодРаботыЛет</DataPath>
+							<ReadOnly>true</ReadOnly>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="ТрудоваяДеятельностьФизическихЛицПериодРаботыЛетКонтекстноеМеню" id="15"/>
+							<ExtendedTooltip name="ТрудоваяДеятельностьФизическихЛицПериодРаботыЛетРасширеннаяПодсказка" id="16"/>
+						</InputField>
+						<InputField name="ТрудоваяДеятельностьФизическихЛицПериодРаботыМесяцев" id="17">
+							<DataPath>ТрудоваяДеятельностьФизическихЛиц.ПериодРаботыМесяцев</DataPath>
+							<ReadOnly>true</ReadOnly>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="ТрудоваяДеятельностьФизическихЛицПериодРаботыМесяцевКонтекстноеМеню" id="18"/>
+							<ExtendedTooltip name="ТрудоваяДеятельностьФизическихЛицПериодРаботыМесяцевРасширеннаяПодсказка" id="19"/>
+						</InputField>
+						<InputField name="ТрудоваяДеятельностьФизическихЛицПериодРаботыДней" id="20">
+							<DataPath>ТрудоваяДеятельностьФизическихЛиц.ПериодРаботыДней</DataPath>
+							<ReadOnly>true</ReadOnly>
+							<EditMode>EnterOnInput</EditMode>
+							<ContextMenu name="ТрудоваяДеятельностьФизическихЛицПериодРаботыДнейКонтекстноеМеню" id="21"/>
+							<ExtendedTooltip name="ТрудоваяДеятельностьФизическихЛицПериодРаботыДнейРасширеннаяПодсказка" id="22"/>
+						</InputField>
+					</ChildItems>
+				</ColumnGroup>
+				<ColumnGroup name="ТрудоваяДеятельностьФизическихЛицОписаниеГруппа" id="59">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Детализация</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Details</v8:content>
+						</v8:item>
+					</Title>
+					<ExtendedTooltip name="ТрудоваяДеятельностьФизическихЛицОписаниеГруппаРасширеннаяПодсказка" id="60"/>
+					<ChildItems>
+						<ColumnGroup name="ТрудоваяДеятельностьФизическихЛицОрганизацияДолжностьГруппа" id="57">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Организация, должность</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Company, position</v8:content>
+								</v8:item>
+							</Title>
+							<Group>Horizontal</Group>
+							<ExtendedTooltip name="ТрудоваяДеятельностьФизическихЛицОрганизацияДолжностьГруппаРасширеннаяПодсказка" id="58"/>
+							<ChildItems>
+								<InputField name="ТрудоваяДеятельностьФизическихЛицОрганизация" id="32">
+									<DataPath>ТрудоваяДеятельностьФизическихЛиц.Организация</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<Width>15</Width>
+									<ContextMenu name="ТрудоваяДеятельностьФизическихЛицОрганизацияКонтекстноеМеню" id="33"/>
+									<ExtendedTooltip name="ТрудоваяДеятельностьФизическихЛицОрганизацияРасширеннаяПодсказка" id="34"/>
+								</InputField>
+								<InputField name="ТрудоваяДеятельностьФизическихЛицДолжность" id="41">
+									<DataPath>ТрудоваяДеятельностьФизическихЛиц.Должность</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<Width>15</Width>
+									<ContextMenu name="ТрудоваяДеятельностьФизическихЛицДолжностьКонтекстноеМеню" id="42"/>
+									<ExtendedTooltip name="ТрудоваяДеятельностьФизическихЛицДолжностьРасширеннаяПодсказка" id="43"/>
+								</InputField>
+							</ChildItems>
+						</ColumnGroup>
+						<ColumnGroup name="ТрудоваяДеятельностьФизическихЛицОбязанностиСфераДеятельностиГруппа" id="61">
+							<UserVisible>
+								<xr:Common>false</xr:Common>
+							</UserVisible>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Адрес, обязанности, сфера деятельности</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Address, duties, sphere of activity</v8:content>
+								</v8:item>
+							</Title>
+							<Group>Horizontal</Group>
+							<ExtendedTooltip name="ТрудоваяДеятельностьФизическихЛицОбязанностиСфераДеятельностиГруппаРасширеннаяПодсказка" id="62"/>
+							<ChildItems>
+								<InputField name="ТрудоваяДеятельностьФизическихЛицАдресОрганизации" id="88">
+									<DataPath>ТрудоваяДеятельностьФизическихЛиц.АдресОрганизации</DataPath>
+									<UserVisible>
+										<xr:Common>false</xr:Common>
+									</UserVisible>
+									<EditMode>EnterOnInput</EditMode>
+									<Width>15</Width>
+									<ContextMenu name="ТрудоваяДеятельностьФизическихЛицАдресОрганизацииКонтекстноеМеню" id="89"/>
+									<ExtendedTooltip name="ТрудоваяДеятельностьФизическихЛицАдресОрганизацииРасширеннаяПодсказка" id="90"/>
+								</InputField>
+								<InputField name="ТрудоваяДеятельностьФизическихЛицСфераДеятельностиКомпании" id="47">
+									<DataPath>ТрудоваяДеятельностьФизическихЛиц.СфераДеятельностиКомпании</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<Width>15</Width>
+									<ContextMenu name="ТрудоваяДеятельностьФизическихЛицСфераДеятельностиКомпанииКонтекстноеМеню" id="48"/>
+									<ExtendedTooltip name="ТрудоваяДеятельностьФизическихЛицСфераДеятельностиКомпанииРасширеннаяПодсказка" id="49"/>
+								</InputField>
+								<InputField name="ТрудоваяДеятельностьФизическихЛицОбязанности" id="44">
+									<DataPath>ТрудоваяДеятельностьФизическихЛиц.Обязанности</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ShowInFooter>false</ShowInFooter>
+									<Width>15</Width>
+									<ContextMenu name="ТрудоваяДеятельностьФизическихЛицОбязанностиКонтекстноеМеню" id="45"/>
+									<ExtendedTooltip name="ТрудоваяДеятельностьФизическихЛицОбязанностиРасширеннаяПодсказка" id="46"/>
+								</InputField>
+							</ChildItems>
+						</ColumnGroup>
+					</ChildItems>
+				</ColumnGroup>
+			</ChildItems>
+		</Table>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="ФизическоеЛицоСсылка" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Физическое лицо ссылка</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Individual ref</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.ФизическиеЛица</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ТрудоваяДеятельностьФизическихЛиц" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Трудовая деятельность физических лиц</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Individuals' labor activity </v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:InformationRegisterRecordSet.ТрудоваяДеятельностьФизическихЛиц</v8:Type>
+			</Type>
+			<SavedData>true</SavedData>
+			<Columns>
+				<Column name="ПериодРаботыЛет" id="1">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Лет</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Years</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>2</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+							<v8:AllowedSign>Any</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="ПериодРаботыМесяцев" id="2">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Мес.</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Mon.</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>2</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+							<v8:AllowedSign>Any</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="ПериодРаботыДней" id="3">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Дн.</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Days</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>2</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+							<v8:AllowedSign>Any</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+			</Columns>
+		</Attribute>
+		<Attribute name="ВидыСтажей" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Виды стажей</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Service length kinds</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:ValueListType</v8:Type>
+			</Type>
+			<Settings xsi:type="v8:TypeDescription">
+				<v8:Type>cfg:CatalogRef.ВидыСтажа</v8:Type>
+			</Settings>
+		</Attribute>
+		<Attribute name="СтажиФизическихЛиц" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Стажи физических лиц</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Individuals' lengths of service </v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:InformationRegisterRecordSet.СтажиФизическихЛиц</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ИдентификаторСтрокиТрудовойДеятельности" id="7">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Идентификатор строки трудовой деятельности</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Labor service line ID</v8:content>
+				</v8:item>
+			</Title>
+			<Type/>
+		</Attribute>
+		<Attribute name="ДатаНачалаТрудовойДеятельности" id="8">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Дата начала трудовой деятельности</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Labor activity start date</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ДатаОкончанияТрудовойДеятельности" id="9">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Дата окончания трудовой деятельности</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Labor activity end date</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ВидыСтажаТрудовойДеятельностиФизическихЛиц" id="12">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Виды стажа трудовой деятельности физических лиц</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Types of individuals labor service length</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:InformationRegisterRecordSet.ВидыСтажаТрудовойДеятельностиФизическихЛиц</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ДатаКалькуляцииСтажей" id="13">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Дата калькуляции стажей</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Service length calculation date</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>Date</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ДанныеРасчетаСтажей" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Данные расчета стажей</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Service length calculation data</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>v8:ValueTable</v8:Type>
+			</Type>
+			<Columns>
+				<Column name="ВидСтажа" id="1">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Вид стажа</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Length of service kind</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>cfg:CatalogRef.ВидыСтажа</v8:Type>
+					</Type>
+				</Column>
+				<Column name="Лет" id="2">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Лет</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Years</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+							<v8:AllowedSign>Any</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="Месяцев" id="3">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Месяцев</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Months</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+							<v8:AllowedSign>Any</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="Дней" id="4">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Дней</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Days</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:decimal</v8:Type>
+						<v8:NumberQualifiers>
+							<v8:Digits>10</v8:Digits>
+							<v8:FractionDigits>0</v8:FractionDigits>
+							<v8:AllowedSign>Any</v8:AllowedSign>
+						</v8:NumberQualifiers>
+					</Type>
+				</Column>
+				<Column name="Изменен" id="5">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Изменен</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Changed</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:boolean</v8:Type>
+					</Type>
+				</Column>
+				<Column name="Пользовательский" id="6">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Пользовательский</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Custom</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:boolean</v8:Type>
+					</Type>
+				</Column>
+				<Column name="ДатаОтсчета" id="7">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Дата отсчета</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>en</v8:lang>
+							<v8:content>Starting date</v8:content>
+						</v8:item>
+					</Title>
+					<Type>
+						<v8:Type>xs:dateTime</v8:Type>
+						<v8:DateQualifiers>
+							<v8:DateFractions>Date</v8:DateFractions>
+						</v8:DateQualifiers>
+					</Type>
+				</Column>
+			</Columns>
+		</Attribute>
+		<ConditionalAppearance>
+			<dcsset:item>
+				<dcsset:selection>
+					<dcsset:item>
+						<dcsset:field>ТрудоваяДеятельностьФизическихЛицДатаНачала</dcsset:field>
+					</dcsset:item>
+					<dcsset:item>
+						<dcsset:field>ТрудоваяДеятельностьФизическихЛицДатаОкончания</dcsset:field>
+					</dcsset:item>
+				</dcsset:selection>
+				<dcsset:filter>
+					<dcsset:item xsi:type="dcsset:FilterItemComparison">
+						<dcsset:left xsi:type="dcscor:Field">ТрудоваяДеятельностьФизическихЛиц.ДатаОкончания</dcsset:left>
+						<dcsset:comparisonType>Filled</dcsset:comparisonType>
+					</dcsset:item>
+					<dcsset:item xsi:type="dcsset:FilterItemComparison">
+						<dcsset:left xsi:type="dcscor:Field">ТрудоваяДеятельностьФизическихЛиц.ДатаОкончания</dcsset:left>
+						<dcsset:comparisonType>Less</dcsset:comparisonType>
+						<dcsset:right xsi:type="dcscor:Field">ТрудоваяДеятельностьФизическихЛиц.ДатаНачала</dcsset:right>
+					</dcsset:item>
+				</dcsset:filter>
+				<dcsset:appearance>
+					<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+						<dcscor:parameter>ЦветТекста</dcscor:parameter>
+						<dcscor:value xsi:type="v8ui:Color">style:ПоясняющийОшибкуТекст</dcscor:value>
+					</dcscor:item>
+				</dcsset:appearance>
+			</dcsset:item>
+		</ConditionalAppearance>
+	</Attributes>
+	<Commands>
+		<Command name="ОК" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>ОК</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>OK </v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>ОК</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>OK </v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ОК</Action>
+		</Command>
+		<Command name="Отмена" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отмена</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Cancel</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отмена</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Cancel</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>Отмена</Action>
+		</Command>
+	</Commands>
+	<Parameters>
+		<Parameter name="ФизическоеЛицоСсылка">
+			<Type>
+				<v8:Type>cfg:CatalogRef.ФизическиеЛица</v8:Type>
+			</Type>
+		</Parameter>
+	</Parameters>
+</Form>

@@ -1,0 +1,619 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
+	<Title>
+		<v8:item>
+			<v8:lang>ru</v8:lang>
+			<v8:content>Резервы отпусков</v8:content>
+		</v8:item>
+		<v8:item>
+			<v8:lang>en</v8:lang>
+			<v8:content>Estimated liabilities (reserves) of leaves</v8:content>
+		</v8:item>
+	</Title>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+		<Autofill>false</Autofill>
+		<ChildItems>
+			<Button name="ФормаЗаписатьИЗакрыть" id="3">
+				<Type>CommandBarButton</Type>
+				<DefaultButton>true</DefaultButton>
+				<CommandName>Form.Command.ЗаписатьИЗакрыть</CommandName>
+				<ExtendedTooltip name="ФормаЗаписатьИЗакрытьРасширеннаяПодсказка" id="4"/>
+			</Button>
+			<Button name="ФормаЗаписать" id="1">
+				<Type>CommandBarButton</Type>
+				<CommandName>Form.Command.Записать</CommandName>
+				<ExtendedTooltip name="ФормаЗаписатьРасширеннаяПодсказка" id="2"/>
+			</Button>
+			<Button name="ФормаОтмена" id="5">
+				<Type>CommandBarButton</Type>
+				<CommandName>Form.StandardCommand.Cancel</CommandName>
+				<ExtendedTooltip name="ФормаОтменаРасширеннаяПодсказка" id="6"/>
+			</Button>
+		</ChildItems>
+	</AutoCommandBar>
+	<Events>
+		<Event name="NotificationProcessing">ОбработкаОповещения</Event>
+		<Event name="BeforeClose">ПередЗакрытием</Event>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+		<Event name="FillCheckProcessingAtServer">ОбработкаПроверкиЗаполненияНаСервере</Event>
+	</Events>
+	<ChildItems>
+		<LabelDecoration name="ОрганизацияОписаниеДекорация" id="28">
+			<AutoMaxWidth>false</AutoMaxWidth>
+			<Height>2</Height>
+			<TextColor>style:ПоясняющийТекст</TextColor>
+			<Title formatted="false">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Организация является обособленным подразделением, настройки расчета резервов отпусков недоступны для редактирования.</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Company is a branch office, calculation settings of leave reserves are not available for editing.</v8:content>
+				</v8:item>
+			</Title>
+			<ContextMenu name="ОрганизацияОписаниеДекорацияКонтекстноеМеню" id="29"/>
+			<ExtendedTooltip name="ОрганизацияОписаниеДекорацияExtendedTooltip" id="30"/>
+		</LabelDecoration>
+		<UsualGroup name="ГруппаОценочныеОбязательства" id="42">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Формировать резервы</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Generate reserves</v8:content>
+				</v8:item>
+			</Title>
+			<Group>Vertical</Group>
+			<Behavior>Usual</Behavior>
+			<ExtendedTooltip name="ГруппаОценочныеОбязательстваРасширеннаяПодсказка" id="43"/>
+			<ChildItems>
+				<UsualGroup name="Группа6" id="59">
+					<Group>Vertical</Group>
+					<Behavior>Usual</Behavior>
+					<Representation>NormalSeparation</Representation>
+					<ShowTitle>false</ShowTitle>
+					<ExtendedTooltip name="Группа6РасширеннаяПодсказка" id="60"/>
+					<ChildItems>
+						<UsualGroup name="Группа2" id="40">
+							<Group>Vertical</Group>
+							<Behavior>Usual</Behavior>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="Группа2РасширеннаяПодсказка" id="41"/>
+							<ChildItems>
+								<UsualGroup name="Группа3" id="47">
+									<Group>Horizontal</Group>
+									<Behavior>Usual</Behavior>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="Группа3РасширеннаяПодсказка" id="48"/>
+									<ChildItems>
+										<CheckBoxField name="ФормироватьРезервОтпусковБУ" id="13">
+											<DataPath>НастройкиРасчетаРезервовОтпусков.ФормироватьРезервОтпусковБУ</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>В бухгалтерском учете:</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>In bookkeeping:</v8:content>
+												</v8:item>
+											</Title>
+											<TitleLocation>Right</TitleLocation>
+											<ToolTipRepresentation>Button</ToolTipRepresentation>
+											<CheckBoxType>Auto</CheckBoxType>
+											<ContextMenu name="ФормироватьРезервОтпусковБУКонтекстноеМеню" id="14"/>
+											<ExtendedTooltip name="ФормироватьРезервОтпусковБУРасширеннаяПодсказка" id="15"/>
+											<Events>
+												<Event name="OnChange">ФормироватьРезервОтпусковБУПриИзменении</Event>
+											</Events>
+										</CheckBoxField>
+										<RadioButtonField name="МетодНачисленияРезерваОтпусков" id="19">
+											<DataPath>НастройкиРасчетаРезервовОтпусков.МетодНачисленияРезерваОтпусков</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Метод расчета обязательств</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Obligation calculation method  </v8:content>
+												</v8:item>
+											</Title>
+											<TitleLocation>None</TitleLocation>
+											<RadioButtonType>Auto</RadioButtonType>
+											<ChoiceList>
+												<xr:Item>
+													<xr:Presentation/>
+													<xr:CheckState>0</xr:CheckState>
+													<xr:Value xsi:type="FormChoiceListDesTimeValue">
+														<Presentation/>
+														<Value xsi:type="xr:DesignTimeRef">Enum.МетодыНачисленияРезервовОтпусков.EnumValue.НормативныйМетод</Value>
+													</xr:Value>
+												</xr:Item>
+												<xr:Item>
+													<xr:Presentation/>
+													<xr:CheckState>0</xr:CheckState>
+													<xr:Value xsi:type="FormChoiceListDesTimeValue">
+														<Presentation/>
+														<Value xsi:type="xr:DesignTimeRef">Enum.МетодыНачисленияРезервовОтпусков.EnumValue.МетодОбязательств</Value>
+													</xr:Value>
+												</xr:Item>
+											</ChoiceList>
+											<ContextMenu name="МетодНачисленияРезерваОтпусковКонтекстноеМеню" id="20"/>
+											<ExtendedTooltip name="МетодНачисленияРезерваОтпусковРасширеннаяПодсказка" id="21"/>
+											<Events>
+												<Event name="OnChange">МетодНачисленияРезерваОтпусковПриИзменении</Event>
+											</Events>
+										</RadioButtonField>
+									</ChildItems>
+								</UsualGroup>
+								<UsualGroup name="Группа4" id="49">
+									<Group>Horizontal</Group>
+									<Behavior>Usual</Behavior>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="Группа4РасширеннаяПодсказка" id="50"/>
+									<ChildItems>
+										<LabelDecoration name="Декорация2" id="51">
+											<ContextMenu name="Декорация2КонтекстноеМеню" id="52"/>
+											<ExtendedTooltip name="Декорация2РасширеннаяПодсказка" id="53"/>
+										</LabelDecoration>
+										<CheckBoxField name="ОпределятьИзлишкиЕжемесячно" id="44">
+											<DataPath>НастройкиРасчетаРезервовОтпусков.ОпределятьИзлишкиЕжемесячно</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Переоценивать ежемесячно</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Revalue monthly</v8:content>
+												</v8:item>
+											</Title>
+											<TitleLocation>Right</TitleLocation>
+											<ToolTipRepresentation>Button</ToolTipRepresentation>
+											<CheckBoxType>Auto</CheckBoxType>
+											<ContextMenu name="ОпределятьИзлишкиЕжемесячноКонтекстноеМеню" id="45"/>
+											<ExtendedTooltip name="ОпределятьИзлишкиЕжемесячноРасширеннаяПодсказка" id="46"/>
+										</CheckBoxField>
+									</ChildItems>
+								</UsualGroup>
+							</ChildItems>
+						</UsualGroup>
+						<CheckBoxField name="ФормироватьРезервОтпусковНУ" id="16">
+							<DataPath>НастройкиРасчетаРезервовОтпусков.ФормироватьРезервОтпусковНУ</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>В налоговом учете (по налогу на прибыль): Нормативный метод</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>In tax accounting (profit tax): Standard method</v8:content>
+								</v8:item>
+							</Title>
+							<TitleLocation>Right</TitleLocation>
+							<ToolTipRepresentation>Button</ToolTipRepresentation>
+							<CheckBoxType>Auto</CheckBoxType>
+							<ContextMenu name="ФормироватьРезервОтпусковНУКонтекстноеМеню" id="17"/>
+							<ExtendedTooltip name="ФормироватьРезервОтпусковНУРасширеннаяПодсказка" id="18"/>
+							<Events>
+								<Event name="OnChange">ФормироватьРезервОтпусковНУПриИзменении</Event>
+							</Events>
+						</CheckBoxField>
+						<UsualGroup name="Группа1" id="31">
+							<Group>Vertical</Group>
+							<Behavior>Usual</Behavior>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="Группа1РасширеннаяПодсказка" id="32"/>
+							<ChildItems>
+								<UsualGroup name="Группа5" id="54">
+									<ToolTipRepresentation>Button</ToolTipRepresentation>
+									<Behavior>Usual</Behavior>
+									<Representation>None</Representation>
+									<ShowTitle>false</ShowTitle>
+									<ExtendedTooltip name="Группа5РасширеннаяПодсказка" id="55">
+										<Title formatted="true">
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>Применяется при начислении резерва отпусков нормативным методом.
+&lt;font Arial&gt;&lt;fontsize 10&gt;&lt;color #000000&gt;Задается в процентах от &lt;/&gt;&lt;/&gt;&lt;/&gt;&lt;font Arial&gt;&lt;fontsize 10&gt;&lt;color #000000&gt;фонда оплаты труда&lt;/&gt;&lt;/&gt;&lt;/&gt;&lt;font Arial&gt;&lt;fontsize 10&gt;&lt;color #000000&gt;.&lt;/&gt;&lt;/&gt;&lt;/&gt;
+Примерный порядок расчета размера отчислений:
+1. Определить месячный фонд оплаты труда на новый год, увеличить полученный результат на сумму страховых взносов и взносов от НС и ПЗ.
+2. Определить количество дней отпуска, на которые сотрудники получат право в течение нового года и умножить на их средний заработок, увеличить полученный результат на сумму страховых взносов и взносов от НС и ПЗ. Итоговую сумму разделить на 12.
+3. Расчитать % отчислений: результат расчета из п.2 разделить на результат расчета  из п.1, умножить на 100.</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>en</v8:lang>
+												<v8:content>It is used when calculating leave reserve by standard method.
+&lt;font Arial&gt;&lt;fontsize 10&gt;&lt;color #000000&gt;Set as a percentage of&lt;/&gt;&lt;/&gt;&lt;/&gt;&lt;font Arial&gt;&lt;fontsize 10&gt;&lt;color #000000&gt;salary budget&lt;/&gt;&lt;/&gt;&lt;/&gt;&lt;font Arial&gt;&lt;fontsize 10&gt;&lt;color #000000&gt;.&lt;/&gt;&lt;/&gt;&lt;/&gt;
+Approximate procedure for calculating the amount of deductions:
+1. Determine the monthly salary budget for the new year and increase the result obtained by the amount of insurance premiums and contributions against industrial accidents and occupational diseases.
+2. Determine the number of leave days for which employees are entitled during the new year and multiply by their average earnings, and increase the result obtained by the amount of insurance premiums and contributions against industrial accidents and occupational diseases. The total amount shall be divided by 12.
+3. Calculate the deductions %: divide the calculation result of clause 2 by the calculation result of clause 1 and then multiply by 100.</v8:content>
+											</v8:item>
+										</Title>
+									</ExtendedTooltip>
+									<ChildItems>
+										<InputField name="НормативОтчисленийВРезервОтпусков" id="22">
+											<DataPath>НастройкиРасчетаРезервовОтпусков.НормативОтчисленийВРезервОтпусков</DataPath>
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Размер отчислений</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>Deductions</v8:content>
+												</v8:item>
+											</Title>
+											<ContextMenu name="НормативОтчисленийВРезервОтпусковКонтекстноеМеню" id="23"/>
+											<ExtendedTooltip name="НормативОтчисленийВРезервОтпусковРасширеннаяПодсказка" id="24"/>
+										</InputField>
+										<LabelDecoration name="Декорация3" id="56">
+											<Title formatted="false">
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>% от ФОТ</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>en</v8:lang>
+													<v8:content>% from salary budget</v8:content>
+												</v8:item>
+											</Title>
+											<ContextMenu name="Декорация3КонтекстноеМеню" id="57"/>
+											<ExtendedTooltip name="Декорация3РасширеннаяПодсказка" id="58"/>
+										</LabelDecoration>
+									</ChildItems>
+								</UsualGroup>
+								<InputField name="ПредельнаяВеличинаОтчисленийВРезервОтпусков" id="25">
+									<DataPath>НастройкиРасчетаРезервовОтпусков.ПредельнаяВеличинаОтчисленийВРезервОтпусков</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Предельная величина</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>Limit value</v8:content>
+										</v8:item>
+									</Title>
+									<ToolTipRepresentation>Button</ToolTipRepresentation>
+									<ContextMenu name="ПредельнаяВеличинаОтчисленийВРезервОтпусковКонтекстноеМеню" id="26"/>
+									<ExtendedTooltip name="ПредельнаяВеличинаОтчисленийВРезервОтпусковРасширеннаяПодсказка" id="27">
+										<Title formatted="true">
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>Применяется при начислении резерва отпусков нормативным методом.
+Примерный порядок расчета предельной величины оценочного обязательства/резерва:
+1. Определить неиспользованные права на отпуск на конец предыдущего года по каждому сотруднику и умножить на их средний заработок. Увеличить полученный результат на сумму страховых взносов и взносов от НС и ПЗ.
+2. Определить количество дней отпуска, на которые сотрудники получат право в течение нового года и умножить на их средний заработок. Увеличить полученный результат на сумму страховых взносов и взносов от НС и ПЗ.
+3. Сложить обе полученные величины.
+Данный расчет осуществляется ежегодно.
+&lt;font Arial&gt;&lt;fontsize 10&gt;&lt;color #000000&gt;В течение года резервы начисляются до тех пор, пока не достигнут указанной предельной величины.&lt;/&gt;&lt;/&gt;&lt;/&gt;</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>en</v8:lang>
+												<v8:content>It is used when calculating leave reserve by standard method.
+The approximate procedure for calculating the maximum value of the estimated liability / reserve:
+1.Determine the unused leave entitlements at the end of the previous year for each employee and multiply by their average earnings. Increase the result by the amount of insurance premiums and contributions against industrial accidents and occupational diseases.
+2. Determine the number of leave days for which employees are entitled during the new year and multiply by their average earnings. Increase the result obtained by the amount of insurance premiums and contributions against industrial accidents and occupational diseases.
+3. Sum up both values.
+This calculation is carried out annually.
+&lt;font Arial&gt;&lt;fontsize 10&gt;&lt;color #000000&gt;During the year, reserves are accrued until the specified maximum value is reached.&lt;/&gt;&lt;/&gt;&lt;/&gt;</v8:content>
+											</v8:item>
+										</Title>
+									</ExtendedTooltip>
+								</InputField>
+							</ChildItems>
+						</UsualGroup>
+						<UsualGroup name="ГруппаГодНастроек" id="33">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Год настроек</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>en</v8:lang>
+									<v8:content>Setting year</v8:content>
+								</v8:item>
+							</Title>
+							<Group>Horizontal</Group>
+							<Behavior>Usual</Behavior>
+							<Representation>None</Representation>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="ГруппаГодНастроекРасширеннаяПодсказка" id="34"/>
+							<ChildItems>
+								<InputField name="ГодНастроек" id="7">
+									<DataPath>ГодНастроек</DataPath>
+									<SpinButton>true</SpinButton>
+									<MinValue xsi:type="xs:decimal">2010</MinValue>
+									<ContextMenu name="ГодНастроекКонтекстноеМеню" id="8"/>
+									<ExtendedTooltip name="ГодНастроекРасширеннаяПодсказка" id="9"/>
+									<Events>
+										<Event name="OnChange">ГодНастроекПриИзменении</Event>
+										<Event name="Tuning">ГодНастроекРегулирование</Event>
+									</Events>
+								</InputField>
+								<LabelDecoration name="Декорация1" id="35">
+									<AutoMaxWidth>false</AutoMaxWidth>
+									<Title formatted="false">
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>года</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>en</v8:lang>
+											<v8:content>year</v8:content>
+										</v8:item>
+									</Title>
+									<ContextMenu name="Декорация1КонтекстноеМеню" id="36"/>
+									<ExtendedTooltip name="Декорация1РасширеннаяПодсказка" id="37"/>
+								</LabelDecoration>
+								<Button name="НастройкиРасчетаРезервовОтпусковИстория" id="38">
+									<Type>Hyperlink</Type>
+									<CommandName>Form.Command.НастройкиРасчетаРезервовОтпусковИстория</CommandName>
+									<ExtendedTooltip name="НастройкиРасчетаРезервовОтпусковИсторияРасширеннаяПодсказка" id="39"/>
+								</Button>
+							</ChildItems>
+						</UsualGroup>
+					</ChildItems>
+				</UsualGroup>
+			</ChildItems>
+		</UsualGroup>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="ГоловнаяОрганизация" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Организация</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Company</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.Организации</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="НастройкиРасчетаРезервовОтпусков" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Настройки расчета резервов отпусков</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Settings of leave reserve calculation</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:InformationRegisterRecordManager.НастройкиРасчетаРезервовОтпусков</v8:Type>
+			</Type>
+			<Edit>
+				<xr:Common>false</xr:Common>
+				<xr:Value name="Role.НастройкаНалоговИВзносовРасширенная">true</xr:Value>
+				<xr:Value name="Role.ПолныеПрава">true</xr:Value>
+			</Edit>
+			<SavedData>true</SavedData>
+			<FunctionalOptions>
+				<Item>FunctionalOption.ИспользоватьРасчетЗарплатыРасширенная</Item>
+			</FunctionalOptions>
+		</Attribute>
+		<Attribute name="НастройкиРасчетаРезервовОтпусковНаборЗаписей" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Настройки расчета резервов отпусков набор записей</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Settings of leave reserve calculation record set</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:InformationRegisterRecordSet.НастройкиРасчетаРезервовОтпусков</v8:Type>
+			</Type>
+			<SavedData>true</SavedData>
+		</Attribute>
+		<Attribute name="НастройкиРасчетаРезервовОтпусковНаборЗаписейПрочитан" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Настройки расчета резервов отпусков набор записей прочитан</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Settings of leave reserve calculation record set read</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="НастройкиРасчетаРезервовОтпусковНоваяЗапись" id="6">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Настройки расчета резервов отпусков новая запись</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Settings of leave reserve calculation new entry </v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ГодНастроек" id="7">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Применяется с</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Applied from</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>4</v8:Digits>
+					<v8:FractionDigits>0</v8:FractionDigits>
+					<v8:AllowedSign>Nonnegative</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</Type>
+			<Edit>
+				<xr:Common>false</xr:Common>
+				<xr:Value name="Role.НастройкаНалоговИВзносовРасширенная">true</xr:Value>
+				<xr:Value name="Role.ПолныеПрава">true</xr:Value>
+			</Edit>
+			<SavedData>true</SavedData>
+			<FunctionalOptions>
+				<Item>FunctionalOption.ИспользоватьРасчетЗарплатыРасширенная</Item>
+			</FunctionalOptions>
+		</Attribute>
+		<Attribute name="НастройкиРасчетаРезервовОтпусковПрежняя" id="8">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Настройки расчета резервов отпусков прежняя</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Settings of leave reserve calculation previous</v8:content>
+				</v8:item>
+			</Title>
+			<Type/>
+		</Attribute>
+		<Attribute name="ОбособленноеПодразделение" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Обособленное подразделение</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Branch office</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ОрганизацияСсылка" id="9">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Организация ссылка</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Company link</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>cfg:CatalogRef.Организации</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ЭтоЮрЛицо" id="10">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Это юр лицо</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>This is a business entity</v8:content>
+				</v8:item>
+			</Title>
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="Записать" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Записать</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Write</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Записать</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Write</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Picture>
+				<xr:Ref>StdPicture.Write</xr:Ref>
+				<xr:LoadTransparent>true</xr:LoadTransparent>
+			</Picture>
+			<Action>Записать</Action>
+			<Representation>Picture</Representation>
+			<ModifiesSavedData>true</ModifiesSavedData>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="ЗаписатьИЗакрыть" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Записать и закрыть</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Write and close</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Записать и закрыть</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Write and close</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ЗаписатьИЗакрыть</Action>
+			<ModifiesSavedData>true</ModifiesSavedData>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+		<Command name="НастройкиРасчетаРезервовОтпусковИстория" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>История изменений ...</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>en</v8:lang>
+					<v8:content>Change history ...</v8:content>
+				</v8:item>
+			</Title>
+			<Action>НастройкиРасчетаРезервовОтпусковИстория</Action>
+			<FunctionalOptions>
+				<Item>FunctionalOption.ИспользоватьРасчетЗарплатыРасширенная</Item>
+			</FunctionalOptions>
+			<CurrentRowUse>DontUse</CurrentRowUse>
+		</Command>
+	</Commands>
+</Form>
