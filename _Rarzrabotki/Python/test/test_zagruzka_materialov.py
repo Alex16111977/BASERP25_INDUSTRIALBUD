@@ -8,7 +8,7 @@ import win32com.client
 import openpyxl
 
 EPF = r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\Загрузка СС\Загрузка материалов в СС.epf"
-XLSX = r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\Загрузка СС\Виробництво\IRC 15м2 НОВИЙ ШАблон  СС Виробництво 16-06-2026_.xlsx"
+XLSX = r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\Загрузка СС\Виробництво\1\IRC 15м2 НОВИЙ ШАблон  СС Виробництво 16-06-2026_Коррект (1).xlsx"
 TESTNAME = "__ТЕСТ Загрузка материалов СС"
 CONN = 'Srvr="SQLSERVER";Ref="BuhBud";Usr="cfo";Pwd="2442"'
 
@@ -131,9 +131,18 @@ def main():
     print(f"СВЯЗКА: строк с Номенклатурой={s_nom}, расхождений с ОбщимНазванием={mism}")
     assert mism == 0, f"Номенклатура/Единица не совпадают с реквизитами ОбщегоНазвания: {mism} строк"
 
+    assert res.КонтрольПройден, "контроль загрузки не пройден"
+    assert res.Контроль.Количество() > 0, "контрольный блок пуст"
+    print("КОНТРОЛЬ:")
+    for i in range(res.Контроль.Количество()):
+        print("  " + str(res.Контроль.Получить(i)))
+    for i in range(res.Инфо.Количество()):
+        print("  " + str(res.Инфо.Получить(i)))
+
     # идемпотентность: повторный прогон — те же строки, 0 новых этапов
     res2 = obr.ЗагрузитьМатериалыИзМассива(ref, mass)
     assert not res2.Ошибка, f"повторный прогон вернул ошибку: {res2.ТекстОшибки}"
+    assert res2.КонтрольПройден, "контроль на повторе не пройден"
     assert int(res2.Загружено) == exp_cnt, f"идемпотентность: загружено {res2.Загружено} != {exp_cnt}"
     k2, s2, _, _, _ = tc_totals(erp, ref)
     assert k2 == exp_cnt, f"идемпотентность: строк {k2} != {exp_cnt}"
