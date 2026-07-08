@@ -24,6 +24,16 @@
 			</title>
 		</field>
 		<field xsi:type="DataSetFieldField">
+			<dataPath>Подразделение</dataPath>
+			<field>Подразделение</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Подразделение</v8:content>
+				</v8:item>
+			</title>
+		</field>
+		<field xsi:type="DataSetFieldField">
 			<dataPath>ОбщееНазвание</dataPath>
 			<field>ОбщееНазвание</field>
 			<title xsi:type="v8:LocalStringType">
@@ -169,19 +179,19 @@
 		</field>
 		<dataSource>ИсточникДанных1</dataSource>
 		<query>ВЫБРАТЬ РАЗЛИЧНЫЕ
-	К.ОбщееНазвание КАК ОбщееНазвание
-ПОМЕСТИТЬ АктивныеОН
+	СС.Подразделение КАК Подразделение
+ПОМЕСТИТЬ ПодразделенияСС
 ИЗ
-	Справочник.СтруктураСебестоимости.Комплектующие КАК К
+	Справочник.СтруктураСебестоимости КАК СС
 ГДЕ
-	К.Ссылка.Активная
-	И НЕ К.Ссылка.ПометкаУдаления
-	И К.ОбщееНазвание &lt;&gt; ЗНАЧЕНИЕ(Справочник.ОбщиеНазванияНоменклатуры.ПустаяСсылка)
+	СС.Активная
+	И НЕ СС.ПометкаУдаления
 ;
 
 ////////////////////////////////////////////////////////////////////////////////
 ВЫБРАТЬ
 	"План СС" КАК ВидСтроки,
+	К.Ссылка.Подразделение КАК Подразделение,
 	К.ОбщееНазвание КАК ОбщееНазвание,
 	К.ОбщееНазвание.Единица КАК ЕдиницаОбщая,
 	К.Номенклатура КАК Номенклатура,
@@ -204,6 +214,7 @@
 
 ВЫБРАТЬ
 	"Факт закупки",
+	Т.Ссылка.Подразделение,
 	Т.Номенклатура.ОбщееНазваниеНоменклатуры,
 	Т.Номенклатура.ОбщееНазваниеНоменклатуры.Единица,
 	Т.Номенклатура,
@@ -220,8 +231,12 @@
 	Документ.ПоступлениеТоваровУслуг.Товары КАК Т
 ГДЕ
 	Т.Ссылка.Проведен
-	И Т.Номенклатура.ОбщееНазваниеНоменклатуры В
-		(ВЫБРАТЬ АктивныеОН.ОбщееНазвание ИЗ АктивныеОН КАК АктивныеОН)</query>
+	И Т.Номенклатура.ОбщееНазваниеНоменклатуры &lt;&gt; ЗНАЧЕНИЕ(Справочник.ОбщиеНазванияНоменклатуры.ПустаяСсылка)
+	И Т.Ссылка.Подразделение В
+		(ВЫБРАТЬ
+			ПодразделенияСС.Подразделение
+		ИЗ
+			ПодразделенияСС КАК ПодразделенияСС)</query>
 	</dataSet>
 	<totalField>
 		<dataPath>КоличествоПлан</dataPath>
@@ -282,6 +297,10 @@
 			</dcsset:selection>
 			<dcsset:order>
 				<dcsset:item xsi:type="dcsset:OrderItemField">
+					<dcsset:field>Подразделение</dcsset:field>
+					<dcsset:orderType>Asc</dcsset:orderType>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:OrderItemField">
 					<dcsset:field>ОбщееНазвание</dcsset:field>
 					<dcsset:orderType>Asc</dcsset:orderType>
 				</dcsset:item>
@@ -297,7 +316,7 @@
 			<dcsset:item xsi:type="dcsset:StructureItemGroup">
 				<dcsset:groupItems>
 					<dcsset:item xsi:type="dcsset:GroupItemField">
-						<dcsset:field>ОбщееНазвание</dcsset:field>
+						<dcsset:field>Подразделение</dcsset:field>
 						<dcsset:groupType>Items</dcsset:groupType>
 						<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 						<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -309,14 +328,11 @@
 				</dcsset:order>
 				<dcsset:selection>
 					<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
-					<dcsset:item xsi:type="dcsset:SelectedItemField">
-						<dcsset:field>ОбщееНазвание.ЕдиницаОбщая</dcsset:field>
-					</dcsset:item>
 				</dcsset:selection>
 				<dcsset:item xsi:type="dcsset:StructureItemGroup">
 					<dcsset:groupItems>
 						<dcsset:item xsi:type="dcsset:GroupItemField">
-							<dcsset:field>Номенклатура</dcsset:field>
+							<dcsset:field>ОбщееНазвание</dcsset:field>
 							<dcsset:groupType>Items</dcsset:groupType>
 							<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 							<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -328,14 +344,34 @@
 					</dcsset:order>
 					<dcsset:selection>
 						<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+						<dcsset:item xsi:type="dcsset:SelectedItemField">
+							<dcsset:field>ОбщееНазвание.ЕдиницаОбщая</dcsset:field>
+						</dcsset:item>
 					</dcsset:selection>
 					<dcsset:item xsi:type="dcsset:StructureItemGroup">
+						<dcsset:groupItems>
+							<dcsset:item xsi:type="dcsset:GroupItemField">
+								<dcsset:field>Номенклатура</dcsset:field>
+								<dcsset:groupType>Items</dcsset:groupType>
+								<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
+								<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
+								<dcsset:periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionEnd>
+							</dcsset:item>
+						</dcsset:groupItems>
 						<dcsset:order>
 							<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
 						</dcsset:order>
 						<dcsset:selection>
 							<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
 						</dcsset:selection>
+						<dcsset:item xsi:type="dcsset:StructureItemGroup">
+							<dcsset:order>
+								<dcsset:item xsi:type="dcsset:OrderItemAuto"/>
+							</dcsset:order>
+							<dcsset:selection>
+								<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+							</dcsset:selection>
+						</dcsset:item>
 					</dcsset:item>
 				</dcsset:item>
 			</dcsset:item>
