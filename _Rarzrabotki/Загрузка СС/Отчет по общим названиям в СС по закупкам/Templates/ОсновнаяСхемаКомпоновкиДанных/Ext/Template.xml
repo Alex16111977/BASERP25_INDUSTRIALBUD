@@ -177,6 +177,38 @@
 				</dcscor:item>
 			</appearance>
 		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ЦенаПлан</dataPath>
+			<field>ЦенаПлан</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Цена плановая</v8:content>
+				</v8:item>
+			</title>
+			<appearance>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>Формат</dcscor:parameter>
+					<dcscor:value xsi:type="xs:string">ЧЦ=15; ЧДЦ=2</dcscor:value>
+				</dcscor:item>
+			</appearance>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ЦенаФакт</dataPath>
+			<field>ЦенаФакт</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Цена факт</v8:content>
+				</v8:item>
+			</title>
+			<appearance>
+				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
+					<dcscor:parameter>Формат</dcscor:parameter>
+					<dcscor:value xsi:type="xs:string">ЧЦ=15; ЧДЦ=2</dcscor:value>
+				</dcscor:item>
+			</appearance>
+		</field>
 		<dataSource>ИсточникДанных1</dataSource>
 		<query>ВЫБРАТЬ РАЗЛИЧНЫЕ
 	СС.Подразделение КАК Подразделение
@@ -203,7 +235,9 @@
 	К.Количество КАК КоличествоПлан,
 	К.Сумма КАК СуммаПлан,
 	NULL КАК КоличествоФакт,
-	NULL КАК СуммаФакт
+	NULL КАК СуммаФакт,
+	ВЫБОР КОГДА К.Количество &lt;&gt; 0 ТОГДА К.Сумма / К.Количество ИНАЧЕ 0 КОНЕЦ КАК ЦенаПлан,
+	NULL КАК ЦенаФакт
 ИЗ
 	Справочник.СтруктураСебестоимости.Комплектующие КАК К
 ГДЕ
@@ -226,7 +260,9 @@
 	NULL,
 	NULL,
 	Т.Количество,
-	ВЫБОР КОГДА Т.Ссылка.СуммаВключаетНДС ТОГДА Т.Сумма ИНАЧЕ Т.Сумма + Т.СуммаНДС КОНЕЦ
+	ВЫБОР КОГДА Т.Ссылка.СуммаВключаетНДС ТОГДА Т.Сумма ИНАЧЕ Т.Сумма + Т.СуммаНДС КОНЕЦ,
+	NULL,
+	ВЫБОР КОГДА Т.Количество &lt;&gt; 0 ТОГДА (ВЫБОР КОГДА Т.Ссылка.СуммаВключаетНДС ТОГДА Т.Сумма ИНАЧЕ Т.Сумма + Т.СуммаНДС КОНЕЦ) / Т.Количество ИНАЧЕ 0 КОНЕЦ
 ИЗ
 	Документ.ПоступлениеТоваровУслуг.Товары КАК Т
 ГДЕ
@@ -253,6 +289,14 @@
 	<totalField>
 		<dataPath>СуммаФакт</dataPath>
 		<expression>Сумма(СуммаФакт)</expression>
+	</totalField>
+	<totalField>
+		<dataPath>ЦенаПлан</dataPath>
+		<expression>ВЫБОР КОГДА Сумма(КоличествоПлан) &lt;&gt; 0 ТОГДА Сумма(СуммаПлан) / Сумма(КоличествоПлан) ИНАЧЕ 0 КОНЕЦ</expression>
+	</totalField>
+	<totalField>
+		<dataPath>ЦенаФакт</dataPath>
+		<expression>ВЫБОР КОГДА Сумма(КоличествоФакт) &lt;&gt; 0 ТОГДА Сумма(СуммаФакт) / Сумма(КоличествоФакт) ИНАЧЕ 0 КОНЕЦ</expression>
 	</totalField>
 	<settingsVariant>
 		<dcsset:name>Основной</dcsset:name>
@@ -286,10 +330,16 @@
 					<dcsset:field>КоличествоПлан</dcsset:field>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>ЦенаПлан</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:field>СуммаПлан</dcsset:field>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:field>КоличествоФакт</dcsset:field>
+				</dcsset:item>
+				<dcsset:item xsi:type="dcsset:SelectedItemField">
+					<dcsset:field>ЦенаФакт</dcsset:field>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:SelectedItemField">
 					<dcsset:field>СуммаФакт</dcsset:field>
@@ -297,11 +347,11 @@
 			</dcsset:selection>
 			<dcsset:order>
 				<dcsset:item xsi:type="dcsset:OrderItemField">
-					<dcsset:field>Подразделение</dcsset:field>
+					<dcsset:field>ОбщееНазвание</dcsset:field>
 					<dcsset:orderType>Asc</dcsset:orderType>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:OrderItemField">
-					<dcsset:field>ОбщееНазвание</dcsset:field>
+					<dcsset:field>Подразделение</dcsset:field>
 					<dcsset:orderType>Asc</dcsset:orderType>
 				</dcsset:item>
 				<dcsset:item xsi:type="dcsset:OrderItemField">
@@ -316,7 +366,7 @@
 			<dcsset:item xsi:type="dcsset:StructureItemGroup">
 				<dcsset:groupItems>
 					<dcsset:item xsi:type="dcsset:GroupItemField">
-						<dcsset:field>Подразделение</dcsset:field>
+						<dcsset:field>ОбщееНазвание</dcsset:field>
 						<dcsset:groupType>Items</dcsset:groupType>
 						<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 						<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -328,11 +378,14 @@
 				</dcsset:order>
 				<dcsset:selection>
 					<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
+					<dcsset:item xsi:type="dcsset:SelectedItemField">
+						<dcsset:field>ОбщееНазвание.ЕдиницаОбщая</dcsset:field>
+					</dcsset:item>
 				</dcsset:selection>
 				<dcsset:item xsi:type="dcsset:StructureItemGroup">
 					<dcsset:groupItems>
 						<dcsset:item xsi:type="dcsset:GroupItemField">
-							<dcsset:field>ОбщееНазвание</dcsset:field>
+							<dcsset:field>Подразделение</dcsset:field>
 							<dcsset:groupType>Items</dcsset:groupType>
 							<dcsset:periodAdditionType>None</dcsset:periodAdditionType>
 							<dcsset:periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</dcsset:periodAdditionBegin>
@@ -344,9 +397,6 @@
 					</dcsset:order>
 					<dcsset:selection>
 						<dcsset:item xsi:type="dcsset:SelectedItemAuto"/>
-						<dcsset:item xsi:type="dcsset:SelectedItemField">
-							<dcsset:field>ОбщееНазвание.ЕдиницаОбщая</dcsset:field>
-						</dcsset:item>
 					</dcsset:selection>
 					<dcsset:item xsi:type="dcsset:StructureItemGroup">
 						<dcsset:groupItems>
