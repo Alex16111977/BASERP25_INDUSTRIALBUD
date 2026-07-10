@@ -2,10 +2,12 @@
 """Smoke-тест обработки «Загрузка работ в СС для базы ЕРП» (BaseERP).
 
 Эталон считается openpyxl из того же Excel (лист «Проект СС», колонка C = "Робота",
-пустое G -> пропуск; Этап<-E, Работа<-G, Количество<-J, Цена<-K, Сумма<-M),
+пустое G -> пропуск; Этап<-E, Работа<-G, Единица<-I, Количество<-J, Цена<-K, Сумма<-M),
 затем движок .epf грузит ТЧ Работы тестового элемента А_СтруктураСебестоимости
 «__ТЕСТ Загрузка работ ЕРП» (get-or-create, НЕ удаляется), после чего сверяются
-строки/суммы/этапы и проверяется идемпотентность (повтор: 0 новых работ/этапов).
+строки/суммы/этапы/единицы и проверяется идемпотентность (повтор: 0 новых работ/этапов).
+Единицы резолвятся в базовые (владелец НаборыУпаковок.БазовыеЕдиницыИзмерения) по тем же
+правилам, что и движок: точное имя -> нормализованное -> без хвостовой точки -> полное имя.
 
 Запуск: C:\\Python313\\python.exe test_zagruzka_rabot_erp.py [путь_к_xlsx]
 """
@@ -44,6 +46,44 @@ def r2(x):
     return float(Decimal(str(x)).quantize(Decimal("0.01"), ROUND_HALF_UP))
 
 
+def strip_dot(s):
+    while s.endswith("."):
+        s = s[:-1].strip()
+    return s
+
+
+def build_unit_resolver(erp):
+    """Зеркало ПостроитьКэшЕдиниц движка: ключ -> каноничное Наименование."""
+    q = erp.NewObject("Запрос")
+    q.Text = ("ВЫБРАТЬ Наименование, НаименованиеПолное, Ссылка ИЗ Справочник.УпаковкиЕдиницыИзмерения\n"
+              "ГДЕ Владелец = ЗНАЧЕНИЕ(Справочник.НаборыУпаковок.БазовыеЕдиницыИзмерения)")
+    tab = q.Execute().Выгрузить()
+    items = [((tab.Получить(i).Наименование or ""), (tab.Получить(i).НаименованиеПолное or ""))
+             for i in range(tab.Количество())]
+    keys = {}
+    for prio in (1, 2, 3, 4):
+        for naim, full in items:
+            nn = norm(naim)
+            if prio == 1:
+                if naim != nn:
+                    continue
+                k = nn.lower()
+            elif prio == 2:
+                k = nn.lower()
+            elif prio == 3:
+                k = strip_dot(nn).lower()
+            else:
+                k = strip_dot(norm(full)).lower()
+            if k and k not in keys:
+                keys[k] = naim
+    def resolve(name):
+        k = norm(name).lower()
+        if not k:
+            return ""
+        return keys.get(k) or keys.get(strip_dot(k)) or ""
+    return resolve
+
+
 def read_excel(path):
     """Эталон: та же фильтрация и маппинг, что у клиента формы."""
     wb = openpyxl.load_workbook(path, data_only=True)
@@ -59,10 +99,11 @@ def read_excel(path):
             skipped += 1
             continue
         etap = str(row[4].value).strip() if row[4].value is not None else ""
+        edinica = str(row[8].value).strip() if row[8].value is not None else ""
         kol = float(row[9].value or 0)
         cena = float(row[10].value or 0)
         summa = float(row[12].value or 0)
-        rows.append({"Этап": etap, "Работа": rabota,
+        rows.append({"Этап": etap, "Работа": rabota, "Единица": edinica,
                      "Количество": kol, "Цена": cena, "Сумма": summa})
         # ожидание в БД: построчное округление под квалификаторы ТЧ (2/2)
         exp["rows"] += 1
@@ -127,9 +168,10 @@ def main():
 
     массив = erp.NewObject("Массив")
     for r in rows:
-        st = erp.NewObject("Структура", "Этап, Работа, Количество, Цена, Сумма")
+        st = erp.NewObject("Структура", "Этап, Работа, Единица, Количество, Цена, Сумма")
         st.Вставить("Этап", r["Этап"])
         st.Вставить("Работа", r["Работа"])
+        st.Вставить("Единица", r["Единица"])
         st.Вставить("Количество", float(r["Количество"]))
         st.Вставить("Цена", float(r["Цена"]))
         st.Вставить("Сумма", float(r["Сумма"]))
@@ -180,6 +222,32 @@ def main():
         if k in db_stages:
             check(abs(db_stages[k] - exp["stages"][k]) <= TOL,
                   f"БД: этап «{k}» {db_stages[k]:.2f} ~ {exp['stages'][k]:.2f}")
+
+    # --- сверка единиц построчно (те же правила резолвинга, что в движке) ---
+    resolve = build_unit_resolver(erp)
+    expected_units = [resolve(r["Единица"]) for r in rows]
+    q = erp.NewObject("Запрос")
+    q.Text = ("ВЫБРАТЬ Р.НомерСтроки КАК НомерСтроки, Р.Единица.Наименование КАК ЕдиницаНаим\n"
+              "ИЗ Справочник.А_СтруктураСебестоимости.Работы КАК Р\n"
+              "ГДЕ Р.Ссылка = &Структура\n"
+              "УПОРЯДОЧИТЬ ПО Р.НомерСтроки")
+    q.SetParameter("Структура", структура)
+    tab = q.Execute().Выгрузить()
+    db_units = [(tab.Получить(i).ЕдиницаНаим or "") for i in range(tab.Количество())]
+    check(len(db_units) == len(expected_units), f"БД: строк для сверки единиц {len(db_units)}")
+    mismatches = [(i + 1, expected_units[i], db_units[i])
+                  for i in range(min(len(db_units), len(expected_units)))
+                  if db_units[i] != expected_units[i]]
+    check(not mismatches, f"БД: единицы построчно совпали (расхождений {len(mismatches)})")
+    for num, e, d in mismatches[:10]:
+        print(f"     строка {num}: ожидалось «{e}», в БД «{d}»")
+    filled = sum(1 for u in db_units if u)
+    not_found = {}
+    for r, e in zip(rows, expected_units):
+        if r["Единица"] and not e:
+            not_found[r["Единица"]] = not_found.get(r["Единица"], 0) + 1
+    print(f"Единицы: заполнено {filled} из {len(db_units)}; не найдено в базовых: "
+          + (", ".join(f"«{k}»×{v}" for k, v in sorted(not_found.items())) or "нет"))
 
     # === прогон 2: идемпотентность ===
     res2 = прогон("прогон 2, идемпотентность")
