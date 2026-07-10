@@ -2,7 +2,8 @@
 """Smoke-тест обработки «Загрузка работ в СС для базы ЕРП» (BaseERP).
 
 Эталон считается openpyxl из того же Excel (лист «Проект СС», колонка C = "Робота",
-пустое G -> пропуск; Этап<-E, Работа<-G, Единица<-I, Количество<-J, Цена<-K, Сумма<-M),
+пустое G -> пропуск; Этап<-E, Работа<-G, Единица<-I, Количество<-J, Цена<-K, Сумма<-M;
+чтение ДО раздела «Загальновиробничі витрати» - дальше статьи затрат, не работы),
 затем движок .epf грузит ТЧ Работы тестового элемента А_СтруктураСебестоимости
 «__ТЕСТ Загрузка работ ЕРП» (get-or-create, НЕ удаляется), после чего сверяются
 строки/суммы/этапы/единицы и проверяется идемпотентность (повтор: 0 новых работ/этапов).
@@ -25,6 +26,7 @@ DEFAULT_XLSX = (r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\Загруз�
                 r"\IRC 15м2 НОВИЙ ШАблон  СС Виробництво 16-06-2026_Коррект (1).xlsx")
 TEST_NAME = "__ТЕСТ Загрузка работ ЕРП"
 TOL = 0.005
+BOUNDARY = "загальновиробничі витрати"  # раздел статей затрат - не грузим
 
 ERRORS = []
 
@@ -91,6 +93,10 @@ def read_excel(path):
     rows, total, skipped = [], 0, 0
     exp = {"rows": 0, "kol": 0.0, "summa": 0.0, "stages": {}}
     for row in ws.iter_rows(min_row=2):
+        # граница: раздел «Загальновиробничі витрати» (статьи затрат, не работы)
+        if norm(row[4].value).lower() == BOUNDARY or norm(row[6].value).lower() == BOUNDARY:
+            print(f"Excel: чтение остановлено на разделе «Загальновиробничі витрати» (строка {row[0].row})")
+            break
         if norm(row[2].value) != "Робота":
             continue
         total += 1
@@ -218,6 +224,7 @@ def main():
     check(abs(db_kol - exp["kol"]) <= TOL, f"БД: ΣКоличество {db_kol:.3f} ~ {exp['kol']:.2f}")
     check(abs(db_sum - exp["summa"]) <= TOL, f"БД: ΣСумма {db_sum:.2f} ~ {exp['summa']:.2f}")
     check(set(db_stages) == set(exp["stages"]), f"БД: набор этапов совпал ({len(db_stages)})")
+    check(BOUNDARY not in db_stages, "БД: этапа «Загальновиробничі витрати» нет в ТЧ (статьи затрат не грузятся)")
     for k in sorted(exp["stages"]):
         if k in db_stages:
             check(abs(db_stages[k] - exp["stages"][k]) <= TOL,
