@@ -52,7 +52,7 @@ assert len(листы) == 3
 
 # === 1С: подключение, загрузка .epf ===
 erp = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERPRazr";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERPRazr";Usr="Администратор";Pwd="24043"')
 proc = erp.ВнешниеОбработки.Создать(EPF, False)
 print("Обработка загружена:", EPF)
 

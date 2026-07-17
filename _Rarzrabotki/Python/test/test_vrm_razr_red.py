@@ -32,7 +32,7 @@ def парс_проценты(текст):
     return None
 
 erp = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERPRazr";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERPRazr";Usr="Администратор";Pwd="24043"')
 
 сс = erp.Справочники.А_СтруктураСебестоимости.НайтиПоНаименованию(СС_ИМЯ)
 assert сс is not None and not сс.Пустая(), "СС не найдена в Razr"
