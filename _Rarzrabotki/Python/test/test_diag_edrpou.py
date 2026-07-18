@@ -7,7 +7,7 @@ import pythoncom
 import pywintypes
 from datetime import datetime
 
-CONNECTION_STRING = 'Srvr="SQLSERVER";Ref="BuhBud";Usr="cfo";Pwd="2442"'
+CONNECTION_STRING = 'Srvr="localhost";Ref="bas_industrialbud";Usr="cfo";Pwd="2442"'
 DATE_FROM = datetime(2025, 12, 1)
 DATE_TO = datetime(2025, 12, 31, 23, 59, 59)
 

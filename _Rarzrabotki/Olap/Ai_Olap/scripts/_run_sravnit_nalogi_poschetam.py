@@ -6,7 +6,7 @@ sys.stdout.reconfigure(encoding="utf-8")
 import win32com.client
 
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 PER = "ДАТАВРЕМЯ(2025,11,1), ДАТАВРЕМЯ(2025,11,30,23,59,59)"
 
@@ -38,7 +38,7 @@ while sel.Следующий():
     erp_t[str(sel.КодСчета).strip()] = (float(sel.НО), float(sel.Нач), float(sel.Упл), float(sel.КО))
 
 # --- BuhBud Хозрасчетный 64x/65x ---
-buh = v8.Connect('Srvr="SQLSERVER";Ref="BuhBud";Usr="cfo";Pwd="2442"')
+buh = v8.Connect('Srvr="localhost";Ref="bas_industrialbud";Usr="cfo";Pwd="2442"')
 qb = buh.NewObject("Запрос")
 masEDR = buh.NewObject("Массив")
 for e in edrpou:

@@ -9,7 +9,7 @@ if sys.stdout.encoding != 'utf-8':
 
 v8 = win32com.client.Dispatch("V83.COMConnector")
 
-BASES = ["zup_1", "zup_2", "BuhBud", "BuhKazn"]
+BASES = ["zup", "zup2", "bas_industrialbud", "kazna"]
 fails = 0
 for ref in BASES:
     try:
@@ -27,7 +27,7 @@ try:
     p = erp.ОбщегоНазначенияКлиентСервер.СтруктураПараметровДляУстановкиВнешнегоСоединения()
     p.ВариантРаботыИнформационнойБазы = 1
     p.ИмяСервера1СПредприятия = "localhost"
-    p.ИмяИнформационнойБазыНаСервере1СПредприятия = "BuhBud"
+    p.ИмяИнформационнойБазыНаСервере1СПредприятия = "bas_industrialbud"
     p.ИмяПользователя = "cfo"
     p.ПарольПользователя = "2442"
     r = erp.ОбщегоНазначения.УстановитьВнешнееСоединениеСБазой(p)

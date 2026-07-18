@@ -16,7 +16,7 @@ ETALON = {
 }
 
 v8 = win32com.client.Dispatch("V83.COMConnector")
-zup = v8.Connect('Srvr="SQLSERVER";Ref="zup_2";Usr="cfo";Pwd="2442"')
+zup = v8.Connect('Srvr="localhost";Ref="zup2";Usr="cfo";Pwd="2442"')
 
 def fetch(text, cols):
     q = zup.NewObject("Запрос")

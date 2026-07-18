@@ -10,8 +10,8 @@
 ## 0. Среда и правила
 | Параметр | Значение |
 |---|---|
-| База ЕРП | `Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"` |
-| База ЗУП (источник удержаний) | `Srvr="SQLSERVER";Ref="zup_1";Usr="cfo";Pwd="2442"` |
+| База ЕРП | `Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"` |
+| База ЗУП (источник удержаний) | `Srvr="localhost";Ref="zup";Usr="cfo";Pwd="2442"` |
 | Платформа / Python | `C:\Program Files\1cv8\8.3.20.1914\bin` · `C:\Python313\python.exe` |
 | Основная конфигурация (Designer/сервер грузит отсюда) | `C:\Configuration_downloads\BASERP25` (ветка `claude/bas-doc-skills`, живой код) |
 | Главный файл | `Documents/А_ОтражениеЗПпоКазне/Ext/ObjectModule.bsl` |

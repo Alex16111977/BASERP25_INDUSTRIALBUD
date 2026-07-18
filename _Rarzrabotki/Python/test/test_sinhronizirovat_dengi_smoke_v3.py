@@ -20,7 +20,7 @@ IBAN_ISTOCHNIK = "UA973005280000026004000010559"   # ОТП
 IBAN_PRIEMNIK = "UA663395002600601537072000002"    # ТАС_Виробн
 
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 FAILS = 0
 

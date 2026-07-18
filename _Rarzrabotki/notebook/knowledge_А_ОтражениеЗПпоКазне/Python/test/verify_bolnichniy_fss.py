@@ -10,7 +10,7 @@ import win32com.client, sys
 if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
 
-erp = win32com.client.Dispatch("V83.COMConnector").Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = win32com.client.Dispatch("V83.COMConnector").Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 print("Connected BaseERP")
 
 def find_parent(num):

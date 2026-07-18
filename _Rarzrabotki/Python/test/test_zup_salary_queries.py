@@ -16,7 +16,7 @@ print("=" * 70)
 
 # === 1. zup_1: Нарахування ===
 print("\n--- 1. zup_1: Нарахування (ОсновныеНачисленияРаботниковОрганизаций) ---")
-conn_zup = v8.Connect('Srvr="SQLSERVER";Ref="zup_1";Usr="cfo";Pwd="2442"')
+conn_zup = v8.Connect('Srvr="localhost";Ref="zup";Usr="cfo";Pwd="2442"')
 
 q1 = conn_zup.NewObject("Запрос")
 q1.Текст = """ВЫБРАТЬ
@@ -97,7 +97,7 @@ print(f"  ... Всього: {i} записів взносів, загальна 
 
 # === 4. BuhKazn: Розподіл ЗП ===
 print("\n--- 4. BuhKazn: Розподіл ЗП по підрозділах (БДДС) ---")
-conn_kazn = v8.Connect('Srvr="SQLSERVER";Ref="BuhKazn";Usr="cfo";Pwd="2442"')
+conn_kazn = v8.Connect('Srvr="localhost";Ref="kazna";Usr="cfo";Pwd="2442"')
 
 q4 = conn_kazn.NewObject("Запрос")
 q4.Текст = """ВЫБРАТЬ
@@ -128,7 +128,7 @@ print(f"  ... Всього: {i} записів розподілу, загаль�
 
 # === 5. BaseERP: Що вже є ===
 print("\n--- 5. BaseERP: Документи зарплати за грудень 2025 ---")
-conn_erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+conn_erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 q5 = conn_erp.NewObject("Запрос")
 q5.Текст = """ВЫБРАТЬ

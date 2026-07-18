@@ -8,7 +8,7 @@ import win32com.client, pythoncom
 
 pythoncom.CoInitialize()
 conn = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 S = conn.String
 
 q0 = conn.NewObject("Запрос")

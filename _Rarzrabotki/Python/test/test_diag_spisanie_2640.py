@@ -7,7 +7,7 @@ import win32com.client
 import pythoncom
 import sys
 
-CONN_STRING = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN_STRING = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 DOC_NUMBER = "00000002640"
 
 

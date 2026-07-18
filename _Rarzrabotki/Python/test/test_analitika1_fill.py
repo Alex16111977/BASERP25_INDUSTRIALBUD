@@ -9,7 +9,7 @@ import win32com.client, pythoncom
 
 pythoncom.CoInitialize()
 conn = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 # Вызовем сам отчёт ПриКомпоновкеРезультата — тут таблица создаётся внутри.
 # Проще: повторим основной шаг вручную с пост-процессингом.

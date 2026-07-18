@@ -3,7 +3,7 @@ import win32com.client, datetime, sys
 sys.stdout.reconfigure(encoding='utf-8')
 v8 = win32com.client.Dispatch("V83.COMConnector")
 
-conn = v8.Connect('Srvr="SQLSERVER";Ref="zup_2";Usr="cfo";Pwd="2442"')
+conn = v8.Connect('Srvr="localhost";Ref="zup2";Usr="cfo";Pwd="2442"')
 for month in range(3, 0, -1):
     ps = datetime.datetime(2026, month, 1)
     pe = datetime.datetime(2026, month, 28, 23, 59, 59)
@@ -16,7 +16,7 @@ for month in range(3, 0, -1):
     print(f"zup_2 {month:02d}/2026: {r.КолВо}", flush=True)
 conn = None
 
-conn1 = v8.Connect('Srvr="SQLSERVER";Ref="zup_1";Usr="cfo";Pwd="2442"')
+conn1 = v8.Connect('Srvr="localhost";Ref="zup";Usr="cfo";Pwd="2442"')
 for month in range(3, 0, -1):
     ps = datetime.datetime(2026, month, 1)
     q = conn1.NewObject("Запрос")

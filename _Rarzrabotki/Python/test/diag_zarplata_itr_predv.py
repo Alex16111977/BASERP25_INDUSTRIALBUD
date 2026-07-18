@@ -12,7 +12,7 @@ import win32com.client, pythoncom
 from win32com.client import VARIANT
 
 erp = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 STAT = sys.argv[1] if len(sys.argv) > 1 else "Зарплата ИТР"
 MONTHS = [(2025, 12), (2026, 1), (2026, 3), (2026, 5)]
 

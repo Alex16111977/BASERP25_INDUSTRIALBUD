@@ -17,7 +17,7 @@ print("=" * 60)
 print("ERP: A_ДенежныеСредстваФинАгенты.ОстаткиИОбороты")
 print("=" * 60)
 
-CONN_ERP = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN_ERP = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 erp = v8.Connect(CONN_ERP)
 
 # Test 1: Check all columns from virtual table
@@ -68,7 +68,7 @@ print("\n" + "=" * 60)
 print("КАЗНА: ДенежныеСредстваФинАгенты.ОстаткиИОбороты")
 print("=" * 60)
 
-CONN_KAZN = 'Srvr="SQLSERVER";Ref="BuhKazn";Usr="cfo";Pwd="2442"'
+CONN_KAZN = 'Srvr="localhost";Ref="kazna";Usr="cfo";Pwd="2442"'
 kazn = v8.Connect(CONN_KAZN)
 
 # Test 3: All columns

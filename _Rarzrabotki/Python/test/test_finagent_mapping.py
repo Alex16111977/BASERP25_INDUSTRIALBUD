@@ -5,8 +5,8 @@
 import win32com.client
 import pythoncom
 
-CONN_ERP = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
-CONN_KAZNA = 'Srvr="SQLSERVER";Ref="BuhKazn";Usr="cfo";Pwd="2442"'
+CONN_ERP = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN_KAZNA = 'Srvr="localhost";Ref="kazna";Usr="cfo";Pwd="2442"'
 
 def main():
     pythoncom.CoInitialize()

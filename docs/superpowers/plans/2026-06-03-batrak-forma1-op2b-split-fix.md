@@ -166,7 +166,7 @@ import win32com.client, sys
 if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 def en(v): return erp.XMLСтрока(v) if erp.ЗначениеЗаполнено(v) else ""
 def fl(v): return erp.ЗначениеЗаполнено(v)
 def uid(r): return erp.String(r.УникальныйИдентификатор())

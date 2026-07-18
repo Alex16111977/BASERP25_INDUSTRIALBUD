@@ -53,7 +53,7 @@ for имя_листа, дата in ЛИСТЫ:
 
 # === 1С ===
 erp = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 сс = erp.Справочники.А_СтруктураСебестоимости.НайтиПоНаименованию(СС_ИМЯ)
 assert сс is not None and not сс.Пустая(), "СС не найдена"
 

@@ -7,7 +7,7 @@ import pythoncom
 import pywintypes
 from datetime import datetime
 
-CONN_KAZNA = 'Srvr="SQLSERVER";Ref="BuhKazn";Usr="cfo";Pwd="2442"'
+CONN_KAZNA = 'Srvr="localhost";Ref="kazna";Usr="cfo";Pwd="2442"'
 
 def main():
     pythoncom.CoInitialize()

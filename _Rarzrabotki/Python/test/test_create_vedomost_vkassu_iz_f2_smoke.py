@@ -12,7 +12,7 @@ sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8")
 
 import win32com.client
 
-CONN_ERP = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN_ERP = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 EXPECTED_SUM = 348800.00
 EXPECTED_ZARP_ROWS = 31   # число строк ТЧ Распределение Ф2 №000000026 (= ТЧ Зарплата ВКассу hotfix v2)
 EXPECTED_UNIQ_FL = 21     # число уникальных ФЛ (= ТЧ Состав ВКассу)

@@ -16,7 +16,7 @@ ERF = r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\Отчеты\А_Пла�
 TXT = os.path.join(os.environ.get("TEMP", r"C:\Temp"), "pfr_smoke.txt")
 
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 # 1) загрузка внешнего отчёта
 report = erp.ВнешниеОтчеты.Создать(ERF, False)

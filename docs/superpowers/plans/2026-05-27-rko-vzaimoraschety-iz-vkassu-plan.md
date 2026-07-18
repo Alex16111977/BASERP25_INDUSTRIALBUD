@@ -232,7 +232,7 @@ sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8")
 
 import win32com.client
 
-CONN = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 EXPECTED_SUM = 348800.00
 v8 = win32com.client.Dispatch("V83.COMConnector")
 erp = v8.Connect(CONN)

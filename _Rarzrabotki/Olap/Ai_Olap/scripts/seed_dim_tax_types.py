@@ -19,7 +19,7 @@ DDL = (pathlib.Path(__file__).parent / "ddl_dim_tax_types.sql").read_text(encodi
 
 # 1С: Имя|Представление|Порядок всех значений Перечисление.ТипыНалогов
 erp = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 md = erp.Метаданные.Перечисления.Найти("ТипыНалогов")
 zn = md.ЗначенияПеречисления
 mgr = erp.Перечисления.ТипыНалогов

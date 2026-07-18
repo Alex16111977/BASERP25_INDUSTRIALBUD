@@ -8,7 +8,7 @@
 
 **Tech Stack:** 1С BSL (внешний отчёт .erf), СКД, V83.COMConnector, Python COM-тесты (Rule #-1), скилы erf-validate/erf-build.
 
-**Базы:** ERP `Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"`, ЗУП `Srvr="SQLSERVER";Ref="zup_2";Usr="cfo";Pwd="2442"`.
+**Базы:** ERP `Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"`, ЗУП `Srvr="localhost";Ref="zup2";Usr="cfo";Pwd="2442"`.
 
 **Критические грабли (из памяти проекта):**
 - Запросы — сначала Python COM, потом BSL (Rule #-1). В Python-тестах границы периода — литералами `ДАТАВРЕМЯ(...)` (TZ-сдвиг datetime→COM).
@@ -51,8 +51,8 @@ if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
 
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
-zup = v8.Connect('Srvr="SQLSERVER";Ref="zup_2";Usr="cfo";Pwd="2442"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+zup = v8.Connect('Srvr="localhost";Ref="zup2";Usr="cfo";Pwd="2442"')
 
 FAILED = False
 
@@ -188,8 +188,8 @@ if sys.stdout.encoding != 'utf-8':
 BUSHA = "2888011632"
 
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
-zup = v8.Connect('Srvr="SQLSERVER";Ref="zup_2";Usr="cfo";Pwd="2442"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+zup = v8.Connect('Srvr="localhost";Ref="zup2";Usr="cfo";Pwd="2442"')
 
 def fetch(conn, text, cols):
     q = conn.NewObject("Запрос")
@@ -1355,8 +1355,8 @@ MAPPING = "T1"  # вердикт test_sverka_vzss_zup_pretest2_signs.py
 TOL = 0.01
 
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
-zup = v8.Connect('Srvr="SQLSERVER";Ref="zup_2";Usr="cfo";Pwd="2442"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+zup = v8.Connect('Srvr="localhost";Ref="zup2";Usr="cfo";Pwd="2442"')
 
 def fetch(conn, text, cols):
     q = conn.NewObject("Запрос")

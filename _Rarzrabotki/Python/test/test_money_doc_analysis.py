@@ -7,7 +7,7 @@ import pythoncom
 import pywintypes
 from datetime import datetime
 
-CONN_ERP = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN_ERP = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 
 
 def test_money_oboroty_with_ref_filter():

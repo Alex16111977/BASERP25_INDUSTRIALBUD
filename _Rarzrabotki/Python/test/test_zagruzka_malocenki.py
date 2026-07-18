@@ -60,7 +60,7 @@ print(f"Excel '{SHEET}': строк с кодом и qty>0: {len(codes)}, sum(qt
 
 # --- COM ---
 v8 = win32com.client.Dispatch("V83.COMConnector")
-buh = v8.Connect('Srvr="SQLSERVER";Ref="BuhBud";Usr="cfo";Pwd="2442"')
+buh = v8.Connect('Srvr="localhost";Ref="bas_industrialbud";Usr="cfo";Pwd="2442"')
 S = buh.String
 
 print("\n[1] СведенияОВнешнейОбработке()")

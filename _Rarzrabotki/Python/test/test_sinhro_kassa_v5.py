@@ -8,8 +8,8 @@ import win32com.client
 v8 = win32com.client.Dispatch("V83.COMConnector")
 
 # ДВА соединения
-kazna = v8.Connect('Srvr="SQLSERVER";Ref="BuhKazn";Usr="cfo";Pwd="2442"')
-erp   = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+kazna = v8.Connect('Srvr="localhost";Ref="kazna";Usr="cfo";Pwd="2442"')
+erp   = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 print("Соединения открыты: BuhKazn + BaseERP")
 

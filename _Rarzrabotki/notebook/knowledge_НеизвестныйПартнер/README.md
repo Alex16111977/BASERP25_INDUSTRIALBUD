@@ -102,7 +102,7 @@ knowledge_НеизвестныйПартнер/
 C:\Python313\python.exe C:\Configuration_downloads\BASERP25\_Rarzrabotki\Python\test\diag_neizv_partner_refs.py
 ```
 Покажет, где сейчас ссылается «Неизвестный» (срез `НайтиПоСсылкам`, сводка по метаданным).
-COM-подключение: `Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"`.
+COM-подключение: `Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"`.
 
 ---
 

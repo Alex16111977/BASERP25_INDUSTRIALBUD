@@ -19,7 +19,7 @@ import datetime
 sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 v8 = win32com.client.Dispatch("V83.COMConnector")
-CONN = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 print("Connecting to BaseERP...")
 conn = v8.Connect(CONN)
 print("Connected\n")

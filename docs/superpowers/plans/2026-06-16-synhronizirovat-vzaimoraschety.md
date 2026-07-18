@@ -62,8 +62,8 @@ if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
 
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
-buh = v8.Connect('Srvr="SQLSERVER";Ref="BuhBud";Usr="cfo";Pwd="2442"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+buh = v8.Connect('Srvr="localhost";Ref="bas_industrialbud";Usr="cfo";Pwd="2442"')
 
 Н = erp.Дата(2026,1,1); К = erp.Дата(2026,1,31,23,59,59)
 КИ = "2b026266-3aa5-11ef-80d2-00155d235309"
@@ -439,7 +439,7 @@ Expected: `.epf` создан без «Исключение XDTO» (если е�
 ```python
 import win32com.client
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 обр = erp.ВнешниеОбработки.Создать(r"C:\...\СинхронизироватьВзаиморасчеты.epf", False)
 print("OK создан объект обработки:", обр)
 ```

@@ -9,7 +9,7 @@ XLSX = r'C:\Configuration_downloads\BASERP25\_Rarzrabotki\Загрузка СС\
 EPF = r'C:\Configuration_downloads\BASERP25\_Rarzrabotki\Загрузка СС\Загрузка работ в СС.epf'
 
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 ИСКЛ = "Код,Артикул,Наименование,НаименованиеПолное,Ссылка,Родитель,Владелец,ПометкаУдаления,Предопределенный,ИмяПредопределенныхДанных"
 # Эквивалент пропущенного позиционного параметра 1С (как «, ,») — чтобы 3-й

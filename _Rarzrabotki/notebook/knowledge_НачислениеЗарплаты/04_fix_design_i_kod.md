@@ -152,7 +152,7 @@
 ```
 1. Убедиться: Конфигуратор по BaseERP ЗАКРЫТ (иначе load заблокирован).
 2. /db-load-xml -Mode Partial -Files "Documents/А_ОтражениеЗПпоКазне/Ext/ObjectModule.bsl"
-   (Srvr="SQLSERVER";Ref="BaseERP";  v8 C:\Program Files\1cv8\8.3.20.1914\bin)
+   (Srvr="localhost";Ref="BaseERP";  v8 C:\Program Files\1cv8\8.3.20.1914\bin)
 3. /db-update -Dynamic+   (UpdateDBCfg)
 4. python test_nz_smoke_green.py   → перезапись 000Ц-000005 + якоря (1 документ — это смок)
 5. python test_nz_fix_verify.py    → A1/A2/A3 GREEN

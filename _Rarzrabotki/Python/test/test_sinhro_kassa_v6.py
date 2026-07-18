@@ -4,7 +4,7 @@ import win32com.client
 import pywintypes
 
 v8 = win32com.client.Dispatch("V83.COMConnector")
-kazna = v8.Connect('Srvr="SQLSERVER";Ref="BuhKazn";Usr="cfo";Pwd="2442"')
+kazna = v8.Connect('Srvr="localhost";Ref="kazna";Usr="cfo";Pwd="2442"')
 
 def kdate(y, m, d, hh=0, mm=0, ss=0):
     # Дата как настоящий тип 1С: pywintypes.Time (передаётся в SetParameter как тип Дата,

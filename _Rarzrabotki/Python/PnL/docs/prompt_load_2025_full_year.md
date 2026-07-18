@@ -1,6 +1,6 @@
 # ПРОМТ: Дозагрузить остальные 11 месяцев 2025 года (Январь–Ноябрь) из декабрьского Excel
 
-Ты работаешь в `C:\Configuration_downloads\BASERP25` (BAS ERP 2.5 INDUSTRIALBUD на 1С:Предприятие 8.3.20+). Пайплайн PnL — в `_Rarzrabotki/Python/PnL/`. Подключение к ERP описано в `config.py` → `CONN_ERP = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="..."'`. Внешний интерпретатор: `..\venv\Scripts\python.exe` (или fallback `C:\Python313\python.exe`).
+Ты работаешь в `C:\Configuration_downloads\BASERP25` (BAS ERP 2.5 INDUSTRIALBUD на 1С:Предприятие 8.3.20+). Пайплайн PnL — в `_Rarzrabotki/Python/PnL/`. Подключение к ERP описано в `config.py` → `CONN_ERP = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="..."'`. Внешний интерпретатор: `..\venv\Scripts\python.exe` (или fallback `C:\Python313\python.exe`).
 
 ## Цель
 

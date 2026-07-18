@@ -1,6 +1,6 @@
 # FINDINGS — эталоны и контрольные данные
 
-Discovery-факты для smoke-тестов и проверки запросов. База **BuhBud** (`Srvr="SQLSERVER";Ref="BuhBud";Usr="cfo";Pwd="2442"`).
+Discovery-факты для smoke-тестов и проверки запросов. База **BuhBud** (`Srvr="localhost";Ref="bas_industrialbud";Usr="cfo";Pwd="2442"`).
 
 ## Спецификации (нормы) — `Справочник.СтруктураСебестоимости`
 

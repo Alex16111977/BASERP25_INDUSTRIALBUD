@@ -6,7 +6,7 @@ import win32com.client, pywintypes
 sys.stdout.reconfigure(encoding="utf-8")
 
 EPF = r"C:\Configuration_downloads\BASERP25\.claude\worktrees\trusting-noyce-fbeddb\_Rarzrabotki\Обработки\СинхронизироватьДеньгиКасса.epf"
-CONN = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 
 def err(e):
     if hasattr(e, "excepinfo") and e.excepinfo: return str(e.excepinfo[2])

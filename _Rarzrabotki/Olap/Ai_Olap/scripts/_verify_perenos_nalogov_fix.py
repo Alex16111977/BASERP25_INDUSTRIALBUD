@@ -8,7 +8,7 @@ import win32com.client
 from collections import defaultdict
 
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 def tip(code):
     c = code.strip()
@@ -31,7 +31,7 @@ while sel.Следующий():
 print("Орг А_ВБалансе → Подразделение:", podr_by_edr)
 
 # 2) BuhBud: сальдо Кт-Дт по (ЕДРПОУ, Счёт.Код) на 30.11.2025 (как ЗагрузитьОстатки)
-buh = v8.Connect('Srvr="SQLSERVER";Ref="BuhBud";Usr="cfo";Pwd="2442"')
+buh = v8.Connect('Srvr="localhost";Ref="bas_industrialbud";Usr="cfo";Pwd="2442"')
 masSch = buh.NewObject("Массив")
 for c in "6411,6412,6413,6414,6415,6417,642,651".split(","):
     masSch.Добавить(c)

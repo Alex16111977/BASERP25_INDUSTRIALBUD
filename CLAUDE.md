@@ -30,7 +30,7 @@ if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
 
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 S = erp.String
 
 q = erp.NewObject("Запрос")
@@ -135,11 +135,11 @@ import win32com.client
 v8 = win32com.client.Dispatch("V83.COMConnector")
 
 # ERP (BaseERP)
-CONN_ERP = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN_ERP = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 conn_erp = v8.Connect(CONN_ERP)
 
 # BAS Бухгалтерія (BuhBud)
-CONN_BUH = 'Srvr="SQLSERVER";Ref="BuhBud";Usr="cfo";Pwd="2442"'
+CONN_BUH = 'Srvr="localhost";Ref="bas_industrialbud";Usr="cfo";Pwd="2442"'
 conn_buh = v8.Connect(CONN_BUH)
 ```
 
@@ -323,6 +323,15 @@ ProcessorName/
 - Action WITHOUT `xsi:type`
 - Button: `Type=CommandBarButton`
 - All IDs must be unique within form
+
+### Сборка EPF/ERF при занятом конфигураторе (IMPORTANT!)
+- `epf-build`/`erf-build` запускают Конфигуратор в пакетном режиме. Если конфигуратор рабочей базы
+  (`Srvr="SQLSERVER";Ref="BaseERP";`) открыт (занят) — пакетная сборка падает или висит.
+- **Решение:** собирать через конфигуратор базы-копии **BaseERPRazr**:
+  `Srvr="SQLSERVER";Ref="BaseERPRazr";Usr="Администратор";Pwd="24043"` (те же креды, метаданные совпадают —
+  ссылки `cfg:*` в исходниках валидируются так же).
+- Для скрипта: `epf-build.ps1 -InfoBaseServer "SQLSERVER" -InfoBaseRef "BaseERPRazr" -UserName "Администратор" -Password "24043" ...`
+- Обработки/отчёты для BuhBud собираются против `bas_industrialbud` (`Usr="cfo";Pwd="2442"`).
 
 ---
 

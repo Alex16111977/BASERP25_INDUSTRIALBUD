@@ -7,7 +7,7 @@ if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
 
 erp = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 сс = erp.Справочники.А_СтруктураСебестоимости.НайтиПоНаименованию("МД МХП ОРІЛЬ / СТІЛ МД МХП ОРІЛЬ")
 assert not сс.Пустая()
 НП = datetime.datetime(2020, 1, 1)

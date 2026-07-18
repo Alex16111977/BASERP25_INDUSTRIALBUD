@@ -16,7 +16,7 @@ import pythoncom
 import sys
 
 # ============ НАСТРОЙКИ ============
-CONN_STRING = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN_STRING = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 DOC_NUMBER = "N00023533"
 
 

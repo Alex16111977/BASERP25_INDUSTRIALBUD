@@ -143,7 +143,7 @@ _Rarzrabotki/Olap/Ai_Olap/
 **Підключення:**
 - BaseERP: pyodbc → `localhost / BaseERP / sa / Brw739182465!` (read-only)
 - OlapBASERP: pyodbc → `localhost / OlapBASERP / sa / Brw739182465!` (write, fast_executemany)
-- COM (fallback): `Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"`
+- COM (fallback): `Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"`
 
 **Mapping**: платформенний метод `ПолучитьСтруктуруХраненияБазыДанных()` через `mapping/refresh_mapping.py` (Python COM call) генерує `baserp_storage.json`. Refresh — після значної зміни конфіги.
 

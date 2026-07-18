@@ -7,7 +7,7 @@
 import win32com.client
 
 v8 = win32com.client.Dispatch("V83.COMConnector")
-CONN_ERP = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN_ERP = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 conn = v8.Connect(CONN_ERP)
 
 DOC_UUID = "a6f0a6dd-fd21-11f0-a2e2-c54425f51b91"

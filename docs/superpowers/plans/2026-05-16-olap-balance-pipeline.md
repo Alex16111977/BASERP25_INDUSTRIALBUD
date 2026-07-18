@@ -312,7 +312,7 @@ import pyodbc, win32com.client, pythoncom
 from datetime import datetime
 OLAP = ("DRIVER={ODBC Driver 17 for SQL Server};SERVER=localhost;"
         "DATABASE=OlapBASERP;UID=sa;PWD=Brw739182465!;")
-ERP = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+ERP = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 TOL = 0.01
 
 def test_balance_sum_matches_pap_and_zero():

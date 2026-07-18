@@ -6,11 +6,11 @@ if sys.stdout.encoding != 'utf-8':
 v8 = win32com.client.Dispatch("V83.COMConnector")
 
 # BuhBud
-conn_buh = v8.Connect('Srvr="SQLSERVER";Ref="BuhBud";Usr="cfo";Pwd="2442"')
+conn_buh = v8.Connect('Srvr="localhost";Ref="bas_industrialbud";Usr="cfo";Pwd="2442"')
 S = conn_buh.String
 
 # Казна
-conn_kazn = v8.Connect('Srvr="SQLSERVER";Ref="BuhKazn";Usr="cfo";Pwd="2442"')
+conn_kazn = v8.Connect('Srvr="localhost";Ref="kazna";Usr="cfo";Pwd="2442"')
 Sk = conn_kazn.String
 
 names = ["Анурін", "Безсмертн", "Билім", "Гусаков", "Камінськ", "Киченко",
@@ -23,7 +23,7 @@ print(f"{'Name':<30} {'BuhBud FL':<12} {'Kazna Sotr':<12} {'ERP Sotr':<12}")
 print("-" * 70)
 
 # ERP
-conn_erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+conn_erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 Se = conn_erp.String
 
 for name in names:

@@ -6,7 +6,7 @@ if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
 ERR = r"C:\Users\SUPPOR~1\AppData\Local\Temp\claude\C--Configuration-downloads-BASERP25--claude-worktrees-pensive-maxwell-b838b2\29051090-71b2-4f13-b2ee-3ab99aea0913\scratchpad\_pfpp_kr_err.txt"
 erp = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 сс = erp.Справочники.А_СтруктураСебестоимости.НайтиПоНаименованию("МД МХП ОРІЛЬ / СТІЛ МД МХП ОРІЛЬ")
 assert not сс.Пустая()
 подр = сс.Ссылка.Подразделение

@@ -48,7 +48,7 @@ from datetime import datetime
 
 pythoncom.CoInitialize()
 conn = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 q0 = conn.NewObject("Запрос")
 q0.Текст = ('ВЫБРАТЬ ПЕРВЫЕ 1 Ссылка КАК С ИЗ Справочник.Организации '
@@ -416,7 +416,7 @@ from datetime import datetime
 TOL_RUB = 1.0
 pythoncom.CoInitialize()
 conn = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 # Параметры
 qOT = conn.NewObject("Запрос")
@@ -707,7 +707,7 @@ from datetime import datetime
 TOL = 1.0
 pythoncom.CoInitialize()
 conn = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 q0 = conn.NewObject("Запрос")
 q0.Текст = ('ВЫБРАТЬ ПЕРВЫЕ 1 Ссылка КАК С ИЗ Справочник.Организации '

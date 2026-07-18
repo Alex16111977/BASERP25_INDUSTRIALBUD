@@ -84,7 +84,7 @@ CTE `втЕРП_Расх_Детали`: SELECT из `РегистрНакопл�
 # scripts/_reprovesti_ozp.py (создать в _Rarzrabotki/Python/)
 import win32com.client
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 q = erp.NewObject("Запрос")
 q.Text = """

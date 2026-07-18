@@ -9,7 +9,7 @@ import win32com.client
 
 pythoncom.CoInitialize()
 v8 = win32com.client.Dispatch("V83.COMConnector")
-CONN_KAZNA = 'Srvr="SQLSERVER";Ref="BuhKazn";Usr="cfo";Pwd="2442"'
+CONN_KAZNA = 'Srvr="localhost";Ref="kazna";Usr="cfo";Pwd="2442"'
 conn = v8.Connect(CONN_KAZNA)
 
 print("=== Test 1: .Обороты() field names ===")

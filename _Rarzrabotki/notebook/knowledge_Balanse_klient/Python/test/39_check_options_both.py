@@ -24,5 +24,5 @@ def check(label, conn_str):
             print(f"  ФО.{fo:<54} ERR {str(e)[:60]}")
 
 print("=" * 110)
-check("BASERP25 (наша)",   'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
-check("BaseERPRazr (типовая, эталон)", 'Srvr="SQLSERVER";Ref="BaseERPRazr";Usr="Администратор";Pwd="24043"')
+check("BASERP25 (наша)",   'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+check("BaseERPRazr (типовая, эталон)", 'Srvr="localhost";Ref="BaseERPRazr";Usr="Администратор";Pwd="24043"')

@@ -6,7 +6,7 @@ import win32com.client
 if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
 
-CONN = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 EPF = r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\build\ЗакрытиеОтрицательныхОстатков.epf"
 
 v8 = win32com.client.Dispatch("V83.COMConnector")

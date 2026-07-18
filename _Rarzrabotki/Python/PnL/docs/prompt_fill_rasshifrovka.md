@@ -1,6 +1,6 @@
 # ПРОМТ: Доработать заполнение документа `Документ.А_РасшифровкаЛистов` через Python-скрипт
 
-Ты работаешь в `C:\Configuration_downloads\BASERP25` (конфигурация BAS ERP 2.5 INDUSTRIALBUD на 1C:Enterprise 8.3.20+). Подключение к ERP описано в `_Rarzrabotki/Python/PnL/config.py` → `CONN_ERP = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="..."'`.
+Ты работаешь в `C:\Configuration_downloads\BASERP25` (конфигурация BAS ERP 2.5 INDUSTRIALBUD на 1C:Enterprise 8.3.20+). Подключение к ERP описано в `_Rarzrabotki/Python/PnL/config.py` → `CONN_ERP = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="..."'`.
 
 ## Цель
 

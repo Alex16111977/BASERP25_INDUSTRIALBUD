@@ -11,7 +11,7 @@ import win32com.client, pythoncom
 from datetime import datetime
 from collections import defaultdict
 
-CONN_STR = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN_STR = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 pythoncom.CoInitialize()
 v8 = win32com.client.Dispatch("V83.COMConnector")
 conn = v8.Connect(CONN_STR)

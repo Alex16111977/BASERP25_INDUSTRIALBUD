@@ -6,7 +6,7 @@
 import win32com.client
 
 v8 = win32com.client.Dispatch("V83.COMConnector")
-conn = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+conn = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 print("Connected")
 
 query = conn.NewObject("Запрос")

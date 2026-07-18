@@ -6,8 +6,8 @@ import sys, datetime
 import win32com.client
 sys.stdout.reconfigure(encoding="utf-8")
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
-zup = v8.Connect('Srvr="SQLSERVER";Ref="zup_2";Usr="cfo";Pwd="2442"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+zup = v8.Connect('Srvr="localhost";Ref="zup2";Usr="cfo";Pwd="2442"')
 XML = erp.XMLСтрока
 EZ = erp.ЗначениеЗаполнено
 EPF = r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\Обработки\А_НачальнаяЗадолженностьПоЗарплатеФорма2.epf"

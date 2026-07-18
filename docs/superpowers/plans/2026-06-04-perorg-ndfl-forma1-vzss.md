@@ -8,7 +8,7 @@
 
 **Tech Stack:** 1C BSL (BAS ERP 2.5), Python 3.13 + win32com (`V83.COMConnector`), skills `db-load-xml`/`db-update`.
 
-**Среда:** база `Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"`; рабочая папка `C:\Configuration_downloads\BASERP25` (ветка `claude/bas-doc-skills`); python `C:\Python313\python.exe`. Спека: `docs/superpowers/specs/2026-06-04-perorg-ndfl-forma1-vzss-design.md`.
+**Среда:** база `Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"`; рабочая папка `C:\Configuration_downloads\BASERP25` (ветка `claude/bas-doc-skills`); python `C:\Python313\python.exe`. Спека: `docs/superpowers/specs/2026-06-04-perorg-ndfl-forma1-vzss-design.md`.
 
 **Коммиты:** только релевантные файлы (`git add <путь>`), НЕ `git add -A` — в дереве 1040 несвязанных WIP-файлов.
 
@@ -29,7 +29,7 @@ import win32com.client, sys
 if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
 erp = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 A_FL = ["Воронцов","Манжула","Аулова","Шостак","Соколенко","Шинкаренко",
         "Шкурат","Пономаренко О","Травінський","Скрипник С","Пономаренко В"]
@@ -109,7 +109,7 @@ import win32com.client, sys
 if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
 erp = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 НОМЕР = "000000001"  # Воронцов-канарейка; при необходимости расширить на список из Task 8
 ref = erp.Документы.А_ОтражениеЗПпоКазне.НайтиПоНомеру(НОМЕР)
@@ -444,7 +444,7 @@ import win32com.client, sys
 if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
 erp = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 q = erp.NewObject("Запрос")
 q.Текст = """
 ВЫБРАТЬ РАЗЛИЧНЫЕ Док.Ссылка.Номер КАК Номер, Док.Ссылка.Дата КАК Дата

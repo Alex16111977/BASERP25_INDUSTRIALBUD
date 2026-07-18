@@ -14,7 +14,7 @@ if sys.stdout.encoding != "utf-8":
 
 pythoncom.CoInitialize()
 ERP = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 S = ERP.String
 
 

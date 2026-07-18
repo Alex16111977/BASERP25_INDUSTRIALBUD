@@ -14,7 +14,7 @@
 ## Окружение
 
 - **База**: BuhBud, COM из Python:
-  `v8.Connect('Srvr="SQLSERVER";Ref="BuhBud";Usr="cfo";Pwd="2442"')`
+  `v8.Connect('Srvr="localhost";Ref="bas_industrialbud";Usr="cfo";Pwd="2442"')`
 - **Образец (НЕ трогать!)**: `C:\Configuration_downloads\BASERP25\_Rarzrabotki\Обработки\Загрузка ТЧТребованиеНакладная.xml` (+ каталог) — работает в проде.
 - **Целевой клон (дорабатывать его)**: `C:\Configuration_downloads\BASERP25\_Rarzrabotki\Обработки\Загрузка ПередачаМалоценныхАктивовВЭксплуатацию.xml` (+ каталог). Сейчас это байт-копия образца.
 - **Тестовые файлы**: `C:\Configuration_downloads\BASERP25\_Rarzrabotki\Загрузка в документ ПередачаМалоценныхАктивовВЭксплуатацию\2\` (два .xlsx — акты М-29/АВР, МНОГОЛИСТОВЫЕ: «АВР №1», «коригування», «М29 №21 1.10 - АР», «Лист2»…).

@@ -1,7 +1,7 @@
 # ПРОМТ: Перезалить Март 2026 + Апрель 2026 в 1С из обновлённого Excel
 
 Ты работаешь в `C:\Configuration_downloads\BASERP25` (BAS ERP 2.5 INDUSTRIALBUD, 1С 8.3.20+). Пайплайн PnL —
-`_Rarzrabotki/Python/PnL/`. Подключение к ERP — `config.py` → `CONN_ERP` (`Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"`).
+`_Rarzrabotki/Python/PnL/`. Подключение к ERP — `config.py` → `CONN_ERP` (`Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"`).
 Интерпретатор: `..\venv\Scripts\python.exe` (fallback `C:\Python313\python.exe`).
 
 ## Цель

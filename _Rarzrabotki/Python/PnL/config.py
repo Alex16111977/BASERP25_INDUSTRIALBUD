@@ -87,7 +87,7 @@ EXCEL_FILES = [
     },
 ]
 
-CONN_ERP = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN_ERP = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 
 ORGANIZATION_NAME = 'ТОВ "ІНДАСТРІАЛБУД"'
 

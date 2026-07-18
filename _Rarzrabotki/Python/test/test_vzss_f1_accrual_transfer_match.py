@@ -19,7 +19,7 @@ import win32com.client
 if sys.stdout.encoding != "utf-8":
     sys.stdout.reconfigure(encoding="utf-8")
 
-CONN = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 ФЛ_ЭТАЛОН = "Шишк"   # подстрока без 'і' (Ukr/Rus неоднозначность), сравнение регистронезависимое
 
 

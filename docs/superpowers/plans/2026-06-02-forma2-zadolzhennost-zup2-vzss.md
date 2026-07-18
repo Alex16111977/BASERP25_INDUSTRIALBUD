@@ -28,7 +28,7 @@
 | Цель 000Ц-000002: Буша, ФормаPL=**Форма2**, Сумма=**−93,01**, Подр Строительство, ОргБух **пусто** | эталон ✅ |
 
 **Подтверждённые имена/грабли:**
-- zup_2: регистр `ВзаиморасчетыСРаботниками` (Изм `Физлицо`, Рес `СуммаУпр`; в `.Остатки(…)` колонка = **`СуммаУпрОстаток`**). Строка подключения `Srvr="SQLSERVER";Ref="zup_2";Usr="cfo";Pwd="2442"`.
+- zup_2: регистр `ВзаиморасчетыСРаботниками` (Изм `Физлицо`, Рес `СуммаУпр`; в `.Остатки(…)` колонка = **`СуммаУпрОстаток`**). Строка подключения `Srvr="localhost";Ref="zup2";Usr="cfo";Pwd="2442"`.
 - ФизЛице zup_2↔ERP: по `КодПоДРФО`.
 - `ВедомостьНаВыплатуЗарплатыВКассу`: шапочное `Подразделение` пустое → брать из ТЧ `А_РасшифровкаВыплатыЗарплатаПоФизлицам.Подразделение`.
 - `СтруктураПредприятия` иерархична (Родитель); корни: Девелопмент/Логистика/Производство/Спецтехника/Строительство/ЦО.
@@ -63,8 +63,8 @@ import sys
 import win32com.client
 sys.stdout.reconfigure(encoding="utf-8")
 v8 = win32com.client.Dispatch("V83.COMConnector")
-zup = v8.Connect('Srvr="SQLSERVER";Ref="zup_2";Usr="cfo";Pwd="2442"')
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+zup = v8.Connect('Srvr="localhost";Ref="zup2";Usr="cfo";Pwd="2442"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 EZ = erp.ЗначениеЗаполнено
 УпрОрг = erp.А_Привилегированный.А_ПолучитьОрганизациюУпр()
 
@@ -536,8 +536,8 @@ import sys, datetime
 import win32com.client
 sys.stdout.reconfigure(encoding="utf-8")
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
-zup = v8.Connect('Srvr="SQLSERVER";Ref="zup_2";Usr="cfo";Pwd="2442"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+zup = v8.Connect('Srvr="localhost";Ref="zup2";Usr="cfo";Pwd="2442"')
 XML = erp.XMLСтрока
 EPF = r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\Обработки\А_НачальнаяЗадолженностьПоЗарплатеФорма2.epf"
 

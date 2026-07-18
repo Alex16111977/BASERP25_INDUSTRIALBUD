@@ -12,7 +12,7 @@
 
 **Эталон (для всех тестов):** родитель `А_ОтражениеЗПпоКазне №000000005 от 30.04.2026` → дочерний `ОтражениеЗарплатыВФинансовомУчете 000Ц-000004 от 30.04.2026`. Контроль: ПАП(ОТ) −6 202 867,32 · Налоги −1 571 501,70 (НДФЛ 635 724,30 / ВС 176 590,07 / ЕСВ 759 187,33) · ПрочиеПассивы −23 363,04.
 
-**Connection (Python):** `Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"` · `C:\Python313\python.exe`.
+**Connection (Python):** `Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"` · `C:\Python313\python.exe`.
 
 ---
 
@@ -45,7 +45,7 @@ import win32com.client, sys
 if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 def q(text, params=None):
     z = erp.NewObject("Запрос"); z.Текст = text

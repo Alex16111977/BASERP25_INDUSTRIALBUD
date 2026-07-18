@@ -10,7 +10,7 @@
 
 **Tech Stack:** 1С:Предприятие 8.3.20 BSL · BAS ERP 2.5 · Python 3 + `win32com` (V83.COMConnector → BaseERP) · MCP `1c-workerp` · db-skills (`/db-load-xml`, `/db-update`).
 
-**Соединение (все Python-скрипты):** `Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"`. Скрипты класть в `_Rarzrabotki/Python/test/`, запускать `python <путь>` (НЕ inline — кириллица в `-c` портится). Период — границами серверно (`НачалоМесяца`/`КонецМесяца`/`Граница`), не naive datetime.
+**Соединение (все Python-скрипты):** `Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"`. Скрипты класть в `_Rarzrabotki/Python/test/`, запускать `python <путь>` (НЕ inline — кириллица в `-c` портится). Период — границами серверно (`НачалоМесяца`/`КонецМесяца`/`Граница`), не naive datetime.
 
 **Пути файлов кода (Rule #4 — править в worktree, копировать в основную конфигурацию):**
 - Часть A: `Documents/РаспределениеПрочихЗатрат/Ext/ManagerModule.bsl`
@@ -40,7 +40,7 @@ import win32com.client, sys
 if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 # 1) тест-документ: РаспределениеПрочихЗатрат с макс. числом движений ПрочиеРасходы
 q = erp.NewObject("Запрос")

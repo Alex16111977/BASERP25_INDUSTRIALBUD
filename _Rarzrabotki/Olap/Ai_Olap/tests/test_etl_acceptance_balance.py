@@ -8,7 +8,7 @@ import win32com.client
 
 OLAP = ("DRIVER={ODBC Driver 17 for SQL Server};SERVER=localhost;"
         "DATABASE=OlapBASERP;UID=sa;PWD=Brw739182465!;")
-ERP = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+ERP = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 TOL = 0.01      # копійка
 TOL_OT = 1.0    # «Оплата труда» — округлення розкладу по фізлицю
 

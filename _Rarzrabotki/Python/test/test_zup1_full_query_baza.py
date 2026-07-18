@@ -7,7 +7,7 @@ if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
 
 v8 = win32com.client.Dispatch("V83.COMConnector")
-zup = v8.Connect('Srvr="SQLSERVER";Ref="zup_1";Usr="cfo";Pwd="2442"')
+zup = v8.Connect('Srvr="localhost";Ref="zup";Usr="cfo";Pwd="2442"')
 S = zup.String
 
 

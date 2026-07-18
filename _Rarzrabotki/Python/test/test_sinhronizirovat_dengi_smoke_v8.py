@@ -22,7 +22,7 @@ ETALON_NOMERA = ["000187", "000192", "000197", "000199", "000201",
                  "000203", "000205", "000211", "000212", "000219"]
 
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 q = erp.NewObject("Запрос")
 q.Text = """

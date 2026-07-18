@@ -6,8 +6,8 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 import win32com.client as w
 
 v8 = w.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
-z = v8.Connect('Srvr="SQLSERVER";Ref="zup_1";Usr="cfo";Pwd="2442"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+z = v8.Connect('Srvr="localhost";Ref="zup";Usr="cfo";Pwd="2442"')
 
 # (а) zup_1: удержание Гуняги Код 00009
 q = z.NewObject("Запрос")

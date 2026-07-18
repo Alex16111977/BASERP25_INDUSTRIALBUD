@@ -10,7 +10,7 @@
 
 **Reference spec:** `docs/superpowers/specs/2026-05-15-balans-svod-canonical-design.md` (Canonical **v1.2** — без фільтра виключення; розріз Актив/Пасив downstream).
 
-**БД:** `Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"` · Організація **ТОВ ІНДАСТРІАЛБУД (ЄДРПОУ 40645273)** · період **лютий 2026**.
+**БД:** `Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"` · Організація **ТОВ ІНДАСТРІАЛБУД (ЄДРПОУ 40645273)** · період **лютий 2026**.
 
 **Шляхи:** worktree = `C:\Configuration_downloads\BASERP25\.claude\worktrees\peaceful-knuth-51295b`; main config = `C:\Configuration_downloads\BASERP25` (1С Конфигуратор вантажить ЗВІДСИ — Rule #4).
 
@@ -103,7 +103,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 import win32com.client, pythoncom
 from datetime import datetime
 
-CONN = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 D1 = datetime(2026, 2, 1, 12, 0, 0)
 D2 = datetime(2026, 2, 28, 23, 59, 59)
 TOL = 0.01
@@ -385,7 +385,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 import win32com.client, pythoncom
 from datetime import datetime
 
-CONN = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 MONTH = datetime(2026, 2, 1, 12, 0, 0)   # TZ-safe
 DDATE = datetime(2026, 2, 28, 14, 0, 0)
 
@@ -465,7 +465,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 import win32com.client, pythoncom
 from datetime import datetime
 
-CONN = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 D1 = datetime(2026, 2, 1, 12, 0, 0)
 D2 = datetime(2026, 2, 28, 23, 59, 59)
 TOL = 0.01
@@ -606,7 +606,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 import win32com.client, pythoncom
 from datetime import datetime
 
-CONN = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 D2 = datetime(2026, 2, 28, 23, 59, 59)
 pythoncom.CoInitialize()
 conn = win32com.client.Dispatch("V83.COMConnector").Connect(CONN)

@@ -10,7 +10,7 @@ from collections import defaultdict
 from datetime import datetime
 
 conn = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 qO = conn.NewObject("Запрос")
 qO.Текст = ('ВЫБРАТЬ ПЕРВЫЕ 1 Ссылка КАК С ИЗ Справочник.Организации '
             'ГДЕ КодПоЕДРПОУ = "40645273"')

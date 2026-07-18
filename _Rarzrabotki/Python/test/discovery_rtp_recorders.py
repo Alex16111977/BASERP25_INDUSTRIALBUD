@@ -9,7 +9,7 @@ import win32com.client
 from datetime import datetime
 from collections import Counter
 
-CONN = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 v8 = win32com.client.Dispatch("V83.COMConnector")
 erp = v8.Connect(CONN)
 S = erp.String

@@ -26,7 +26,7 @@ print("=" * 100)
 print("\n[1] CONNECTING TO BuhKazn...")
 try:
     v8 = win32com.client.Dispatch("V83.COMConnector")
-    conn = v8.Connect('Srvr="SQLSERVER";Ref="BuhKazn";Usr="cfo";Pwd="2442"')
+    conn = v8.Connect('Srvr="localhost";Ref="kazna";Usr="cfo";Pwd="2442"')
     S = conn.String
     print("    ✓ Connected to BuhKazn")
 except Exception as e:

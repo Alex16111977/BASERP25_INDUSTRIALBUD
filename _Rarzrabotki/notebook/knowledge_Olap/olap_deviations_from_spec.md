@@ -358,7 +358,7 @@ Pipeline `fact_cashflow.json` додає `defaults: {"BankAccount_ID": "00000000
 ## 13. _Date_Time у BaseERP MSSQL зберігається з +2000 рік-офсетом
 
 ### Що
-1С BAS ERP cluster mode (`Srvr="SQLSERVER";Ref="BaseERP"`) зберігає всі datetime поля як `Дата + 2000 років`. Документ за 2026-02-15 у MSSQL — `4026-02-15`. (File-mode без офсету.)
+1С BAS ERP cluster mode (`Srvr="localhost";Ref="BaseERP"`) зберігає всі datetime поля як `Дата + 2000 років`. Документ за 2026-02-15 у MSSQL — `4026-02-15`. (File-mode без офсету.)
 
 ### Deviation
 SQL запити проти BaseERP backend мають додавати 2000 років до Period/Date params, інакше отримуємо 0 рядків.

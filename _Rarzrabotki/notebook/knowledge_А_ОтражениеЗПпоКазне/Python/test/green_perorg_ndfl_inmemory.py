@@ -28,7 +28,7 @@ def nm(v, erp):
 
 def main():
     erp = win32com.client.Dispatch("V83.COMConnector").Connect(
-        'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+        'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
     )
     Ф1 = erp.Перечисления.А_ФормыPL.Форма1
     Ф1x = erp.XMLСтрока(Ф1)

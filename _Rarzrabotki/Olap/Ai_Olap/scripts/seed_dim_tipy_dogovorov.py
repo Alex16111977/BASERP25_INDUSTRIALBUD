@@ -14,7 +14,7 @@ from ai_olap.core.connections import get_olap_sql
 DDL = (pathlib.Path(__file__).parent / "ddl_dim_tipy_dogovorov.sql").read_text(encoding="utf-8")
 
 erp = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 md = erp.Метаданные.Перечисления.Найти("ТипыДоговоров")
 zn = md.ЗначенияПеречисления
 mgr = erp.Перечисления.ТипыДоговоров

@@ -3,7 +3,7 @@
 потім створити ПрочиеАктивыПассивы РАСХОД з аналітикою по кожному ОС."""
 import win32com.client, datetime, copy
 v8 = win32com.client.Dispatch("V83.COMConnector")
-conn = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+conn = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 S = conn.String
 
 doc_ref = conn.Documents.АмортизацияОС.FindByNumber("000Ц-000001",

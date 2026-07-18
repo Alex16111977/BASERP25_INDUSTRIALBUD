@@ -7,7 +7,7 @@ import win32com.client, pythoncom
 
 pythoncom.CoInitialize()
 conn = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 qOT = conn.NewObject("Запрос")
 qOT.Текст = ('ВЫБРАТЬ ПЕРВЫЕ 1 Ссылка КАК С ИЗ '

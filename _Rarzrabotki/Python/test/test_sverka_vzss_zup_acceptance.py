@@ -11,8 +11,8 @@ MAPPING = "T0"  # вердикт test_sverka_vzss_zup_pretest2_signs.py (identit
 TOL = 0.01
 
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
-zup = v8.Connect('Srvr="SQLSERVER";Ref="zup_2";Usr="cfo";Pwd="2442"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+zup = v8.Connect('Srvr="localhost";Ref="zup2";Usr="cfo";Pwd="2442"')
 
 def fetch(conn, text, cols):
     q = conn.NewObject("Запрос")

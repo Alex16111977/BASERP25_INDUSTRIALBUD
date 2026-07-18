@@ -1,7 +1,7 @@
 # ПНМП — Тесты, эталон, контрольные суммы, грабли
 
 > 4 Python COM теста (`_Rarzrabotki/Python/test/test_peredacha_*.py`). Все PASS на 2026-05-30.
-> Connection: `Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"` · `C:\Python313\python.exe`.
+> Connection: `Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"` · `C:\Python313\python.exe`.
 
 ---
 

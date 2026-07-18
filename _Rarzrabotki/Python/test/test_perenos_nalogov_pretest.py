@@ -12,9 +12,9 @@ import win32com.client, pythoncom, datetime
 pythoncom.CoInitialize()
 
 erp = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 buh = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BuhBud";Usr="cfo";Pwd="2442"')
+    'Srvr="localhost";Ref="bas_industrialbud";Usr="cfo";Pwd="2442"')
 fails = []
 
 

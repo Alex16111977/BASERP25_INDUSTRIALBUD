@@ -28,7 +28,7 @@ content = (
     '\t// 2. ЗАЛИШКИ BUHBUD (COM + РегБух.Хозрасчетный)\r\n'
     '\t//    Рахунок 3721 (Розрахунки з підзвітними особами)\r\n'
     '\t// =============================================\r\n'
-    '\tСтрокаПодключенияBuhBud = "Srvr=""SQLSERVER"";Ref=""BuhBud"";Usr=""cfo"";Pwd=""2442""";\r\n'
+    '\tСтрокаПодключенияBuhBud = "Srvr=""localhost"";Ref=""bas_industrialbud"";Usr=""cfo"";Pwd=""2442""";\r\n'
     '\tV8 = Новый COMОбъект("V83.COMConnector");\r\n'
     '\r\n'
     '\tПопытка\r\n'

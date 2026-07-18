@@ -16,10 +16,10 @@
 ## 2. Connection strings (все 4)
 
 ```
-BaseERP:   Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"
-BuhKazn:   Srvr="SQLSERVER";Ref="BuhKazn";Usr="cfo";Pwd="2442"
-zup_1:     Srvr="SQLSERVER";Ref="zup_1";Usr="cfo";Pwd="2442"
-zup_2:     Srvr="SQLSERVER";Ref="zup_2";Usr="cfo";Pwd="2442"
+BaseERP:   Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"
+BuhKazn:   Srvr="localhost";Ref="kazna";Usr="cfo";Pwd="2442"
+zup_1:     Srvr="localhost";Ref="zup";Usr="cfo";Pwd="2442"
+zup_2:     Srvr="localhost";Ref="zup2";Usr="cfo";Pwd="2442"
 ```
 
 ⚠️ **Только BuhKazn↔ERP** имеет двусторонний регулярный обмен (правила в `_Rarzrabotki/ConvertERP/`). zup_1 и zup_2 — only COM read, без обмена.

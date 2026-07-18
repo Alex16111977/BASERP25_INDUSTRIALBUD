@@ -113,7 +113,7 @@ _Rarzrabotki/Olap/Ai_Olap/
 ```ini
 BASERP_SQL_DSN=DRIVER={ODBC Driver 17 for SQL Server};SERVER=localhost;DATABASE=BaseERP;UID=sa;PWD=Brw739182465!;TrustServerCertificate=yes
 OLAP_SQL_DSN=DRIVER={ODBC Driver 17 for SQL Server};SERVER=localhost;DATABASE=OlapBASERP;UID=sa;PWD=Brw739182465!;TrustServerCertificate=yes
-BASERP_COM_CONN=Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"
+BASERP_COM_CONN=Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"
 LOG_LEVEL=INFO
 MAPPING_PATH=mapping/baserp_storage.json
 ```

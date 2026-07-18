@@ -16,7 +16,7 @@ BSL = r"C:\Configuration_downloads\BASERP25\Documents\ОтражениеЗарп
 ЭТАЛОН = 4750096.77
 
 erp = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 content = io.open(BSL, encoding="utf-8-sig").read()
 

@@ -19,7 +19,7 @@ import win32com.client, pythoncom
 TOL = 0.01
 pythoncom.CoInitialize()
 conn = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 def S(v): return conn.XMLСтрока(v)
 
 Ф1 = S(conn.PredefinedValue("Перечисление.А_ФормыPL.Форма1"))

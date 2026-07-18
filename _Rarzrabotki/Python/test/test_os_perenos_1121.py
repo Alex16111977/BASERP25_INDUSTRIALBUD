@@ -16,7 +16,7 @@ import pywintypes
 from datetime import datetime
 import traceback
 
-CONNECTION_STRING = 'Srvr="SQLSERVER";Ref="BuhBud";Usr="cfo";Pwd="2442"'
+CONNECTION_STRING = 'Srvr="localhost";Ref="bas_industrialbud";Usr="cfo";Pwd="2442"'
 TEST_DATE = datetime(2026, 3, 1)
 
 

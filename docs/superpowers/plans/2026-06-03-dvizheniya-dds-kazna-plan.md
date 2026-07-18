@@ -18,7 +18,7 @@
 |---|---|
 | Корень | `C:\Configuration_downloads\BASERP25` |
 | Платформа / Python | `C:\Program Files\1cv8\8.3.20.1914\bin` · `C:\Python313\python.exe` |
-| ERP (BaseERP) | `Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"` |
+| ERP (BaseERP) | `Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"` |
 | Рабочий каталог = основная конфигурация (НЕ worktree) | правки на месте; обязательна загрузка в БД (Task 6) |
 
 **Правила (CLAUDE.md):** Rule #-1 (Python COM тест ЛЮБОГО запроса ПЕРЕД BSL); Rule #4 (после правки .bsl — загрузить в БД); Rule #5 (NotebookLM по скрытым флагам документов обмена).
@@ -66,7 +66,7 @@
 # -*- coding: utf-8 -*-
 import win32com.client, sys
 if sys.stdout.encoding != 'utf-8': sys.stdout.reconfigure(encoding='utf-8')
-erp = win32com.client.Dispatch("V83.COMConnector").Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = win32com.client.Dispatch("V83.COMConnector").Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 def run(text, params=None, title=""):
     q = erp.NewObject("Запрос"); q.Text = text
@@ -374,7 +374,7 @@ Expected: «Обновление конфигурации успешно зав�
 # -*- coding: utf-8 -*-
 import win32com.client, sys
 if sys.stdout.encoding != 'utf-8': sys.stdout.reconfigure(encoding='utf-8')
-erp = win32com.client.Dispatch("V83.COMConnector").Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = win32com.client.Dispatch("V83.COMConnector").Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 X=lambda v: erp.XMLСтрока(v)
 
 НОМЕР="000000005"   # эталон из Task 1 discovery #1 (подставить реальный)

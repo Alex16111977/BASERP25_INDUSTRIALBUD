@@ -7,7 +7,7 @@ import win32com.client
 if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
 
-CONN = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 BSL_PATH = r"C:\Configuration_downloads\BASERP25\Documents\А_ФинРез_PL\Ext\ObjectModule.bsl"
 
 

@@ -9,7 +9,7 @@ ERF = os.path.join(os.environ["TEMP"], "pfpp_new.erf")
 assert os.path.exists(ERF), "нет собранного .erf"
 
 erp = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 # 1) Создать внешний отчёт из .erf — компилирует модуль (ловит синтаксис BSL)
 отчет = erp.ВнешниеОтчеты.Создать(ERF)

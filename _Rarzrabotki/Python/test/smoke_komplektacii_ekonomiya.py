@@ -8,7 +8,7 @@ from collections import defaultdict
 
 EPF = r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\Обработки\Создания комплектаций для бух учета.epf"
 v8 = win32com.client.Dispatch("V83.COMConnector")
-buh = v8.Connect('Srvr="SQLSERVER";Ref="BuhBud";Usr="cfo";Pwd="2442"')
+buh = v8.Connect('Srvr="localhost";Ref="bas_industrialbud";Usr="cfo";Pwd="2442"')
 
 обр = buh.ВнешниеОбработки.Создать(EPF, False)
 print("OK загружена:", обр.Метаданные().Имя)

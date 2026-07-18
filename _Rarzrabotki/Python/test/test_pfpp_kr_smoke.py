@@ -7,7 +7,7 @@ if sys.stdout.encoding != 'utf-8':
 ERF = os.path.join(os.environ["TEMP"], "pfpp_kr.erf")
 assert os.path.exists(ERF)
 erp = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 отчет = erp.ВнешниеОтчеты.Создать(ERF)
 print("ВнешниеОтчеты.Создать: OK (модуль скомпилирован)")
 сс = erp.Справочники.А_СтруктураСебестоимости.НайтиПоНаименованию("МД МХП ОРІЛЬ / СТІЛ МД МХП ОРІЛЬ")

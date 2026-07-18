@@ -30,7 +30,7 @@ import win32com.client
 if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
 
-CONN = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 
 PERIOD_START_LIT = "ДАТАВРЕМЯ(2026,4,1)"
 PERIOD_END_LIT = "ДАТАВРЕМЯ(2026,4,30,23,59,59)"

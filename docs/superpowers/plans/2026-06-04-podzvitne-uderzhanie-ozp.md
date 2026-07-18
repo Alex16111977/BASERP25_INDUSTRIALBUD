@@ -29,8 +29,8 @@ import io, sys
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 import win32com.client as w
 v8 = w.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
-z = v8.Connect('Srvr="SQLSERVER";Ref="zup_1";Usr="cfo";Pwd="2442"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+z = v8.Connect('Srvr="localhost";Ref="zup";Usr="cfo";Pwd="2442"')
 
 # (а) zup_1: удержание Гуняги Код 00009
 q = z.NewObject("Запрос")
@@ -249,7 +249,7 @@ Expected: загрузка + динамическое обновление бе�
 import io, sys
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 import win32com.client as w
-erp = w.Dispatch("V83.COMConnector").Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = w.Dispatch("V83.COMConnector").Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 ref = erp.Документы.А_ОтражениеЗПпоКазне.НайтиПоНомеру("000000001")
 ob = ref.ПолучитьОбъект()
 ob.ЗагрузитьНалогиИУдержанияИзЗарплатыБух()   # перезагрузка ТЧ из zup_1 (в памяти)

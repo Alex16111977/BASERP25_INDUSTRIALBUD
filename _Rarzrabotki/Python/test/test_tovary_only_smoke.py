@@ -15,7 +15,7 @@ import win32com.client
 if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
 
-CONN_ERP = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN_ERP = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 EPF = (r"C:\Configuration_downloads\BASERP25\.claude\worktrees\musing-kare-55f9e1"
        r"\_Rarzrabotki\Обработки\СинхронизироватьТоварыТолькоТовары.epf")
 NP = datetime.datetime(2026, 3, 1, 12, 0, 0)

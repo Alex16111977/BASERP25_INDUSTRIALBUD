@@ -2,7 +2,7 @@
 """Тест v2: правильне допроведення РАСХОД в ПрочиеРасходы."""
 import win32com.client, datetime
 v8 = win32com.client.Dispatch("V83.COMConnector")
-conn = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+conn = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 S = conn.String
 
 # Отримати значення Расход через запит

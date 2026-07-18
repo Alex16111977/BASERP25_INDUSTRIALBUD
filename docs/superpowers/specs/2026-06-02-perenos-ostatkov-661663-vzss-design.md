@@ -15,8 +15,8 @@
 **Память:** `vzss_nachzadolzh_period_mesyac` (период=Месяц, не Дата), `python_com_enum_str_gotcha`, `broken_refs_detection`, `feedback_use_db_skills_for_config_load`.
 
 Конфигурация: **BAS ERP 2.5 (v2.13)**, **1С:Предприятие 8.3.20**. Организация-владелец: **ТОВ ІНДАСТРІАЛБУД** (ЕДРПОУ 40645273).
-БД ERP: **BaseERP** (`Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"`).
-БД бухгалтерии: **BuhBud** (`Srvr="SQLSERVER";Ref="BuhBud";Usr="cfo";Pwd="2442"`). Python: `C:\Python313\python.exe` (pywin32).
+БД ERP: **BaseERP** (`Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"`).
+БД бухгалтерии: **BuhBud** (`Srvr="localhost";Ref="bas_industrialbud";Usr="cfo";Pwd="2442"`). Python: `C:\Python313\python.exe` (pywin32).
 
 ---
 

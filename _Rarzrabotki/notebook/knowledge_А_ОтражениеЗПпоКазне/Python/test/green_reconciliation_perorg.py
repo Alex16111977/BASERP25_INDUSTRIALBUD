@@ -26,7 +26,7 @@ A_FL = ["Воронцов Олександр", "Манжула Максим", "�
 
 def main():
     erp = win32com.client.Dispatch("V83.COMConnector").Connect(
-        'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+        'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
     )
 
     cond = " ИЛИ ".join([f'ВзС.ФизическоеЛицо.Наименование ПОДОБНО "{p}%"' for p in A_FL])

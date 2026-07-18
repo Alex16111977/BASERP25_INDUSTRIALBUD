@@ -7,7 +7,7 @@ import sys, io
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 import pythoncom, win32com.client
 
-CONN = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 pythoncom.CoInitialize()
 erp = win32com.client.Dispatch("V83.COMConnector").Connect(CONN)
 

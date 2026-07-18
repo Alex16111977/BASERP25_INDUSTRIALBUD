@@ -82,5 +82,5 @@ def analyze(label, conn_str):
     return ref
 
 
-analyze("BASERP25 (наша)",   'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
-analyze("BaseERPRazr (типовая)", 'Srvr="SQLSERVER";Ref="BaseERPRazr";Usr="Администратор";Pwd="24043"')
+analyze("BASERP25 (наша)",   'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+analyze("BaseERPRazr (типовая)", 'Srvr="localhost";Ref="BaseERPRazr";Usr="Администратор";Pwd="24043"')

@@ -6,7 +6,7 @@ import win32com.client, pythoncom
 
 pythoncom.CoInitialize()
 conn = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 S = conn.String
 
 # Берем тестовий документ № 00000000003 від 31.03.2026 (стуб для Task 7 з UI)

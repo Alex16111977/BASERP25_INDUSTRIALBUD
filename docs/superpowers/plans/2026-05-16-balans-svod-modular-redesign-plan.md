@@ -15,7 +15,7 @@
 - **Спека (источник истины решений DR-1…DR-13):** `C:\Configuration_downloads\BASERP25\docs\superpowers\specs\2026-05-16-balans-svod-modular-redesign-design.md`. Канон-инварианты (OD-3/OD-8/Σ==ПАП): `docs/superpowers/specs/2026-05-15-balans-svod-canonical-design.md`. База знаний: `_Rarzrabotki/notebook/knowledge_Balanse/`.
 - **Worktree удалён.** Прошлый worktree `peaceful-knuth-51295b` убран при закрытии прошлой ветки. Работаем **напрямую в main config** `C:\Configuration_downloads\BASERP25\`, ветка `main`. Все пути — без `.claude\worktrees`. Правки .bsl делаются сразу в main config (Rule #4 «cp в main» = тривиально, уже там); после правки — `/cf-validate` → `/db-load-xml` → `/db-update`.
 - **Rule #-1 (CLAUDE.md, КРИТИЧНО):** ни одного запроса 1С в BSL без предварительного Python COM теста. Каждая `Свод_*` и `СверкаСПАП` имеет свой Python пре-тест ПЕРЕД написанием BSL.
-- **Connection (Python COM):** `Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"`. Шаблон — ниже (Task 1).
+- **Connection (Python COM):** `Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"`. Шаблон — ниже (Task 1).
 - **TZ-safe:** даты в Python — опівдні (`datetime(2026,1,1,12,0,0)`); границы периода в запросах считать СЕРВЕРНО (`НАЧАЛОПЕРИОДА(&М,МЕСЯЦ)`, `КОНЕЦПЕРИОДА(КОНЕЦПЕРИОДА(&М,МЕСЯЦ),ДЕНЬ)`), не Python-наивно.
 - **Организация-эталон:** ТОВ ІНДАСТРІАЛБУД, `КодПоЕДРПОУ = "40645273"`. Период валидации — **январь 2026** (закрытый).
 - **DR-12: типовые объекты ТОЛЬКО чтение.** `ПрочиеАктивыПассивы`, `РасчетыС*ПоСрокам`, `СебестоимостьТоваров`, `ДенежныеСредства*`, `ВзаиморасчетыССотрудниками`, `ДвиженияАктивовПассивов` — только SELECT/.ОстаткиИОбороты. Структуру регистра `А_ОтчетБаланс_Свод`/enum правит **финансист вручную** (Task 3 — список для него); план НЕ меняет метаданные сам.
@@ -60,7 +60,7 @@ from datetime import datetime
 
 pythoncom.CoInitialize()
 V8 = win32com.client.Dispatch("V83.COMConnector")
-ERP = V8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+ERP = V8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 def org_ref(conn):
     q = conn.NewObject("Запрос")
@@ -117,7 +117,7 @@ import win32com.client, pythoncom
 from datetime import datetime
 pythoncom.CoInitialize()
 ERP = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 q0 = ERP.NewObject("Запрос")
 q0.Текст = ('ВЫБРАТЬ ПЕРВЫЕ 1 Ссылка КАК С ИЗ Справочник.Организации '
@@ -231,7 +231,7 @@ import win32com.client, pythoncom
 from datetime import datetime
 pythoncom.CoInitialize()
 ERP = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 q0 = ERP.NewObject("Запрос")
 q0.Текст = ('ВЫБРАТЬ ПЕРВЫЕ 1 Ссылка КАК С ИЗ Справочник.Организации '
@@ -341,7 +341,7 @@ import win32com.client, pythoncom
 from datetime import datetime
 pythoncom.CoInitialize()
 ERP = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администratор";Pwd="24043"'.replace("атор","атор"))
+    'Srvr="localhost";Ref="BaseERP";Usr="Администratор";Pwd="24043"'.replace("атор","атор"))
 q0=ERP.NewObject("Запрос"); q0.Текст='ВЫБРАТЬ ПЕРВЫЕ 1 Ссылка КАК С ИЗ Справочник.Организации ГДЕ КодПоЕДРПОУ="40645273"'
 s=q0.Выполнить().Выбрать(); s.Следующий(); ORG=s.С
 qm=ERP.NewObject("Запрос")
@@ -528,7 +528,7 @@ import win32com.client, pythoncom
 from datetime import datetime
 pythoncom.CoInitialize()
 ERP = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 q0=ERP.NewObject("Запрос"); q0.Текст='ВЫБРАТЬ ПЕРВЫЕ 1 Ссылка КАК С ИЗ Справочник.Организации ГДЕ КодПоЕДРПОУ="40645273"'
 s=q0.Выполнить().Выбрать(); s.Следующий(); ORG=s.С
 qm=ERP.NewObject("Запрос")
@@ -794,7 +794,7 @@ import win32com.client, pythoncom
 from datetime import datetime
 pythoncom.CoInitialize()
 ERP = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 q0=ERP.NewObject("Запрос"); q0.Текст='ВЫБРАТЬ ПЕРВЫЕ 1 Ссылка КАК С ИЗ Справочник.Организации ГДЕ КодПоЕДРПОУ="40645273"'
 s=q0.Выполнить().Выбрать(); s.Следующий(); ORG=s.С
 # удалить прежние документы за период
@@ -853,7 +853,7 @@ import win32com.client, pythoncom
 from datetime import datetime
 pythoncom.CoInitialize()
 ERP = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 q0=ERP.NewObject("Запрос"); q0.Текст='ВЫБРАТЬ ПЕРВЫЕ 1 Ссылка КАК С ИЗ Справочник.Организации ГДЕ КодПоЕДРПОУ="40645273"'
 s=q0.Выполнить().Выбрать(); s.Следующий(); ORG=s.С
 qm=ERP.NewObject("Запрос")

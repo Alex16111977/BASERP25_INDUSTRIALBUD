@@ -96,7 +96,7 @@ import win32com.client, sys
 sys.stdout.reconfigure(encoding='utf-8')
 
 v8 = win32com.client.Dispatch("V83.COMConnector")
-zup1 = v8.Connect('Srvr="SQLSERVER";Ref="zup_1";Usr="cfo";Pwd="2442"')
+zup1 = v8.Connect('Srvr="localhost";Ref="zup";Usr="cfo";Pwd="2442"')
 
 q = zup1.NewObject("Запрос")
 q.Текст = """..."""

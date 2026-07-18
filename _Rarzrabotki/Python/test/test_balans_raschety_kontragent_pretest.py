@@ -34,7 +34,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 import win32com.client, pythoncom
 from datetime import datetime
 
-CONN = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 TOL = 0.01
 МЕСЯЦЫ = [datetime(2025, 12, 1, 12), datetime(2026, 1, 1, 12)]
 # Эталон из ТЗ (≥1 месяц воспроизводит, должно == ПАП.ОстаткиИОбороты)

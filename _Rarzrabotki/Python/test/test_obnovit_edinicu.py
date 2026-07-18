@@ -19,7 +19,7 @@ if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
 
 EPF = r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\Загрузка СС\Обновить единицу в общем названии.epf"
-CONN_BUH = 'Srvr="SQLSERVER";Ref="BuhBud";Usr="cfo";Pwd="2442"'
+CONN_BUH = 'Srvr="localhost";Ref="bas_industrialbud";Usr="cfo";Pwd="2442"'
 
 Q1 = """ВЫБРАТЬ
 	К.ОбщееНазвание КАК ОбщееНазвание,

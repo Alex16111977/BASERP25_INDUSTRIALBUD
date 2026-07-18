@@ -14,7 +14,7 @@
 **Прочитать в CLAUDE.md ПЕРЕД началом:** Rule #-1 (Python COM тест ДО BSL), Rule #4 (копировать в основную конфигурацию), правило про зарезервированные имена (`ПО`, `В`, `Ссылка`).
 **Память:** `perenos_661663_vzss` (эта обработка — её Форма2-вариант), `vzss_nachzadolzh_period_mesyac`, `python_com_enum_str_gotcha`, `feedback_balans_etalon_period_serverside` (TZ-сдвиг), `feedback_use_db_skills_for_config_load`.
 
-Базы: ERP **BaseERP** (`Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"`); **zup_2** (`Srvr="SQLSERVER";Ref="zup_2";Usr="cfo";Pwd="2442"`). Python `C:\Python313\python.exe`.
+Базы: ERP **BaseERP** (`Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"`); **zup_2** (`Srvr="localhost";Ref="zup2";Usr="cfo";Pwd="2442"`). Python `C:\Python313\python.exe`.
 
 ---
 

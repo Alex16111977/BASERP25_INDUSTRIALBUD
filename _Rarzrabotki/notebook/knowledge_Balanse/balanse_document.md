@@ -87,7 +87,7 @@ import win32com.client, pythoncom
 from datetime import datetime
 pythoncom.CoInitialize()
 conn = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 # організація за КодПоЕДРПОУ; Месяц/Дата — опівдні (TZ-safe проти зсуву границі року)
 doc = conn.Документы.А_ФинРез_Баланс.СоздатьДокумент()
 doc.Дата = datetime(2026, 1, 31, 14, 0, 0)

@@ -6,7 +6,7 @@
 
 **Architecture:** Паттерн Find-Or-Create + Cleanup по образцу `А_ОтгрузкаПродукции.СоздатьДокументОказанияУслугМеждуПодразделениямиПоОтгрузкаПродукции`. Триггер: кнопка в форме Ф2 + `ПриЗаписи` родителя (с защитой от рекурсии через `ОбменДанными.Загрузка`). Шапка ведомости: `Подразделение = "ЦО"` (предопределённое в `ТОВ "ІНДАСТРІАЛБУД"`). 1 Ф2 ↔ 1 ВКассу (1:1). Все правки — в основной конфигурации `C:\Configuration_downloads\BASERP25\`, никаких CFE.
 
-**Tech Stack:** 1С:Предприятие 8.3.20, BAS ERP 2.5 INDUSTRIALBUD. Доставка через `/db-load-xml -Mode Partial` + `/db-update -Dynamic+`. Тестирование: Python 3.13 + win32com (V83.COMConnector). Connection `Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"`.
+**Tech Stack:** 1С:Предприятие 8.3.20, BAS ERP 2.5 INDUSTRIALBUD. Доставка через `/db-load-xml -Mode Partial` + `/db-update -Dynamic+`. Тестирование: Python 3.13 + win32com (V83.COMConnector). Connection `Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"`.
 
 **Spec:** `docs/superpowers/specs/2026-05-26-vedomost-vkassu-iz-raspredeleniyaf2-design.md`
 
@@ -65,7 +65,7 @@ sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8")
 
 import win32com.client
 
-CONN_ERP = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN_ERP = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 
 
 def main():
@@ -1170,7 +1170,7 @@ sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8")
 
 import win32com.client
 
-CONN_ERP = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN_ERP = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 EXPECTED_SUM = 348800.00
 EXPECTED_SOTR_COUNT = 19
 EXPECTED_RASP_COUNT = 2
@@ -1322,7 +1322,7 @@ sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8")
 
 import win32com.client
 
-CONN_ERP = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN_ERP = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 
 
 def main():
@@ -1429,7 +1429,7 @@ sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8")
 
 import win32com.client
 
-CONN_ERP = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN_ERP = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 
 
 def main():

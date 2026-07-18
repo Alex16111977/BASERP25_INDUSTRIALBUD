@@ -7,10 +7,10 @@ import win32com.client
 v8 = win32com.client.Dispatch("V83.COMConnector")
 
 DATABASES = {
-    "zup_1":   'Srvr="SQLSERVER";Ref="zup_1";Usr="cfo";Pwd="2442"',
-    "zup_2":   'Srvr="SQLSERVER";Ref="zup_2";Usr="cfo";Pwd="2442"',
-    "BuhKazn": 'Srvr="SQLSERVER";Ref="BuhKazn";Usr="cfo";Pwd="2442"',
-    "BaseERP": 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"',
+    "zup_1":   'Srvr="localhost";Ref="zup";Usr="cfo";Pwd="2442"',
+    "zup_2":   'Srvr="localhost";Ref="zup2";Usr="cfo";Pwd="2442"',
+    "BuhKazn": 'Srvr="localhost";Ref="kazna";Usr="cfo";Pwd="2442"',
+    "BaseERP": 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"',
 }
 
 # Запити для перевірки ключових регістрів в кожній базі

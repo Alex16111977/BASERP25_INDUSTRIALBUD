@@ -13,7 +13,7 @@ import pythoncom
 import pywintypes
 from datetime import datetime
 
-CONNECTION_STRING = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONNECTION_STRING = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 
 
 def main():

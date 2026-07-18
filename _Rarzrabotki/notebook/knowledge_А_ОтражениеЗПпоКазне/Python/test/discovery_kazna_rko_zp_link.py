@@ -24,7 +24,7 @@ OUT_FILE = os.path.join(ARTIFACT_DIR, "kazna_rko_zp_link.md")
 
 def main():
     v8 = win32com.client.Dispatch("V83.COMConnector")
-    kazna = v8.Connect('Srvr="SQLSERVER";Ref="BuhKazn";Usr="cfo";Pwd="2442"')
+    kazna = v8.Connect('Srvr="localhost";Ref="kazna";Usr="cfo";Pwd="2442"')
 
     lines = ["# Связь РКО Казны с РаспределениеЗП (выплата ЗП по подразделениям)\n",
              "_Discovery 2026-05-26_\n"]

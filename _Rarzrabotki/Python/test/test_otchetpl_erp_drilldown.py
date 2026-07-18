@@ -21,7 +21,7 @@ import pythoncom
 import pywintypes
 from datetime import datetime
 
-CONNECTION_STRING = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONNECTION_STRING = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 
 PERIOD_START = datetime(2025, 12, 1)
 PERIOD_END = datetime(2025, 12, 31, 23, 59, 59)

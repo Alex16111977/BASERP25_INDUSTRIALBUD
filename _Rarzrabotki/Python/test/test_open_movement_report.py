@@ -8,7 +8,7 @@ import win32com.client
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 erp = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 )
 
 q = erp.NewObject("Запрос")

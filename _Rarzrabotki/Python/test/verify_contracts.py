@@ -6,7 +6,7 @@ from datetime import datetime
 
 pythoncom.CoInitialize()
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="\u0410\u0434\u043c\u0438\u043d\u0438\u0441\u0442\u0440\u0430\u0442\u043e\u0440";Pwd="24043"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="\u0410\u0434\u043c\u0438\u043d\u0438\u0441\u0442\u0440\u0430\u0442\u043e\u0440";Pwd="24043"')
 print("Connected to ERP")
 
 q = erp.NewObject("\u0417\u0430\u043f\u0440\u043e\u0441")

@@ -23,7 +23,7 @@
 import io, sys
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 import win32com.client as w
-erp = w.Dispatch("V83.COMConnector").Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = w.Dispatch("V83.COMConnector").Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 енум = erp.Перечисления.ВидыОперацийПоЗарплате.УдержаниеНеизрасходованныхПодотчетныхСумм
 print("enum УдержаниеНеизрасходованныхПодотчетныхСумм:", erp.ЗначениеЗаполнено(енум))
 ob = erp.Документы.А_ОтражениеЗПпоКазне.НайтиПоНомеру("000000001").ПолучитьОбъект()
@@ -187,7 +187,7 @@ git commit -m "fix(подотчётне3): ВидОперации Удержан
 import io, sys
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 import win32com.client as w
-erp = w.Dispatch("V83.COMConnector").Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = w.Dispatch("V83.COMConnector").Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 ob = erp.Документы.А_ОтражениеЗПпоКазне.НайтиПоНомеру("000000001").ПолучитьОбъект()
 ob.ЗагрузитьНалогиИУдержанияИзЗарплатыБух()
 ok = False

@@ -15,7 +15,7 @@ EXP_NACH = 200000.00
 EXP_VYPL = 266013.53
 
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 Q = """ВЫБРАТЬ
 	Ост.ФизическоеЛицо КАК ФизическоеЛицо,

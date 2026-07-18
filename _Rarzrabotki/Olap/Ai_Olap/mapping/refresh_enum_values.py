@@ -16,7 +16,7 @@ import win32com.client
 if sys.stdout.encoding != "utf-8":
     sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 
-CONN = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 
 # Enums where we need full UUID -> Name mapping (large or dynamic content)
 ENUMS_TO_DUMP = [

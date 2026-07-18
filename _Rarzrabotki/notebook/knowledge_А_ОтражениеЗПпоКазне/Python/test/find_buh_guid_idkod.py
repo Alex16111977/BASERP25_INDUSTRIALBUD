@@ -4,8 +4,8 @@ import win32com.client, sys
 if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
-buh = v8.Connect('Srvr="SQLSERVER";Ref="BuhBud";Usr="cfo";Pwd="2442"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+buh = v8.Connect('Srvr="localhost";Ref="bas_industrialbud";Usr="cfo";Pwd="2442"')
 qo = erp.NewObject("Запрос")
 qo.Текст = ("ВЫБРАТЬ Организации.КодПоЕДРПОУ КАК Е ИЗ Справочник.Организации КАК Организации"
             " ГДЕ Организации.А_ВБалансе = ИСТИНА И Организации.КодПоЕДРПОУ <> \"\"")

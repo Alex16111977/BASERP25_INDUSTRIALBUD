@@ -26,7 +26,7 @@ MXL_OUT = r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\build\счет_ІБ
 DOC_UUID = "646adb6b-3cab-11f1-8110-00155dce3d04"
 DOC_NUMBER = "ІБ00-000360"
 
-CONN = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 
 
 def fail(msg):

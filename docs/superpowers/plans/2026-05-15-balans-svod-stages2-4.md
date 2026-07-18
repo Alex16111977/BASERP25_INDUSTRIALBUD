@@ -10,7 +10,7 @@
 
 **Reference spec:** `docs/superpowers/specs/2026-05-15-balans-svod-canonical-design.md` (Canonical **v1.4**, §8 + OD-2 РЕЗОЛЮЦІЯ).
 
-**БД:** `Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"` · Організація **ТОВ ІНДАСТРІАЛБУД (ЄДРПОУ 40645273)** · період валідації **січень 2026 (закритий)**.
+**БД:** `Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"` · Організація **ТОВ ІНДАСТРІАЛБУД (ЄДРПОУ 40645273)** · період валідації **січень 2026 (закритий)**.
 
 **Шляхи:** worktree = `C:\Configuration_downloads\BASERP25\.claude\worktrees\peaceful-knuth-51295b`; main config = `C:\Configuration_downloads\BASERP25` (Rule #4: cp у main після кожної правки BSL).
 
@@ -66,7 +66,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 import win32com.client, pythoncom
 from datetime import datetime
 
-CONN = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 M = datetime(2026, 1, 1, 12, 0, 0)
 pythoncom.CoInitialize()
 conn = win32com.client.Dispatch("V83.COMConnector").Connect(CONN)
@@ -338,7 +338,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 import win32com.client, pythoncom
 from datetime import datetime
 
-CONN = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 M = datetime(2026, 1, 1, 12, 0, 0)
 DDATE = datetime(2026, 1, 31, 14, 0, 0)
 TOL = 0.01
@@ -447,7 +447,7 @@ import sys, io
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 import win32com.client, pythoncom
 from datetime import datetime
-CONN = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 M = datetime(2026, 1, 1, 12, 0, 0)
 pythoncom.CoInitialize()
 conn = win32com.client.Dispatch("V83.COMConnector").Connect(CONN)

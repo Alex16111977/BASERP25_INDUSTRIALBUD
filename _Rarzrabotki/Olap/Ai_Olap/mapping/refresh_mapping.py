@@ -24,7 +24,7 @@ if sys.stdout.encoding != "utf-8":
 
 CONN = (
     os.environ.get("BASERP_COM_CONN")
-    or 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+    or 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 )
 
 # Whitelist of objects we actually need for ETL. Generated from olap_data_sources_erp.md.

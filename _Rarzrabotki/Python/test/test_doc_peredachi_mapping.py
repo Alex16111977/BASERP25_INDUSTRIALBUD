@@ -9,12 +9,12 @@ import win32com.client
 v8 = win32com.client.Dispatch("V83.COMConnector")
 
 # Connect to Kazna
-CONN_KAZN = 'Srvr="SQLSERVER";Ref="BuhKazn";Usr="cfo";Pwd="2442"'
+CONN_KAZN = 'Srvr="localhost";Ref="kazna";Usr="cfo";Pwd="2442"'
 print("Connecting to Kazna...")
 kazna = v8.Connect(CONN_KAZN)
 
 # Connect to ERP
-CONN_ERP = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN_ERP = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 print("Connecting to ERP...")
 erp = v8.Connect(CONN_ERP)
 

@@ -3,7 +3,7 @@
 import win32com.client as w, sys, datetime, pywintypes
 sys.stdout.reconfigure(encoding='utf-8')
 v8 = w.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 path = r"C:\Configuration_downloads\BASERP25\.claude\worktrees\silly-colden-130551\_Rarzrabotki\Обработки\СинхронизироватьВзаиморасчеты.epf"
 обр = erp.ВнешниеОбработки.Создать(path, False)
 # Дата полднем — pywintypes сдвигает день, ставим полдень (memory win32com_epf_smoke_gotchas)

@@ -4,7 +4,7 @@ import win32com.client
 import pythoncom
 
 pythoncom.CoInitialize()
-conn_str = 'Srvr="SQLSERVER";Ref="BuhBud";Usr="cfo";Pwd="2442"'
+conn_str = 'Srvr="localhost";Ref="bas_industrialbud";Usr="cfo";Pwd="2442"'
 v8 = win32com.client.Dispatch('V83.COMConnector')
 v83 = v8.Connect(conn_str)
 

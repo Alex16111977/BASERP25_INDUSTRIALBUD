@@ -10,8 +10,8 @@ import sys, datetime
 import win32com.client
 sys.stdout.reconfigure(encoding="utf-8")
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
-buh = v8.Connect('Srvr="SQLSERVER";Ref="BuhBud";Usr="cfo";Pwd="2442"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+buh = v8.Connect('Srvr="localhost";Ref="bas_industrialbud";Usr="cfo";Pwd="2442"')
 XML = erp.XMLСтрока
 EPF = r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\Обработки\Перенос остатков сотрудников.epf"
 ДАТА = datetime.datetime(2026, 6, 1, 12, 0, 0)   # полдень — TZ-сдвиг не «сползает» на май

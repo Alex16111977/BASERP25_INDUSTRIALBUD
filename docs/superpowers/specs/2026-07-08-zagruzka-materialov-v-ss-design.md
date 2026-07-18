@@ -2,7 +2,7 @@
 
 - **Дата:** 2026-07-08
 - **Ветка:** claude/hungry-mcnulty-ca2a24 (worktree pensive-maxwell-b838b2)
-- **Целевая база:** BuhBud — `Srvr="SQLSERVER";Ref="BuhBud";Usr="cfo";Pwd="2442"`, исходники `_Rarzrabotki/BASEBuh`
+- **Целевая база:** BuhBud — `Srvr="localhost";Ref="bas_industrialbud";Usr="cfo";Pwd="2442"`, исходники `_Rarzrabotki/BASEBuh`
 - **Файлы обработки:** `_Rarzrabotki/Загрузка СС/Загрузка материалов в СС.xml` (+ каталог с формой и модулями)
 - **Образец-шаблон:** `_Rarzrabotki/Загрузка СС/Загрузка работ в СС` (см. [[zagruzka_rabot_v_ss]])
 

@@ -12,7 +12,7 @@ from test_balans_m_uprreport import отчет_упрбаланс_по_стат�
 
 pythoncom.CoInitialize()
 ERP = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 q0 = ERP.NewObject("Запрос")
 q0.Текст = ('ВЫБРАТЬ ПЕРВЫЕ 1 Ссылка КАК С ИЗ Справочник.Организации '

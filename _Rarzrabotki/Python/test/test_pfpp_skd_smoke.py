@@ -3,7 +3,7 @@ if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
 ERF = r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\Отчеты\А_ПланФактныйПроизводствоПолный.erf"
 erp = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 rep = erp.ВнешниеОтчеты.Создать(ERF)
 
 from collections import defaultdict

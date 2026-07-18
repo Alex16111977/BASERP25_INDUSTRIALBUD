@@ -59,7 +59,7 @@
 # 1. Правильная база
 echo "Должна быть BaseERP. Connection string в _common.py:"
 head -50 "C:/Configuration_downloads/BASERP25/_Rarzrabotki/notebook/knowledge_НеоборотныеАктивы/Python/test/_common.py" | grep CONN_STRING
-# → 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+# → 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 
 # 2. Venv-Python с win32com
 "C:/Configuration_downloads/BASERP25/_Rarzrabotki/Python/venv/Scripts/python.exe" -c "import win32com.client; print('OK')"
@@ -177,7 +177,7 @@ UUID: `2d9182ad-3062-11f1-a2e7-eb06fbf9b98b`.
 ```python
 import win32com.client
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 uid = erp.NewObject("УникальныйИдентификатор", "2d9182ad-3062-11f1-a2e7-eb06fbf9b98b")
 ref = erp.Документы.АмортизацияОС.ПолучитьСсылку(uid)
 obj = ref.ПолучитьОбъект()

@@ -5,7 +5,7 @@ if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
 
 v8 = win32com.client.Dispatch("V83.COMConnector")
-conn = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+conn = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 S = conn.String
 VZ = conn.ЗначениеЗаполнено
 
@@ -45,7 +45,7 @@ if inn_empty > 0 and sotr_empty > 0:
     print("Заполняю ИНН вручную из Казны через COM...")
 
     # Connect to Kazna and get INN mapping for doc 267
-    conn_kazn = v8.Connect('Srvr="SQLSERVER";Ref="BuhKazn";Usr="cfo";Pwd="2442"')
+    conn_kazn = v8.Connect('Srvr="localhost";Ref="kazna";Usr="cfo";Pwd="2442"')
     Sk = conn_kazn.String
 
     import datetime

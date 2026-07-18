@@ -7,8 +7,8 @@ if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
 
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
-zup = v8.Connect('Srvr="SQLSERVER";Ref="zup_1";Usr="cfo";Pwd="2442"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+zup = v8.Connect('Srvr="localhost";Ref="zup";Usr="cfo";Pwd="2442"')
 print("Connected ERP + zup_1")
 
 # 1. Массив ЕДРПОУ организаций ERP с А_ВБалансе

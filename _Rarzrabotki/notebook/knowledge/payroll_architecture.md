@@ -74,11 +74,11 @@ type: architecture
 
 | База | Connection string | Призначення |
 |---|---|---|
-| **BaseERP** | `Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"` | Основна ERP (для cfo не працює!) |
-| **BuhKazn** | `Srvr="SQLSERVER";Ref="BuhKazn";Usr="cfo";Pwd="2442"` | Казна — фактичні виплати, регістр БДДС |
-| **zup_1** | `Srvr="SQLSERVER";Ref="zup_1";Usr="cfo";Pwd="2442"` | БАС ЗУП 2.1 — регламентна ЗП (НДФЛ/ВС/ЄСВ) |
-| **zup_2** | `Srvr="SQLSERVER";Ref="zup_2";Usr="cfo";Pwd="2442"` | БАС ЗУП — управлінська ЗП (НачисленияУпр) |
-| **BuhBud** | `Srvr="SQLSERVER";Ref="BuhBud";Usr="cfo";Pwd="2442"` | БАС Бухгалтерія (для іншого обміну) |
+| **BaseERP** | `Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"` | Основна ERP (для cfo не працює!) |
+| **BuhKazn** | `Srvr="localhost";Ref="kazna";Usr="cfo";Pwd="2442"` | Казна — фактичні виплати, регістр БДДС |
+| **zup_1** | `Srvr="localhost";Ref="zup";Usr="cfo";Pwd="2442"` | БАС ЗУП 2.1 — регламентна ЗП (НДФЛ/ВС/ЄСВ) |
+| **zup_2** | `Srvr="localhost";Ref="zup2";Usr="cfo";Pwd="2442"` | БАС ЗУП — управлінська ЗП (НачисленияУпр) |
+| **BuhBud** | `Srvr="localhost";Ref="bas_industrialbud";Usr="cfo";Pwd="2442"` | БАС Бухгалтерія (для іншого обміну) |
 
 **КРИТИЧНО**: при Python COM тестах до ZUP-баз дати передавай як `pywintypes.Time(datetime.datetime(...))`, не як рядок.
 

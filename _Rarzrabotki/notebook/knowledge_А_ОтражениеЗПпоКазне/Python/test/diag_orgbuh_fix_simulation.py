@@ -6,7 +6,7 @@ import win32com.client, sys
 if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 def run(t):
     q = erp.NewObject("Запрос"); q.Текст = t; return q.Выполнить().Выгрузить()
 P = lambda a: f"ГОД({a})=2026 И МЕСЯЦ({a})=2"

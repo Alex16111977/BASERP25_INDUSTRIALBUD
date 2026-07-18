@@ -8,7 +8,7 @@ if sys.stdout.encoding != "utf-8":
 import win32com.client
 
 EDRPOU_ORG_TOV = "40645273"
-CONN_STRING = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN_STRING = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 ARTIFACTS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "_artifacts")
 os.makedirs(ARTIFACTS_DIR, exist_ok=True)
 

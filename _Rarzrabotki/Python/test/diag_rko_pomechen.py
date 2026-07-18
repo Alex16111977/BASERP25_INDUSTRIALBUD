@@ -6,7 +6,7 @@ import win32com.client, pythoncom
 
 pythoncom.CoInitialize()
 conn = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 with open(r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\Python\test\rko_candidates.json", encoding="utf-8") as f:
     cands = json.load(f)

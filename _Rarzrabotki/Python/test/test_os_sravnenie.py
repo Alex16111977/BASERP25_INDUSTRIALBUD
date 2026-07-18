@@ -16,7 +16,7 @@ import pythoncom
 import pywintypes
 from datetime import datetime
 
-CONNECTION_STRING_BUHBUD = 'Srvr="SQLSERVER";Ref="BuhBud";Usr="cfo";Pwd="2442"'
+CONNECTION_STRING_BUHBUD = 'Srvr="localhost";Ref="bas_industrialbud";Usr="cfo";Pwd="2442"'
 CONNECTION_STRING_ERP = 'Srvr="SQLSERVER";Ref="BASERP25";Usr="cfo";Pwd="2442"'
 DATE_OSTATKI = datetime(2026, 2, 28, 23, 59, 59)
 

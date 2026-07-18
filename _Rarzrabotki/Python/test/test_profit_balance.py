@@ -16,7 +16,7 @@ import pythoncom
 import pywintypes
 from datetime import datetime
 
-CONN_STR = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN_STR = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 PERIOD_END = datetime(2025, 11, 30, 23, 59, 59)
 DOC_NUMBER = "0Ц-00000002"
 EXPECTED_ROWS = 91        # кількість рядків (Орг, Підрозділ, Напрямок) з ненульовим дисбалансом

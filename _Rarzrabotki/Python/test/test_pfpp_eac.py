@@ -8,7 +8,7 @@ def f(x): return float(x) if x is not None else 0.0
 ERF = os.environ.get("PFPP_ERF") or os.path.join(os.environ["TEMP"], "pfpp_eac.erf")
 assert os.path.exists(ERF), f"нет .erf: {ERF}"
 erp = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 отчет = erp.ВнешниеОтчеты.Создать(ERF)
 сс = erp.Справочники.А_СтруктураСебестоимости.НайтиПоНаименованию("МД МХП ОРІЛЬ / СТІЛ МД МХП ОРІЛЬ")
 def период(кон=None):

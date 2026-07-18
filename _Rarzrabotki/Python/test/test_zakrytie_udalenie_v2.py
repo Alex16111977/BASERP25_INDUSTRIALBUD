@@ -16,7 +16,7 @@ import win32com.client
 if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
 
-CONN = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 EPF = r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\build\ЗакрытиеОтрицательныхОстатков.epf"
 ORG_UUID = "6bee36b2-53f0-11e6-80d3-000c29bbac23"
 

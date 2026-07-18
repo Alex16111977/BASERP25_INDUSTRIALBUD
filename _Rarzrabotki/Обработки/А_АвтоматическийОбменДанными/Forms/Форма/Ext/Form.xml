@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
+	<AutoSaveDataInSettings>Use</AutoSaveDataInSettings>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+		<ChildItems>
+			<Button name="КнопкаПолныйОбмен" id="10">
+				<Type>CommandBarButton</Type>
+				<CommandName>Form.Command.ПолныйОбмен</CommandName>
+				<ExtendedTooltip name="КнопкаПолныйОбменExtendedTooltip" id="11"/>
+			</Button>
+			<Button name="КнопкаПолныйОбменПоВсем" id="12">
+				<Type>CommandBarButton</Type>
+				<CommandName>Form.Command.ПолныйОбменПоВсем</CommandName>
+				<ExtendedTooltip name="КнопкаПолныйОбменПоВсемExtendedTooltip" id="13"/>
+			</Button>
+		</ChildItems>
+	</AutoCommandBar>
+	<Events>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+		<Event name="OnOpen">ПриОткрытии</Event>
+	</Events>
+	<ChildItems>
+		<InputField name="ПланОбмена" id="33">
+			<DataPath>Объект.ПланОбмена</DataPath>
+			<ContextMenu name="ПланОбменаКонтекстноеМеню" id="34"/>
+			<ExtendedTooltip name="ПланОбменаРасширеннаяПодсказка" id="35"/>
+		</InputField>
+		<InputField name="Результат" id="23">
+			<DataPath>Результат</DataPath>
+			<ReadOnly>true</ReadOnly>
+			<TitleLocation>None</TitleLocation>
+			<HorizontalStretch>true</HorizontalStretch>
+			<VerticalStretch>true</VerticalStretch>
+			<MultiLine>true</MultiLine>
+			<ContextMenu name="РезультатКонтекстноеМеню" id="24"/>
+			<ExtendedTooltip name="РезультатExtendedTooltip" id="25"/>
+		</InputField>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Объект" id="1">
+			<Type>
+				<v8:Type>cfg:ExternalDataProcessorObject.А_АвтоматическийОбменДанными</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+			<Save>
+				<Field>Объект.ПланОбмена</Field>
+			</Save>
+		</Attribute>
+		<Attribute name="Результат" id="2">
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="АвтоЗапуск" id="3">
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>10</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="ПолныйОбмен" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Полный обмен</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Полный обмен с выбранной базой по плану обмена. Все параметры (база, учётка, путь к обработке-исполнителю) берутся из регистра А_НастройкиПодключенияБаз.</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ПолныйОбмен</Action>
+		</Command>
+		<Command name="ПолныйОбменПоВсем" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Полный обмен по всем базам</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Последовательный полный обмен со всеми базами, у которых в регистре А_НастройкиПодключенияБаз заполнен план обмена (порядок — по идентификатору базы).</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ПолныйОбменПоВсем</Action>
+		</Command>
+	</Commands>
+</Form>

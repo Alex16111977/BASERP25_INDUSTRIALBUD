@@ -24,7 +24,7 @@ cl = content.index('";', op + 1)    # закрывающая
 rekviz = depipe(content[op+1:cl])
 
 erp = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 # найти документ
 qd = erp.NewObject("Запрос")

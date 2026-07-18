@@ -18,7 +18,7 @@ print("=" * 110)
 print("СКРИПТ 38 — ВыполнитьОтложенноеРаспределение в BASERP25 + verify ІБ00-007576")
 print("=" * 110)
 
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 S = erp.String
 
 # === 0. Найдём документ ІБ00-007576 для verify ===

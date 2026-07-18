@@ -11,7 +11,7 @@ def connect_to_1c():
     """Connecting to 1S via COM"""
     try:
         v8 = win32com.client.Dispatch("V83.COMConnector")
-        erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+        erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
         print("[OK] Successfully connected to 1S")
         return erp
     except Exception as e:

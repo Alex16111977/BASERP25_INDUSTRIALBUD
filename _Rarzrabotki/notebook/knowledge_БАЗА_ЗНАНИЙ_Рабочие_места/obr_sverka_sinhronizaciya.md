@@ -138,8 +138,8 @@
 
 | База | Строка подключения (в коде, кавычки удвоены) |
 |---|---|
-| ЕРП `BaseERP` | `Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"` |
-| BuhBud (товары/взаиморасчёты) | `Srvr="SQLSERVER";Ref="BuhBud";Usr="cfo";Pwd="2442"` |
+| ЕРП `BaseERP` | `Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"` |
+| BuhBud (товары/взаиморасчёты) | `Srvr="localhost";Ref="bas_industrialbud";Usr="cfo";Pwd="2442"` |
 | BuhBud (`ЗаполнитьСчетУчетаВДоговоре`) | ⚠️ `Usr="1cAdmin";Pwd=""` — пустой пароль, отличается; зависит от COM-доступа конкретной BuhBud |
 
 ### Передача `ТаблицаЗначений` между базами — сериализация Внутр

@@ -48,7 +48,7 @@ def fmt(v, w=20):
 # === CONNECTION ===
 print("Connecting to BaseERP...")
 v8 = win32com.client.Dispatch("V83.COMConnector")
-CONN = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 erp = v8.Connect(CONN)
 print("Connected.")
 S = erp.String

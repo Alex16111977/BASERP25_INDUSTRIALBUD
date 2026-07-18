@@ -1,7 +1,7 @@
 # ПРОМТ-РАЗБИРАТЕЛЬСТВО: Расхождение −7 194 594,73 ₽ в Глобино-2 «Задолженность клиентов» (январь 2026)
 
 Ты работаешь в `C:\Configuration_downloads\BASERP25` (BAS ERP 2.5 INDUSTRIALBUD).
-Подключение: `Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"`. Python: `C:\Python313\python.exe`.
+Подключение: `Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"`. Python: `C:\Python313\python.exe`.
 
 ## Симптом (что увидел финансист)
 
@@ -96,7 +96,7 @@ import win32com.client, pythoncom, sys, io
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 pythoncom.CoInitialize()
 conn = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 ```
 
 ### Шаг 1 — Найти UUID ОбъектРасчетов «Строительство внутр.(Реализация)»
@@ -234,7 +234,7 @@ import win32com.client, pythoncom
 
 pythoncom.CoInitialize()
 conn = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 НМ = datetime.datetime(2026, 1, 1)
 КМ = datetime.datetime(2026, 1, 31, 23, 59, 59)

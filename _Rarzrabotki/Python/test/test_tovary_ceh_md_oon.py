@@ -14,10 +14,10 @@ def main():
     v8 = win32com.client.Dispatch("V83.COMConnector")
 
     print("Подключение к ERP...")
-    conn_erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    conn_erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
     print("Подключение к BuhBud...")
-    conn_buh = v8.Connect('Srvr="SQLSERVER";Ref="BuhBud";Usr="cfo";Pwd="2442"')
+    conn_buh = v8.Connect('Srvr="localhost";Ref="bas_industrialbud";Usr="cfo";Pwd="2442"')
 
     start = datetime(2025, 12, 1)
     end = datetime(2025, 12, 31, 23, 59, 59)

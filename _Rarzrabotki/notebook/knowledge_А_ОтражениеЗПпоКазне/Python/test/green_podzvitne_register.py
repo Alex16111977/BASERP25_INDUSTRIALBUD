@@ -5,7 +5,7 @@
 import io, sys
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 import win32com.client as w
-erp = w.Dispatch("V83.COMConnector").Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = w.Dispatch("V83.COMConnector").Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 # (а) Регистр ДенежныеСредстваУПодотчетныхЛиц — остаток Гуняги per подразделение.
 # ВАЖНО: движение ОЗФУ имеет Период=КонецМесяца(31.12 23:59:59); .Остатки(31.12 23:59:59) его ИСКЛЮЧАЕТ

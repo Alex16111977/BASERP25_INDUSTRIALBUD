@@ -18,7 +18,7 @@ import win32com.client
 if sys.stdout.encoding != "utf-8":
     sys.stdout.reconfigure(encoding="utf-8")
 
-CONN = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 STATIA_UUID = "3e2ba4c7-7a7e-11eb-a208-000c299fb278"   # "Аренда сторонней техники"
 
 EXPECTED_ROWS  = 204

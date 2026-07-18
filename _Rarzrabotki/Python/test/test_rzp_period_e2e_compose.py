@@ -16,7 +16,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 import pythoncom, win32com.client
 
 ERF = r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\Отчеты\А_РасшифровкаЗадолженностиПодразделений.erf"
-CONN = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 assert os.path.exists(ERF)
 
 pythoncom.CoInitialize()

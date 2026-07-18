@@ -368,7 +368,7 @@ else:
 - `_search_pl_in_excel.py` — поиск PL-статей без ДДС в Excel-файлах (`openpyxl`, чтение `01_raw_sheets.json`).
 - `_fix_a_statii_pl_dds.py` — (итерация 1) правка ДДС у 5 ЗП-статей.
 
-Утилиты подключения: `_Rarzrabotki/Python/PnL/scripts/utils/com_connect.py` — функции `connect_erp()`, `uuid_str(conn, ref)`. Строка подключения берётся из `config.CONN_ERP` (формат `Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="..."`).
+Утилиты подключения: `_Rarzrabotki/Python/PnL/scripts/utils/com_connect.py` — функции `connect_erp()`, `uuid_str(conn, ref)`. Строка подключения берётся из `config.CONN_ERP` (формат `Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="..."`).
 
 ## Ловушки и подводные камни
 

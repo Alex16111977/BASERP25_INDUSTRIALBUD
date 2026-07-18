@@ -19,8 +19,8 @@ Notebook ID: 3303acdb-2d7f-4879-9f13-78705ab3fb8c
 
 ## Потік даних між базами
 
-BAS Бухгалтерія (BuhBud, Srvr="SQLSERVER";Ref="BuhBud") -> правила обміну -> BAS ERP 2.5 (BaseERP, Srvr="SQLSERVER";Ref="BaseERP")
-Казна (BuhKazn, Srvr="SQLSERVER";Ref="BuhKazn") -> правила обміну -> BAS ERP 2.5 (BaseERP)
+BAS Бухгалтерія (BuhBud, Srvr="localhost";Ref="bas_industrialbud") -> правила обміну -> BAS ERP 2.5 (BaseERP, Srvr="localhost";Ref="BaseERP")
+Казна (BuhKazn, Srvr="localhost";Ref="kazna") -> правила обміну -> BAS ERP 2.5 (BaseERP)
 
 Правила обміну ERP<->BuhBud: C:/Razrabotki/ExChange/Индастриал/ПравилаОбменаДаннымиЕРПБух/
 Правила обміну ERP<->Казна: C:/Configuration_downloads/BASERP25/_Rarzrabotki/ExChange/Казна/ПравилаОбменаДаннымиКазна/

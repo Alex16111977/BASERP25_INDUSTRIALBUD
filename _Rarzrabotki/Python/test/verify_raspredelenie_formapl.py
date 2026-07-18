@@ -22,7 +22,7 @@ if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
 import win32com.client
 
-CONN = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 DOC_NUM = "00000000279"
 # границы декабря 2025 (серверно через ДАТАВРЕМЯ в запросе)
 TOL = 0.01

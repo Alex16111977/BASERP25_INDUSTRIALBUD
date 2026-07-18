@@ -14,7 +14,7 @@ from datetime import datetime
 
 BSL = (r"C:\Configuration_downloads\BASERP25\.claude\worktrees"
        r"\naughty-neumann-691338\Documents\А_ФинРез_Баланс\Ext\ObjectModule.bsl")
-CONN = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 TOL = 0.01
 МЕСЯЦЫ = [datetime(2025, 12, 1, 12), datetime(2026, 1, 1, 12)]
 

@@ -3,7 +3,7 @@ sys.stdout.reconfigure(encoding="utf-8")
 import win32com.client
 
 v8 = win32com.client.Dispatch("V83.COMConnector")
-kazna = v8.Connect('Srvr="SQLSERVER";Ref="BuhKazn";Usr="cfo";Pwd="2442"')
+kazna = v8.Connect('Srvr="localhost";Ref="kazna";Usr="cfo";Pwd="2442"')
 
 # === V4: остатки/обороты наличной кассы Казны (спека §4.2) ===
 # Фильтр Наличные внутри 5-го параметра виртуальной таблицы ОстаткиИОбороты

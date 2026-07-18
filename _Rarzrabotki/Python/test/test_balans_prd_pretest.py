@@ -26,7 +26,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 import win32com.client, pythoncom
 from datetime import datetime
 
-CONN = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 TOL = 0.01
 ЭТ_ПР = {"декабрь2025": 175_165.62, "январь2026": 205_718.88}
 ПЕРИОДЫ = [

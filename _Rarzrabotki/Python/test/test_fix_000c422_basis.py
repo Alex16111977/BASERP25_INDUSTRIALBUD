@@ -6,7 +6,7 @@ And test that НайтиСуществующийВзаимозачет works aft
 import win32com.client
 
 v8 = win32com.client.Dispatch("V83.COMConnector")
-CONN = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 conn = v8.Connect(CONN)
 
 mgr = conn.Документы.ВзаимозачетЗадолженности

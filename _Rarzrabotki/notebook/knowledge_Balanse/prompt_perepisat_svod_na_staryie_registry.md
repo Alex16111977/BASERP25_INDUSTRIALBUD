@@ -11,7 +11,7 @@
 | Параметр | Значение |
 |---|---|
 | База | `C:\Configuration_downloads\BASERP25` (BAS ERP 2.5 INDUSTRIALBUD) |
-| COM-подключение | `Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"` |
+| COM-подключение | `Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"` |
 | Python | `C:\Python313\python.exe` |
 | Архитектура взаиморасчётов | `НоваяАрхитектураВзаиморасчётов = TRUE` |
 | Файл с кодом | `Documents/А_ФинРез_Баланс/Ext/ObjectModule.bsl` |
@@ -237,7 +237,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', write_through
 import win32com.client, pythoncom
 pythoncom.CoInitialize()
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 q = erp.NewObject("Запрос")
 q.УстановитьПараметр("НачМес", datetime.datetime(2025, 12, 1))
@@ -476,7 +476,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', write_through
 import win32com.client, pythoncom
 pythoncom.CoInitialize()
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 q = erp.NewObject("Запрос")
 q.Текст = 'ВЫБРАТЬ ПЕРВЫЕ 1 Ссылка ИЗ Справочник.Организации ГДЕ Наименование ПОДОБНО "%НДАСТРІАЛБУД%"'

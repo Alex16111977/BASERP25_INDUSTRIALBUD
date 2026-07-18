@@ -15,8 +15,8 @@ GitHub: Alex16111977/BASERP25_INDUSTRIALBUD
 | Common Modules | 1770+ |
 
 ### Databases
-- **ERP (BaseERP)**: Main ERP database, connection: `Srvr="SQLSERVER";Ref="BaseERP"`
-- **BAS Accounting (BuhBud)**: Accounting database, connection: `Srvr="SQLSERVER";Ref="BuhBud"`
+- **ERP (BaseERP)**: Main ERP database, connection: `Srvr="localhost";Ref="BaseERP"`
+- **BAS Accounting (BuhBud)**: Accounting database, connection: `Srvr="localhost";Ref="bas_industrialbud"`
 
 ---
 
@@ -478,8 +478,8 @@ ProcessorName/
 
 ### Python COM Testing
 - `result.Количество` may be interpreted as a method (COM name collision) - use alias `КолВо` in test queries
-- BAS Бухгалтерія connection: `Srvr="SQLSERVER";Ref="BuhBud";Usr="cfo";Pwd="2442"`
-- ERP connection: `Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"`
+- BAS Бухгалтерія connection: `Srvr="localhost";Ref="bas_industrialbud";Usr="cfo";Pwd="2442"`
+- ERP connection: `Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"`
 
 ---
 

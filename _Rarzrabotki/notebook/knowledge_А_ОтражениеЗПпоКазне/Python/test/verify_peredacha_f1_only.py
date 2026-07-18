@@ -6,7 +6,7 @@ if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
 
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 print("Connected ERP")
 q = erp.NewObject("Запрос")
 q.Текст = ("ВЫБРАТЬ ПЕРВЫЕ 1 Ссылка КАК Ссылка, Номер КАК Номер ИЗ Документ.А_ОтражениеЗПпоКазне "

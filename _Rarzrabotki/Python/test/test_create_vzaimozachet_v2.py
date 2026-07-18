@@ -10,7 +10,7 @@ import win32com.client
 import pythoncom
 from datetime import datetime
 
-CONN_STR = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN_STR = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 
 
 def connect():

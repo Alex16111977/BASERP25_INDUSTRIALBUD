@@ -23,7 +23,7 @@
 import io, sys
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 import win32com.client as w
-erp = w.Dispatch("V83.COMConnector").Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = w.Dispatch("V83.COMConnector").Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 # (а) ПередачаНач №1 — ПАП по статьям (Гуняга-сумма 400 сейчас на «Прочие пассивы»)
 q = erp.NewObject("Запрос")
@@ -271,7 +271,7 @@ git commit -m "feat(подотчётне2): Субконто1=ФЛ (3721) + Пе
 import io, sys
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 import win32com.client as w
-erp = w.Dispatch("V83.COMConnector").Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = w.Dispatch("V83.COMConnector").Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 ob = erp.Документы.А_ОтражениеЗПпоКазне.НайтиПоНомеру("000000001").ПолучитьОбъект()
 ob.ЗагрузитьНалогиИУдержанияИзЗарплатыБух()
 ok = False

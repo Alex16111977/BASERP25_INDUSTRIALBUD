@@ -22,7 +22,7 @@
 - **Каталог обработки (относительный, есть и в worktree, и в main):**
   `_Rarzrabotki\Загрузка СС\Загрузка материалов в СС\`
 - **Итоговый .epf:** `_Rarzrabotki\Загрузка СС\Загрузка материалов в СС.epf` (main)
-- **BuhBud COM:** `Srvr="SQLSERVER";Ref="BuhBud";Usr="cfo";Pwd="2442"`
+- **BuhBud COM:** `Srvr="localhost";Ref="bas_industrialbud";Usr="cfo";Pwd="2442"`
 - **Excel-шаблоны (лист «Проект СС»):**
   - `_Rarzrabotki\Загрузка СС\Виробництво\IRC 15м2 НОВИЙ ШАблон  СС Виробництво 16-06-2026_.xlsx`
   - `_Rarzrabotki\Загрузка СС\Виробництво\IRC 30м2 НОВИЙ ШАблон  СС Виробництво 16-06-2026_.xlsx`
@@ -57,7 +57,7 @@ import openpyxl
 EPF = r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\Загрузка СС\Загрузка материалов в СС.epf"
 XLSX = r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\Загрузка СС\Виробництво\IRC 15м2 НОВИЙ ШАблон  СС Виробництво 16-06-2026_.xlsx"
 TESTNAME = "__ТЕСТ Загрузка материалов СС"
-CONN = 'Srvr="SQLSERVER";Ref="BuhBud";Usr="cfo";Pwd="2442"'
+CONN = 'Srvr="localhost";Ref="bas_industrialbud";Usr="cfo";Pwd="2442"'
 
 def num(v):
     try:
@@ -528,7 +528,7 @@ Expected: без вывода (успех).
 Использовать навык `epf-build`: source — каталог обработки в **main**
 `C:\Configuration_downloads\BASERP25\_Rarzrabotki\Загрузка СС\Загрузка материалов в СС`
 (корневой `Загрузка материалов в СС.xml`), база сборки — **BuhBud**
-(`Srvr="SQLSERVER";Ref="BuhBud"`), выход —
+(`Srvr="localhost";Ref="bas_industrialbud"`), выход —
 `C:\Configuration_downloads\BASERP25\_Rarzrabotki\Загрузка СС\Загрузка материалов в СС.epf`.
 
 Причина BuhBud: реквизит `ДокСтруктураСебестоимости` имеет тип

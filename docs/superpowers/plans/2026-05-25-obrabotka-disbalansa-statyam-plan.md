@@ -15,7 +15,7 @@
 ## Pre-execution checklist
 
 - [ ] **Workdir:** `C:\Configuration_downloads\BASERP25` (основная конфигурация)
-- [ ] **DB:** `Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"` — доступна
+- [ ] **DB:** `Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"` — доступна
 - [ ] **Изучить spec** разделы 3-5 (структура реквизитов, алгоритмы) перед началом
 - [ ] **Изучить образец** `_Rarzrabotki/Обработки/А_ОбработкаДисбалансаПоПодразделениям/Ext/ObjectModule.bsl` (паттерн АнализДокументов/СоздатьДокументы)
 

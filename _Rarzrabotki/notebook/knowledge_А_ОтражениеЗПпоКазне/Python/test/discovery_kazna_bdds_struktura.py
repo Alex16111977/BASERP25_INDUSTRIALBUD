@@ -25,7 +25,7 @@ OUT_FILE = os.path.join(ARTIFACT_DIR, "kazna_bdds_schema.md")
 
 def main():
     v8 = win32com.client.Dispatch("V83.COMConnector")
-    kazna = v8.Connect('Srvr="SQLSERVER";Ref="BuhKazn";Usr="cfo";Pwd="2442"')
+    kazna = v8.Connect('Srvr="localhost";Ref="kazna";Usr="cfo";Pwd="2442"')
 
     # Метаданные регистра — список реквизитов/измерений/ресурсов
     try:

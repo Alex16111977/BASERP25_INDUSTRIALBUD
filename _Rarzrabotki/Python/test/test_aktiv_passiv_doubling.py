@@ -13,7 +13,7 @@ import win32com.client
 import sys
 
 v8 = win32com.client.Dispatch("V83.COMConnector")
-CONN_ERP = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN_ERP = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 conn = v8.Connect(CONN_ERP)
 
 DOC_NUMBER = "007404"

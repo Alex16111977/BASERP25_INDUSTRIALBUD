@@ -13,7 +13,7 @@
 
 ## Окружение
 
-- **База**: BaseERP — `v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')`.
+- **База**: BaseERP — `v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')`.
   Здесь РАБОТАЕТ MCP `1c-workerp` (list_metadata_objects / get_metadata_structure /
   execute_query) — используй его для метаданных, а Python COM для тестов запросов
   (Rule #-1: любой запрос — сначала COM-тест 1:1).

@@ -8,7 +8,7 @@ import win32com.client, pythoncom
 from datetime import datetime
 pythoncom.CoInitialize()
 ERP = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 ОЖИДАТЬ_СТРОКИ = os.environ.get("BALANS_EXPECT_ROWS", "0") == "1"
 

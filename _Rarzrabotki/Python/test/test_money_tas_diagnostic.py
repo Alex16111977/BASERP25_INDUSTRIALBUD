@@ -18,8 +18,8 @@ def main():
     print("ДІАГНОСТИКА: Розбіжність 2,824,601 на ТАС_Будівн за грудень 2025")
     print("=" * 80)
 
-    conn_erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
-    conn_buh = v8.Connect('Srvr="SQLSERVER";Ref="BuhBud";Usr="cfo";Pwd="2442"')
+    conn_erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    conn_buh = v8.Connect('Srvr="localhost";Ref="bas_industrialbud";Usr="cfo";Pwd="2442"')
 
     dt_start = pywintypes.Time(datetime(2025, 12, 1))
     dt_end = pywintypes.Time(datetime(2025, 12, 31, 23, 59, 59))

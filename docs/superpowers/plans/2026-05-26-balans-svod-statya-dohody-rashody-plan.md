@@ -29,7 +29,7 @@
 
 **Среда:** Python 3.13 в `C:/Python313/python.exe` (имеет win32com.client). Скрипты запускать через `C:/Python313/python.exe`, не `python` (там 3.13 без pywin32 → 3.11 без pywin32).
 
-**База:** `Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"`. Организация: ТОВ «ІНДАСТРІАЛБУД» (КодПоЕДРПОУ 40645273).
+**База:** `Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"`. Организация: ТОВ «ІНДАСТРІАЛБУД» (КодПоЕДРПОУ 40645273).
 
 **Документ тестируемый:** `Финансовый результат Баланс (для OLAP) 00000000004` от 30.04.2026 12:00:00. Месяц документа = 01.04.2026 00:00:00 (НачалоМесяца), КонМес = 30.04.2026 23:59:59.
 
@@ -73,7 +73,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 import win32com.client
 from collections import Counter
 
-CONN = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 v8 = win32com.client.Dispatch("V83.COMConnector")
 erp = v8.Connect(CONN)
 S = erp.String
@@ -769,7 +769,7 @@ import win32com.client
 from datetime import datetime
 from collections import Counter
 
-CONN = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 v8 = win32com.client.Dispatch("V83.COMConnector")
 erp = v8.Connect(CONN)
 S = erp.String
@@ -988,7 +988,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 import win32com.client
 from datetime import datetime
 
-CONN = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 v8 = win32com.client.Dispatch("V83.COMConnector")
 erp = v8.Connect(CONN)
 S = erp.String
@@ -1145,7 +1145,7 @@ Expected: все 3 PASS, без exit code != 0.
 # inline скрипт
 import win32com.client
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 q = erp.NewObject("Запрос")
 q.Text = """ВЫБРАТЬ КОЛИЧЕСТВО(*) КАК Кол
 ИЗ РегистрСведений.А_ОтчетБаланс_Свод РС

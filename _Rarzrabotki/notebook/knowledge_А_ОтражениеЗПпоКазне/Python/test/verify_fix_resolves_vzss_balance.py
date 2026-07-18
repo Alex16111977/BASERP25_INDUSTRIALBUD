@@ -14,7 +14,7 @@ import win32com.client, sys
 if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 print("Connected ERP")
 
 def en(v): return erp.XMLСтрока(v) if erp.ЗначениеЗаполнено(v) else ""
@@ -114,7 +114,7 @@ for d in FL.values():
         bug[d['idk']] = bug.get(d['idk'], 0.0) + bd
 
 # === 3. BuhBud 661/663 КонОст per ФЛ (как в отчёте), орг из А_ВБалансе ===
-buh = v8.Connect('Srvr="SQLSERVER";Ref="BuhBud";Usr="cfo";Pwd="2442"')
+buh = v8.Connect('Srvr="localhost";Ref="bas_industrialbud";Usr="cfo";Pwd="2442"')
 print("Connected BuhBud")
 qo = erp.NewObject("Запрос")
 qo.Текст = ("ВЫБРАТЬ Организации.КодПоЕДРПОУ КАК ЕДРПОУ ИЗ Справочник.Организации КАК Организации"

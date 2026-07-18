@@ -37,7 +37,7 @@
 | `_Rarzrabotki/ExChange/ПравилаОбменаДаннымиЕРПБух/ExchangeRules.xml` | правила обмена (первопричина, стр.1313) |
 
 ## Доступы / окружение
-- COM: `Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"`, Python `C:\Python313\python.exe`.
+- COM: `Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"`, Python `C:\Python313\python.exe`.
 - Платформа 8.3.20.1914. Конфигурация BAS ERP 2.5 v2.13, ТОВ «ІНДАСТРІАЛБУД».
 - Партнёр-заглушка UUID `7185991a-6ea2-11f0-a2de-bccbaebe2890`.
 

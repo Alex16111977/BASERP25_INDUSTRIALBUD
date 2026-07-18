@@ -72,7 +72,7 @@
 
 1. Відкриває COM-зʼєднання до BuhKazn:
    ```
-   Srvr="SQLSERVER";Ref="BuhKazn";Usr="cfo";Pwd="2442"
+   Srvr="localhost";Ref="kazna";Usr="cfo";Pwd="2442"
    ```
 2. Виконує запит у Казні:
    ```sql

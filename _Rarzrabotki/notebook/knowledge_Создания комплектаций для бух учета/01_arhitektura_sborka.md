@@ -67,7 +67,7 @@ powershell -File .claude/skills/epf-build/scripts/epf-build.ps1 `
 
 ```python
 import win32com.client
-buh = win32com.client.Dispatch("V83.COMConnector").Connect('Srvr="SQLSERVER";Ref="BuhBud";Usr="cfo";Pwd="2442"')
+buh = win32com.client.Dispatch("V83.COMConnector").Connect('Srvr="localhost";Ref="bas_industrialbud";Usr="cfo";Pwd="2442"')
 обр = buh.ВнешниеОбработки.Создать(r"C:\...\Создания комплектаций для бух учета.epf", False)
 # задать Период / Спецификация / Организация / СчетаОстатков / СкладыОстатков -> РассчитатьАнализ() -> читать ТабличнаяЧастьОстатков
 ```

@@ -28,7 +28,7 @@ CODE_STATYA_DS_NALICH = "00000000004"
 CODE_STATYA_DS_PODOTCH = "00000000005"
 CODE_STATYA_DS_VPUTI = "00000000028"
 
-CONN_STRING = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN_STRING = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 
 ARTIFACTS_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "_artifacts")
 os.makedirs(ARTIFACTS_DIR, exist_ok=True)

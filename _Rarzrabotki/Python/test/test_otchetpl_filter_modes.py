@@ -9,7 +9,7 @@
 import win32com.client
 import pythoncom
 
-CONNECTION_STRING = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONNECTION_STRING = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 
 
 def inspect_filters(conn, report_name, variant_name=None):

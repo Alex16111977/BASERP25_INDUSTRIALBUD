@@ -10,7 +10,7 @@ import openpyxl
 EPF = r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\Загрузка СС\Загрузка материалов в СС.epf"
 XLSX = r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\Загрузка СС\Виробництво\1\IRC 15м2 НОВИЙ ШАблон  СС Виробництво 16-06-2026_Коррект (1).xlsx"
 TESTNAME = "__ТЕСТ Загрузка материалов СС"
-CONN = 'Srvr="SQLSERVER";Ref="BuhBud";Usr="cfo";Pwd="2442"'
+CONN = 'Srvr="localhost";Ref="bas_industrialbud";Usr="cfo";Pwd="2442"'
 
 def num(v):
     try:

@@ -10,7 +10,7 @@ PATH = (r"C:\Configuration_downloads\BASERP25\.claude\worktrees\pedantic-greider
         r"\_Rarzrabotki\Обработки\Перепровести Расчеты по контрагентам с выбором за период.epf")
 
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 try:
     obj = erp.ВнешниеОбработки.Создать(PATH, False)  # False = небезопасный режим

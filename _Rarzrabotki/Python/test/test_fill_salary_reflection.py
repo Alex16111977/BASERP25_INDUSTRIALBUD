@@ -9,7 +9,7 @@ import win32com.client
 import sys
 import datetime
 
-CONN_ERP = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="\u0410\u0434\u043c\u0438\u043d\u0438\u0441\u0442\u0440\u0430\u0442\u043e\u0440";Pwd="24043"'
+CONN_ERP = 'Srvr="localhost";Ref="BaseERP";Usr="\u0410\u0434\u043c\u0438\u043d\u0438\u0441\u0442\u0440\u0430\u0442\u043e\u0440";Pwd="24043"'
 
 def main():
     print("=" * 60)

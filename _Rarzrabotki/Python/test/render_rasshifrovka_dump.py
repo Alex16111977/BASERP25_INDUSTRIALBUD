@@ -7,7 +7,7 @@ import sys, io
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 import os, pythoncom, win32com.client
 
-ERP = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+ERP = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 ERF = (r"C:\Configuration_downloads\BASERP25\.claude\worktrees"
        r"\charming-allen-2fc47b\_Rarzrabotki\Отчеты"
        r"\А_РасшифровкаЗадолженностиПодразделений.erf")

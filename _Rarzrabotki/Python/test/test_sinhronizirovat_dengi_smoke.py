@@ -15,7 +15,7 @@ if sys.stdout.encoding != 'utf-8':
 EPF = r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\Обработки\СинхронизироватьДеньги.epf"
 
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 obr = erp.ВнешниеОбработки.Создать(EPF, False)
 obr.НачалоПериода = datetime(2026, 6, 1, 0, 0, 0)

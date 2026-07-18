@@ -436,7 +436,7 @@ load_dotenv(PROJECT_ROOT / ".env")
 
 # 1С BaseERP COM
 CONN_ERP = os.getenv("CONN_ERP",
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 # OlapBASERP SQL Server
 CONN_OLAP = os.getenv("CONN_OLAP", (

@@ -19,7 +19,7 @@ count_zup2 = 0
 count_zup2_ded = 0
 
 try:
-    conn_zup2 = v8.Connect('Srvr="SQLSERVER";Ref="zup_2";Usr="cfo";Pwd="2442"')
+    conn_zup2 = v8.Connect('Srvr="localhost";Ref="zup2";Usr="cfo";Pwd="2442"')
     print("[OK] Подключение к zup_2 успешно")
 
     q = conn_zup2.NewObject("Запрос")
@@ -87,7 +87,7 @@ print("=" * 60)
 count_zup1 = 0
 
 try:
-    conn_zup1 = v8.Connect('Srvr="SQLSERVER";Ref="zup_1";Usr="cfo";Pwd="2442"')
+    conn_zup1 = v8.Connect('Srvr="localhost";Ref="zup";Usr="cfo";Pwd="2442"')
     print("[OK] Подключение к zup_1 успешно")
 
     q3 = conn_zup1.NewObject("Запрос")

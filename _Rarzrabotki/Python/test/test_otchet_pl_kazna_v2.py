@@ -9,7 +9,7 @@ ERF = r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\build\А_ОтчетPL_v
 MXL = r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\build\А_ОтчетPL_v2_янв2026.mxl"
 
 erp = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 )
 print("[OK] Connected")
 

@@ -14,7 +14,7 @@ def main():
     v8 = win32com.client.Dispatch("V83.COMConnector")
 
     print("=== ERP ===")
-    conn_erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    conn_erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
     # 1. Найти А_ИдКод для "Кутик внутр на плінтус низький №201"
     q = conn_erp.NewObject("Запрос")
@@ -84,7 +84,7 @@ def main():
 
     # 4. Проверить в BuhBud
     print(f"\n=== BuhBud ===")
-    conn_buh = v8.Connect('Srvr="SQLSERVER";Ref="BuhBud";Usr="cfo";Pwd="2442"')
+    conn_buh = v8.Connect('Srvr="localhost";Ref="bas_industrialbud";Usr="cfo";Pwd="2442"')
 
     print(f"--- ВСЕ товары в BuhBud с А_ИдКод = '{idkod}' ---")
     q4 = conn_buh.NewObject("Запрос")

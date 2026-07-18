@@ -31,7 +31,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8")
 import win32com.client, pythoncom
 from datetime import datetime
 
-CONN = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 TOL = 0.01
 # Эталон signed (Источник=ПустаяСсылка, Статья=ОТ, OD-3) ТОВ ІНДАСТРІАЛБУД,
 # ПОДТВЕРЖДЁН serverside COM (discovery_oplatatruda.py 2026-05-18).

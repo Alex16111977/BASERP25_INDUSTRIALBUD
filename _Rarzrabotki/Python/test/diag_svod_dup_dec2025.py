@@ -10,7 +10,7 @@ import win32com.client
 from collections import defaultdict
 
 conn = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 
 # период декабрь 2025 (серверно)
 from datetime import datetime

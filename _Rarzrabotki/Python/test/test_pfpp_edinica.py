@@ -8,7 +8,7 @@ if sys.stdout.encoding != 'utf-8':
 ERF = os.environ.get("PFPP_ERF") or os.path.join(os.environ["TEMP"], "pfpp_ed5.erf")
 assert os.path.exists(ERF), f"нет .erf: {ERF}"
 erp = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 отчет = erp.ВнешниеОтчеты.Создать(ERF)
 сс = erp.Справочники.А_СтруктураСебестоимости.НайтиПоНаименованию("МД МХП ОРІЛЬ / СТІЛ МД МХП ОРІЛЬ")
 тз = отчет.ПолучитьДанные(erp.NewObject("СтандартныйПериод"), сс.Ссылка)

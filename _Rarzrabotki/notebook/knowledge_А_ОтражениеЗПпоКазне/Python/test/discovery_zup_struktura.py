@@ -53,7 +53,7 @@ def main():
     # ZUP_1 — регламентированный учёт зарплаты
     lines.append("\n## ZUP_1 (BAS ЗУП регламент)\n")
     try:
-        zup1 = v8.Connect('Srvr="SQLSERVER";Ref="zup_1";Usr="cfo";Pwd="2442"')
+        zup1 = v8.Connect('Srvr="localhost";Ref="zup";Usr="cfo";Pwd="2442"')
         dump_register(zup1.Метаданные, "ВзаиморасчетыПоНДФЛ", "Накопл", lines)
         dump_register(zup1.Метаданные, "ВзносыВФонды", "Расчет", lines)
         dump_register(zup1.Метаданные, "УдержанияРаботниковОрганизаций", "Расчет", lines)
@@ -91,7 +91,7 @@ def main():
     # zup_2 — управленческий учёт
     lines.append("\n## zup_2 (BAS ЗУП управленческий)\n")
     try:
-        zup2 = v8.Connect('Srvr="SQLSERVER";Ref="zup_2";Usr="cfo";Pwd="2442"')
+        zup2 = v8.Connect('Srvr="localhost";Ref="zup2";Usr="cfo";Pwd="2442"')
         try:
             doc_md = zup2.Метаданные.Документы.Найти("НачислениеЗарплатыРаботникам")
             if doc_md:

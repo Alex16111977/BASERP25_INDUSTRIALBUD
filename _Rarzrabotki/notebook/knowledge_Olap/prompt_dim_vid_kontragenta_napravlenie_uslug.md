@@ -21,7 +21,7 @@
 
 | | |
 |---|---|
-| ERP база | `Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"` (COM `V83.COMConnector`) |
+| ERP база | `Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"` (COM `V83.COMConnector`) |
 | SQL OLAP | `localhost`, БД `OlapBASERP`, login `sa` (пароль — memory `sql_olap_baserp_credentials`) |
 | ETL | `_Rarzrabotki/Olap/Ai_Olap/` — `python main.py` (СТРОГО venv-python; дефолт = все Dim + fact_balance) |
 | Mapping | `_Rarzrabotki/Olap/Ai_Olap/mapping/refresh_mapping.py` — строгий WHITELIST |

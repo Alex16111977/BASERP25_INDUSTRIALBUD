@@ -19,7 +19,7 @@ A_FL_PREFIX = ["Воронцов Олександр", "Манжула Макси
 
 def main():
     erp = win32com.client.Dispatch("V83.COMConnector").Connect(
-        'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+        'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
     )
 
     # Все декабрьские документы

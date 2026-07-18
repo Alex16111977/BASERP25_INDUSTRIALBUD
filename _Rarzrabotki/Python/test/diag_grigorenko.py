@@ -21,7 +21,7 @@ from collections import defaultdict
 
 pythoncom.CoInitialize()
 conn = win32com.client.Dispatch("V83.COMConnector").Connect(
-    'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+    'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 def S(v): return conn.XMLСтрока(v)
 ЛС, ЛПо = "ДАТАВРЕМЯ(2026,2,1)", "ДАТАВРЕМЯ(2026,3,1)"
 Ф1 = "ЗНАЧЕНИЕ(Перечисление.А_ФормыPL.Форма1)"

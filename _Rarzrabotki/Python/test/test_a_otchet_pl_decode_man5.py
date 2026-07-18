@@ -27,7 +27,7 @@ import datetime
 if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
 
-CONN_ERP = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN_ERP = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 
 print("=" * 80)
 print("ДІАГНОСТИКА А_ОтчетPL — розшифровка виручки MAN №5 КА5697НВ")

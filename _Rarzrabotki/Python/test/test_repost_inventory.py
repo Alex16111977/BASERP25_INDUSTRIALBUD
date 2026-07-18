@@ -12,7 +12,7 @@ import sys
 pythoncom.CoInitialize()
 
 v8 = win32com.client.Dispatch("V83.COMConnector")
-CONN_ERP = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN_ERP = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 
 print("Подключение к BaseERP...")
 conn = v8.Connect(CONN_ERP)

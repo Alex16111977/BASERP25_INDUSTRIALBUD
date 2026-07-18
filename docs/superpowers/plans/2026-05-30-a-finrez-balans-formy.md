@@ -18,7 +18,7 @@
 трогаем (balance-класс).
 
 **Tech Stack:** 1С BAS ERP 2.5 (Form.xml/BSL), скилы `form-validate`/`meta-edit`/`db-load-xml`/`db-update`,
-Python COM (`V83.COMConnector`, `Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"`).
+Python COM (`V83.COMConnector`, `Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"`).
 
 **«Тест» в этом домене:** форма → `form-validate` (структура) + загрузка конфигурации + **smoke** (пользователь
 открывает форму в 1С Enterprise и подтверждает вид); скил → приёмка свежим субагентом (дать скил чистому

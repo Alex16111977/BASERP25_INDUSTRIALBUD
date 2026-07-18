@@ -26,7 +26,7 @@ from datetime import datetime
 
 BSL = r"C:\Configuration_downloads\BASERP25\Documents\А_ФинРез_Баланс\Ext\ObjectModule.bsl"
 BASE = r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\Python\test\_balans_baseline.json"
-CONN = 'Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
+CONN = 'Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"'
 TOL = 0.01
 ПЕРИОДЫ = [
     ("декабрь2025", datetime(2025, 12, 1, 12, 0, 0)),

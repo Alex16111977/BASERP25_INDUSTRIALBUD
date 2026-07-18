@@ -29,7 +29,7 @@ EPF = r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\Обработки\Пе
                                                        # требует непустую Организация документа)
 
 v8 = win32com.client.Dispatch("V83.COMConnector")
-erp = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
+erp = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="24043"')
 XML = erp.XMLСтрока
 ЗАП = erp.ЗначениеЗаполнено
 

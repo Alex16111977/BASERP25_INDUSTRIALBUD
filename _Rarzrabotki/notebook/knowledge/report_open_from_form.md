@@ -261,7 +261,7 @@
 ```python
 import win32com.client
 v8 = win32com.client.Dispatch("V83.COMConnector")
-conn = v8.Connect('Srvr="SQLSERVER";Ref="BaseERP";Usr="Администратор";Pwd="***"')
+conn = v8.Connect('Srvr="localhost";Ref="BaseERP";Usr="Администратор";Pwd="***"')
 
 report = conn.Reports.А_ОтчетPL.Создать()
 schema = report.СхемаКомпоновкиДанных
