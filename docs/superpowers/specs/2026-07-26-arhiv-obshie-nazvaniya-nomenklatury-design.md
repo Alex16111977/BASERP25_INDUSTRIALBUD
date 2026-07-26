@@ -78,6 +78,7 @@
 
 | Файл | Назначение |
 |---|---|
+| `_Rarzrabotki/Python/onn_arhiv_common.py` | общий модуль: подключение, UUID-хелперы, батч-запись в транзакциях, упорядочивание по иерархии |
 | `_Rarzrabotki/Python/test/test_onn_arhiv_dry_run.py` | шаг 0 — проверка механики в откатываемой транзакции |
 | `_Rarzrabotki/Python/perenos_onn_v_arhiv.py` | шаги 1–2 — перенос и заполнение |
 | `_Rarzrabotki/Python/proverka_onn_arhiv.py` | шаг 3 — независимая верификация |
