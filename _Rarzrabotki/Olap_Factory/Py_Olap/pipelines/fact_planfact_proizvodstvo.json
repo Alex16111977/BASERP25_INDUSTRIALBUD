@@ -1,0 +1,61 @@
+{
+  "pipeline_id": "fact_planfact_proizvodstvo",
+  "description": "Fact_PlanFactProizvodstvo из РегистрСведений.А_ПланФактПроизводство_Свод (_InfoRg56577). Свёртка целиком сделана в 1С документом А_Отчет_ПланФактныйПроизводство — ETL только копирует. Регистр периодический (собственный _Period), поэтому JOIN к документу-регистратору НЕ нужен. 14 измерений + 8 ресурсов.",
+  "schedule": "0 2 * * *",
+  "steps": [
+    {
+      "step_id": "load",
+      "extractor": {
+        "type": "raw_sql",
+        "auto_period_params": true,
+        "raw_sql": "SELECT r._RecorderRRef AS Recorder_ID, r._Period AS Period, r._Fld56578RRef AS Organization_ID, r._Fld56579RRef AS Department_ID, r._Fld56580RRef AS ExecutorDept_ID, r._Fld56581RRef AS RowType, r._Fld56582 AS Block, r._Fld56583 AS Category, r._Fld56584RRef AS Stage_ID, r._Fld56585RRef AS Work_ID, r._Fld56586RRef AS CommonName_ID, r._Fld56587_RRRef AS Analytics_ID, r._Fld56587_S AS Analytics_Text, r._Fld56588_RRRef AS Document_ID, r._Fld56597RRef AS Unit_ID, r._Fld56598 AS ItemName, r._Fld56589 AS PlanHours, r._Fld56590 AS FactHours, r._Fld56591 AS EarnedHours, r._Fld56592 AS PlanQty, r._Fld56593 AS FactQty, r._Fld56594 AS PlanUAH, r._Fld56595 AS FactUAH, r._Fld56596 AS ETC_UAH FROM _InfoRg56577 r WHERE r._Active = 0x01 AND r._Period >= ? AND r._Period < ?"
+      },
+      "transformer": {
+        "steps": ["varbinary_to_uuid", "enum_resolver", "period_offset_fix", "column_mapper"],
+        "options": {
+          "enum_resolver": {
+            "column_to_enum": { "RowType": "Перечисление.А_ТипыСтрокПланФактПроизводство" }
+          },
+          "period_offset_fix": {
+            "source_column": "Period",
+            "period_month_column": "Period_Month"
+          },
+          "column_mapper": {
+            "column_map": {
+              "Recorder_ID": "Recorder_ID",
+              "Period": "Period",
+              "Period_Month": "Period_Month",
+              "Organization_ID": "Organization_ID",
+              "Department_ID": "Department_ID",
+              "ExecutorDept_ID": "ExecutorDept_ID",
+              "RowType": "RowType",
+              "Block": "Block",
+              "Category": "Category",
+              "Stage_ID": "Stage_ID",
+              "Work_ID": "Work_ID",
+              "CommonName_ID": "CommonName_ID",
+              "Analytics_ID": "Analytics_ID",
+              "Analytics_Text": "Analytics_Text",
+              "Document_ID": "Document_ID",
+              "Unit_ID": "Unit_ID",
+              "ItemName": "ItemName",
+              "PlanHours": "PlanHours",
+              "FactHours": "FactHours",
+              "EarnedHours": "EarnedHours",
+              "PlanQty": "PlanQty",
+              "FactQty": "FactQty",
+              "PlanUAH": "PlanUAH",
+              "FactUAH": "FactUAH",
+              "ETC_UAH": "ETC_UAH"
+            }
+          }
+        }
+      },
+      "loader": {
+        "target_table": "Fact_PlanFactProizvodstvo",
+        "mode": "idempotent_period",
+        "period_column": "Period_Month"
+      }
+    }
+  ]
+}

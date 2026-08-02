@@ -1,0 +1,266 @@
+{
+  "pipeline_id": "dim_factory",
+  "description": "Справочники-измерения витрины OlapFactory: организации, подразделения, этапы работ, номенклатура, общие названия, единицы, физлица, документы-первичка. Полная перезаливка (full_reload), период не нужен.",
+  "schedule": "0 1 * * *",
+  "steps": [
+    {
+      "step_id": "dim_organizations",
+      "extractor": {
+        "type": "sql_backend",
+        "object": "Справочник.Организации",
+        "fields": [
+          "Ссылка",
+          "Наименование",
+          "ПометкаУдаления"
+        ]
+      },
+      "transformer": {
+        "steps": [
+          "varbinary_to_uuid",
+          "column_mapper"
+        ],
+        "options": {
+          "column_mapper": {
+            "column_map": {
+              "Ссылка": "Organization_ID",
+              "Наименование": "Organization_Name",
+              "ПометкаУдаления": "Marked_For_Deletion"
+            }
+          }
+        }
+      },
+      "loader": {
+        "target_table": "Dim_Organizations",
+        "mode": "full_reload"
+      }
+    },
+    {
+      "step_id": "dim_departments",
+      "extractor": {
+        "type": "sql_backend",
+        "object": "Справочник.СтруктураПредприятия",
+        "fields": [
+          "Ссылка",
+          "Код",
+          "Наименование",
+          "Родитель",
+          "ПометкаУдаления"
+        ]
+      },
+      "transformer": {
+        "steps": [
+          "varbinary_to_uuid",
+          "column_mapper"
+        ],
+        "options": {
+          "column_mapper": {
+            "column_map": {
+              "Ссылка": "Department_ID",
+              "Код": "Department_Code",
+              "Наименование": "Department_Name",
+              "Родитель": "Parent_ID",
+              "ПометкаУдаления": "Marked_For_Deletion"
+            }
+          }
+        }
+      },
+      "loader": {
+        "target_table": "Dim_Departments",
+        "mode": "full_reload"
+      }
+    },
+    {
+      "step_id": "dim_stages",
+      "extractor": {
+        "type": "sql_backend",
+        "object": "Справочник.А_ЭтапыРабот",
+        "fields": [
+          "Ссылка",
+          "Код",
+          "Наименование",
+          "ПометкаУдаления"
+        ]
+      },
+      "transformer": {
+        "steps": [
+          "varbinary_to_uuid",
+          "column_mapper"
+        ],
+        "options": {
+          "column_mapper": {
+            "column_map": {
+              "Ссылка": "Stage_ID",
+              "Код": "Stage_Code",
+              "Наименование": "Stage_Name",
+              "ПометкаУдаления": "Marked_For_Deletion"
+            }
+          }
+        }
+      },
+      "loader": {
+        "target_table": "Dim_Stages",
+        "mode": "full_reload"
+      }
+    },
+    {
+      "step_id": "dim_items",
+      "extractor": {
+        "type": "sql_backend",
+        "object": "Справочник.Номенклатура",
+        "fields": [
+          "Ссылка",
+          "Код",
+          "Наименование",
+          "ЭтоГруппа",
+          "ПометкаУдаления"
+        ]
+      },
+      "transformer": {
+        "steps": [
+          "varbinary_to_uuid",
+          "column_mapper"
+        ],
+        "options": {
+          "column_mapper": {
+            "column_map": {
+              "Ссылка": "Item_ID",
+              "Код": "Item_Code",
+              "Наименование": "Item_Name",
+              "ЭтоГруппа": "Is_Group",
+              "ПометкаУдаления": "Marked_For_Deletion"
+            }
+          }
+        }
+      },
+      "loader": {
+        "target_table": "Dim_Items",
+        "mode": "full_reload"
+      }
+    },
+    {
+      "step_id": "dim_common_names",
+      "extractor": {
+        "type": "sql_backend",
+        "object": "Справочник.А_ОбщиеНазванияНоменклатуры",
+        "fields": [
+          "Ссылка",
+          "Код",
+          "Наименование",
+          "ЭтоГруппа",
+          "ПометкаУдаления"
+        ]
+      },
+      "transformer": {
+        "steps": [
+          "varbinary_to_uuid",
+          "column_mapper"
+        ],
+        "options": {
+          "column_mapper": {
+            "column_map": {
+              "Ссылка": "CommonName_ID",
+              "Код": "CommonName_Code",
+              "Наименование": "CommonName",
+              "ЭтоГруппа": "Is_Group",
+              "ПометкаУдаления": "Marked_For_Deletion"
+            }
+          }
+        }
+      },
+      "loader": {
+        "target_table": "Dim_CommonNames",
+        "mode": "full_reload"
+      }
+    },
+    {
+      "step_id": "dim_units",
+      "extractor": {
+        "type": "sql_backend",
+        "object": "Справочник.УпаковкиЕдиницыИзмерения",
+        "fields": [
+          "Ссылка",
+          "Наименование",
+          "ПометкаУдаления"
+        ]
+      },
+      "transformer": {
+        "steps": [
+          "varbinary_to_uuid",
+          "column_mapper"
+        ],
+        "options": {
+          "column_mapper": {
+            "column_map": {
+              "Ссылка": "Unit_ID",
+              "Наименование": "Unit_Name",
+              "ПометкаУдаления": "Marked_For_Deletion"
+            }
+          }
+        }
+      },
+      "loader": {
+        "target_table": "Dim_Units",
+        "mode": "full_reload"
+      }
+    },
+    {
+      "step_id": "dim_individuals",
+      "extractor": {
+        "type": "sql_backend",
+        "object": "Справочник.ФизическиеЛица",
+        "fields": [
+          "Ссылка",
+          "Наименование",
+          "ПометкаУдаления"
+        ]
+      },
+      "transformer": {
+        "steps": [
+          "varbinary_to_uuid",
+          "column_mapper"
+        ],
+        "options": {
+          "column_mapper": {
+            "column_map": {
+              "Ссылка": "Individual_ID",
+              "Наименование": "Individual_Name",
+              "ПометкаУдаления": "Marked_For_Deletion"
+            }
+          }
+        }
+      },
+      "loader": {
+        "target_table": "Dim_Individuals",
+        "mode": "full_reload"
+      }
+    },
+    {
+      "step_id": "dim_documents",
+      "extractor": {
+        "type": "raw_sql",
+        "raw_sql": "SELECT d._IDRRef AS Document_ID, N'Приобретение товаров и услуг' AS Document_Type, LTRIM(RTRIM(d._Number)) AS Document_Number, DATEADD(year, -2000, d._Date_Time) AS Document_Date, N'Приобретение товаров и услуг ' + LTRIM(RTRIM(d._Number)) + N' от ' + CONVERT(varchar(10), DATEADD(year, -2000, d._Date_Time), 104) AS Document_Presentation FROM _Document911 d UNION ALL SELECT t._IDRRef, N'Табель учета рабочего времени (казна)', LTRIM(RTRIM(t._Number)), DATEADD(year, -2000, t._Date_Time), N'Табель учета рабочего времени (казна) ' + LTRIM(RTRIM(t._Number)) + N' от ' + CONVERT(varchar(10), DATEADD(year, -2000, t._Date_Time), 104) FROM _Document54976 t UNION ALL SELECT v._IDRRef, N'Выполнение работ модулей', LTRIM(RTRIM(v._Number)), DATEADD(year, -2000, v._Date_Time), N'Выполнение работ модулей ' + LTRIM(RTRIM(v._Number)) + N' от ' + CONVERT(varchar(10), DATEADD(year, -2000, v._Date_Time), 104) FROM _Document56405 v UNION ALL SELECT c._IDRRef, N'Структура себестоимости', NULL, NULL, c._Description FROM _Reference56133 c"
+      },
+      "transformer": {
+        "steps": [
+          "varbinary_to_uuid",
+          "column_mapper"
+        ],
+        "options": {
+          "column_mapper": {
+            "column_map": {
+              "Document_ID": "Document_ID",
+              "Document_Type": "Document_Type",
+              "Document_Number": "Document_Number",
+              "Document_Date": "Document_Date",
+              "Document_Presentation": "Document_Presentation"
+            }
+          }
+        }
+      },
+      "loader": {
+        "target_table": "Dim_Documents",
+        "mode": "full_reload"
+      }
+    }
+  ]
+}
