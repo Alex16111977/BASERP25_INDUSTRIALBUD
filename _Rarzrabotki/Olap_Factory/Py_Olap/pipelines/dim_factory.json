@@ -238,7 +238,7 @@
       "step_id": "dim_documents",
       "extractor": {
         "type": "raw_sql",
-        "raw_sql": "SELECT d._IDRRef AS Document_ID, N'Приобретение товаров и услуг' AS Document_Type, LTRIM(RTRIM(d._Number)) AS Document_Number, DATEADD(year, -2000, d._Date_Time) AS Document_Date, N'Приобретение товаров и услуг ' + LTRIM(RTRIM(d._Number)) + N' от ' + CONVERT(varchar(10), DATEADD(year, -2000, d._Date_Time), 104) AS Document_Presentation FROM _Document911 d UNION ALL SELECT t._IDRRef, N'Табель учета рабочего времени (казна)', LTRIM(RTRIM(t._Number)), DATEADD(year, -2000, t._Date_Time), N'Табель учета рабочего времени (казна) ' + LTRIM(RTRIM(t._Number)) + N' от ' + CONVERT(varchar(10), DATEADD(year, -2000, t._Date_Time), 104) FROM _Document54976 t UNION ALL SELECT v._IDRRef, N'Выполнение работ модулей', LTRIM(RTRIM(v._Number)), DATEADD(year, -2000, v._Date_Time), N'Выполнение работ модулей ' + LTRIM(RTRIM(v._Number)) + N' от ' + CONVERT(varchar(10), DATEADD(year, -2000, v._Date_Time), 104) FROM _Document56405 v UNION ALL SELECT c._IDRRef, N'Структура себестоимости', NULL, NULL, c._Description FROM _Reference56133 c"
+        "raw_sql": "SELECT d._IDRRef AS Document_ID, N'Приобретение товаров и услуг' AS Document_Type, LTRIM(RTRIM(d._Number)) AS Document_Number, DATEADD(year, -2000, d._Date_Time) AS Document_Date, N'Приобретение товаров и услуг ' + LTRIM(RTRIM(d._Number)) + N' от ' + CONVERT(varchar(10), DATEADD(year, -2000, d._Date_Time), 104) AS Document_Presentation, CAST(NULL AS binary(16)) AS ObjectDept_ID FROM _Document911 d UNION ALL SELECT t._IDRRef, N'Табель учета рабочего времени (казна)', LTRIM(RTRIM(t._Number)), DATEADD(year, -2000, t._Date_Time), N'Табель учета рабочего времени (казна) ' + LTRIM(RTRIM(t._Number)) + N' от ' + CONVERT(varchar(10), DATEADD(year, -2000, t._Date_Time), 104), CAST(NULL AS binary(16)) FROM _Document54976 t UNION ALL SELECT v._IDRRef, N'Выполнение работ модулей', LTRIM(RTRIM(v._Number)), DATEADD(year, -2000, v._Date_Time), N'Выполнение работ модулей ' + LTRIM(RTRIM(v._Number)) + N' от ' + CONVERT(varchar(10), DATEADD(year, -2000, v._Date_Time), 104), vc._Fld56558RRef FROM _Document56405 v LEFT JOIN _Reference56133 vc ON vc._IDRRef = v._Fld56407RRef UNION ALL SELECT c._IDRRef, N'Структура себестоимости', NULL, NULL, c._Description, c._Fld56558RRef FROM _Reference56133 c"
       },
       "transformer": {
         "steps": [
@@ -252,7 +252,8 @@
               "Document_Type": "Document_Type",
               "Document_Number": "Document_Number",
               "Document_Date": "Document_Date",
-              "Document_Presentation": "Document_Presentation"
+              "Document_Presentation": "Document_Presentation",
+              "ObjectDept_ID": "ObjectDept_ID"
             }
           }
         }

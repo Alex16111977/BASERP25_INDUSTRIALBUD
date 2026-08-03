@@ -113,6 +113,10 @@ GO
 
 -- Documents: drill-down from any fact number to the source 1C document
 -- (timesheet / purchase / module-completion / cost-structure card).
+-- ObjectDept_ID = "PodrazdelenieObjekta" (15m/30m) the document belongs to. It is an attribute of
+-- the cost-structure card, so it is known for the card itself and for the module-completion
+-- document (via its CostStructure header attribute); purchases and timesheets keep NULL --
+-- exactly like the reference report, where fact rows carry no object.
 IF OBJECT_ID('dbo.Dim_Documents','U') IS NULL
 CREATE TABLE Dim_Documents (
     Document_ID           char(32) NOT NULL PRIMARY KEY,
@@ -120,8 +124,14 @@ CREATE TABLE Dim_Documents (
     Document_Number       varchar(50) NULL,
     Document_Date         datetime NULL,
     Document_Presentation nvarchar(300) NOT NULL,
+    ObjectDept_ID         char(32) NULL,
     Loaded_At             datetime2 NOT NULL DEFAULT SYSDATETIME()
 );
+GO
+
+-- idempotent upgrade for a mart created before ObjectDept_ID existed
+IF COL_LENGTH('dbo.Dim_Documents','ObjectDept_ID') IS NULL
+ALTER TABLE dbo.Dim_Documents ADD ObjectDept_ID char(32) NULL;
 GO
 
 -- ------------------------------------------------------------------ Fact
@@ -194,6 +204,10 @@ GO
 
 -- Fact view for Power BI: resolves composite Analytics (item / individual / free text)
 -- into one readable column, so the model needs no ambiguous relationships and no DAX lookups.
+-- ObjectDept_ID is derived, NOT stored: the link "row -> cost-structure card" already lives in the
+-- register dimension "Dokument", so duplicating it in the fact would create a second source of truth
+-- that drifts on the next re-posting. Plan rows resolve through the card itself, EV rows through the
+-- module-completion document; fact and ETC rows stay NULL, as in the reference 1C report.
 IF OBJECT_ID('dbo.vw_Fact_PlanFact','V') IS NOT NULL DROP VIEW dbo.vw_Fact_PlanFact;
 GO
 CREATE VIEW dbo.vw_Fact_PlanFact AS
@@ -203,9 +217,11 @@ SELECT f.Fact_ID, f.Period, f.Period_Month, f.Recorder_ID, f.Organization_ID,
        f.Document_ID, f.Unit_ID, f.ItemName,
        COALESCE(i.Item_Name, ind.Individual_Name, NULLIF(f.Analytics_Text, N''), N'(не задано)')
            AS Analytics_Name,
+       doc.ObjectDept_ID,
        f.PlanHours, f.FactHours, f.EarnedHours, f.PlanQty, f.FactQty,
        f.PlanUAH, f.FactUAH, f.ETC_UAH, f.Loaded_At
 FROM Fact_PlanFactProizvodstvo f
 LEFT JOIN Dim_Items i        ON i.Item_ID       = f.Analytics_ID
-LEFT JOIN Dim_Individuals ind ON ind.Individual_ID = f.Analytics_ID;
+LEFT JOIN Dim_Individuals ind ON ind.Individual_ID = f.Analytics_ID
+LEFT JOIN Dim_Documents doc  ON doc.Document_ID = f.Document_ID;
 GO
