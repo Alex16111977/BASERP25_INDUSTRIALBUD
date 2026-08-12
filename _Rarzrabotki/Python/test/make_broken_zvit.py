@@ -18,7 +18,6 @@ sys.stdout.reconfigure(encoding='utf-8')
 ШАБЛОН = (r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\notebook"
           r"\knowledge_Загрузка файлов в выполнение работ\Шаблоны"
           r"\МД IRS 2026 15 м (МД IRS 2026).xlsx")
-EPF = r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\Обработки\Загрузка выполнения работ.epf"
 ПОРЧЕНЫЙ = os.path.join(tempfile.gettempdir(), "zvr_broken.xlsx")
 
 shutil.copyfile(ШАБЛОН, ПОРЧЕНЫЙ)
@@ -42,7 +41,7 @@ def адрес():
     return ERP.ПоместитьВоВременноеХранилище(ERP.NewObject("ДвоичныеДанные", ПОРЧЕНЫЙ))
 
 
-обр = ERP.ВнешниеОбработки.Создать(EPF, False)
+обр = ERP.Обработки.А_ЗагрузкаВыполненияРабот.Создать()
 обр.ИмяФайла = "zvr_broken.xlsx"
 паспорт = обр.ПрочитатьПаспортФайла(адрес(), обр.ИмяФайла)
 обр.СтруктураСебестоимости = паспорт.СтруктураСебестоимости

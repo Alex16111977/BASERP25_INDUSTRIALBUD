@@ -1,0 +1,534 @@
+<title>Завантаження виконання робіт — інструкція</title>
+
+<style>
+  :root {
+    --ground: #fbfaf7;
+    --panel: #ffffff;
+    --ink: #1b1915;
+    --ink-soft: #565047;
+    --ink-faint: #8b8478;
+    --line: #e4dfd5;
+    --line-strong: #cec7b9;
+    --accent: #b86a12;
+    --accent-wash: #fbf1e3;
+    --good: #2c6e3c;
+    --warn: #8a6104;
+    --bad: #9d2f2f;
+    --code-bg: #f3f0ea;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #17150f;
+      --panel: #1f1c15;
+      --ink: #f0eae0;
+      --ink-soft: #b5ac9c;
+      --ink-faint: #857e71;
+      --line: #322e24;
+      --line-strong: #4a4335;
+      --accent: #e0a052;
+      --accent-wash: #2a2317;
+      --good: #7bc48c;
+      --warn: #d7ab4a;
+      --bad: #e08a8a;
+      --code-bg: #262218;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground: #17150f;
+    --panel: #1f1c15;
+    --ink: #f0eae0;
+    --ink-soft: #b5ac9c;
+    --ink-faint: #857e71;
+    --line: #322e24;
+    --line-strong: #4a4335;
+    --accent: #e0a052;
+    --accent-wash: #2a2317;
+    --good: #7bc48c;
+    --warn: #d7ab4a;
+    --bad: #e08a8a;
+    --code-bg: #262218;
+  }
+
+  body {
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0 24px 96px;
+  }
+
+  .wrap { max-width: 1080px; margin: 0 auto; }
+  .prose { max-width: 74ch; }
+
+  code, .mono { font-family: Consolas, "Cascadia Mono", ui-monospace, monospace; }
+
+  code {
+    background: var(--code-bg);
+    border-radius: 3px;
+    padding: 1px 5px;
+    font-size: 0.88em;
+  }
+
+  header { padding: 56px 0 28px; border-bottom: 2px solid var(--line-strong); }
+
+  .eyebrow {
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin: 0 0 10px;
+  }
+
+  h1 {
+    font-size: clamp(28px, 4.2vw, 42px);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+    margin: 0 0 14px;
+    text-wrap: balance;
+  }
+
+  .lede { font-size: 18px; color: var(--ink-soft); margin: 0; max-width: 70ch; }
+
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 2px 28px;
+    margin-top: 26px;
+    font-size: 14px;
+  }
+  .facts div { border-top: 1px solid var(--line); padding: 8px 0; }
+  .facts dt { color: var(--ink-faint); font-size: 12px; text-transform: uppercase; letter-spacing: 0.07em; }
+  .facts dd { margin: 2px 0 0; }
+
+  section { padding-top: 46px; }
+
+  h2 {
+    font-size: 13px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--accent);
+    margin: 0 0 6px;
+  }
+
+  h2 + .h2sub {
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    margin: 0 0 18px;
+    color: var(--ink);
+  }
+
+  h3 { font-size: 16px; font-weight: 600; margin: 30px 0 8px; }
+
+  p { margin: 0 0 14px; }
+
+  ol.steps { list-style: none; counter-reset: s; margin: 0; padding: 0; }
+  ol.steps > li {
+    counter-increment: s;
+    position: relative;
+    padding: 0 0 18px 46px;
+    border-left: 1px solid var(--line);
+    margin-left: 13px;
+  }
+  ol.steps > li:last-child { border-left-color: transparent; padding-bottom: 0; }
+  ol.steps > li::before {
+    content: counter(s);
+    position: absolute;
+    left: -13px;
+    top: 0;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    display: grid;
+    place-items: center;
+  }
+  ol.steps b { font-weight: 600; }
+
+  .tablewrap { overflow-x: auto; margin: 0 0 8px; }
+  table.doc { border-collapse: collapse; width: 100%; font-size: 14.5px; }
+  table.doc th, table.doc td {
+    text-align: left;
+    vertical-align: top;
+    padding: 9px 12px 9px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  table.doc th {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--ink-faint);
+    font-weight: 600;
+    border-bottom: 1px solid var(--line-strong);
+    white-space: nowrap;
+  }
+  table.doc td.cell { white-space: nowrap; }
+
+  .tag {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 1px 7px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+  .tag.bad { background: var(--bad); color: #fff; }
+  .tag.warn { background: var(--warn); color: #fff; }
+  .tag.ok { background: var(--good); color: #fff; }
+
+  .note {
+    border-left: 3px solid var(--accent);
+    background: var(--accent-wash);
+    padding: 12px 16px;
+    margin: 18px 0;
+    font-size: 15px;
+  }
+  .note strong { color: var(--accent); }
+  .note p:last-child { margin-bottom: 0; }
+
+  /* «знімок екрана» — завжди світлий, як реальне вікно 1С, незалежно від теми сторінки */
+  .shot {
+    background: #ffffff;
+    color: #1a1a1a;
+    border: 1px solid #b9b9b9;
+    border-radius: 3px;
+    margin: 20px 0 10px;
+    font-size: 13px;
+    overflow: hidden;
+  }
+  .shot .bar {
+    background: linear-gradient(#fdfdfd, #f0efed);
+    border-bottom: 1px solid #d5d3cf;
+    padding: 7px 12px;
+    font-weight: 600;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .shot .bar .star { color: #f0a30a; }
+  .shot .body { padding: 12px; }
+  .shot .row { display: flex; align-items: center; gap: 8px; margin-bottom: 7px; flex-wrap: wrap; }
+  .shot .lbl { color: #444; }
+  .shot .fld {
+    border: 1px solid #a9a9a9;
+    background: #fff;
+    padding: 2px 7px;
+    min-width: 150px;
+    border-radius: 2px;
+    color: #111;
+  }
+  .shot .btn {
+    border: 1px solid #b3b3b3;
+    background: linear-gradient(#fdfdfd, #eeecea);
+    padding: 3px 13px;
+    border-radius: 3px;
+    color: #222;
+  }
+  .shot .btn.primary { background: linear-gradient(#ffc44d, #f2a007); border-color: #d08c05; font-weight: 700; }
+  .shot .chk { display: inline-block; width: 13px; height: 13px; border: 1px solid #8a8a8a; background: #fff; vertical-align: -2px; position: relative; }
+  .shot .chk.on::after { content: "✓"; position: absolute; left: 1px; top: -3px; font-size: 12px; color: #1c5fbf; }
+  .shot .summary { color: #333; margin: 10px 0 4px; }
+  .shot .grouptitle { color: #0b64c4; text-decoration: underline; font-weight: 600; margin: 14px 0 6px; }
+
+  table.grid { border-collapse: collapse; font-size: 12.5px; font-variant-numeric: tabular-nums; }
+  table.grid th, table.grid td { border: 1px solid #d3d3d3; padding: 3px 7px; white-space: nowrap; }
+  table.grid th { background: #f2f2f2; font-weight: 600; color: #333; text-align: center; }
+  table.grid th.left, table.grid td.left { text-align: left; }
+  table.grid td.num { text-align: center; }
+  table.grid td.g { background: #c6efce; }
+  table.grid td.y { background: #ffeb9c; }
+  table.grid td.r { background: #ffc7ce; }
+  table.grid tr.total td { background: #ebebeb; font-weight: 600; }
+
+  .caption { font-size: 13px; color: var(--ink-faint); margin: 0 0 24px; }
+
+  ul.tight { margin: 0 0 14px; padding-left: 20px; }
+  ul.tight li { margin-bottom: 5px; }
+
+  footer {
+    margin-top: 56px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+    color: var(--ink-faint);
+  }
+</style>
+
+<div class="wrap">
+
+<header>
+  <p class="eyebrow">BAS ERP 2.5 · BaseERP · обробка конфігурації</p>
+  <h1>Завантаження виконання робіт</h1>
+  <p class="lede">
+    Зворотний хід звіту «Звіт з виконання робіт по домах і модулях»: вивантажений у Excel звіт
+    з правками виконроба завантажується назад у документи «Виконання робіт модулів».
+    За один раз — один файл: один проєкт на одну дату, документ на кожен дім.
+  </p>
+  <dl class="facts">
+    <div><dt>Де відкрити</dt><dd>Усі функції → Обробки → Завантаження виконання робіт</dd></div>
+    <div><dt>Джерело даних</dt><dd>звіт «Звіт з виконання робіт по домах і модулях», <span class="mono">.xlsx</span></dd></div>
+    <div><dt>Що створює</dt><dd>документи «Виконання робіт модулів»</dd></div>
+  </dl>
+</header>
+
+<section>
+  <h2>Крок за кроком</h2>
+  <p class="h2sub">Порядок роботи</p>
+  <div class="prose">
+    <ol class="steps">
+      <li><b>Сформувати звіт.</b> Зі списку документів «Виконання робіт модулів» — команда відкриття
+        звіту по поточному рядку (структура собівартості береться з документа, період — з початку
+        місяця по дату документа). Зберегти як <span class="mono">.xlsx</span>. Придатні обидва
+        варіанти звіту — короткий і повний.</li>
+      <li><b>Віддати файл виконробу.</b> Він править <em>лише клітинки відсотків</em>. Не додавати
+        й не видаляти рядки та колонки, не перейменовувати роботи: обробка звіряє назви зі складом
+        робіт структури собівартості.</li>
+      <li><b>Закрити файл в Excel</b> перед завантаженням. Відкритий файл дає
+        «Помилка спільного доступу до файлу».</li>
+      <li><b>Обрати файл</b> у формі обробки. Шапка заповнюється сама з файлу: структура
+        собівартості й дата. Дату змінити, якщо вантажимо іншим числом.</li>
+      <li><b>Розшифрувати файл → перевірити три матриці → Створити документи.</b>
+        Прапорець «Провести» ввімкнено за замовчуванням.</li>
+    </ol>
+  </div>
+</section>
+
+<section>
+  <h2>Інтерфейс</h2>
+  <p class="h2sub">Що показує форма</p>
+
+  <div class="shot">
+    <div class="bar"><span class="star">★</span> Завантаження виконання робіт</div>
+    <div class="body">
+      <div class="row">
+        <span class="lbl">Файл звіту:</span>
+        <span class="fld" style="min-width:280px">МД IRS 2026 30 м (МД IRS 2026).xlsx</span>
+        <span class="btn">Обрати файл…</span>
+      </div>
+      <div class="row">
+        <span class="lbl">Структура собівартості:</span>
+        <span class="fld" style="min-width:230px">МД IRS 2026 30 м (МД IRS 2026)</span>
+        <span class="lbl">На дату:</span>
+        <span class="fld" style="min-width:88px">12.08.2026</span>
+      </div>
+      <div class="row">
+        <span class="lbl"><span class="chk on"></span> Провести</span>
+        <span class="lbl" style="margin-left:14px"><span class="chk"></span> Завантажити попри помилки</span>
+      </div>
+      <div class="row" style="margin-top:10px">
+        <span class="btn primary">Розшифрувати файл</span>
+        <span class="btn">Створити документи</span>
+        <span class="btn">Закрити</span>
+      </div>
+      <div class="summary">Створено 7 · оновлено 0 · проведено 7</div>
+
+      <div class="grouptitle">БУДЕ ЗАВАНТАЖЕНО (з файлу)</div>
+      <div class="tablewrap">
+        <table class="grid">
+          <tr>
+            <th rowspan="2">№</th><th rowspan="2" class="left">Найменування робіт</th>
+            <th colspan="2">Дім №1</th><th colspan="2">Дім №2</th><th colspan="2">Дім №3</th>
+            <th rowspan="2">…</th><th rowspan="2">Разом, %</th>
+          </tr>
+          <tr><th>М1</th><th>М2</th><th>М1</th><th>М2</th><th>М1</th><th>М2</th></tr>
+          <tr><td class="num">1</td><td class="left">Приймання матеріалу</td>
+            <td class="g">100,0%</td><td class="g">100,0%</td><td class="g">100,0%</td>
+            <td class="g">100,0%</td><td class="g">100,0%</td><td class="g">100,0%</td>
+            <td></td><td class="g">100,0%</td></tr>
+          <tr><td class="num">2</td><td class="left">Обробка матеріалу (дерево)</td>
+            <td class="y">20,0%</td><td class="y">20,0%</td><td class="y">20,0%</td>
+            <td class="y">20,0%</td><td class="y">20,0%</td><td class="y">20,0%</td>
+            <td></td><td class="y">20,0%</td></tr>
+          <tr><td class="num">5</td><td class="left">зварювання (дерево зєдання)</td>
+            <td class="g">100,0%</td><td class="g">100,0%</td><td class="y">10,0%</td>
+            <td class="y">10,0%</td><td></td><td></td>
+            <td></td><td class="y">15,7%</td></tr>
+          <tr><td class="num">7</td><td class="left">Грунтування металокаркасу</td>
+            <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr><td class="num">8</td><td class="left">Фарубування металокаркасу</td>
+            <td class="g">100,0%</td><td class="g">100,0%</td><td></td><td></td><td></td><td></td>
+            <td></td><td class="y">14,3%</td></tr>
+          <tr class="total"><td></td><td class="left">Загальна</td>
+            <td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>2,5%</td></tr>
+        </table>
+      </div>
+
+      <div class="grouptitle">БУЛО В БАЗІ на 12.08.2026</div>
+      <div class="grouptitle">ЗМІНИ — на скільки % зміниться база: 24 (зростань 24, відкатів 0)</div>
+      <div class="tablewrap">
+        <table class="grid">
+          <tr>
+            <th rowspan="2">№</th><th rowspan="2" class="left">Найменування робіт</th>
+            <th colspan="2">Дім №1</th><th colspan="2">Дім №2</th><th colspan="2">Дім №3</th>
+            <th rowspan="2">…</th>
+          </tr>
+          <tr><th>М1</th><th>М2</th><th>М1</th><th>М2</th><th>М1</th><th>М2</th></tr>
+          <tr><td class="num">14</td><td class="left">Утеплення стеля та стіни</td>
+            <td class="g">+100,0</td><td class="g">+100,0</td><td class="g">+100,0</td>
+            <td class="g">+100,0</td><td class="g">+100,0</td><td class="g">+100,0</td><td></td></tr>
+          <tr><td class="num">17</td><td class="left">Гідроізоляційна плівка</td>
+            <td class="g">+100,0</td><td class="g">+100,0</td><td class="g">+100,0</td>
+            <td class="g">+100,0</td><td></td><td></td><td></td></tr>
+          <tr><td class="num">21</td><td class="left">монтаж мдф дверей</td>
+            <td class="g">+40,0</td><td class="g">+40,0</td><td></td><td></td><td></td><td></td><td></td></tr>
+          <tr class="total"><td></td><td class="left">Загальна</td>
+            <td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+  <p class="caption">Матриця повторює звіт: колонок стільки ж, скільки у файлі — «15 м» 6×1, «30 м» 7×2.</p>
+
+  <div class="prose">
+    <h3>Три матриці та таблиця проблем</h3>
+    <div class="tablewrap">
+      <table class="doc">
+        <tr><th>Блок</th><th>У клітинці</th><th>Заливка</th></tr>
+        <tr>
+          <td><b>БУДЕ ЗАВАНТАЖЕНО (з файлу)</b></td>
+          <td>відсоток з файлу; 0 — порожньо</td>
+          <td>як у звіті: 100 % <span class="tag ok">зелене</span>, 1…99 <span class="tag warn">жовте</span>,
+            проблемна клітинка <span class="tag bad">червона</span></td>
+        </tr>
+        <tr>
+          <td><b>БУЛО В БАЗІ на <span class="mono">&lt;дата&gt;</span></b></td>
+          <td>що зараз у документах на цю дату</td>
+          <td>те саме, без червоного</td>
+        </tr>
+        <tr>
+          <td><b>ЗМІНИ</b></td>
+          <td><code>+20</code>, <code>−50</code>; порожньо — без змін</td>
+          <td>зростання <span class="tag ok">зелене</span>, відкат <span class="tag bad">червоний</span></td>
+        </tr>
+        <tr>
+          <td><b>ПРОБЛЕМИ (N)</b></td>
+          <td>Робота · Дім · М · У файлі · Що не так</td>
+          <td>з'являється лише за наявності помилок</td>
+        </tr>
+      </table>
+    </div>
+    <p>
+      У блоці «ЗМІНИ» лишаються <em>тільки роботи зі змінами</em> — решта рядків прибрана. Порожня
+      матриця означає, що завантаження нічого не змінить (так буває, коли той самий файл вантажать
+      удруге). Лічильники — у заголовку блоку, підсумок по документах — у рядку під кнопками.
+    </p>
+    <p>«БУЛО В БАЗІ» згорнуто за замовчуванням: розгорнути, коли треба звірити очима повну картину.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Людський фактор</h2>
+  <p class="h2sub">Як читаються клітинки</p>
+  <div class="prose">
+    <p>Файл заповнює людина, тому кожне відхилення називається явно. Принцип: <b>«не розпізналося»
+      ніколи не дорівнює нулю</b> — інакше години мовчки зникають з документа.</p>
+  </div>
+  <div class="tablewrap">
+    <table class="doc">
+      <tr><th>У комірці</th><th>Результат</th><th>Рівень</th></tr>
+      <tr><td class="cell mono">порожньо</td><td>0 %</td><td><span class="tag ok">ок</span></td></tr>
+      <tr><td class="cell mono">100% · 80 · 80 % · 76,7% · 50%%</td><td>число</td><td><span class="tag ok">ок</span></td></tr>
+      <tr><td class="cell mono">33,333%</td><td>33,33 — округлено до 2 знаків</td><td><span class="tag warn">інфо</span></td></tr>
+      <tr><td class="cell mono">0,5</td>
+        <td>не вантажиться: «неоднозначне значення "0,5": це 50% чи 0,5%? Впишіть 50 або 50%»</td>
+        <td><span class="tag bad">помилка</span></td></tr>
+      <tr><td class="cell mono">120% · −5</td><td>«відсоток має бути від 0 до 100»</td><td><span class="tag bad">помилка</span></td></tr>
+      <tr><td class="cell mono">в роботі · −</td><td>«не розпізнано як число»</td><td><span class="tag bad">помилка</span></td></tr>
+      <tr><td class="cell">змінена назва роботи</td>
+        <td>«роботи … немає в структурі собівартості. Схоже на: …»</td>
+        <td><span class="tag bad">помилка</span></td></tr>
+      <tr><td class="cell">рядок роботи скопійовано</td><td>«робота … зустрічається у файлі двічі»</td><td><span class="tag bad">помилка</span></td></tr>
+      <tr><td class="cell">відсоток менший, ніж у базі</td>
+        <td>«відкат: у базі 100%, у файлі 50% — завантаження знизить показник»</td>
+        <td><span class="tag warn">попередження</span></td></tr>
+    </table>
+  </div>
+  <div class="note">
+    <p><strong>Помилки блокують створення документів.</strong> Виправити файл і розшифрувати
+      ще раз — правильний шлях. Прапорець «Завантажити попри помилки» пропускає проблемні клітинки
+      й вантажить решту: це усвідомлений обхід, а не норма. Відкати не блокують — вони видні
+      червоним у матриці «ЗМІНИ».</p>
+  </div>
+</section>
+
+<section>
+  <h2>Запис</h2>
+  <p class="h2sub">Що потрапляє в документи</p>
+  <div class="prose">
+    <ul class="tight">
+      <li>Документ на <b>кожен дім</b> (дім = підрозділ). Повторне завантаження того самого дня
+        <b>оновлює ті самі документи</b>, а не плодить нові.</li>
+      <li>Кількість модулів у документі береться зі структури собівартості; рядок =
+        робота × номер модуля. У проєкті «30 м» на кожну роботу два рядки — М1 і М2.</li>
+      <li>Планові години на модуль = норма роботи <b>поділена на модулі</b> (не на доми):
+        дім при 100 % по всіх модулях набирає повну норму.</li>
+      <li>Пишуться <b>всі роботи файлу, включно з 0 %</b> — це повний знімок. Без явного нуля
+        обнулена робота не зменшить виконання у звітах.</li>
+      <li>Усі доми записуються <b>однією операцією</b>: збій на будь-якому домі скасовує все,
+        напівзавантаженого знімка не буває.</li>
+      <li>Коментар «Завантажено з файлу …» ставиться <b>лише новому</b> документу — ваш текст
+        у наявному не затирається.</li>
+    </ul>
+    <p>
+      Контроль після завантаження 12.08.2026: «15 м» — 6 документів по 44 рядки,
+      «30 м» — 7 документів по 88 рядків (44 роботи × 2 модулі), усі проведені.
+    </p>
+  </div>
+</section>
+
+<section>
+  <h2>Граблі</h2>
+  <p class="h2sub">Що знати заздалегідь</p>
+  <div class="tablewrap">
+    <table class="doc">
+      <tr><th>Ситуація</th><th>Що робити</th></tr>
+      <tr>
+        <td>Дата у файлі ≠ дата завантаження</td>
+        <td>Обробка підставляє дату звіту з файлу. Вантажимо іншим числом — змінити «На дату»
+          <em>до</em> розшифровки: від неї залежить і «БУЛО В БАЗІ», і дата документів.</td>
+      </tr>
+      <tr>
+        <td>Перезавантаження того самого дня</td>
+        <td>«БУЛО» береться <b>на дату включно</b>, тобто з документів цього ж дня — «ЗМІНИ»
+          показують саме те, що правиться зараз, а не тижневий приріст.</td>
+      </tr>
+      <tr>
+        <td>Робота без норми в структурі собівартості</td>
+        <td>Відсоток запишеться, але годин не додасть — виконання у звіті не зміниться.
+          Причина не в обробці: у складі робіт не заповнена кількість.</td>
+      </tr>
+      <tr>
+        <td>Файл сформовано для іншого проєкту</td>
+        <td>Розшифровка зупиниться: «У файлі модулів у домі N, а в структурі собівартості M».
+          Звірити структуру собівартості в шапці файлу.</td>
+      </tr>
+      <tr>
+        <td>Дім є у файлі, але не знайдений у базі</td>
+        <td>Доми беруться з <b>наявних документів</b> цього проєкту (за номером після «№»).
+          Для нового дому спершу має з'явитися хоча б один документ.</td>
+      </tr>
+      <tr>
+        <td>Пізніші знімки того ж дому</td>
+        <td>Документ сам попередить, що їх треба перепровести: виконання пізнього знімка
+          рахується від раннього.</td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<footer>
+  BAS ERP 2.5 INDUSTRIALBUD · база BaseERP · обробка «Завантаження виконання робіт»
+</footer>
+
+</div>
