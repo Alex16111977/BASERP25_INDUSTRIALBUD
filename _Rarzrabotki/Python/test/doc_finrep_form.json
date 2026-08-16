@@ -3,6 +3,10 @@
   "properties": { "autoTitle": false, "commandBarLocation": "Top" },
   "events": { "OnCreateAtServer": "ПриСозданииНаСервере", "OnOpen": "ПриОткрытии",
               "OnReadAtServer": "ПриЧтенииНаСервере" },
+
+  "_канон": "Компоновка без прокрутки формы (скил bas-form-layout + knowledge_Бухгалтерия_РасчетКомплектаций §10): на КАЖДОЙ странице ровно ОДИН вертикально-растягиваемый элемент — главная таблица БЕЗ height; всё прочее фиксировано (мини-таблицы 3 строки + VerticalStretch=false пост-патчем, поля однострочные, у всех групп showTitle=false + representation none). Высота Pages = максимум по страницам, поэтому ни на одной странице нет двух резиновых таблиц.",
+  "_verticalScroll": "НЕ задаём: компилятор пишет значение как есть, а XDTO-enum требует строчное «useIfNecessary» — «UseIfNecessary» валит загрузку («Исключение XDTO при чтении Form.xml», проверено 16.08.2026). Default тот же, флагманы ERP живут без этого свойства.",
+
   "elements": [
     { "cmdBar": "ПанельДействий", "children": [
       { "button": "КнопкаРассчитать", "command": "Рассчитать", "title": "Розрахувати",
@@ -22,27 +26,26 @@
       ]}
     ]},
 
-    { "group": "horizontal", "name": "ГруппаШапка", "children": [
-      { "group": "vertical", "name": "ГруппаШапкаЛево", "children": [
+    { "group": "horizontal", "name": "ГруппаШапка", "showTitle": false,
+      "representation": "None", "children": [
+      { "group": "vertical", "name": "ГруппаШапкаЛево", "showTitle": false,
+        "representation": "None", "children": [
         { "input": "ПолеНомер", "path": "Объект.Номер" },
         { "input": "ПолеДата", "path": "Объект.Дата" },
         { "input": "ПолеДатаРасчета", "path": "Объект.ДатаРасчета", "markIncomplete": true },
         { "input": "ПолеНачалоПериода", "path": "Объект.НачалоПериода" }
       ]},
-      { "group": "vertical", "name": "ГруппаШапкаЦентр", "children": [
+      { "group": "vertical", "name": "ГруппаШапкаЦентр", "showTitle": false,
+        "representation": "None", "children": [
         { "input": "ПолеНаправление", "path": "Объект.Направление" },
         { "check": "ПолеЗаполнятьТолькоСДвижениями", "path": "Объект.ЗаполнятьТолькоСДвижениями" },
-        { "input": "ПолеОрганизация", "path": "Объект.Организация" },
-        { "input": "ПолеСтавкаНДС", "path": "Объект.СтавкаНДС" },
-        { "check": "ПолеВключатьНепроведенные", "path": "Объект.ВключатьНепроведенные" },
-        { "input": "ПолеСтатус", "path": "Объект.Статус", "readOnly": true }
+        { "check": "ПолеВключатьНепроведенные", "path": "Объект.ВключатьНепроведенные" }
       ]},
-      { "group": "vertical", "name": "ГруппаШапкаПраво", "children": [
-        { "input": "ПолеЗаголовокОтчета", "path": "Объект.ЗаголовокОтчета",
-          "inputHint": "Заголовок друкованої форми (необов'язково)" },
-        { "input": "ПолеОтветственный", "path": "Объект.Ответственный" },
+      { "group": "vertical", "name": "ГруппаШапкаПраво", "showTitle": false,
+        "representation": "None", "children": [
         { "input": "ПолеДокументСравнения", "path": "Объект.ДокументСравнения",
           "inputHint": "Порожньо — підбереться автоматично при розрахунку" },
+        { "input": "ПолеОтветственный", "path": "Объект.Ответственный" },
         { "labelField": "ПолеСостояние", "path": "СостояниеРасчета", "titleLocation": "none",
           "readOnly": true, "horizontalStretch": true }
       ]}
@@ -51,19 +54,20 @@
     { "pages": "Страницы", "pagesRepresentation": "TabsOnTop", "children": [
 
       { "page": "СтраницаРасчет", "title": "Розрахунок", "children": [
-        { "group": "horizontal", "name": "ГруппаКомандыПодразделений", "children": [
+        { "group": "horizontal", "name": "ГруппаКомандыПодразделений", "showTitle": false,
+          "representation": "None", "children": [
           { "button": "КнопкаЗаполнитьИзКазны", "command": "ЗаполнитьИзКазны",
             "title": "Заповнити", "type": "hyperlink" }
         ]},
         { "table": "Подразделения", "path": "Объект.Подразделения", "changeRowSet": true,
-          "changeRowOrder": true, "height": 10, "columns": [
+          "changeRowOrder": true, "columns": [
           { "check": "ПодразделенияВключать", "path": "Объект.Подразделения.Включать" },
           { "input": "ПодразделенияПодразделение", "path": "Объект.Подразделения.Подразделение" }
         ]},
-        { "group": "vertical", "name": "ГруппаУточнения", "title": "Уточнення розрахунку",
-          "showTitle": true, "representation": "weak", "children": [
+        { "group": "horizontal", "name": "ГруппаУточнения", "showTitle": false,
+          "representation": "None", "children": [
           { "table": "ДоговорыДополнительно", "path": "Объект.ДоговорыДополнительно",
-            "changeRowSet": true, "height": 4, "columns": [
+            "changeRowSet": true, "height": 3, "columns": [
             { "input": "ДопДогПодразделение", "path": "Объект.ДоговорыДополнительно.Подразделение" },
             { "input": "ДопДогДоговор", "path": "Объект.ДоговорыДополнительно.Договор" },
             { "input": "ДопДогКомментарий", "path": "Объект.ДоговорыДополнительно.Комментарий" }
@@ -76,7 +80,8 @@
       ]},
 
       { "page": "СтраницаКазна", "title": "Казна", "children": [
-        { "table": "Казна", "path": "Объект.Казна", "readOnly": true, "height": 12, "columns": [
+        { "table": "Казна", "path": "Объект.Казна", "readOnly": true,
+          "commandBarLocation": "None", "columns": [
           { "input": "КазнаПодразделение", "path": "Объект.Казна.Подразделение" },
           { "input": "КазнаИмяВКазне", "path": "Объект.Казна.ИмяВКазне" },
           { "input": "КазнаПоступленияПлан", "path": "Объект.Казна.ПоступленияПлан" },
@@ -86,20 +91,16 @@
           { "input": "КазнаМаржаПлан", "path": "Объект.Казна.МаржаПлан" },
           { "input": "КазнаМаржаФакт", "path": "Объект.Казна.МаржаФакт" }
         ]},
-        { "group": "vertical", "name": "ГруппаИсключенияКазны",
-          "title": "Статті-виключення (за найменуванням у казні)", "showTitle": true,
-          "representation": "weak", "children": [
-          { "table": "СтатьиИсключенияКазны", "path": "Объект.СтатьиИсключенияКазны",
-            "changeRowSet": true, "height": 5, "columns": [
-            { "input": "ИсключенияСтатья", "path": "Объект.СтатьиИсключенияКазны.Статья",
-              "horizontalStretch": true }
-          ]}
+        { "table": "СтатьиИсключенияКазны", "path": "Объект.СтатьиИсключенияКазны",
+          "changeRowSet": true, "height": 3, "columns": [
+          { "input": "ИсключенияСтатья", "path": "Объект.СтатьиИсключенияКазны.Статья",
+            "horizontalStretch": true }
         ]}
       ]},
 
       { "page": "СтраницаРезультат", "title": "Результат", "children": [
-        { "table": "Расчет", "path": "Объект.Расчет", "readOnly": true, "height": 16,
-          "on": ["OnActivateRow"], "columns": [
+        { "table": "Расчет", "path": "Объект.Расчет", "readOnly": true,
+          "commandBarLocation": "None", "on": ["OnActivateRow"], "columns": [
           { "input": "РасчетПодразделение", "path": "Объект.Расчет.Подразделение" },
           { "input": "РасчетКонтрагент", "path": "Объект.Расчет.Контрагент" },
           { "input": "РасчетДоговор", "path": "Объект.Расчет.Договор" },
@@ -117,14 +118,15 @@
       ]},
 
       { "page": "СтраницаРасшифровка", "title": "Розшифровка", "children": [
-        { "group": "horizontal", "name": "ГруппаФильтрРасшифровки", "children": [
+        { "group": "horizontal", "name": "ГруппаФильтрРасшифровки", "showTitle": false,
+          "representation": "None", "children": [
           { "input": "ПолеФильтрПодразделение", "path": "ФильтрПодразделениеРасшифровки",
             "on": ["OnChange"], "title": "Підрозділ" },
           { "button": "КнопкаСбросФильтра", "command": "СбросФильтраРасшифровки",
             "title": "Показати всі", "type": "hyperlink" }
         ]},
         { "table": "РасшифровкаДокументов", "path": "Объект.РасшифровкаДокументов",
-          "readOnly": true, "height": 16, "on": ["Selection"], "columns": [
+          "readOnly": true, "commandBarLocation": "None", "on": ["Selection"], "columns": [
           { "input": "РасшПодразделение", "path": "Объект.РасшифровкаДокументов.Подразделение" },
           { "input": "РасшКонтрагент", "path": "Объект.РасшифровкаДокументов.Контрагент" },
           { "input": "РасшДоговор", "path": "Объект.РасшифровкаДокументов.Договор" },
@@ -139,8 +141,8 @@
       ]},
 
       { "page": "СтраницаКонтроль", "title": "Контроль", "children": [
-        { "table": "Контроль", "path": "Объект.Контроль", "readOnly": true, "height": 18,
-          "columns": [
+        { "table": "Контроль", "path": "Объект.Контроль", "readOnly": true,
+          "commandBarLocation": "None", "columns": [
           { "input": "КонтрольУровень", "path": "Объект.Контроль.Уровень" },
           { "input": "КонтрольКод", "path": "Объект.Контроль.КодЗамечания" },
           { "input": "КонтрольПодразделение", "path": "Объект.Контроль.Подразделение" },
@@ -149,8 +151,8 @@
       ]},
 
       { "page": "СтраницаКомментарий", "title": "Коментар", "children": [
-        { "input": "ПолеКомментарий", "path": "Объект.Комментарий", "multiLine": true,
-          "height": 6, "titleLocation": "none", "horizontalStretch": true }
+        { "input": "ПолеКомментарий", "path": "Объект.Комментарий", "titleLocation": "none",
+          "horizontalStretch": true }
       ]}
     ]}
   ],
