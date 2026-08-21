@@ -43,7 +43,7 @@ _спец.loader.exec_module(pfa)
   th,td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:right}
   th:first-child,td:first-child{text-align:left}
   thead th{background:#f7f9fb;font-weight:600;color:var(--muted);font-size:13px;
-           border-bottom:1px solid #c9d2da;white-space:nowrap}
+           border-bottom:1px solid #c9d2da;line-height:1.3}
   tr.total td{font-weight:700;background:#f7f9fb;border-top:1px solid #c9d2da}
   .num{font-variant-numeric:tabular-nums;white-space:nowrap}
   .good{color:var(--good);font-weight:600}
@@ -322,7 +322,7 @@ def письмо(д):
     # 6. ТОП економії
     a("<h2>Основна економія наростаючим підсумком</h2>")
     a('<table><thead><tr><th>Загальна назва</th><th>План, грн</th><th>План на факт, грн</th>'
-      "<th>Економія, грн</th><th>Прогноз, % до плану</th><th>Закуплено, % к-сті</th>"
+      "<th>Економія, грн</th><th>Прогноз, % до плану</th><th>Закуплено кількості, % до плану</th>"
       "<th>За рахунок чого</th></tr></thead><tbody>")
     for с in топ_э:
         a(строка_топ(с, "Отклонение"))
@@ -336,7 +336,7 @@ def письмо(д):
     # 7. ТОП перевитрат
     a("<h2>Перевитрати — основні позиції</h2>")
     a('<table><thead><tr><th>Загальна назва</th><th>План, грн</th><th>План на факт, грн</th>'
-      "<th>Перевитрата, грн</th><th>Прогноз, % до плану</th><th>Закуплено, % к-сті</th>"
+      "<th>Перевитрата, грн</th><th>Прогноз, % до плану</th><th>Закуплено кількості, % до плану</th>"
       "<th>За рахунок чого</th></tr></thead><tbody>")
     for с in топ_п:
         a(строка_топ(с, "Отклонение"))
