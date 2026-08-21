@@ -1,0 +1,672 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Settings xmlns="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<selection>
+		<item xsi:type="SelectedItemField">
+			<field>СуммаФ1</field>
+			<title>Сумма по Ф1, грн</title>
+		</item>
+		<item xsi:type="SelectedItemField">
+			<field>СуммаФ2</field>
+			<title>Сумма по Ф2, грн</title>
+		</item>
+		<item xsi:type="SelectedItemField">
+			<field>СуммаИтого</field>
+			<title>Сумма, грн</title>
+		</item>
+		<item xsi:type="SelectedItemField">
+			<field>Процент</field>
+			<title>% суммы затрат в общем объеме</title>
+		</item>
+	</selection>
+	<filter>
+		<item xsi:type="FilterItemComparison">
+			<left xsi:type="dcscor:Field">НаправлениеДеятельности</left>
+			<comparisonType>InList</comparisonType>
+			<right xmlns:d4p1="http://v8.1c.ru/8.1/data/enterprise/current-config" xsi:type="d4p1:CatalogRef.НаправленияДеятельности">9d2c848e-1ae7-11f0-80dc-00155d235309</right>
+			<userSettingID>5d1f9c8a-3b47-4c1e-9a52-8e6f0d2b7a41</userSettingID>
+		</item>
+	</filter>
+	<dataParameters>
+		<dcscor:item xsi:type="SettingsParameterValue">
+			<dcscor:parameter>Период</dcscor:parameter>
+			<dcscor:value xsi:type="v8:StandardPeriod">
+				<v8:variant xsi:type="v8:StandardPeriodVariant">Custom</v8:variant>
+				<v8:startDate>2026-07-01T00:00:00</v8:startDate>
+				<v8:endDate>2026-07-31T23:59:59</v8:endDate>
+			</dcscor:value>
+			<userSettingID>Период</userSettingID>
+		</dcscor:item>
+		<dcscor:item xsi:type="SettingsParameterValue">
+			<dcscor:parameter>СводыНаправлений</dcscor:parameter>
+			<dcscor:value xsi:type="xs:boolean">true</dcscor:value>
+		</dcscor:item>
+		<dcscor:item xsi:type="SettingsParameterValue">
+			<dcscor:parameter>ПоказИтогиПрибыли</dcscor:parameter>
+			<dcscor:value xsi:type="xs:boolean">true</dcscor:value>
+		</dcscor:item>
+		<dcscor:item xsi:type="SettingsParameterValue">
+			<dcscor:parameter>ПоказатьСлужебныеСтроки</dcscor:parameter>
+			<dcscor:value xsi:type="xs:boolean">false</dcscor:value>
+		</dcscor:item>
+		<dcscor:item xsi:type="SettingsParameterValue">
+			<dcscor:parameter>ПолныйШаблон</dcscor:parameter>
+			<dcscor:value xsi:type="xs:boolean">true</dcscor:value>
+		</dcscor:item>
+		<dcscor:item xsi:type="SettingsParameterValue">
+			<dcscor:parameter>ВыводитьМесяцы</dcscor:parameter>
+			<dcscor:value xsi:type="xs:boolean">true</dcscor:value>
+		</dcscor:item>
+		<dcscor:item xsi:type="SettingsParameterValue">
+			<dcscor:parameter>ВыводитьНакопительный</dcscor:parameter>
+			<dcscor:value xsi:type="xs:boolean">true</dcscor:value>
+		</dcscor:item>
+		<dcscor:item xsi:type="SettingsParameterValue">
+			<dcscor:parameter>ВыводитьПлан</dcscor:parameter>
+			<dcscor:value xsi:type="xs:boolean">false</dcscor:value>
+		</dcscor:item>
+		<dcscor:item xsi:type="SettingsParameterValue">
+			<dcscor:parameter>ВыводитьФиксы</dcscor:parameter>
+			<dcscor:value xsi:type="xs:boolean">false</dcscor:value>
+		</dcscor:item>
+		<dcscor:item xsi:type="SettingsParameterValue">
+			<dcscor:parameter>ТолькоСтатьиСФиксами</dcscor:parameter>
+			<dcscor:value xsi:type="xs:boolean">false</dcscor:value>
+		</dcscor:item>
+	</dataParameters>
+	<conditionalAppearance>
+		<item>
+			<selection>
+				<item>
+					<field>СуммаФ1</field>
+				</item>
+				<item>
+					<field>СуммаФ2</field>
+				</item>
+				<item>
+					<field>СуммаИтого</field>
+				</item>
+			</selection>
+			<filter>
+				<item xsi:type="FilterItemComparison">
+					<left xsi:type="dcscor:Field">ВидСтроки</left>
+					<comparisonType>Equal</comparisonType>
+					<right xsi:type="xs:string">ПоказательПроцент</right>
+				</item>
+			</filter>
+			<appearance>
+				<dcscor:item xsi:type="SettingsParameterValue">
+					<dcscor:parameter>ГоризонтальноеПоложение</dcscor:parameter>
+					<dcscor:value xsi:type="v8ui:HorizontalAlign">Right</dcscor:value>
+				</dcscor:item>
+			</appearance>
+		</item>
+		<item>
+			<selection>
+				<item>
+					<field>Процент</field>
+				</item>
+			</selection>
+			<filter/>
+			<appearance>
+				<dcscor:item xsi:type="SettingsParameterValue">
+					<dcscor:parameter>ГоризонтальноеПоложение</dcscor:parameter>
+					<dcscor:value xsi:type="v8ui:HorizontalAlign">Right</dcscor:value>
+				</dcscor:item>
+			</appearance>
+		</item>
+	</conditionalAppearance>
+	<outputParameters>
+		<dcscor:item xsi:type="SettingsParameterValue">
+			<dcscor:parameter>МакетОформления</dcscor:parameter>
+			<dcscor:value xsi:type="xs:string">Sea</dcscor:value>
+		</dcscor:item>
+		<dcscor:item xsi:type="SettingsParameterValue">
+			<dcscor:parameter>ГоризонтальноеРасположениеОбщихИтогов</dcscor:parameter>
+			<dcscor:value xsi:type="dcscor:DataCompositionTotalPlacement">None</dcscor:value>
+		</dcscor:item>
+		<dcscor:item xsi:type="SettingsParameterValue">
+			<dcscor:parameter>ВертикальноеРасположениеОбщихИтогов</dcscor:parameter>
+			<dcscor:value xsi:type="dcscor:DataCompositionTotalPlacement">None</dcscor:value>
+		</dcscor:item>
+		<dcscor:item xsi:type="SettingsParameterValue">
+			<dcscor:parameter>ВыводитьЗаголовок</dcscor:parameter>
+			<dcscor:value xsi:type="DataCompositionTextOutputType">DontOutput</dcscor:value>
+			<viewMode>Inaccessible</viewMode>
+		</dcscor:item>
+		<dcscor:item xsi:type="SettingsParameterValue">
+			<dcscor:use>false</dcscor:use>
+			<dcscor:parameter>Заголовок</dcscor:parameter>
+			<dcscor:value xsi:type="xs:string">PL по объекту (план, месяцы, накопительно)</dcscor:value>
+			<viewMode>Normal</viewMode>
+		</dcscor:item>
+		<dcscor:item xsi:type="SettingsParameterValue">
+			<dcscor:parameter>ВыводитьПараметрыДанных</dcscor:parameter>
+			<dcscor:value xsi:type="DataCompositionTextOutputType">DontOutput</dcscor:value>
+			<viewMode>Normal</viewMode>
+		</dcscor:item>
+		<dcscor:item xsi:type="SettingsParameterValue">
+			<dcscor:parameter>ВыводитьОтбор</dcscor:parameter>
+			<dcscor:value xsi:type="DataCompositionTextOutputType">DontOutput</dcscor:value>
+			<viewMode>Inaccessible</viewMode>
+		</dcscor:item>
+	</outputParameters>
+	<item xsi:type="StructureItemTable">
+		<column>
+			<groupItems>
+				<item xsi:type="GroupItemField">
+					<field>КолонкаСорт</field>
+					<groupType>Items</groupType>
+					<periodAdditionType>None</periodAdditionType>
+					<periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</periodAdditionBegin>
+					<periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</periodAdditionEnd>
+				</item>
+			</groupItems>
+			<filter>
+				<item xsi:type="FilterItemComparison">
+					<left xsi:type="dcscor:Field">КолонкаСорт</left>
+					<comparisonType>NotEqual</comparisonType>
+					<right xsi:type="xs:decimal">900100</right>
+				</item>
+			</filter>
+			<order>
+				<item xsi:type="OrderItemField">
+					<field>КолонкаСорт</field>
+					<orderType>Asc</orderType>
+				</item>
+			</order>
+			<selection>
+				<item xsi:type="SelectedItemAuto"/>
+			</selection>
+			<outputParameters>
+				<dcscor:item xsi:type="SettingsParameterValue">
+					<dcscor:parameter>ВыводитьОтбор</dcscor:parameter>
+					<dcscor:value xsi:type="DataCompositionTextOutputType">DontOutput</dcscor:value>
+				</dcscor:item>
+			</outputParameters>
+		</column>
+		<row>
+			<groupItems>
+				<item xsi:type="GroupItemField">
+					<field>СтрокаЛиста</field>
+					<groupType>Items</groupType>
+					<periodAdditionType>None</periodAdditionType>
+					<periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</periodAdditionBegin>
+					<periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</periodAdditionEnd>
+				</item>
+			</groupItems>
+			<order>
+				<item xsi:type="OrderItemField">
+					<field>СортЛиста</field>
+					<orderType>Asc</orderType>
+				</item>
+			</order>
+			<selection>
+				<item xsi:type="SelectedItemAuto"/>
+			</selection>
+			<conditionalAppearance>
+				<item>
+					<selection/>
+					<filter>
+						<item xsi:type="FilterItemGroup">
+							<groupType>OrGroup</groupType>
+							<item xsi:type="FilterItemComparison">
+								<left xsi:type="dcscor:Field">СтрокаЛиста</left>
+								<comparisonType>Equal</comparisonType>
+								<right xsi:type="xs:string">Операционный доход</right>
+							</item>
+							<item xsi:type="FilterItemComparison">
+								<left xsi:type="dcscor:Field">СтрокаЛиста</left>
+								<comparisonType>Equal</comparisonType>
+								<right xsi:type="xs:string">Себестоимость проданой продукции (переменные производственные затраты)</right>
+							</item>
+							<item xsi:type="FilterItemComparison">
+								<left xsi:type="dcscor:Field">СтрокаЛиста</left>
+								<comparisonType>Equal</comparisonType>
+								<right xsi:type="xs:string">Дополнительные  расходы</right>
+							</item>
+							<item xsi:type="FilterItemComparison">
+								<left xsi:type="dcscor:Field">СтрокаЛиста</left>
+								<comparisonType>Equal</comparisonType>
+								<right xsi:type="xs:string">Общепроизводственные затраты</right>
+							</item>
+							<item xsi:type="FilterItemComparison">
+								<left xsi:type="dcscor:Field">СтрокаЛиста</left>
+								<comparisonType>Equal</comparisonType>
+								<right xsi:type="xs:string">Маркетинговые затраты</right>
+							</item>
+							<item xsi:type="FilterItemComparison">
+								<left xsi:type="dcscor:Field">СтрокаЛиста</left>
+								<comparisonType>Equal</comparisonType>
+								<right xsi:type="xs:string">Административные затраты</right>
+							</item>
+							<item xsi:type="FilterItemComparison">
+								<left xsi:type="dcscor:Field">СтрокаЛиста</left>
+								<comparisonType>Equal</comparisonType>
+								<right xsi:type="xs:string">Налоги и сборы</right>
+							</item>
+							<item xsi:type="FilterItemComparison">
+								<left xsi:type="dcscor:Field">СтрокаЛиста</left>
+								<comparisonType>Equal</comparisonType>
+								<right xsi:type="xs:string">Финансовая деятельность</right>
+							</item>
+							<item xsi:type="FilterItemComparison">
+								<left xsi:type="dcscor:Field">СтрокаЛиста</left>
+								<comparisonType>Equal</comparisonType>
+								<right xsi:type="xs:string">Вне структуры PL</right>
+							</item>
+							<item xsi:type="FilterItemComparison">
+								<left xsi:type="dcscor:Field">СтрокаЛиста</left>
+								<comparisonType>Equal</comparisonType>
+								<right xsi:type="xs:string">План без статьи PL (ДДС не привязана)</right>
+							</item>
+						</item>
+					</filter>
+					<appearance>
+						<dcscor:item xsi:type="SettingsParameterValue">
+							<dcscor:parameter>ЦветФона</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Color">#D9D9D9</dcscor:value>
+						</dcscor:item>
+						<dcscor:item xsi:type="SettingsParameterValue">
+							<dcscor:parameter>Шрифт</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+						</dcscor:item>
+					</appearance>
+				</item>
+				<item>
+					<selection/>
+					<filter>
+						<item xsi:type="FilterItemGroup">
+							<groupType>OrGroup</groupType>
+							<item xsi:type="FilterItemComparison">
+								<left xsi:type="dcscor:Field">СтрокаЛиста</left>
+								<comparisonType>Equal</comparisonType>
+								<right xsi:type="xs:string">Маржинальный доход, грн</right>
+							</item>
+							<item xsi:type="FilterItemComparison">
+								<left xsi:type="dcscor:Field">СтрокаЛиста</left>
+								<comparisonType>Equal</comparisonType>
+								<right xsi:type="xs:string">Операционная прибыль, грн</right>
+							</item>
+							<item xsi:type="FilterItemComparison">
+								<left xsi:type="dcscor:Field">СтрокаЛиста</left>
+								<comparisonType>Equal</comparisonType>
+								<right xsi:type="xs:string">Прибыль после вычета финансовых затрат</right>
+							</item>
+							<item xsi:type="FilterItemComparison">
+								<left xsi:type="dcscor:Field">СтрокаЛиста</left>
+								<comparisonType>Equal</comparisonType>
+								<right xsi:type="xs:string">Прибыль до вычета налогов</right>
+							</item>
+							<item xsi:type="FilterItemComparison">
+								<left xsi:type="dcscor:Field">СтрокаЛиста</left>
+								<comparisonType>Equal</comparisonType>
+								<right xsi:type="xs:string">Чистый доход</right>
+							</item>
+							<item xsi:type="FilterItemComparison">
+								<left xsi:type="dcscor:Field">СтрокаЛиста</left>
+								<comparisonType>Equal</comparisonType>
+								<right xsi:type="xs:string">Прибыль в распоряжении компании (нераспределенная прибыль), грн</right>
+							</item>
+						</item>
+					</filter>
+					<appearance>
+						<dcscor:item xsi:type="SettingsParameterValue">
+							<dcscor:parameter>ЦветФона</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Color">#BDD7EE</dcscor:value>
+						</dcscor:item>
+						<dcscor:item xsi:type="SettingsParameterValue">
+							<dcscor:parameter>Шрифт</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+						</dcscor:item>
+					</appearance>
+				</item>
+				<item>
+					<selection/>
+					<filter>
+						<item xsi:type="FilterItemGroup">
+							<groupType>OrGroup</groupType>
+							<item xsi:type="FilterItemComparison">
+								<left xsi:type="dcscor:Field">СтрокаЛиста</left>
+								<comparisonType>Equal</comparisonType>
+								<right xsi:type="xs:string">Маржинальный доход, %</right>
+							</item>
+							<item xsi:type="FilterItemComparison">
+								<left xsi:type="dcscor:Field">СтрокаЛиста</left>
+								<comparisonType>Equal</comparisonType>
+								<right xsi:type="xs:string">Операционная прибыль, %</right>
+							</item>
+							<item xsi:type="FilterItemComparison">
+								<left xsi:type="dcscor:Field">СтрокаЛиста</left>
+								<comparisonType>Equal</comparisonType>
+								<right xsi:type="xs:string">Рентабельность продукции, %</right>
+							</item>
+						</item>
+					</filter>
+					<appearance>
+						<dcscor:item xsi:type="SettingsParameterValue">
+							<dcscor:parameter>ЦветФона</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Color">#C6E0B4</dcscor:value>
+						</dcscor:item>
+						<dcscor:item xsi:type="SettingsParameterValue">
+							<dcscor:parameter>Шрифт</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+						</dcscor:item>
+					</appearance>
+				</item>
+				<item>
+					<selection>
+						<item>
+							<field>СтрокаЛиста</field>
+						</item>
+					</selection>
+					<filter/>
+					<appearance>
+						<dcscor:item xsi:type="SettingsParameterValue">
+							<dcscor:parameter>МаксимальнаяШирина</dcscor:parameter>
+							<dcscor:value xsi:type="xs:decimal">40</dcscor:value>
+						</dcscor:item>
+					</appearance>
+				</item>
+				<item>
+					<selection>
+						<item>
+							<field>СуммаФ1</field>
+						</item>
+						<item>
+							<field>СуммаФ2</field>
+						</item>
+						<item>
+							<field>СуммаИтого</field>
+						</item>
+					</selection>
+					<filter>
+						<item xsi:type="FilterItemGroup">
+							<groupType>OrGroup</groupType>
+							<item xsi:type="FilterItemComparison">
+								<left xsi:type="dcscor:Field">СтрокаЛиста</left>
+								<comparisonType>Equal</comparisonType>
+								<right xsi:type="xs:string">Маржинальный доход, %</right>
+							</item>
+							<item xsi:type="FilterItemComparison">
+								<left xsi:type="dcscor:Field">СтрокаЛиста</left>
+								<comparisonType>Equal</comparisonType>
+								<right xsi:type="xs:string">Операционная прибыль, %</right>
+							</item>
+							<item xsi:type="FilterItemComparison">
+								<left xsi:type="dcscor:Field">СтрокаЛиста</left>
+								<comparisonType>Equal</comparisonType>
+								<right xsi:type="xs:string">Рентабельность продукции, %</right>
+							</item>
+						</item>
+					</filter>
+					<appearance>
+						<dcscor:item xsi:type="SettingsParameterValue">
+							<dcscor:parameter>ЦветФона</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Color">#C6E0B4</dcscor:value>
+						</dcscor:item>
+						<dcscor:item xsi:type="SettingsParameterValue">
+							<dcscor:parameter>Шрифт</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+						</dcscor:item>
+						<dcscor:item xsi:type="SettingsParameterValue">
+							<dcscor:parameter>ГоризонтальноеПоложение</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:HorizontalAlign">Right</dcscor:value>
+						</dcscor:item>
+					</appearance>
+				</item>
+				<item>
+					<selection>
+						<item>
+							<field>СуммаФ1</field>
+						</item>
+						<item>
+							<field>СуммаФ2</field>
+						</item>
+						<item>
+							<field>СуммаИтого</field>
+						</item>
+					</selection>
+					<filter>
+						<item xsi:type="FilterItemGroup">
+							<groupType>OrGroup</groupType>
+							<item xsi:type="FilterItemComparison">
+								<left xsi:type="dcscor:Field">СтрокаЛиста</left>
+								<comparisonType>Equal</comparisonType>
+								<right xsi:type="xs:string">Маржинальный доход, грн</right>
+							</item>
+							<item xsi:type="FilterItemComparison">
+								<left xsi:type="dcscor:Field">СтрокаЛиста</left>
+								<comparisonType>Equal</comparisonType>
+								<right xsi:type="xs:string">Операционная прибыль, грн</right>
+							</item>
+							<item xsi:type="FilterItemComparison">
+								<left xsi:type="dcscor:Field">СтрокаЛиста</left>
+								<comparisonType>Equal</comparisonType>
+								<right xsi:type="xs:string">Прибыль после вычета финансовых затрат</right>
+							</item>
+							<item xsi:type="FilterItemComparison">
+								<left xsi:type="dcscor:Field">СтрокаЛиста</left>
+								<comparisonType>Equal</comparisonType>
+								<right xsi:type="xs:string">Прибыль до вычета налогов</right>
+							</item>
+							<item xsi:type="FilterItemComparison">
+								<left xsi:type="dcscor:Field">СтрокаЛиста</left>
+								<comparisonType>Equal</comparisonType>
+								<right xsi:type="xs:string">Чистый доход</right>
+							</item>
+							<item xsi:type="FilterItemComparison">
+								<left xsi:type="dcscor:Field">СтрокаЛиста</left>
+								<comparisonType>Equal</comparisonType>
+								<right xsi:type="xs:string">Прибыль в распоряжении компании (нераспределенная прибыль), грн</right>
+							</item>
+							<item xsi:type="FilterItemComparison">
+								<left xsi:type="dcscor:Field">СтрокаЛиста</left>
+								<comparisonType>Equal</comparisonType>
+								<right xsi:type="xs:string">EBITDA, %</right>
+							</item>
+							<item xsi:type="FilterItemComparison">
+								<left xsi:type="dcscor:Field">СтрокаЛиста</left>
+								<comparisonType>Equal</comparisonType>
+								<right xsi:type="xs:string">EBIT / Операционная прибыль, %</right>
+							</item>
+						</item>
+					</filter>
+					<appearance>
+						<dcscor:item xsi:type="SettingsParameterValue">
+							<dcscor:parameter>ЦветФона</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Color">#BDD7EE</dcscor:value>
+						</dcscor:item>
+						<dcscor:item xsi:type="SettingsParameterValue">
+							<dcscor:parameter>Шрифт</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:Font" ref="sys:DefaultGUIFont" bold="true" italic="false" underline="false" strikeout="false" kind="WindowsFont"/>
+						</dcscor:item>
+						<dcscor:item xsi:type="SettingsParameterValue">
+							<dcscor:parameter>ГоризонтальноеПоложение</dcscor:parameter>
+							<dcscor:value xsi:type="v8ui:HorizontalAlign">Right</dcscor:value>
+						</dcscor:item>
+					</appearance>
+				</item>
+			</conditionalAppearance>
+			<outputParameters>
+				<dcscor:item xsi:type="SettingsParameterValue">
+					<dcscor:parameter>ВыводитьОтбор</dcscor:parameter>
+					<dcscor:value xsi:type="DataCompositionTextOutputType">DontOutput</dcscor:value>
+				</dcscor:item>
+			</outputParameters>
+			<item>
+				<groupItems>
+					<item xsi:type="GroupItemField">
+						<field>СтатьяPL</field>
+						<groupType>Items</groupType>
+						<periodAdditionType>None</periodAdditionType>
+						<periodAdditionBegin xsi:type="xs:dateTime">0001-01-01T00:00:00</periodAdditionBegin>
+						<periodAdditionEnd xsi:type="xs:dateTime">0001-01-01T00:00:00</periodAdditionEnd>
+					</item>
+				</groupItems>
+				<filter>
+					<item xsi:type="FilterItemComparison">
+						<left xsi:type="dcscor:Field">ПоказыватьСтатью</left>
+						<comparisonType>Equal</comparisonType>
+						<right xsi:type="xs:boolean">true</right>
+					</item>
+					<item xsi:type="FilterItemGroup">
+						<groupType>OrGroup</groupType>
+						<item xsi:type="FilterItemComparison">
+							<left xsi:type="dcscor:Field">СуммаФ1</left>
+							<comparisonType>Filled</comparisonType>
+						</item>
+						<item xsi:type="FilterItemComparison">
+							<left xsi:type="dcscor:Field">СуммаФ2</left>
+							<comparisonType>Filled</comparisonType>
+						</item>
+					</item>
+				</filter>
+				<order>
+					<item xsi:type="OrderItemField">
+						<field>СтатьяPL.Сорт</field>
+						<orderType>Asc</orderType>
+					</item>
+				</order>
+				<selection>
+					<item xsi:type="SelectedItemAuto"/>
+				</selection>
+				<outputParameters>
+					<dcscor:item xsi:type="SettingsParameterValue">
+						<dcscor:parameter>ВыводитьОтбор</dcscor:parameter>
+						<dcscor:value xsi:type="DataCompositionTextOutputType">DontOutput</dcscor:value>
+					</dcscor:item>
+				</outputParameters>
+			</item>
+		</row>
+	</item>
+	<additionalProperties>
+		<v8:Property name="КлючВарианта">
+			<v8:Value xsi:type="xs:string">0e8f0c5f-25ea-4ad8-9be5-0d680ce679e3</v8:Value>
+		</v8:Property>
+		<v8:Property name="ВариантНаименование">
+			<v8:Value xsi:type="xs:string">1.P&amp;L - направлений (Месяц, Накопительный PL)</v8:Value>
+		</v8:Property>
+		<v8:Property name="ПараметрыПодбора">
+			<v8:Value xsi:type="v8:Map">
+				<v8:pair>
+					<v8:Key xmlns:d6p1="http://v8.1c.ru/8.1/data/enterprise/current-config" xsi:type="v8:Type">d6p1:CatalogRef.НаправленияДеятельности</v8:Key>
+					<v8:Value xsi:type="xs:string">Справочник.НаправленияДеятельности.ФормаВыбора</v8:Value>
+				</v8:pair>
+			</v8:Value>
+		</v8:Property>
+		<v8:Property name="РасширенноеОписаниеТипов">
+			<v8:Value xsi:type="v8:Map">
+				<v8:pair>
+					<v8:Key xsi:type="xs:decimal">1</v8:Key>
+					<v8:Value xsi:type="v8:Structure">
+						<v8:Property name="СодержитТипТип">
+							<v8:Value xsi:type="xs:boolean">false</v8:Value>
+						</v8:Property>
+						<v8:Property name="СодержитТипДата">
+							<v8:Value xsi:type="xs:boolean">false</v8:Value>
+						</v8:Property>
+						<v8:Property name="СодержитТипБулево">
+							<v8:Value xsi:type="xs:boolean">false</v8:Value>
+						</v8:Property>
+						<v8:Property name="СодержитТипСтрока">
+							<v8:Value xsi:type="xs:boolean">false</v8:Value>
+						</v8:Property>
+						<v8:Property name="СодержитТипЧисло">
+							<v8:Value xsi:type="xs:boolean">false</v8:Value>
+						</v8:Property>
+						<v8:Property name="СодержитТипПериод">
+							<v8:Value xsi:type="xs:boolean">false</v8:Value>
+						</v8:Property>
+						<v8:Property name="СодержитТипУИД">
+							<v8:Value xsi:type="xs:boolean">false</v8:Value>
+						</v8:Property>
+						<v8:Property name="СодержитТипХранилище">
+							<v8:Value xsi:type="xs:boolean">false</v8:Value>
+						</v8:Property>
+						<v8:Property name="СодержитОбъектныеТипы">
+							<v8:Value xsi:type="xs:boolean">true</v8:Value>
+						</v8:Property>
+						<v8:Property name="ОграниченнойДлины">
+							<v8:Value xsi:type="xs:boolean">true</v8:Value>
+						</v8:Property>
+						<v8:Property name="КоличествоТипов">
+							<v8:Value xsi:type="xs:decimal">1</v8:Value>
+						</v8:Property>
+						<v8:Property name="КоличествоПримитивныхТипов">
+							<v8:Value xsi:type="xs:decimal">0</v8:Value>
+						</v8:Property>
+						<v8:Property name="ОбъектныеТипы">
+							<v8:Value xsi:type="v8:Array">
+								<v8:Value xmlns:d9p1="http://v8.1c.ru/8.1/data/enterprise/current-config" xsi:type="v8:Type">d9p1:CatalogRef.НаправленияДеятельности</v8:Value>
+							</v8:Value>
+						</v8:Property>
+						<v8:Property name="ОписаниеТиповИсходное">
+							<v8:Value xsi:type="v8:TypeDescription">
+								<v8:Type xmlns:d9p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d9p1:CatalogRef.НаправленияДеятельности</v8:Type>
+							</v8:Value>
+						</v8:Property>
+						<v8:Property name="ОписаниеТиповДляФормы">
+							<v8:Value xsi:type="v8:TypeDescription">
+								<v8:Type xmlns:d9p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d9p1:CatalogRef.НаправленияДеятельности</v8:Type>
+							</v8:Value>
+						</v8:Property>
+					</v8:Value>
+				</v8:pair>
+				<v8:pair>
+					<v8:Key xsi:type="xs:decimal">0</v8:Key>
+					<v8:Value xsi:type="v8:Structure">
+						<v8:Property name="СодержитТипТип">
+							<v8:Value xsi:type="xs:boolean">false</v8:Value>
+						</v8:Property>
+						<v8:Property name="СодержитТипДата">
+							<v8:Value xsi:type="xs:boolean">false</v8:Value>
+						</v8:Property>
+						<v8:Property name="СодержитТипБулево">
+							<v8:Value xsi:type="xs:boolean">false</v8:Value>
+						</v8:Property>
+						<v8:Property name="СодержитТипСтрока">
+							<v8:Value xsi:type="xs:boolean">false</v8:Value>
+						</v8:Property>
+						<v8:Property name="СодержитТипЧисло">
+							<v8:Value xsi:type="xs:boolean">false</v8:Value>
+						</v8:Property>
+						<v8:Property name="СодержитТипПериод">
+							<v8:Value xsi:type="xs:boolean">true</v8:Value>
+						</v8:Property>
+						<v8:Property name="СодержитТипУИД">
+							<v8:Value xsi:type="xs:boolean">false</v8:Value>
+						</v8:Property>
+						<v8:Property name="СодержитТипХранилище">
+							<v8:Value xsi:type="xs:boolean">false</v8:Value>
+						</v8:Property>
+						<v8:Property name="СодержитОбъектныеТипы">
+							<v8:Value xsi:type="xs:boolean">false</v8:Value>
+						</v8:Property>
+						<v8:Property name="ОграниченнойДлины">
+							<v8:Value xsi:type="xs:boolean">true</v8:Value>
+						</v8:Property>
+						<v8:Property name="КоличествоТипов">
+							<v8:Value xsi:type="xs:decimal">1</v8:Value>
+						</v8:Property>
+						<v8:Property name="КоличествоПримитивныхТипов">
+							<v8:Value xsi:type="xs:decimal">0</v8:Value>
+						</v8:Property>
+						<v8:Property name="ОбъектныеТипы">
+							<v8:Value xsi:type="v8:Array"/>
+						</v8:Property>
+						<v8:Property name="ОписаниеТиповИсходное">
+							<v8:Value xsi:type="v8:TypeDescription">
+								<v8:Type>v8:StandardPeriod</v8:Type>
+							</v8:Value>
+						</v8:Property>
+						<v8:Property name="ОписаниеТиповДляФормы">
+							<v8:Value xsi:type="v8:TypeDescription">
+								<v8:Type>v8:StandardPeriod</v8:Type>
+							</v8:Value>
+						</v8:Property>
+					</v8:Value>
+				</v8:pair>
+			</v8:Value>
+		</v8:Property>
+	</additionalProperties>
+</Settings>
