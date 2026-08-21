@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<title>ШАБЛОН — МД IRS 2026 — план-факт станом на ДД.ММ.РРРР</title>
+<!--
+  ШАБЛОН ПИСЬМА ДИРЕКТОРУ. Порядок разделов: Матеріали -> Роботи -> Додатки.
+  Заменить: ДД.ММ.РРРР, все числа, строки таблиц. Ничего не добавлять от себя,
+  кроме итогов, о которых сказано пользователю (см. 04_takt_i_granicy.md, 08_proverka_cifr.md).
+  Классы: .sum крупное число в тексте | .num число в таблице | .good экономия/ожидаем
+          .bad перерасход/не ожидаем | .zero ноль-серый | .obj название объекта | tr.total итог
+-->
+<style>
+  :root{--ink:#1f2933;--muted:#6b7683;--line:#dfe3e8;--good:#1b7f4b;--bad:#b3261e;
+        --accent:#1f4e79;--accent-bg:#eef3f8}
+  *{box-sizing:border-box}
+  body{margin:0;padding:20px 18px 26px;background:#f4f6f8;color:var(--ink);
+       font:14px/1.45 "Segoe UI",Tahoma,Arial,sans-serif}
+  .sheet{max-width:940px;margin:0 auto;background:#fff;padding:24px 28px 20px;
+         border:1px solid var(--line);border-radius:6px;box-shadow:0 1px 4px rgba(0,0,0,.06)}
+  h1{font-size:17px;margin:0 0 12px;color:var(--accent)}
+  h2{font-size:14px;margin:16px 0 6px;padding-bottom:3px;
+     border-bottom:2px solid var(--accent-bg);color:var(--accent)}
+  h3{font-size:13.5px;margin:12px 0 4px;color:var(--ink)}
+  p{margin:6px 0}
+  table{width:100%;border-collapse:collapse;margin:8px 0 0;font-size:12.5px}
+  th,td{padding:3px 7px;border-bottom:1px solid var(--line);text-align:right;vertical-align:top}
+  th:first-child,td:first-child{text-align:left}
+  th:nth-child(3),td:nth-child(3){text-align:left}
+  thead th{background:#f7f9fb;font-weight:600;color:var(--muted);font-size:11.5px;
+           border-bottom:1px solid #c9d2da}
+  tr.total td{font-weight:700;background:#f7f9fb;border-top:1px solid #c9d2da}
+  .num{font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:600}
+  .sum{font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .good{color:var(--good);font-weight:600}
+  .bad{color:var(--bad);font-weight:600}
+  .zero{color:var(--muted);font-weight:400}
+  .obj{font-weight:700;color:var(--accent)}
+  .att{margin:20px 0 0;padding:10px 14px;background:#f7f9fb;border:1px solid var(--line);
+       border-radius:4px;font-size:14px}
+  .att b{color:var(--accent)}
+  .att ol{margin:6px 0 0 18px;padding:0}
+  @page{size:A4 portrait;margin:10mm}
+  @media print{body{background:#fff;padding:0;font-size:11pt}
+    .sheet{border:0;box-shadow:none;max-width:none;padding:0}
+    h1{font-size:14pt} h2{font-size:11.5pt} table{font-size:9.5pt}}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+<p>Доброго дня,</p>
+<h1>МД IRS 2026 — план-факт станом на ДД.ММ.РРРР</h1>
+
+<h2>По матеріалах</h2>
+<p>За матеріалами прогноз витрат нижчий за кошторис: план СС <span class="sum">0 000 000,00</span> грн,
+план на факт <span class="sum">0 000 000,00</span> грн, <b>економія 000 000,00 грн (0,0 %)</b>.</p>
+
+<h3>Динаміка до попереднього тижня</h3>
+<table>
+  <thead><tr><th>Показник</th><th>ДД.ММ.РРРР</th><th>ДД.ММ.РРРР</th><th>Зміна за тиждень</th></tr></thead>
+  <tbody>
+    <tr><td>План на факт, грн</td><td class="num">0,00</td><td class="num">0,00</td><td class="num good">−0,00</td></tr>
+    <tr class="total"><td>Економія, грн</td><td class="num">0,00</td><td class="num">0,00</td><td class="num good">+0,00</td></tr>
+    <tr><td>Економія, % до кошторису</td><td class="num">0,0 %</td><td class="num">0,0 %</td><td class="num good">+0,0 п.п.</td></tr>
+  </tbody>
+</table>
+<!-- Строку «План СС» сюда НЕ ставить: он не меняется -->
+
+<h3>Що дало зміну за тиждень</h3>
+<table>
+  <thead><tr><th>Позиція</th><th>Вплив на прогноз, грн</th><th>Коментар</th></tr></thead>
+  <tbody>
+    <tr><td>Назва</td><td class="num good">−0,00</td><td>коротка фактична причина</td></tr>
+    <tr><td>Назва</td><td class="num bad">+0,00</td><td>коротка фактична причина</td></tr>
+  </tbody>
+</table>
+
+<h3>Основна економія наростаючим підсумком</h3>
+<table>
+  <thead><tr><th>Загальна назва</th><th>План, грн</th><th>План на факт, грн</th><th>Економія, грн</th><th>%</th></tr></thead>
+  <tbody>
+    <tr><td>Назва</td><td class="num">0,00</td><td class="num">0,00</td><td class="num good">0,00</td><td class="num">0,0</td></tr>
+    <tr class="total"><td>Разом ТОП-7</td><td class="num"></td><td class="num"></td><td class="num good">0,00</td><td class="num">00 % економії</td></tr>
+  </tbody>
+</table>
+
+<h3>Перевитрати — основні позиції</h3>
+<table>
+  <thead><tr><th>Загальна назва</th><th>План, грн</th><th>План на факт, грн</th><th>Перевитрата, грн</th><th>%</th></tr></thead>
+  <tbody>
+    <tr><td>Назва</td><td class="num">0,00</td><td class="num">0,00</td><td class="num bad">0,00</td><td class="num">0,0</td></tr>
+    <tr><td>Назва без плану</td><td class="num">—</td><td class="num">0,00</td><td class="num bad">0,00</td><td class="num">поза кошторисом</td></tr>
+    <tr class="total"><td>Разом ТОП-7</td><td class="num"></td><td class="num"></td><td class="num bad">0,00</td><td class="num">00 % перевитрат</td></tr>
+  </tbody>
+</table>
+
+<h3>Матеріали, закуплені поза кошторисом</h3>
+<p>Окремо: матеріали, закуплені поза кошторисом, — на <b>000 000,00 грн</b>.</p>
+<!-- Просьбу «прошу внести до кошторису» добавлять ТОЛЬКО если пользователь просил -->
+<table>
+  <thead><tr><th>Загальна назва</th><th>Сума, грн</th></tr></thead>
+  <tbody>
+    <tr><td>Назва 1</td><td class="num">0,00</td></tr>
+    <tr><td>Інші матеріали</td><td class="num">0,00</td></tr>
+    <tr class="total"><td>Разом</td><td class="num">0,00</td></tr>
+  </tbody>
+</table>
+<!-- Сокращая список — обязательно строка «Інші матеріали», иначе итог не сойдётся -->
+
+<h2>По роботах</h2>
+<p>На сьогодні за табелем відпрацьовано <b>0 000 год</b>, виконано робіт (у нормо-годинах)
+<b>0 000,00 год</b>. Відхилення табель – виконання становить <b>+000,00 год</b> — списано на
+<b>0,0 %</b> більше годин, ніж закрито обсягом виконаних робіт.</p>
+<!-- «освоєно» НЕ писать: жаргон. Только «виконано робіт у нормо-годинах» -->
+
+<h3>Динаміка до попереднього тижня</h3>
+<table>
+  <thead><tr><th>Показник</th><th>ДД.ММ.РРРР</th><th>ДД.ММ.РРРР</th><th>Зміна за тиждень</th></tr></thead>
+  <tbody>
+    <tr><td>Відпрацьовано за табелем, год</td><td class="num">0,00</td><td class="num">0,00</td><td class="num">+0,00</td></tr>
+    <tr><td>Виконано робіт (нормо-годин)</td><td class="num">0,00</td><td class="num">0,00</td><td class="num good">+0,00</td></tr>
+    <tr class="total"><td>Відхилення табель – виконання</td><td class="num">+0,00</td><td class="num">+0,00</td><td class="num good">−0,00</td></tr>
+    <tr><td>Виконання до табеля</td><td class="num">0,0 %</td><td class="num">0,0 %</td><td class="num good">+0,0 п.п.</td></tr>
+  </tbody>
+</table>
+<p><b>Тенденція:</b> за тиждень закрито обсягом робіт 0,00 год при 0,00 год табеля — …</p>
+
+<h3>Приріст виконання по етапах за тиждень</h3>
+<table>
+  <thead><tr><th>Етап</th><th>ДД.ММ, год</th><th>ДД.ММ, год</th><th>Приріст</th></tr></thead>
+  <tbody>
+    <tr><td>Етап</td><td class="num">0,00</td><td class="num">0,00</td><td class="num good">+0,00</td></tr>
+    <tr class="total"><td>Разом</td><td class="num">0,00</td><td class="num">0,00</td><td class="num good">+0,00</td></tr>
+  </tbody>
+</table>
+
+<table>
+  <thead><tr><th>Показник</th><th>Годин</th><th>% до плану</th></tr></thead>
+  <tbody>
+    <tr><td>План по роботах (кошторис СС)</td><td class="num">0 000,00</td><td class="num">100 %</td></tr>
+    <tr><td>Відпрацьовано за табелем</td><td class="num">0 000,00</td><td class="num">0,0 %</td></tr>
+    <tr><td>Виконано робіт (нормо-годин)</td><td class="num">0 000,00</td><td class="num">0,0 %</td></tr>
+  </tbody>
+</table>
+
+<div class="att">
+<b>Додатки:</b>
+<ol>
+  <li>«План-факт виконання СС.xlsx» — повна деталізація по матеріалах у розрізі позицій.</li>
+  <li>«Звіт з виконання СС.xlsx» — виконання по роботах в годинах.</li>
+</ol>
+</div>
+
+</div>
+</body>
+</html>
