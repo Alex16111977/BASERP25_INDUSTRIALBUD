@@ -45,7 +45,8 @@ print("=" * 88)
                "test_otchetpl_v8_ytd_2026-08-24.py",
                "acceptance_otchetpl_novaya_forma_2026-08-20.py",
                "acceptance_otchetpl_excel_parity_v3.py",
-               "acceptance_pl_s_nachala_goda_2026-08-24.py"]
+               "acceptance_pl_s_nachala_goda_2026-08-24.py",
+               "acceptance_rusifikaciya_2026-08-26.py"]
 для_истории = ["v2_full.sql", "v3_full.sql", "v4_full.sql", "v5_full.sql", "v6_full.sql"]
 удалены = ["test_otchetpl_v5_amortizaciya_2026-08-20.py",
            "test_otchetpl_v6_pko_forma2_2026-08-20.py"]
