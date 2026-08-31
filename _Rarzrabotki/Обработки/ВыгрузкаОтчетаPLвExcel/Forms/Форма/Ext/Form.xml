@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
+	<Title>
+		<v8:item>
+			<v8:lang>ru</v8:lang>
+			<v8:content>Выгрузка отчета PL в Excel</v8:content>
+		</v8:item>
+	</Title>
+	<AutoTitle>false</AutoTitle>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+		<ChildItems>
+			<Button name="ФормаСформироватьExcel" id="100">
+				<Type>CommandBarButton</Type>
+				<Representation>PictureAndText</Representation>
+				<DefaultButton>true</DefaultButton>
+				<CommandName>Form.Command.СформироватьExcel</CommandName>
+				<ExtendedTooltip name="ФормаСформироватьExcelРасширеннаяПодсказка" id="101"/>
+			</Button>
+			<Button name="ФормаЗаполнитьИзРегистра" id="102">
+				<Type>CommandBarButton</Type>
+				<CommandName>Form.Command.ЗаполнитьИзРегистра</CommandName>
+				<ExtendedTooltip name="ФормаЗаполнитьИзРегистраРасширеннаяПодсказка" id="103"/>
+			</Button>
+			<Button name="ФормаСохранитьВРегистр" id="104">
+				<Type>CommandBarButton</Type>
+				<CommandName>Form.Command.СохранитьВРегистр</CommandName>
+				<ExtendedTooltip name="ФормаСохранитьВРегистрРасширеннаяПодсказка" id="105"/>
+			</Button>
+		</ChildItems>
+	</AutoCommandBar>
+	<Events>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+	</Events>
+	<ChildItems>
+		<UsualGroup name="ГруппаШапка" id="1">
+			<Group>AlwaysHorizontal</Group>
+			<Behavior>Usual</Behavior>
+			<ShowTitle>false</ShowTitle>
+			<ExtendedTooltip name="ГруппаШапкаРасширеннаяПодсказка" id="2"/>
+			<ChildItems>
+				<InputField name="НачалоПериода" id="3">
+					<DataPath>Объект.НачалоПериода</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Начало периода</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="НачалоПериодаКонтекстноеМеню" id="4"/>
+					<ExtendedTooltip name="НачалоПериодаРасширеннаяПодсказка" id="5"/>
+				</InputField>
+				<InputField name="ОкончаниеПериода" id="6">
+					<DataPath>Объект.ОкончаниеПериода</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Окончание периода</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="ОкончаниеПериодаКонтекстноеМеню" id="7"/>
+					<ExtendedTooltip name="ОкончаниеПериодаРасширеннаяПодсказка" id="8"/>
+				</InputField>
+				<InputField name="ИмяФайлаОтчета" id="9">
+					<DataPath>Объект.ИмяФайлаОтчета</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Файл книги Excel</v8:content>
+						</v8:item>
+					</Title>
+					<HorizontalStretch>true</HorizontalStretch>
+					<ContextMenu name="ИмяФайлаОтчетаКонтекстноеМеню" id="10"/>
+					<ExtendedTooltip name="ИмяФайлаОтчетаРасширеннаяПодсказка" id="11"/>
+				</InputField>
+				<Button name="КнопкаВыбратьФайл" id="12">
+					<CommandName>Form.Command.ВыбратьФайл</CommandName>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Выбрать файл…</v8:content>
+						</v8:item>
+					</Title>
+					<ExtendedTooltip name="КнопкаВыбратьФайлРасширеннаяПодсказка" id="13"/>
+				</Button>
+			</ChildItems>
+		</UsualGroup>
+		<Table name="ПодразделенияДляОтчета" id="20">
+			<DataPath>Объект.ПодразделенияДляОтчета</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Листы книги</v8:content>
+				</v8:item>
+			</Title>
+			<RowFilter xsi:nil="true"/>
+			<ContextMenu name="ПодразделенияДляОтчетаКонтекстноеМеню" id="21"/>
+			<AutoCommandBar name="ПодразделенияДляОтчетаКоманднаяПанель" id="22">
+				<ChildItems>
+					<Button name="ПодразделенияДляОтчетаПеренумеровать" id="64">
+						<Type>CommandBarButton</Type>
+						<CommandName>Form.Command.ПеренумероватьЛисты</CommandName>
+						<ExtendedTooltip name="ПодразделенияДляОтчетаПеренумероватьРасширеннаяПодсказка" id="65"/>
+					</Button>
+				</ChildItems>
+			</AutoCommandBar>
+			<ExtendedTooltip name="ПодразделенияДляОтчетаРасширеннаяПодсказка" id="23"/>
+			<SearchStringAddition name="ПодразделенияДляОтчетаСтрокаПоиска" id="24">
+				<AdditionSource>
+					<Item>ПодразделенияДляОтчета</Item>
+					<Type>SearchStringRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="ПодразделенияДляОтчетаСтрокаПоискаКонтекстноеМеню" id="25"/>
+				<ExtendedTooltip name="ПодразделенияДляОтчетаСтрокаПоискаРасширеннаяПодсказка" id="26"/>
+			</SearchStringAddition>
+			<ViewStatusAddition name="ПодразделенияДляОтчетаСостояниеПросмотра" id="27">
+				<AdditionSource>
+					<Item>ПодразделенияДляОтчета</Item>
+					<Type>ViewStatusRepresentation</Type>
+				</AdditionSource>
+				<ContextMenu name="ПодразделенияДляОтчетаСостояниеПросмотраКонтекстноеМеню" id="28"/>
+				<ExtendedTooltip name="ПодразделенияДляОтчетаСостояниеПросмотраРасширеннаяПодсказка" id="29"/>
+			</ViewStatusAddition>
+			<SearchControlAddition name="ПодразделенияДляОтчетаУправлениеПоиском" id="33">
+				<AdditionSource>
+					<Item>ПодразделенияДляОтчета</Item>
+					<Type>SearchControl</Type>
+				</AdditionSource>
+				<ContextMenu name="ПодразделенияДляОтчетаУправлениеПоискомКонтекстноеМеню" id="34"/>
+				<ExtendedTooltip name="ПодразделенияДляОтчетаУправлениеПоискомРасширеннаяПодсказка" id="35"/>
+			</SearchControlAddition>
+			<ChildItems>
+				<CheckBoxField name="ПодразделенияДляОтчетаВыгружать" id="40">
+					<DataPath>Объект.ПодразделенияДляОтчета.Выгружать</DataPath>
+					<ContextMenu name="ПодразделенияДляОтчетаВыгружатьКонтекстноеМеню" id="41"/>
+					<ExtendedTooltip name="ПодразделенияДляОтчетаВыгружатьРасширеннаяПодсказка" id="42"/>
+				</CheckBoxField>
+				<InputField name="ПодразделенияДляОтчетаНомерСтраницы" id="43">
+					<DataPath>Объект.ПодразделенияДляОтчета.НомерСтраницы</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ПодразделенияДляОтчетаНомерСтраницыКонтекстноеМеню" id="44"/>
+					<ExtendedTooltip name="ПодразделенияДляОтчетаНомерСтраницыРасширеннаяПодсказка" id="45"/>
+				</InputField>
+				<InputField name="ПодразделенияДляОтчетаИмяЛиста" id="46">
+					<DataPath>Объект.ПодразделенияДляОтчета.ИмяЛиста</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ПодразделенияДляОтчетаИмяЛистаКонтекстноеМеню" id="47"/>
+					<ExtendedTooltip name="ПодразделенияДляОтчетаИмяЛистаРасширеннаяПодсказка" id="48"/>
+				</InputField>
+				<InputField name="ПодразделенияДляОтчетаПодразделение" id="49">
+					<DataPath>Объект.ПодразделенияДляОтчета.Подразделение</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ПодразделенияДляОтчетаПодразделениеКонтекстноеМеню" id="50"/>
+					<ExtendedTooltip name="ПодразделенияДляОтчетаПодразделениеРасширеннаяПодсказка" id="51"/>
+				</InputField>
+				<InputField name="ПодразделенияДляОтчетаНаправлениеДеятельности" id="52">
+					<DataPath>Объект.ПодразделенияДляОтчета.НаправлениеДеятельности</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ПодразделенияДляОтчетаНаправлениеДеятельностиКонтекстноеМеню" id="53"/>
+					<ExtendedTooltip name="ПодразделенияДляОтчетаНаправлениеДеятельностиРасширеннаяПодсказка" id="54"/>
+				</InputField>
+				<CheckBoxField name="ПодразделенияДляОтчетаОтчетПоНаправлению" id="55">
+					<DataPath>Объект.ПодразделенияДляОтчета.ОтчетПоНаправлению</DataPath>
+					<ContextMenu name="ПодразделенияДляОтчетаОтчетПоНаправлениюКонтекстноеМеню" id="56"/>
+					<ExtendedTooltip name="ПодразделенияДляОтчетаОтчетПоНаправлениюРасширеннаяПодсказка" id="57"/>
+				</CheckBoxField>
+				<CheckBoxField name="ПодразделенияДляОтчетаТолькоЭтоПодразделение" id="58">
+					<DataPath>Объект.ПодразделенияДляОтчета.ТолькоЭтоПодразделение</DataPath>
+					<ContextMenu name="ПодразделенияДляОтчетаТолькоЭтоПодразделениеКонтекстноеМеню" id="59"/>
+					<ExtendedTooltip name="ПодразделенияДляОтчетаТолькоЭтоПодразделениеРасширеннаяПодсказка" id="60"/>
+				</CheckBoxField>
+				<InputField name="ПодразделенияДляОтчетаВариантОтчета" id="61">
+					<DataPath>Объект.ПодразделенияДляОтчета.ВариантОтчета</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ПодразделенияДляОтчетаВариантОтчетаКонтекстноеМеню" id="62"/>
+					<ExtendedTooltip name="ПодразделенияДляОтчетаВариантОтчетаРасширеннаяПодсказка" id="63"/>
+				</InputField>
+			</ChildItems>
+		</Table>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Объект" id="1">
+			<Type>
+				<v8:Type>cfg:ExternalDataProcessorObject.ВыгрузкаОтчетаPLвExcel</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+			<Save>
+				<Field>Объект.НачалоПериода</Field>
+				<Field>Объект.ОкончаниеПериода</Field>
+				<Field>Объект.ИмяФайлаОтчета</Field>
+			</Save>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="СформироватьExcel" id="1">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сформировать Excel</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сформировать книгу Excel: каждый лист — отчёт PL по подразделению или направлению. Отчёт строится 2-5 секунд на лист, при ~32 листах — несколько минут; ход показывается в окне состояния.</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>СформироватьExcel</Action>
+		</Command>
+		<Command name="ЗаполнитьИзРегистра" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Заполнить из регистра</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Перечитать постоянные настройки состава листов из регистра А_СтруктураВыгрузкиОтчетаPLвЕксел (правки таблицы будут заменены)</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ЗаполнитьИзРегистра</Action>
+		</Command>
+		<Command name="СохранитьВРегистр" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сохранить в регистр</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Записать таблицу как новые постоянные настройки состава листов (полная перезапись регистра)</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>СохранитьВРегистр</Action>
+		</Command>
+		<Command name="ПеренумероватьЛисты" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Перенумеровать листы</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Проставить номера страниц 1..N по текущему порядку строк таблицы</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ПеренумероватьЛисты</Action>
+		</Command>
+		<Command name="ВыбратьФайл" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Выбрать файл…</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Указать, куда сохранить книгу Excel</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ВыбратьФайл</Action>
+		</Command>
+	</Commands>
+</Form>
