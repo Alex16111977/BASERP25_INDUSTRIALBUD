@@ -51,7 +51,10 @@ print("=" * 88)
                "test_otchetpl_v9_rko_analitika_2026-08-27.py",
                "acceptance_rko_analitika_2026-08-27.py",
                "v10_full.sql",
-               "test_otchetpl_v10_kommentarii_2026-08-27.py"]
+               "test_otchetpl_v10_kommentarii_2026-08-27.py",
+               "v11_full.sql",
+               "test_otchetpl_v11_amortizaciya_os_2026-08-28.py",
+               "acceptance_amortizaciya_os_2026-08-28.py"]
 для_истории = ["v2_full.sql", "v3_full.sql", "v4_full.sql", "v5_full.sql", "v6_full.sql"]
 удалены = ["test_otchetpl_v5_amortizaciya_2026-08-20.py",
            "test_otchetpl_v6_pko_forma2_2026-08-20.py"]
@@ -62,12 +65,12 @@ for ф in удалены:
 
 print("")
 print("=" * 88)
-print("3. Запрос в модуле == действующий v10_full.sql")
+print("3. Запрос в модуле == действующий v11_full.sql")
 print("=" * 88)
-sql = io.open(os.path.join(ТЕСТ, "v10_full.sql"), encoding='utf-8').read().replace("\r\n", "\n").rstrip("\n")
+sql = io.open(os.path.join(ТЕСТ, "v11_full.sql"), encoding='utf-8').read().replace("\r\n", "\n").rstrip("\n")
 куски = [s for s in sql.split("\n") if s.strip()]
 попало = sum(1 for s in куски if s.replace('"', '""') in м_сырой)
-чек("все непустые строки v10 присутствуют в модуле", попало == len(куски),
+чек("все непустые строки v11 присутствуют в модуле", попало == len(куски),
     "совпало %d из %d" % (попало, len(куски)))
 
 print("")
