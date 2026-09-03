@@ -1,0 +1,157 @@
+{
+  "dataSets": [{
+    "name": "Данные",
+    "query": "@А_ОтчетПоСтатьямPL_ДДС_СтатьямРасходам.query.sql",
+    "fields": [
+      { "field": "ГруппаPL", "type": "CatalogRef.А_ГруппаСтатей_PL", "title": "Группа PL", "role": "dimension" },
+      { "field": "ГруппаСорт", "type": "decimal(10,0)", "title": "Сорт группы" },
+      { "field": "СтатьяPL", "type": "CatalogRef.А_Статьи_PL", "title": "Статья PL", "role": "dimension" },
+      { "field": "КодPL", "type": "string(9)", "title": "Код PL" },
+      { "field": "СортPL", "type": "decimal(10,0)", "title": "Сорт статьи PL" },
+      { "field": "ТипСтатьи", "type": "EnumRef.А_ТипСтатьиPL", "title": "Тип статьи" },
+      { "field": "НомерСтроки", "type": "decimal(5,0)", "title": "№ строки ТЧ" },
+      { "field": "ДДС", "type": "CatalogRef.СтатьиДвиженияДенежныхСредств", "title": "Статья ДДС (деньги)", "role": "dimension" },
+      { "field": "СтатьяРасходов", "type": "ChartOfCharacteristicTypesRef.СтатьиРасходов", "title": "Статья расходов (затраты)", "role": "dimension" },
+      { "field": "ВхожденийДДС", "type": "decimal(5,0)", "title": "ДДС: в скольких PL" },
+      { "field": "ВхожденийСтатьиРасходов", "type": "decimal(5,0)", "title": "Статья расходов: в скольких PL" },
+      { "field": "ПроблемаДДС", "type": "decimal(5,0)", "title": "Проблем по ДДС" },
+      { "field": "ПроблемаСтатьиРасходов", "type": "decimal(5,0)", "title": "Проблем по статьям расходов" },
+      { "field": "НетСтрок", "type": "decimal(5,0)", "title": "PL без строк ТЧ" },
+      { "field": "КоличествоСтрок", "type": "decimal(5,0)", "title": "Строк ТЧ" }
+    ]
+  }],
+  "totalFields": [
+    { "dataPath": "ГруппаСорт", "expression": "Максимум(ГруппаСорт)" },
+    { "dataPath": "СортPL", "expression": "Максимум(СортPL)" },
+    { "dataPath": "ВхожденийДДС", "expression": "Максимум(ВхожденийДДС)" },
+    { "dataPath": "ВхожденийСтатьиРасходов", "expression": "Максимум(ВхожденийСтатьиРасходов)" },
+    { "dataPath": "ПроблемаДДС", "expression": "Сумма(ПроблемаДДС)" },
+    { "dataPath": "ПроблемаСтатьиРасходов", "expression": "Сумма(ПроблемаСтатьиРасходов)" },
+    { "dataPath": "НетСтрок", "expression": "Сумма(НетСтрок)" },
+    { "dataPath": "КоличествоСтрок", "expression": "Сумма(КоличествоСтрок)" }
+  ],
+  "settingsVariants": [
+    {
+      "name": "ПоСтатьямPL",
+      "title": "По статьям PL: группа → статья → ДДС и статьи расходов",
+      "settings": {
+        "selection": ["ДДС", "ВхожденийДДС", "СтатьяРасходов", "ВхожденийСтатьиРасходов", "КоличествоСтрок", "ПроблемаДДС", "ПроблемаСтатьиРасходов"],
+        "conditionalAppearance": [
+          {
+            "filter": [{ "group": "Or", "items": ["ПроблемаДДС > 0", "ПроблемаСтатьиРасходов > 0"] }],
+            "appearance": { "ЦветФона": "web:MistyRose" },
+            "presentation": "Строка/группа содержит вхождение в 2+ PL"
+          },
+          {
+            "selection": ["СтатьяРасходов", "ВхожденийСтатьиРасходов"],
+            "filter": ["ВхожденийСтатьиРасходов >= 2"],
+            "appearance": { "ЦветФона": "web:LightCoral" },
+            "presentation": "Статья расходов входит в 2+ PL"
+          },
+          {
+            "selection": ["ДДС", "ВхожденийДДС"],
+            "filter": ["ВхожденийДДС >= 2"],
+            "appearance": { "ЦветФона": "web:LightCoral" },
+            "presentation": "ДДС входит в 2+ PL"
+          }
+        ],
+        "outputParameters": { "Заголовок": "Статьи PL: ДДС и статьи расходов (красным — вхождение в 2 и более PL)" },
+        "structure": [
+          {
+            "groupFields": ["ГруппаPL"],
+            "order": ["ГруппаСорт", "Auto"],
+            "children": [
+              {
+                "groupFields": ["СтатьяPL"],
+                "order": ["СортPL", "Auto"],
+                "children": [ { "groupFields": [], "order": ["НомерСтроки"] } ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "ПоСтатьямРасходов",
+      "title": "По статьям расходов: статья расходов → статьи PL → ДДС",
+      "settings": {
+        "selection": ["ВхожденийСтатьиРасходов", "ДДС", "ВхожденийДДС", "КоличествоСтрок", "ПроблемаСтатьиРасходов"],
+        "filter": ["СтатьяРасходов filled"],
+        "conditionalAppearance": [
+          {
+            "filter": [{ "group": "Or", "items": ["ПроблемаДДС > 0", "ПроблемаСтатьиРасходов > 0"] }],
+            "appearance": { "ЦветФона": "web:MistyRose" },
+            "presentation": "Строка/группа содержит вхождение в 2+ PL"
+          },
+          {
+            "selection": ["СтатьяРасходов", "ВхожденийСтатьиРасходов"],
+            "filter": ["ВхожденийСтатьиРасходов >= 2"],
+            "appearance": { "ЦветФона": "web:LightCoral" },
+            "presentation": "Статья расходов входит в 2+ PL"
+          },
+          {
+            "selection": ["ДДС", "ВхожденийДДС"],
+            "filter": ["ВхожденийДДС >= 2"],
+            "appearance": { "ЦветФона": "web:LightCoral" },
+            "presentation": "ДДС входит в 2+ PL"
+          }
+        ],
+        "outputParameters": { "Заголовок": "Статьи расходов → статьи PL (красным — вхождение в 2 и более PL)" },
+        "structure": [
+          {
+            "groupFields": ["СтатьяРасходов"],
+            "order": ["ВхожденийСтатьиРасходов desc", "Auto"],
+            "children": [
+              {
+                "groupFields": ["СтатьяPL"],
+                "order": ["СортPL", "Auto"],
+                "children": [ { "groupFields": [], "order": ["НомерСтроки"] } ]
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "name": "ПоДДС",
+      "title": "По статьям ДДС: ДДС → статьи PL → статьи расходов",
+      "settings": {
+        "selection": ["ВхожденийДДС", "СтатьяРасходов", "ВхожденийСтатьиРасходов", "КоличествоСтрок", "ПроблемаДДС"],
+        "filter": ["ДДС filled"],
+        "conditionalAppearance": [
+          {
+            "filter": [{ "group": "Or", "items": ["ПроблемаДДС > 0", "ПроблемаСтатьиРасходов > 0"] }],
+            "appearance": { "ЦветФона": "web:MistyRose" },
+            "presentation": "Строка/группа содержит вхождение в 2+ PL"
+          },
+          {
+            "selection": ["СтатьяРасходов", "ВхожденийСтатьиРасходов"],
+            "filter": ["ВхожденийСтатьиРасходов >= 2"],
+            "appearance": { "ЦветФона": "web:LightCoral" },
+            "presentation": "Статья расходов входит в 2+ PL"
+          },
+          {
+            "selection": ["ДДС", "ВхожденийДДС"],
+            "filter": ["ВхожденийДДС >= 2"],
+            "appearance": { "ЦветФона": "web:LightCoral" },
+            "presentation": "ДДС входит в 2+ PL"
+          }
+        ],
+        "outputParameters": { "Заголовок": "Статьи ДДС → статьи PL (красным — вхождение в 2 и более PL)" },
+        "structure": [
+          {
+            "groupFields": ["ДДС"],
+            "order": ["ВхожденийДДС desc", "Auto"],
+            "children": [
+              {
+                "groupFields": ["СтатьяPL"],
+                "order": ["СортPL", "Auto"],
+                "children": [ { "groupFields": [], "order": ["НомерСтроки"] } ]
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
