@@ -131,9 +131,14 @@ def table_rows(grid):
     header = grid[hdr]
     start = hdr + 1
     header2 = None
+    header3 = None
     if start < len(grid) and "Организация ЗУП" in grid[start]:
         header2 = grid[start]
         start += 1
+    if start < len(grid) and "Табель Казны" in grid[start]:
+        header3 = grid[start]
+        start += 1
+    table_rows.header3 = header3
     data = []
     for row in grid[start:]:
         first = next((c for c in row if c), "")
@@ -149,9 +154,17 @@ def table_rows(grid):
     return header, data
 
 
-def is_org_row(row):
+def is_doc_row(row):
+    return next((c for c in row if c), "").startswith("Табель учета")
+
+
+def is_zup_org_row(row):
     first = next((c for c in row if c), "")
     return first.startswith("ТОВ") or first.startswith("ФОП")
+
+
+def is_org_row(row):
+    return is_zup_org_row(row) or is_doc_row(row)
 
 
 def org_rows_after(all_rows, i_emp):
@@ -179,6 +192,9 @@ def main():
     md = report.Метаданные()
     check(S(md.Имя) == "ОтчетПоДаннымТабелейКазныиБазыЗУП", "имя отчёта: " + S(md.Имя))
     check(S(md.ОсновнаяФорма.ПолноеИмя()) == "ОбщаяФорма.ФормаОтчета", "основная форма = ОбщаяФорма.ФормаОтчета (%s)" % S(md.ОсновнаяФорма.ПолноеИмя()))
+    схема0 = report.ПолучитьМакет("ОсновнаяСхемаКомпоновкиДанных")
+    имена_параметров = [S(схема0.Параметры.Получить(i).Имя) for i in range(схема0.Параметры.Количество())]
+    check(имена_параметров == ["Период"], f"параметры СКД только Период: {имена_параметров}")
     сведения = report.СведенияОВнешнейОбработке()
     check(S(сведения.Вид) == "ДополнительныйОтчет" and сведения.БезопасныйРежим is False, "СведенияОВнешнейОбработке: ДополнительныйОтчет, БезопасныйРежим = Ложь")
 
@@ -228,7 +244,8 @@ def main():
     check(h2 is not None, "есть вторая строка заголовка с колонками организаций ЗУП")
     ci_org = col(h2, "Организация ЗУП")
     i_ch = next(i for i, rr in enumerate(all_rows) if rr[c_fio] == "Чешко Сергій Анатолійович")
-    org_rows = org_rows_after(all_rows, i_ch)
+    child_rows = org_rows_after(all_rows, i_ch)
+    org_rows = [rr for rr in child_rows if is_zup_org_row(rr)]
     print("   строки организаций Чешко:", [(rr[ci_org], rr[col(h2, "Дни работа (орг)")], rr[col(h2, "Часы работа (орг)")], rr[col(h2, "Начислено (орг)")], rr[col(h2, "Приём в организацию")]) for rr in org_rows])
     ind = [rr for rr in org_rows if "ІНДАСТРІАЛБУД" in rr[ci_org]]
     stl = [rr for rr in org_rows if "ІНДЕПТ СТІЛ" in rr[ci_org]]
@@ -238,6 +255,18 @@ def main():
         check(ind[0][col(h2, "Приём в организацию")] == "23.07.2025" and ind[0][col(h2, "Договор (ЗУП)")] == "Трудовой" and ind[0][col(h2, "Источник даты приёма")] == "" and ind[0][col(h2, "Увольнение из организации")] == "", "Чешко/ІНДАСТРІАЛБУД: приём 23.07.2025 по кадровому регистру, трудовой договор, не уволен")
     if stl:
         check(stl[0][col(h2, "Приём в организацию")] == "07.05.2025" and stl[0][col(h2, "Увольнение из организации")] == "22.07.2025", "Чешко/ІНДЕПТ СТІЛ: приём 07.05.2025, увольнение 22.07.2025 по регистру")
+    # --- табели Казны под сотрудником (связанный набор СводДок), расшифровка до документа ---
+    doc_rows = [rr for rr in child_rows if is_doc_row(rr)]
+    h3 = table_rows.header3
+    check(h3 is not None, "есть третья строка заголовка с колонками табелей Казны")
+    ci_doc = col(h3, "Табель Казны") if h3 else 0
+    print("   табели Чешко:", [(rr[ci_doc], rr[col(h3, "Дни официальные (табель)")], rr[col(h3, "Часы официальные (табель)")]) for rr in doc_rows] if h3 else doc_rows)
+    if h3:
+        check(sum(num(rr[col(h3, "Часы официальные (табель)")]) or 0 for rr in doc_rows) == vals["Часы официальные (Р+М)"], "Чешко: сумма официальных часов по табелям = официальные часы сотрудника")
+    check(len(doc_rows) >= 1 and any("000003260" in rr[ci_doc] for rr in doc_rows), "Чешко: под сотрудником есть строка табеля 000003260 (ссылка на документ)")
+    bad = [rr for rr in data if rr[col(header, "Трудоустроен")] not in ("Да", "Нет")]
+    print("   строки сотрудников без Да/Нет в «Трудоустроен»:", [next((c for c in rr if c), "")[:60] for rr in bad][:5])
+    check(not bad, "все строки уровня сотрудника распознаны")
     n_org_rows = sum(1 for rr in all_rows if is_org_row(rr))
     print(f"   всего строк организаций: {n_org_rows}")
     check(n_org_rows >= len(data) - 150, "строки организаций есть у большинства сотрудников")
@@ -249,12 +278,12 @@ def main():
     if bes:
         r = bes[0]
         i_b = next(i for i, rr in enumerate(all_rows) if rr[col(header, "ИНН")] == "2627718590")
-        b_org = org_rows_after(all_rows, i_b)
+        b_org = [rr for rr in org_rows_after(all_rows, i_b) if is_zup_org_row(rr)]
         txt = "; ".join(rr[ci_org] + ": " + rr[col(h2, "Договор (ЗУП)")] + " / " + rr[col(h2, "Источник даты приёма")] for rr in b_org)
         print("   Беспалько:", r[col(header, "Дата приёма (ЗУП)")], "|", r[col(header, "Актуален в ЗУП (по кадровому регистру)")], "|", txt, "| контроль:", r[col(header, "Контроль")])
-        check(r[col(header, "Дата приёма (ЗУП)")] == "24.04.2025" and r[col(header, "Актуален в ЗУП (по кадровому регистру)")] == "Нет", "Беспалько: дата приёма 24.04.2025 из приказа, по регистру НЕ актуален")
-        check("приказ не проведён" in txt and "ГПХ" in txt, "Беспалько: у организации источник «приказ не проведён», договор «Трудовой + ГПХ»")
-        check("Приказ о приёме в ЗУП не проведён" in r[col(header, "Контроль")] and "ІНД00075" in r[col(header, "Контроль")] and "помечен на удаление" in r[col(header, "Контроль")], "Беспалько: контроль «приказ ІНД00075 не проведён, помечен на удаление»")
+        check(r[col(header, "Дата приёма (ЗУП)")] == "24.04.2025" and r[col(header, "Актуален в ЗУП (по кадровому регистру)")] == "Нет", "Беспалько: дата приёма 24.04.2025 из «даты начала», по регистру НЕ актуален")
+        check("дата начала" in txt and "ГПХ" in txt, "Беспалько: у организации источник «дата начала», договор «Трудовой + ГПХ»")
+        check("риказ" not in r[col(header, "Контроль")] and "риказ" not in txt, "Беспалько: непроведённые приказы в отчёте не упоминаются")
 
     # --- Сотрудник ЗУП в двух организациях: дни по уникальным датам, часы/начисления суммой ---
     nz, kk = bounds(zup)
@@ -269,7 +298,7 @@ def main():
         check(len(mrow) == 1, f"сотрудник ЗУП с {n_org} организациями (ДРФО {drfo}) в Своде одной строкой: {len(mrow)}")
         if mrow:
             i_m = next(i for i, rr in enumerate(all_rows) if rr[col(header, "ИНН")] == drfo)
-            m_org = org_rows_after(all_rows, i_m)
+            m_org = [rr for rr in org_rows_after(all_rows, i_m) if is_zup_org_row(rr)]
             print("   мульти-орг организации:", [(rr[ci_org], rr[col(h2, "Дни работа (орг)")], rr[col(h2, "Начислено (орг)")]) for rr in m_org])
             check(len(m_org) == n_org, f"под сотрудником {n_org} строк организаций")
         if mrow:
@@ -295,6 +324,7 @@ def main():
     grid = compose(kz, report, "ПоДням")
     flat = ["|".join(r) for r in grid]
     ch_days = [l for l in flat if "8М" in l and ("11.08.2026" in l or "12.08.2026" in l or "13.08.2026" in l)]
+    check(any("Табель учета рабочего времени 000003260" in l for l in ch_days), "по дням: в строке дня есть ссылка на табель 000003260")
     print(f"   По дням: таблица {len(grid)} строк; строк с «8М» 11–13.08: {len(ch_days)}")
     check(len(grid) > 50, "вариант «По дням» скомпонован")
     check(len(ch_days) >= 3, "по дням есть строки «8М» за 11–13.08 (Чешко и др.)")
