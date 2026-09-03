@@ -77,8 +77,11 @@ def expected(kz, zup):
         СГРУППИРОВАТЬ ПО Н.Сотрудник.Физлицо.КодПоДРФО""".replace("WHERE", "ГДЕ"), {"Н": nz, "К": kk})
     z_work = {zup.String(r["ДРФО"]).strip(): float(r["ДниРабота"]) for r in zt if zup.String(r["ДРФО"]).strip()}
     z_nach = {zup.String(r["ДРФО"]).strip(): float(r["Начислено"]) for r in zn if zup.String(r["ДРФО"]).strip()}
+    # актуальность ПО РЕГИСТРУ (как ЛичнаяКарточка): есть движения и последнее не увольнение; только трудовые договоры
     za = run(zup, """ВЫБРАТЬ РАЗЛИЧНЫЕ С.Физлицо.КодПоДРФО КАК ДРФО ИЗ Справочник.СотрудникиОрганизаций КАК С
-        ГДЕ НЕ С.ПометкаУдаления И С.Актуальность И С.Физлицо.КодПоДРФО <> "" И С.ВидДоговора = ЗНАЧЕНИЕ(Перечисление.ВидыДоговоровСФизЛицами.ТрудовойДоговор)""")
+        ВНУТРЕННЕЕ СОЕДИНЕНИЕ РегистрСведений.РаботникиОрганизаций.СрезПоследних(, ) КАК Посл ПО Посл.Сотрудник = С.Ссылка
+        ГДЕ НЕ С.ПометкаУдаления И С.Физлицо.КодПоДРФО <> "" И С.ВидДоговора = ЗНАЧЕНИЕ(Перечисление.ВидыДоговоровСФизЛицами.ТрудовойДоговор)
+          И НЕ Посл.Регистратор ССЫЛКА Документ.УвольнениеИзОрганизаций""")
     actual = {zup.String(r["ДРФО"]).strip() for r in za}
     zup_only = {d for d in set(z_work) | {d for d, s in z_nach.items() if s != 0} | actual if d not in kz_inn}
     no_flag = sorted(g[0][0] for key, g in groups.items() if g[0][1] and not any(tr for _, _, tr in g) and (z_nach.get(g[0][1], 0) != 0 or z_work.get(g[0][1], 0) > 0 or g[0][1] in actual))
@@ -126,14 +129,38 @@ def table_rows(grid):
             break
     assert hdr is not None, "строка заголовка не найдена"
     header = grid[hdr]
+    start = hdr + 1
+    header2 = None
+    if start < len(grid) and "Организация ЗУП" in grid[start]:
+        header2 = grid[start]
+        start += 1
     data = []
-    for row in grid[hdr + 1:]:
+    for row in grid[start:]:
         first = next((c for c in row if c), "")
         if first.startswith("Итого"):
             break
         if any(row):
             data.append(row)
+    table_rows.header2 = header2
+    if header2 is not None:
+        # строки организаций: первая колонка = организация ЗУП («ТОВ …»); строки сотрудников — остальные
+        table_rows.all_rows = data
+        return header, [r for r in data if not is_org_row(r)]
     return header, data
+
+
+def is_org_row(row):
+    first = next((c for c in row if c), "")
+    return first.startswith("ТОВ") or first.startswith("ФОП")
+
+
+def org_rows_after(all_rows, i_emp):
+    out = []
+    for rr in all_rows[i_emp + 1:]:
+        if not is_org_row(rr):
+            break
+        out.append(rr)
+    return out
 
 
 def col(header, title):
@@ -190,22 +217,44 @@ def main():
         exp_diff = vals["Дни официальные (Р+М)"] + vals["Дни К (командировка)"] - vals["Дни работа (ЗУП)"]
         check(vals["Расхождение дней (Казна − ЗУП)"] == exp_diff, f"Чешко: расхождение дней = официальные+К − ЗУП = {exp_diff}")
         check(vals["Начислено (ЗУП)"] == 29500, "Чешко: начислено ЗУП = 29 500")
-        print("   Чешко приём/увольнение:", r[col(header, "Дата приёма (ЗУП)")], "|", r[col(header, "Дата увольнения (ЗУП)")], "|", r[col(header, "Приём / увольнение (ЗУП по организациям)")])
+        print("   Чешко приём/увольнение:", r[col(header, "Дата приёма (ЗУП)")], "|", r[col(header, "Дата увольнения (ЗУП)")])
         check(r[col(header, "Дата приёма (ЗУП)")] == "23.07.2025" and r[col(header, "Дата увольнения (ЗУП)")] == "", "Чешко: приём 23.07.2025 (актуальная запись), увольнения нет")
-        check("по н.в." in r[col(header, "Приём / увольнение (ЗУП по организациям)")] and "22.07.2025" in r[col(header, "Приём / увольнение (ЗУП по организациям)")], "Чешко: текст по организациям содержит актуальную и уволенную записи")
     zup_only_rows = [r for r in data if not r[col(header, "ИНН")] == "" and "табеля Казны нет" in r[col(header, "Контроль")]]
     check(len(zup_only_rows) == n_zup_only, f"строк «В ЗУП есть, табеля Казны нет» = {len(zup_only_rows)}")
+
+    # --- уровень организаций ЗУП под сотрудником (связанный набор СводОрг) ---
+    all_rows = getattr(table_rows, "all_rows", data)
+    h2 = table_rows.header2
+    check(h2 is not None, "есть вторая строка заголовка с колонками организаций ЗУП")
+    ci_org = col(h2, "Организация ЗУП")
+    i_ch = next(i for i, rr in enumerate(all_rows) if rr[c_fio] == "Чешко Сергій Анатолійович")
+    org_rows = org_rows_after(all_rows, i_ch)
+    print("   строки организаций Чешко:", [(rr[ci_org], rr[col(h2, "Дни работа (орг)")], rr[col(h2, "Часы работа (орг)")], rr[col(h2, "Начислено (орг)")], rr[col(h2, "Приём в организацию")]) for rr in org_rows])
+    ind = [rr for rr in org_rows if "ІНДАСТРІАЛБУД" in rr[ci_org]]
+    stl = [rr for rr in org_rows if "ІНДЕПТ СТІЛ" in rr[ci_org]]
+    check(len(org_rows) == 2 and len(ind) == 1 and len(stl) == 1, "Чешко: две организации ЗУП под сотрудником (действующая и уволенная)")
+    if ind:
+        check(num(ind[0][col(h2, "Дни работа (орг)")]) == 21 and num(ind[0][col(h2, "Часы работа (орг)")]) == 168 and num(ind[0][col(h2, "Начислено (орг)")]) == 29500, "Чешко/ІНДАСТРІАЛБУД: 21 дн / 168 ч / 29 500")
+        check(ind[0][col(h2, "Приём в организацию")] == "23.07.2025" and ind[0][col(h2, "Договор (ЗУП)")] == "Трудовой" and ind[0][col(h2, "Источник даты приёма")] == "" and ind[0][col(h2, "Увольнение из организации")] == "", "Чешко/ІНДАСТРІАЛБУД: приём 23.07.2025 по кадровому регистру, трудовой договор, не уволен")
+    if stl:
+        check(stl[0][col(h2, "Приём в организацию")] == "07.05.2025" and stl[0][col(h2, "Увольнение из организации")] == "22.07.2025", "Чешко/ІНДЕПТ СТІЛ: приём 07.05.2025, увольнение 22.07.2025 по регистру")
+    n_org_rows = sum(1 for rr in all_rows if is_org_row(rr))
+    print(f"   всего строк организаций: {n_org_rows}")
+    check(n_org_rows >= len(data) - 150, "строки организаций есть у большинства сотрудников")
+    check(not any(t in header for t in ("Есть контроль", "Нет флага Трудоустроен", "Нет табеля Казны", "Организации (Казна)")), "служебные флаги и «Организации (Казна)» в выводе не показаны")
 
     # --- Беспалько: трудовой договор без приказа о приёме, дата из «даты начала», плюс договор ГПХ ---
     bes = [r for r in data if r[col(header, "ИНН")] == "2627718590"]
     check(len(bes) == 1, f"Беспалько О.Ю. в Своде одной строкой: {len(bes)}")
     if bes:
         r = bes[0]
-        txt = r[col(header, "Приём / увольнение (ЗУП по организациям)")]
-        print("   Беспалько:", r[col(header, "Дата приёма (ЗУП)")], "|", r[col(header, "Актуален в ЗУП (трудовой договор)")], "|", txt, "| контроль:", r[col(header, "Контроль")])
-        check(r[col(header, "Дата приёма (ЗУП)")] == "24.04.2025", "Беспалько: дата приёма 24.04.2025 из «даты начала» трудового договора")
-        check("(дата начала)" in txt and "(ГПХ)" in txt, "Беспалько: в тексте пометки «дата начала» и «ГПХ»")
-        check("Нет флага «Трудоустроен»" in r[col(header, "Контроль")] and "24.04.2025" in r[col(header, "Контроль")], "Беспалько: контроль «нет флага Трудоустроен, в ЗУП принят с 24.04.2025»")
+        i_b = next(i for i, rr in enumerate(all_rows) if rr[col(header, "ИНН")] == "2627718590")
+        b_org = org_rows_after(all_rows, i_b)
+        txt = "; ".join(rr[ci_org] + ": " + rr[col(h2, "Договор (ЗУП)")] + " / " + rr[col(h2, "Источник даты приёма")] for rr in b_org)
+        print("   Беспалько:", r[col(header, "Дата приёма (ЗУП)")], "|", r[col(header, "Актуален в ЗУП (по кадровому регистру)")], "|", txt, "| контроль:", r[col(header, "Контроль")])
+        check(r[col(header, "Дата приёма (ЗУП)")] == "24.04.2025" and r[col(header, "Актуален в ЗУП (по кадровому регистру)")] == "Нет", "Беспалько: дата приёма 24.04.2025 из приказа, по регистру НЕ актуален")
+        check("приказ не проведён" in txt and "ГПХ" in txt, "Беспалько: у организации источник «приказ не проведён», договор «Трудовой + ГПХ»")
+        check("Приказ о приёме в ЗУП не проведён" in r[col(header, "Контроль")] and "ІНД00075" in r[col(header, "Контроль")] and "помечен на удаление" in r[col(header, "Контроль")], "Беспалько: контроль «приказ ІНД00075 не проведён, помечен на удаление»")
 
     # --- Сотрудник ЗУП в двух организациях: дни по уникальным датам, часы/начисления суммой ---
     nz, kk = bounds(zup)
@@ -219,8 +268,13 @@ def main():
         mrow = [r for r in data if r[col(header, "ИНН")] == drfo]
         check(len(mrow) == 1, f"сотрудник ЗУП с {n_org} организациями (ДРФО {drfo}) в Своде одной строкой: {len(mrow)}")
         if mrow:
+            i_m = next(i for i, rr in enumerate(all_rows) if rr[col(header, "ИНН")] == drfo)
+            m_org = org_rows_after(all_rows, i_m)
+            print("   мульти-орг организации:", [(rr[ci_org], rr[col(h2, "Дни работа (орг)")], rr[col(h2, "Начислено (орг)")]) for rr in m_org])
+            check(len(m_org) == n_org, f"под сотрудником {n_org} строк организаций")
+        if mrow:
             r = mrow[0]
-            print("   мульти-орг:", r[c_fio], "| орг:", r[col(header, "Организация (ЗУП)")], "| контроль:", r[col(header, "Контроль")])
+            print("   мульти-орг:", r[c_fio], "| контроль:", r[col(header, "Контроль")])
             check(num(r[col(header, "Организаций (ЗУП)")]) == n_org, f"Организаций (ЗУП) = {n_org}")
             check(num(r[col(header, "Дни работа (ЗУП)")]) == n_days, f"Дни работа (ЗУП) по уникальным датам = {n_days} (не сумма по организациям)")
             check("несколько организаций" in r[col(header, "Контроль")], "в Контроле пометка про несколько организаций")
