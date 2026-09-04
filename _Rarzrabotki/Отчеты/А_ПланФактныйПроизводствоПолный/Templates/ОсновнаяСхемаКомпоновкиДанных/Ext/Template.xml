@@ -23,6 +23,22 @@
 			</valueType>
 		</field>
 		<field xsi:type="DataSetFieldField">
+			<dataPath>ПодразделениеОбъекта</dataPath>
+			<field>ПодразделениеОбъекта</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Підрозділ-об'єкт</v8:content>
+				</v8:item>
+			</title>
+			<role>
+				<dcscom:dimension>true</dcscom:dimension>
+			</role>
+			<valueType>
+				<v8:Type xmlns:d5p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d5p1:CatalogRef.СтруктураПредприятия</v8:Type>
+			</valueType>
+		</field>
+		<field xsi:type="DataSetFieldField">
 			<dataPath>ПодразделениеИсполнитель</dataPath>
 			<field>ПодразделениеИсполнитель</field>
 			<title xsi:type="v8:LocalStringType">
@@ -140,8 +156,8 @@
 			</role>
 			<valueType>
 				<v8:Type xmlns:d5p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d5p1:CatalogRef.Номенклатура</v8:Type>
-				<v8:Type xmlns:d5p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d5p1:CatalogRef.ФизическиеЛица</v8:Type>
 				<v8:Type>xs:string</v8:Type>
+				<v8:Type xmlns:d5p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d5p1:CatalogRef.ФизическиеЛица</v8:Type>
 				<v8:StringQualifiers>
 					<v8:Length>200</v8:Length>
 					<v8:AllowedLength>Variable</v8:AllowedLength>
@@ -166,6 +182,26 @@
 					<v8:Length>150</v8:Length>
 					<v8:AllowedLength>Variable</v8:AllowedLength>
 				</v8:StringQualifiers>
+			</valueType>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>Номенклатура</dataPath>
+			<field>Номенклатура</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Номенклатура</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Номенклатура</v8:content>
+				</v8:item>
+			</title>
+			<role>
+				<dcscom:dimension>true</dcscom:dimension>
+			</role>
+			<valueType>
+				<v8:Type xmlns:d5p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d5p1:CatalogRef.Номенклатура</v8:Type>
 			</valueType>
 		</field>
 		<field xsi:type="DataSetFieldField">
@@ -383,6 +419,42 @@
 			</valueType>
 		</field>
 		<field xsi:type="DataSetFieldField">
+			<dataPath>ЦенаПлан</dataPath>
+			<field>ЦенаПлан</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Ціна план, грн</v8:content>
+				</v8:item>
+			</title>
+			<valueType>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>18</v8:Digits>
+					<v8:FractionDigits>2</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</valueType>
+		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ЦенаФакт</dataPath>
+			<field>ЦенаФакт</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Ціна факт, грн</v8:content>
+				</v8:item>
+			</title>
+			<valueType>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>18</v8:Digits>
+					<v8:FractionDigits>2</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</valueType>
+		</field>
+		<field xsi:type="DataSetFieldField">
 			<dataPath>ОтклонениеГрн</dataPath>
 			<field>ОтклонениеГрн</field>
 			<title xsi:type="v8:LocalStringType">
@@ -544,6 +616,24 @@
 				</v8:NumberQualifiers>
 			</valueType>
 		</field>
+		<field xsi:type="DataSetFieldField">
+			<dataPath>ПроцентВиконанняФакт</dataPath>
+			<field>ПроцентВиконанняФакт</field>
+			<title xsi:type="v8:LocalStringType">
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>% виконання до факту</v8:content>
+				</v8:item>
+			</title>
+			<valueType>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>18</v8:Digits>
+					<v8:FractionDigits>2</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</valueType>
+		</field>
 		<dataSource>ИсточникДанных1</dataSource>
 		<objectName>Детали</objectName>
 	</dataSet>
@@ -562,6 +652,14 @@
 	<totalField>
 		<dataPath>ФактГрн</dataPath>
 		<expression>Сумма(ФактГрн)</expression>
+	</totalField>
+	<totalField>
+		<dataPath>ЦенаПлан</dataPath>
+		<expression>ВЫБОР КОГДА Сумма(ПланКол) = 0 ТОГДА 0 ИНАЧЕ Сумма(ПланГрн) / Сумма(ПланКол) КОНЕЦ</expression>
+	</totalField>
+	<totalField>
+		<dataPath>ЦенаФакт</dataPath>
+		<expression>ВЫБОР КОГДА Сумма(ФактКол) = 0 ТОГДА 0 ИНАЧЕ Сумма(ФактГрн) / Сумма(ФактКол) КОНЕЦ</expression>
 	</totalField>
 	<totalField>
 		<dataPath>ОтклонениеЧасы</dataPath>
@@ -623,6 +721,10 @@
 		<dataPath>ПроцентВиконання</dataPath>
 		<expression>ВЫБОР КОГДА Сумма(ПланЧасы) = 0 ТОГДА 0 ИНАЧЕ Сумма(ВиконанняЧасы) / Сумма(ПланЧасы) * 100 КОНЕЦ</expression>
 	</totalField>
+	<totalField>
+		<dataPath>ПроцентВиконанняФакт</dataPath>
+		<expression>ВЫБОР КОГДА Сумма(ФактЧасы) = 0 ТОГДА 0 ИНАЧЕ Сумма(ВиконанняЧасы) / Сумма(ФактЧасы) * 100 КОНЕЦ</expression>
+	</totalField>
 	<parameter>
 		<name>Период</name>
 		<title xsi:type="v8:LocalStringType">
@@ -639,24 +741,6 @@
 			<v8:startDate>0001-01-01T00:00:00</v8:startDate>
 			<v8:endDate>0001-01-01T00:00:00</v8:endDate>
 		</value>
-		<useRestriction>false</useRestriction>
-	</parameter>
-	<parameter>
-		<name>СтруктураСебестоимости</name>
-		<title xsi:type="v8:LocalStringType">
-			<v8:item>
-				<v8:lang>ru</v8:lang>
-				<v8:content>Структура собівартості</v8:content>
-			</v8:item>
-			<v8:item>
-				<v8:lang>uk</v8:lang>
-				<v8:content>Структура собівартості</v8:content>
-			</v8:item>
-		</title>
-		<valueType>
-			<v8:Type xmlns:d4p1="http://v8.1c.ru/8.1/data/enterprise/current-config">d4p1:CatalogRef.А_СтруктураСебестоимости</v8:Type>
-		</valueType>
-		<value xsi:type="xs:string"/>
 		<useRestriction>false</useRestriction>
 	</parameter>
 	<settingsVariant>
@@ -728,11 +812,6 @@
 						<v8:endDate>0001-01-01T00:00:00</v8:endDate>
 					</dcscor:value>
 					<dcsset:userSettingID>c2f3a4b5-1111-2222-3333-444455556666</dcsset:userSettingID>
-				</dcscor:item>
-				<dcscor:item xsi:type="dcsset:SettingsParameterValue">
-					<dcscor:parameter>СтруктураСебестоимости</dcscor:parameter>
-					<dcscor:value xsi:nil="true"/>
-					<dcsset:userSettingID>c2f3a4b5-7777-8888-9999-aaaabbbbcccc</dcsset:userSettingID>
 				</dcscor:item>
 			</dcsset:dataParameters>
 			<dcsset:conditionalAppearance>

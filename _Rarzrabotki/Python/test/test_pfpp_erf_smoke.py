@@ -5,7 +5,7 @@ import win32com.client, sys
 if sys.stdout.encoding != 'utf-8':
     sys.stdout.reconfigure(encoding='utf-8')
 import os
-ERF = os.path.join(os.environ["TEMP"], "pfpp_new.erf")
+ERF = os.environ.get("PFPP_ERF") or r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\Отчеты\А_ПланФактныйПроизводствоПолный.erf"
 assert os.path.exists(ERF), "нет собранного .erf"
 
 erp = win32com.client.Dispatch("V83.COMConnector").Connect(
