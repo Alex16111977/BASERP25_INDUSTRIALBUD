@@ -1,0 +1,576 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcssch="http://v8.1c.ru/8.1/data-composition-system/schema" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
+	<Title>
+		<v8:item>
+			<v8:lang>ru</v8:lang>
+			<v8:content>Пометка на удаление документов за период</v8:content>
+		</v8:item>
+	</Title>
+	<AutoTitle>false</AutoTitle>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+		<HorizontalAlign>Right</HorizontalAlign>
+		<Autofill>false</Autofill>
+	</AutoCommandBar>
+	<Events>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
+	</Events>
+	<ChildItems>
+		<UsualGroup name="ГруппаПериод" id="1">
+			<Group>AlwaysHorizontal</Group>
+			<ExtendedTooltip name="ГруппаПериодРасширеннаяПодсказка" id="2"/>
+			<ChildItems>
+				<InputField name="НачалоПериода" id="3">
+					<DataPath>Объект.НачалоПериода</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Период с</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="НачалоПериодаКонтекстноеМеню" id="4"/>
+					<ExtendedTooltip name="НачалоПериодаРасширеннаяПодсказка" id="5"/>
+				</InputField>
+				<InputField name="ОкончаниеПериода" id="6">
+					<DataPath>Объект.ОкончаниеПериода</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>по</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="ОкончаниеПериодаКонтекстноеМеню" id="7"/>
+					<ExtendedTooltip name="ОкончаниеПериодаРасширеннаяПодсказка" id="8"/>
+				</InputField>
+				<InputField name="РазмерПорции" id="9">
+					<DataPath>РазмерПорции</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Порция</v8:content>
+						</v8:item>
+					</Title>
+					<SpinButton>true</SpinButton>
+					<Width>6</Width>
+					<ContextMenu name="РазмерПорцииКонтекстноеМеню" id="10"/>
+					<ExtendedTooltip name="РазмерПорцииРасширеннаяПодсказка" id="11"/>
+				</InputField>
+				<Button name="КнопкаЗаполнить" id="12">
+					<CommandName>Form.Command.Заполнить</CommandName>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Заполнить</v8:content>
+						</v8:item>
+					</Title>
+					<DefaultButton>true</DefaultButton>
+					<ExtendedTooltip name="КнопкаЗаполнитьРасширеннаяПодсказка" id="13"/>
+				</Button>
+				<Button name="КнопкаОбновитьСтатус" id="14">
+					<CommandName>Form.Command.ОбновитьСтатус</CommandName>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Обновить статус</v8:content>
+						</v8:item>
+					</Title>
+					<ExtendedTooltip name="КнопкаОбновитьСтатусРасширеннаяПодсказка" id="15"/>
+				</Button>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="ГруппаПрогресс" id="16">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Прогресс пометки</v8:content>
+				</v8:item>
+			</Title>
+			<Group>Vertical</Group>
+			<Representation>WeakSeparation</Representation>
+			<ExtendedTooltip name="ГруппаПрогрессРасширеннаяПодсказка" id="17"/>
+			<ChildItems>
+				<LabelField name="ПолеСостояние" id="18">
+					<DataPath>Объект.СостояниеВыполнения</DataPath>
+					<ReadOnly>true</ReadOnly>
+					<ContextMenu name="ПолеСостояниеКонтекстноеМеню" id="19"/>
+					<ExtendedTooltip name="ПолеСостояниеРасширеннаяПодсказка" id="20"/>
+				</LabelField>
+				<UsualGroup name="ГруппаИтоги" id="21">
+					<Group>AlwaysHorizontal</Group>
+					<ExtendedTooltip name="ГруппаИтогиРасширеннаяПодсказка" id="22"/>
+					<ChildItems>
+						<InputField name="ВсегоВСнимке" id="23">
+							<DataPath>Объект.ВсегоВСнимке</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Всего в снимке</v8:content>
+								</v8:item>
+							</Title>
+							<ReadOnly>true</ReadOnly>
+							<Width>10</Width>
+							<ContextMenu name="ВсегоВСнимкеКонтекстноеМеню" id="24"/>
+							<ExtendedTooltip name="ВсегоВСнимкеРасширеннаяПодсказка" id="25"/>
+						</InputField>
+						<InputField name="ВсегоПомечено" id="26">
+							<DataPath>Объект.ВсегоПомечено</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Помечено</v8:content>
+								</v8:item>
+							</Title>
+							<ReadOnly>true</ReadOnly>
+							<Width>10</Width>
+							<ContextMenu name="ВсегоПомеченоКонтекстноеМеню" id="27"/>
+							<ExtendedTooltip name="ВсегоПомеченоРасширеннаяПодсказка" id="28"/>
+						</InputField>
+						<InputField name="ВсегоОсталось" id="29">
+							<DataPath>Объект.ВсегоОсталось</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Осталось</v8:content>
+								</v8:item>
+							</Title>
+							<ReadOnly>true</ReadOnly>
+							<Width>10</Width>
+							<ContextMenu name="ВсегоОсталосьКонтекстноеМеню" id="30"/>
+							<ExtendedTooltip name="ВсегоОсталосьРасширеннаяПодсказка" id="31"/>
+						</InputField>
+						<InputField name="ПроцентВыполнения" id="32">
+							<DataPath>Объект.ПроцентВыполнения</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>% выполнено</v8:content>
+								</v8:item>
+							</Title>
+							<ReadOnly>true</ReadOnly>
+							<Width>8</Width>
+							<ContextMenu name="ПроцентВыполненияКонтекстноеМеню" id="33"/>
+							<ExtendedTooltip name="ПроцентВыполненияРасширеннаяПодсказка" id="34"/>
+						</InputField>
+					</ChildItems>
+				</UsualGroup>
+			</ChildItems>
+		</UsualGroup>
+		<UsualGroup name="ГруппаКомандВидов" id="35">
+			<Group>AlwaysHorizontal</Group>
+			<ExtendedTooltip name="ГруппаКомандВидовРасширеннаяПодсказка" id="36"/>
+			<ChildItems>
+				<Button name="КнопкаОтметитьВсе" id="37">
+					<CommandName>Form.Command.ОтметитьВсе</CommandName>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Отметить все</v8:content>
+						</v8:item>
+					</Title>
+					<ExtendedTooltip name="КнопкаОтметитьВсеРасширеннаяПодсказка" id="38"/>
+				</Button>
+				<Button name="КнопкаСнятьВсе" id="39">
+					<CommandName>Form.Command.СнятьВсе</CommandName>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Снять все</v8:content>
+						</v8:item>
+					</Title>
+					<ExtendedTooltip name="КнопкаСнятьВсеРасширеннаяПодсказка" id="40"/>
+				</Button>
+				<Button name="КнопкаПометить" id="41">
+					<CommandName>Form.Command.ПометитьНаУдаление</CommandName>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Пометить на удаление</v8:content>
+						</v8:item>
+					</Title>
+					<ExtendedTooltip name="КнопкаПометитьРасширеннаяПодсказка" id="42"/>
+				</Button>
+				<Button name="КнопкаОстановить" id="43">
+					<CommandName>Form.Command.Остановить</CommandName>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Остановить</v8:content>
+						</v8:item>
+					</Title>
+					<Enabled>false</Enabled>
+					<ExtendedTooltip name="КнопкаОстановитьРасширеннаяПодсказка" id="44"/>
+				</Button>
+			</ChildItems>
+		</UsualGroup>
+		<Table name="ТаблицаВидов" id="45">
+			<DataPath>Объект.ТаблицаВидов</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Виды документов</v8:content>
+				</v8:item>
+			</Title>
+			<HeightInTableRows>12</HeightInTableRows>
+			<CommandBarLocation>None</CommandBarLocation>
+			<ContextMenu name="ТаблицаВидовКонтекстноеМеню" id="46"/>
+			<AutoCommandBar name="ТаблицаВидовКоманднаяПанель" id="47"/>
+			<SearchStringAddition name="ТаблицаВидовСтрокаПоиска" id="48"/>
+			<ViewStatusAddition name="ТаблицаВидовСостояниеПросмотра" id="49"/>
+			<SearchControlAddition name="ТаблицаВидовУправлениеПоиском" id="50"/>
+			<ChildItems>
+				<CheckBoxField name="ВидПометить" id="51">
+					<DataPath>Объект.ТаблицаВидов.Пометить</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Пометить</v8:content>
+						</v8:item>
+					</Title>
+					<ContextMenu name="ВидПометитьКонтекстноеМеню" id="52"/>
+					<ExtendedTooltip name="ВидПометитьРасширеннаяПодсказка" id="53"/>
+				</CheckBoxField>
+				<InputField name="ВидПредставление" id="54">
+					<DataPath>Объект.ТаблицаВидов.ПредставлениеТипа</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Вид документа</v8:content>
+						</v8:item>
+					</Title>
+					<ReadOnly>true</ReadOnly>
+					<Width>45</Width>
+					<ContextMenu name="ВидПредставлениеКонтекстноеМеню" id="55"/>
+					<ExtendedTooltip name="ВидПредставлениеРасширеннаяПодсказка" id="56"/>
+				</InputField>
+				<InputField name="ВидВсего" id="57">
+					<DataPath>Объект.ТаблицаВидов.Всего</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Всего</v8:content>
+						</v8:item>
+					</Title>
+					<ReadOnly>true</ReadOnly>
+					<Width>9</Width>
+					<ContextMenu name="ВидВсегоКонтекстноеМеню" id="58"/>
+					<ExtendedTooltip name="ВидВсегоРасширеннаяПодсказка" id="59"/>
+				</InputField>
+				<InputField name="ВидПомечено" id="60">
+					<DataPath>Объект.ТаблицаВидов.Помечено</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Помечено</v8:content>
+						</v8:item>
+					</Title>
+					<ReadOnly>true</ReadOnly>
+					<Width>10</Width>
+					<ContextMenu name="ВидПомеченоКонтекстноеМеню" id="61"/>
+					<ExtendedTooltip name="ВидПомеченоРасширеннаяПодсказка" id="62"/>
+				</InputField>
+				<InputField name="ВидОсталось" id="63">
+					<DataPath>Объект.ТаблицаВидов.Осталось</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Осталось</v8:content>
+						</v8:item>
+					</Title>
+					<ReadOnly>true</ReadOnly>
+					<Width>10</Width>
+					<ContextMenu name="ВидОсталосьКонтекстноеМеню" id="64"/>
+					<ExtendedTooltip name="ВидОсталосьРасширеннаяПодсказка" id="65"/>
+				</InputField>
+				<InputField name="ВидПроцент" id="66">
+					<DataPath>Объект.ТаблицаВидов.Процент</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>% помечено</v8:content>
+						</v8:item>
+					</Title>
+					<ReadOnly>true</ReadOnly>
+					<Width>11</Width>
+					<ContextMenu name="ВидПроцентКонтекстноеМеню" id="67"/>
+					<ExtendedTooltip name="ВидПроцентРасширеннаяПодсказка" id="68"/>
+				</InputField>
+				<InputField name="ВидДатаМин" id="69">
+					<DataPath>Объект.ТаблицаВидов.ДатаМин</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Дата с</v8:content>
+						</v8:item>
+					</Title>
+					<ReadOnly>true</ReadOnly>
+					<Width>12</Width>
+					<ContextMenu name="ВидДатаМинКонтекстноеМеню" id="70"/>
+					<ExtendedTooltip name="ВидДатаМинРасширеннаяПодсказка" id="71"/>
+				</InputField>
+				<InputField name="ВидДатаМакс" id="72">
+					<DataPath>Объект.ТаблицаВидов.ДатаМакс</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Дата по</v8:content>
+						</v8:item>
+					</Title>
+					<ReadOnly>true</ReadOnly>
+					<Width>12</Width>
+					<ContextMenu name="ВидДатаМаксКонтекстноеМеню" id="73"/>
+					<ExtendedTooltip name="ВидДатаМаксРасширеннаяПодсказка" id="74"/>
+				</InputField>
+				<CheckBoxField name="ВидЗащищен" id="75">
+					<DataPath>Объект.ТаблицаВидов.Защищен</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Защищён</v8:content>
+						</v8:item>
+					</Title>
+					<ReadOnly>true</ReadOnly>
+					<ContextMenu name="ВидЗащищенКонтекстноеМеню" id="76"/>
+					<ExtendedTooltip name="ВидЗащищенРасширеннаяПодсказка" id="77"/>
+				</CheckBoxField>
+			</ChildItems>
+			<Events>
+				<Event name="OnActivateRow">ТаблицаВидовПриАктивизацииСтроки</Event>
+			</Events>
+		</Table>
+		<Table name="ТаблицаДокументов" id="78">
+			<DataPath>Объект.ТаблицаДокументов</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Документы выбранного вида</v8:content>
+				</v8:item>
+			</Title>
+			<HeightInTableRows>10</HeightInTableRows>
+			<CommandBarLocation>None</CommandBarLocation>
+			<ContextMenu name="ТаблицаДокументовКонтекстноеМеню" id="79"/>
+			<AutoCommandBar name="ТаблицаДокументовКоманднаяПанель" id="80"/>
+			<SearchStringAddition name="ТаблицаДокументовСтрокаПоиска" id="81"/>
+			<ViewStatusAddition name="ТаблицаДокументовСостояниеПросмотра" id="82"/>
+			<SearchControlAddition name="ТаблицаДокументовУправлениеПоиском" id="83"/>
+			<ChildItems>
+				<InputField name="ДокДокумент" id="84">
+					<DataPath>Объект.ТаблицаДокументов.Документ</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Документ</v8:content>
+						</v8:item>
+					</Title>
+					<ReadOnly>true</ReadOnly>
+					<Width>45</Width>
+					<ContextMenu name="ДокДокументКонтекстноеМеню" id="85"/>
+					<ExtendedTooltip name="ДокДокументРасширеннаяПодсказка" id="86"/>
+				</InputField>
+				<InputField name="ДокДата" id="87">
+					<DataPath>Объект.ТаблицаДокументов.Дата</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Дата</v8:content>
+						</v8:item>
+					</Title>
+					<ReadOnly>true</ReadOnly>
+					<Width>16</Width>
+					<ContextMenu name="ДокДатаКонтекстноеМеню" id="88"/>
+					<ExtendedTooltip name="ДокДатаРасширеннаяПодсказка" id="89"/>
+				</InputField>
+				<InputField name="ДокНомер" id="90">
+					<DataPath>Объект.ТаблицаДокументов.Номер</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Номер</v8:content>
+						</v8:item>
+					</Title>
+					<ReadOnly>true</ReadOnly>
+					<Width>14</Width>
+					<ContextMenu name="ДокНомерКонтекстноеМеню" id="91"/>
+					<ExtendedTooltip name="ДокНомерРасширеннаяПодсказка" id="92"/>
+				</InputField>
+				<InputField name="ДокОрганизация" id="93">
+					<DataPath>Объект.ТаблицаДокументов.Организация</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Организация</v8:content>
+						</v8:item>
+					</Title>
+					<ReadOnly>true</ReadOnly>
+					<Width>24</Width>
+					<ContextMenu name="ДокОрганизацияКонтекстноеМеню" id="94"/>
+					<ExtendedTooltip name="ДокОрганизацияРасширеннаяПодсказка" id="95"/>
+				</InputField>
+				<InputField name="ДокПодразделение" id="96">
+					<DataPath>Объект.ТаблицаДокументов.Подразделение</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Подразделение</v8:content>
+						</v8:item>
+					</Title>
+					<ReadOnly>true</ReadOnly>
+					<Width>24</Width>
+					<ContextMenu name="ДокПодразделениеКонтекстноеМеню" id="97"/>
+					<ExtendedTooltip name="ДокПодразделениеРасширеннаяПодсказка" id="98"/>
+				</InputField>
+				<CheckBoxField name="ДокПроведен" id="99">
+					<DataPath>Объект.ТаблицаДокументов.Проведен</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Проведён</v8:content>
+						</v8:item>
+					</Title>
+					<ReadOnly>true</ReadOnly>
+					<ContextMenu name="ДокПроведенКонтекстноеМеню" id="100"/>
+					<ExtendedTooltip name="ДокПроведенРасширеннаяПодсказка" id="101"/>
+				</CheckBoxField>
+				<CheckBoxField name="ДокПометка" id="102">
+					<DataPath>Объект.ТаблицаДокументов.Пометка</DataPath>
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Помечен</v8:content>
+						</v8:item>
+					</Title>
+					<ReadOnly>true</ReadOnly>
+					<ContextMenu name="ДокПометкаКонтекстноеМеню" id="103"/>
+					<ExtendedTooltip name="ДокПометкаРасширеннаяПодсказка" id="104"/>
+				</CheckBoxField>
+			</ChildItems>
+			<Events>
+				<Event name="Selection">ТаблицаДокументовВыборСтроки</Event>
+			</Events>
+		</Table>
+		<InputField name="ПротоколОшибок" id="105">
+			<DataPath>ПротоколОшибок</DataPath>
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Протокол ошибок</v8:content>
+				</v8:item>
+			</Title>
+			<ReadOnly>true</ReadOnly>
+			<MultiLine>true</MultiLine>
+			<Height>4</Height>
+			<HorizontalStretch>true</HorizontalStretch>
+			<ContextMenu name="ПротоколОшибокКонтекстноеМеню" id="106"/>
+			<ExtendedTooltip name="ПротоколОшибокРасширеннаяПодсказка" id="107"/>
+		</InputField>
+	</ChildItems>
+	<Attributes>
+		<Attribute name="Объект" id="108">
+			<Type>
+				<v8:Type>cfg:ExternalDataProcessorObject.А_ОбработкаДляПометкиНаУдаленияДокументовЗапериод</v8:Type>
+			</Type>
+			<MainAttribute>true</MainAttribute>
+		</Attribute>
+		<Attribute name="РазмерПорции" id="109">
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>4</v8:Digits>
+					<v8:FractionDigits>0</v8:FractionDigits>
+					<v8:AllowedSign>Nonnegative</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ВыполняетсяОбработка" id="110">
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ОстановитьЗапрошено" id="111">
+			<Type>
+				<v8:Type>xs:boolean</v8:Type>
+			</Type>
+		</Attribute>
+		<Attribute name="ПротоколОшибок" id="112">
+			<Type>
+				<v8:Type>xs:string</v8:Type>
+				<v8:StringQualifiers>
+					<v8:Length>0</v8:Length>
+					<v8:AllowedLength>Variable</v8:AllowedLength>
+				</v8:StringQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ВремяСтарта" id="113">
+			<Type>
+				<v8:Type>xs:dateTime</v8:Type>
+				<v8:DateQualifiers>
+					<v8:DateFractions>DateTime</v8:DateFractions>
+				</v8:DateQualifiers>
+			</Type>
+		</Attribute>
+		<Attribute name="ОбработаноЗаСеанс" id="114">
+			<Type>
+				<v8:Type>xs:decimal</v8:Type>
+				<v8:NumberQualifiers>
+					<v8:Digits>10</v8:Digits>
+					<v8:FractionDigits>0</v8:FractionDigits>
+					<v8:AllowedSign>Any</v8:AllowedSign>
+				</v8:NumberQualifiers>
+			</Type>
+		</Attribute>
+	</Attributes>
+	<Commands>
+		<Command name="Заполнить" id="115">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Заполнить</v8:content>
+				</v8:item>
+			</Title>
+			<Action>ЗаполнитьКоманда</Action>
+		</Command>
+		<Command name="ОбновитьСтатус" id="116">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Обновить статус</v8:content>
+				</v8:item>
+			</Title>
+			<Action>ОбновитьСтатусКоманда</Action>
+		</Command>
+		<Command name="ОтметитьВсе" id="117">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Отметить все</v8:content>
+				</v8:item>
+			</Title>
+			<Action>ОтметитьВсеКоманда</Action>
+		</Command>
+		<Command name="СнятьВсе" id="118">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Снять все</v8:content>
+				</v8:item>
+			</Title>
+			<Action>СнятьВсеКоманда</Action>
+		</Command>
+		<Command name="ПометитьНаУдаление" id="119">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Пометить на удаление</v8:content>
+				</v8:item>
+			</Title>
+			<Action>ПометитьНаУдалениеКоманда</Action>
+		</Command>
+		<Command name="Остановить" id="120">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Остановить</v8:content>
+				</v8:item>
+			</Title>
+			<Action>ОстановитьКоманда</Action>
+		</Command>
+	</Commands>
+</Form>
