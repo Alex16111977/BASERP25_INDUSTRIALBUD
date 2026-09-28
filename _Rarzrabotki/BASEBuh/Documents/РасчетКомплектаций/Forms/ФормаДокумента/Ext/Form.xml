@@ -164,7 +164,7 @@
 						<Title>
 							<v8:item>
 								<v8:lang>uk</v8:lang>
-								<v8:content>Акт понаднормового списання (за проведеними)</v8:content>
+								<v8:content>Акт на додаткове списання матеріалів</v8:content>
 							</v8:item>
 						</Title>
 						<ExtendedTooltip name="КнопкаПечатьАктФактРасширеннаяПодсказка" id="601"/>
@@ -204,6 +204,21 @@
 					</Button>
 				</ChildItems>
 			</Popup>
+			<Button name="КнопкаЗавантажитиКоментаріЦеху" id="910">
+				<Type>UsualButton</Type>
+				<CommandName>Form.Command.ЗавантажитиКоментаріЦеху</CommandName>
+				<Title>
+					<v8:item>
+						<v8:lang>ru</v8:lang>
+						<v8:content>Завантажити коментарі цеху</v8:content>
+					</v8:item>
+					<v8:item>
+						<v8:lang>uk</v8:lang>
+						<v8:content>Завантажити коментарі цеху</v8:content>
+					</v8:item>
+				</Title>
+				<ExtendedTooltip name="КнопкаЗавантажитиКоментаріЦехуРасширеннаяПодсказка" id="911"/>
+			</Button>
 			<Popup name="ПодменюДокументы" id="574">
 				<Title>
 					<v8:item>
@@ -288,21 +303,10 @@
 					<ContextMenu name="ДатаДокументаКонтекстноеМеню" id="406"/>
 					<ExtendedTooltip name="ДатаДокументаРасширеннаяПодсказка" id="407"/>
 				</InputField>
-				<InputField name="СтатусПоле" id="408">
-					<DataPath>Объект.Статус</DataPath>
-					<ReadOnly>true</ReadOnly>
-					<ContextMenu name="СтатусПолеКонтекстноеМеню" id="409"/>
-					<ExtendedTooltip name="СтатусПолеРасширеннаяПодсказка" id="410"/>
-				</InputField>
-				<InputField name="ОтветственныйПоле" id="411">
-					<DataPath>Объект.Ответственный</DataPath>
-					<ContextMenu name="ОтветственныйПолеКонтекстноеМеню" id="412"/>
-					<ExtendedTooltip name="ОтветственныйПолеРасширеннаяПодсказка" id="413"/>
-				</InputField>
-				<InputField name="КомментарийПоле" id="414">
-					<DataPath>Объект.Комментарий</DataPath>
-					<ContextMenu name="КомментарийПолеКонтекстноеМеню" id="415"/>
-					<ExtendedTooltip name="КомментарийПолеРасширеннаяПодсказка" id="416"/>
+				<InputField name="Подразделение" id="663">
+					<DataPath>Объект.Подразделение</DataPath>
+					<ContextMenu name="ПодразделениеКонтекстноеМеню" id="664"/>
+					<ExtendedTooltip name="ПодразделениеРасширеннаяПодсказка" id="665"/>
 				</InputField>
 			</ChildItems>
 		</UsualGroup>
@@ -1337,6 +1341,163 @@
 						</Table>
 					</ChildItems>
 				</Page>
+				<Page name="СтраницаПричиниЦеху" id="912">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Причины цеха</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Причини цеху</v8:content>
+						</v8:item>
+					</Title>
+					<ExtendedTooltip name="СтраницаПричиниЦехуРасширеннаяПодсказка" id="913"/>
+					<ChildItems>
+						<Table name="ПричиниЦеху" id="914">
+							<DataPath>Объект.ПричиниЦеху</DataPath>
+							<RowFilter xsi:nil="true"/>
+							<ContextMenu name="ПричиниЦехуКонтекстноеМеню" id="915"/>
+							<AutoCommandBar name="ПричиниЦехуКоманднаяПанель" id="916">
+								<ChildItems>
+									<Button name="КнопкаЗавантажитиПричиниЗФайлу" id="939">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.ЗавантажитиКоментаріЦеху</CommandName>
+										<Title>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>Завантажити з Excel</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>uk</v8:lang>
+												<v8:content>Завантажити з Excel</v8:content>
+											</v8:item>
+										</Title>
+										<ExtendedTooltip name="КнопкаЗавантажитиПричиниЗФайлуРасширеннаяПодсказка" id="940"/>
+									</Button>
+									<Button name="КнопкаЗастосуватиПричини" id="941">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.ЗастосуватиПричиниДоСписання</CommandName>
+										<Title>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>Застосувати до списання</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>uk</v8:lang>
+												<v8:content>Застосувати до списання</v8:content>
+											</v8:item>
+										</Title>
+										<ExtendedTooltip name="КнопкаЗастосуватиПричиниРасширеннаяПодсказка" id="942"/>
+									</Button>
+									<Button name="КнопкаОчиститиПричини" id="943">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.ОчиститиПричиниЦеху</CommandName>
+										<Title>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>Очистити причини</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>uk</v8:lang>
+												<v8:content>Очистити причини</v8:content>
+											</v8:item>
+										</Title>
+										<ExtendedTooltip name="КнопкаОчиститиПричиниРасширеннаяПодсказка" id="944"/>
+									</Button>
+								</ChildItems>
+							</AutoCommandBar>
+							<ExtendedTooltip name="ПричиниЦехуРасширеннаяПодсказка" id="917"/>
+							<SearchStringAddition name="ПричиниЦехуСтрокаПоиска" id="918">
+								<AdditionSource>
+									<Item>ПричиниЦеху</Item>
+									<Type>SearchStringRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="ПричиниЦехуСтрокаПоискаКонтекстноеМеню" id="919"/>
+								<ExtendedTooltip name="ПричиниЦехуСтрокаПоискаРасширеннаяПодсказка" id="920"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="ПричиниЦехуСостояниеПросмотра" id="921">
+								<AdditionSource>
+									<Item>ПричиниЦеху</Item>
+									<Type>ViewStatusRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="ПричиниЦехуСостояниеПросмотраКонтекстноеМеню" id="922"/>
+								<ExtendedTooltip name="ПричиниЦехуСостояниеПросмотраРасширеннаяПодсказка" id="923"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="ПричиниЦехуУправлениеПоиском" id="924">
+								<AdditionSource>
+									<Item>ПричиниЦеху</Item>
+									<Type>SearchControl</Type>
+								</AdditionSource>
+								<ContextMenu name="ПричиниЦехуУправлениеПоискомКонтекстноеМеню" id="925"/>
+								<ExtendedTooltip name="ПричиниЦехуУправлениеПоискомРасширеннаяПодсказка" id="926"/>
+							</SearchControlAddition>
+							<ChildItems>
+								<InputField name="ПЦОбщееНазвание" id="927">
+									<DataPath>Объект.ПричиниЦеху.ОбщееНазвание</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Общее название</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Загальна назва</v8:content>
+										</v8:item>
+									</Title>
+									<ContextMenu name="ПЦОбщееНазваниеКонтекстноеМеню" id="928"/>
+									<ExtendedTooltip name="ПЦОбщееНазваниеРасширеннаяПодсказка" id="929"/>
+								</InputField>
+								<InputField name="ПЦНоменклатура" id="930">
+									<DataPath>Объект.ПричиниЦеху.Номенклатура</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Номенклатура</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Номенклатура</v8:content>
+										</v8:item>
+									</Title>
+									<ContextMenu name="ПЦНоменклатураКонтекстноеМеню" id="931"/>
+									<ExtendedTooltip name="ПЦНоменклатураРасширеннаяПодсказка" id="932"/>
+								</InputField>
+								<InputField name="ПЦПричина" id="933">
+									<DataPath>Объект.ПричиниЦеху.Причина</DataPath>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Причина</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Причина</v8:content>
+										</v8:item>
+									</Title>
+									<ContextMenu name="ПЦПричинаКонтекстноеМеню" id="934"/>
+									<ExtendedTooltip name="ПЦПричинаРасширеннаяПодсказка" id="935"/>
+								</InputField>
+								<InputField name="ПЦДатаЗагрузки" id="936">
+									<DataPath>Объект.ПричиниЦеху.ДатаЗагрузки</DataPath>
+									<ReadOnly>true</ReadOnly>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Дата загрузки</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Дата завантаження</v8:content>
+										</v8:item>
+									</Title>
+									<ContextMenu name="ПЦДатаЗагрузкиКонтекстноеМеню" id="937"/>
+									<ExtendedTooltip name="ПЦДатаЗагрузкиРасширеннаяПодсказка" id="938"/>
+								</InputField>
+							</ChildItems>
+						</Table>
+					</ChildItems>
+				</Page>
 				<Page name="СтраницаДокументы" id="83">
 					<Title>
 						<v8:item>
@@ -1347,7 +1508,7 @@
 					<ExtendedTooltip name="СтраницаДокументыРасширеннаяПодсказка" id="84"/>
 					<ChildItems>
 						<Table name="ДокументиКомплектації" id="85">
-							<HeightInTableRows>3</HeightInTableRows>
+							<HeightInTableRows>4</HeightInTableRows>
 							<VerticalStretch>false</VerticalStretch>
 							<DataPath>Объект.ДокументиКомплектації</DataPath>
 							<RowFilter xsi:nil="true"/>
@@ -1383,6 +1544,9 @@
 									<DataPath>Объект.ДокументиКомплектації.Склад</DataPath>
 									<ContextMenu name="ДККСкладКонтекстноеМеню" id="92"/>
 									<ExtendedTooltip name="ДККСкладРасширеннаяПодсказка" id="93"/>
+									<Events>
+										<Event name="OnChange">ДККСкладПриИзменении</Event>
+									</Events>
 								</InputField>
 								<InputField name="ДККОрганизация" id="657">
 									<DataPath>Объект.ДокументиКомплектації.Организация</DataPath>
@@ -1400,11 +1564,19 @@
 									<DataPath>Объект.ДокументиКомплектації.ДокументПоНормам</DataPath>
 									<ContextMenu name="ДККДокументПоНормамКонтекстноеМеню" id="95"/>
 									<ExtendedTooltip name="ДККДокументПоНормамРасширеннаяПодсказка" id="96"/>
+									<Events>
+										<Event name="OnChange">ДККДокументПоНормамПриИзменении</Event>
+										<Event name="StartChoice">ДККДокументПоНормамНачалоВыбора</Event>
+									</Events>
 								</InputField>
 								<InputField name="ДККДокументДодаткова" id="97">
 									<DataPath>Объект.ДокументиКомплектації.ДокументДодаткова</DataPath>
 									<ContextMenu name="ДККДокументДодатковаКонтекстноеМеню" id="98"/>
 									<ExtendedTooltip name="ДККДокументДодатковаРасширеннаяПодсказка" id="99"/>
+									<Events>
+										<Event name="OnChange">ДККДокументДодатковаПриИзменении</Event>
+										<Event name="StartChoice">ДККДокументДодатковаНачалоВыбора</Event>
+									</Events>
 								</InputField>
 								<CheckBoxField name="ДокументиКомплектаціїПроведенПоНормам" id="584">
 									<DataPath>Объект.ДокументиКомплектації.ПроведенПоНормам</DataPath>
@@ -1435,7 +1607,7 @@
 							</ChildItems>
 						</Table>
 						<Table name="ДокументиМалоценки" id="299">
-							<HeightInTableRows>3</HeightInTableRows>
+							<HeightInTableRows>4</HeightInTableRows>
 							<VerticalStretch>false</VerticalStretch>
 							<DataPath>Объект.ДокументиМалоценки</DataPath>
 							<RowFilter xsi:nil="true"/>
@@ -1471,6 +1643,9 @@
 									<DataPath>Объект.ДокументиМалоценки.Склад</DataPath>
 									<ContextMenu name="ДМСкладКонтекстноеМеню" id="313"/>
 									<ExtendedTooltip name="ДМСкладРасширеннаяПодсказка" id="314"/>
+									<Events>
+										<Event name="OnChange">ДМСкладПриИзменении</Event>
+									</Events>
 								</InputField>
 								<InputField name="ДМОрганизация" id="660">
 									<DataPath>Объект.ДокументиМалоценки.Организация</DataPath>
@@ -1498,11 +1673,19 @@
 									<DataPath>Объект.ДокументиМалоценки.ДокументПоНормам</DataPath>
 									<ContextMenu name="ДМДокументПоНормамКонтекстноеМеню" id="316"/>
 									<ExtendedTooltip name="ДМДокументПоНормамРасширеннаяПодсказка" id="317"/>
+									<Events>
+										<Event name="OnChange">ДМДокументПоНормамПриИзменении</Event>
+										<Event name="StartChoice">ДМДокументПоНормамНачалоВыбора</Event>
+									</Events>
 								</InputField>
 								<InputField name="ДМДокументДодаткова" id="318">
 									<DataPath>Объект.ДокументиМалоценки.ДокументДодаткова</DataPath>
 									<ContextMenu name="ДМДокументДодатковаКонтекстноеМеню" id="319"/>
 									<ExtendedTooltip name="ДМДокументДодатковаРасширеннаяПодсказка" id="320"/>
+									<Events>
+										<Event name="OnChange">ДМДокументДодатковаПриИзменении</Event>
+										<Event name="StartChoice">ДМДокументДодатковаНачалоВыбора</Event>
+									</Events>
 								</InputField>
 								<CheckBoxField name="ДокументиМалоценкиПроведенПоНормам" id="590">
 									<DataPath>Объект.ДокументиМалоценки.ПроведенПоНормам</DataPath>
@@ -1532,6 +1715,345 @@
 								</CheckBoxField>
 							</ChildItems>
 						</Table>
+						<LabelDecoration name="НадписьДокументиВідвантаження" id="880">
+							<Title formatted="false">
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Документы отгрузки и досписания</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Документи відвантаження і досписання</v8:content>
+								</v8:item>
+							</Title>
+							<ContextMenu name="НадписьДокументиВідвантаженняКонтекстноеМеню" id="881"/>
+							<ExtendedTooltip name="НадписьДокументиВідвантаженняРасширеннаяПодсказка" id="882"/>
+						</LabelDecoration>
+						<LabelDecoration name="НадписьПідсумокДокументів" id="883">
+							<Title formatted="false">
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Карту циклу ще не побудовано — натисніть «Проаналізувати».</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Карту циклу ще не побудовано — натисніть «Проаналізувати».</v8:content>
+								</v8:item>
+							</Title>
+							<ContextMenu name="НадписьПідсумокДокументівКонтекстноеМеню" id="884"/>
+							<ExtendedTooltip name="НадписьПідсумокДокументівРасширеннаяПодсказка" id="885"/>
+						</LabelDecoration>
+						<Table name="ДокументыОтрузкиИДосписания" id="695">
+							<EnableStartDrag>true</EnableStartDrag>
+							<EnableDrag>true</EnableDrag>
+							<DataPath>Объект.ДокументыОтрузкиИДосписания</DataPath>
+							<RowFilter xsi:nil="true"/>
+							<ContextMenu name="ДокументыОтрузкиИДосписанияКонтекстноеМеню" id="696"/>
+							<AutoCommandBar name="ДокументыОтрузкиИДосписанияКоманднаяПанель" id="697">
+								<ChildItems>
+									<Button name="КнопкаПроаналізуватиЦикл" id="870">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.ПроаналізуватиЦикл</CommandName>
+										<Title>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>Проаналізувати</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>uk</v8:lang>
+												<v8:content>Проаналізувати</v8:content>
+											</v8:item>
+										</Title>
+										<ExtendedTooltip name="КнопкаПроаналізуватиЦиклРасширеннаяПодсказка" id="871"/>
+									</Button>
+									<Button name="КнопкаВідкритиДокументЦиклу" id="872">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.ВідкритиДокументЦиклу</CommandName>
+										<Title>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>Відкрити документ</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>uk</v8:lang>
+												<v8:content>Відкрити документ</v8:content>
+											</v8:item>
+										</Title>
+										<ExtendedTooltip name="КнопкаВідкритиДокументЦиклуРасширеннаяПодсказка" id="873"/>
+									</Button>
+									<Button name="КнопкаСтворитиВідсутні" id="874">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.СтворитиВідсутні</CommandName>
+										<Title>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>Створити відсутні</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>uk</v8:lang>
+												<v8:content>Створити відсутні</v8:content>
+											</v8:item>
+										</Title>
+										<ExtendedTooltip name="КнопкаСтворитиВідсутніРасширеннаяПодсказка" id="875"/>
+									</Button>
+									<Button name="КнопкаПровестиЗаХронологією" id="876">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.ПровестиЗаХронологією</CommandName>
+										<Title>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>Провести за хронологією</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>uk</v8:lang>
+												<v8:content>Провести за хронологією</v8:content>
+											</v8:item>
+										</Title>
+										<ExtendedTooltip name="КнопкаПровестиЗаХронологієюРасширеннаяПодсказка" id="877"/>
+									</Button>
+									<Button name="КнопкаВідмітитиПорушників" id="888">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.ВідмітитиПорушників</CommandName>
+										<Title>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>Відмітити порушників</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>uk</v8:lang>
+												<v8:content>Відмітити порушників</v8:content>
+											</v8:item>
+										</Title>
+										<ExtendedTooltip name="КнопкаВідмітитиПорушниківРасширеннаяПодсказка" id="889"/>
+									</Button>
+									<Button name="КнопкаЗнятиВідмітки" id="890">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.ЗнятиВідмітки</CommandName>
+										<Title>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>Зняти відмітки</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>uk</v8:lang>
+												<v8:content>Зняти відмітки</v8:content>
+											</v8:item>
+										</Title>
+										<ExtendedTooltip name="КнопкаЗнятиВідміткиРасширеннаяПодсказка" id="891"/>
+									</Button>
+									<Button name="КнопкаПеренестиДатиВідмічених" id="892">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.ПеренестиДатиВідмічених</CommandName>
+										<Title>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>Виправити відмічені</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>uk</v8:lang>
+												<v8:content>Виправити відмічені</v8:content>
+											</v8:item>
+										</Title>
+										<ExtendedTooltip name="КнопкаПеренестиДатиВідміченихРасширеннаяПодсказка" id="893"/>
+									</Button>
+									<Button name="КнопкаПерепровестиЦикл" id="900">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.ПерепровестиЦикл</CommandName>
+										<Title>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>Перепровести цикл</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>uk</v8:lang>
+												<v8:content>Перепровести цикл</v8:content>
+											</v8:item>
+										</Title>
+										<ExtendedTooltip name="КнопкаПерепровестиЦиклРасширеннаяПодсказка" id="901"/>
+									</Button>
+									<Button name="КнопкаЗалишкиЦиклу" id="905">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.ЗалишкиЦиклу</CommandName>
+										<Title>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>Залишки після циклу</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>uk</v8:lang>
+												<v8:content>Залишки після циклу</v8:content>
+											</v8:item>
+										</Title>
+										<ExtendedTooltip name="КнопкаЗалишкиЦиклуРасширеннаяПодсказка" id="906"/>
+									</Button>
+								</ChildItems>
+							</AutoCommandBar>
+							<ExtendedTooltip name="ДокументыОтрузкиИДосписанияРасширеннаяПодсказка" id="698"/>
+							<SearchStringAddition name="ДокументыОтрузкиИДосписанияСтрокаПоиска" id="699">
+								<AdditionSource>
+									<Item>ДокументыОтрузкиИДосписания</Item>
+									<Type>SearchStringRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="ДокументыОтрузкиИДосписанияСтрокаПоискаКонтекстноеМеню" id="700"/>
+								<ExtendedTooltip name="ДокументыОтрузкиИДосписанияСтрокаПоискаРасширеннаяПодсказка" id="701"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="ДокументыОтрузкиИДосписанияСостояниеПросмотра" id="702">
+								<AdditionSource>
+									<Item>ДокументыОтрузкиИДосписания</Item>
+									<Type>ViewStatusRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="ДокументыОтрузкиИДосписанияСостояниеПросмотраКонтекстноеМеню" id="703"/>
+								<ExtendedTooltip name="ДокументыОтрузкиИДосписанияСостояниеПросмотраРасширеннаяПодсказка" id="704"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="ДокументыОтрузкиИДосписанияУправлениеПоиском" id="705">
+								<AdditionSource>
+									<Item>ДокументыОтрузкиИДосписания</Item>
+									<Type>SearchControl</Type>
+								</AdditionSource>
+								<ContextMenu name="ДокументыОтрузкиИДосписанияУправлениеПоискомКонтекстноеМеню" id="706"/>
+								<ExtendedTooltip name="ДокументыОтрузкиИДосписанияУправлениеПоискомРасширеннаяПодсказка" id="707"/>
+							</SearchControlAddition>
+							<ChildItems>
+								<LabelField name="ДокументыОтрузкиИДосписанияНомерСтроки" id="708">
+									<DataPath>Объект.ДокументыОтрузкиИДосписания.LineNumber</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ДокументыОтрузкиИДосписанияНомерСтрокиКонтекстноеМеню" id="709"/>
+									<ExtendedTooltip name="ДокументыОтрузкиИДосписанияНомерСтрокиРасширеннаяПодсказка" id="710"/>
+								</LabelField>
+								<CheckBoxField name="ДокументыОтрузкиИДосписанияВиправити" id="894">
+									<DataPath>Объект.ДокументыОтрузкиИДосписания.Виправити</DataPath>
+									<CheckBoxType>Auto</CheckBoxType>
+									<ContextMenu name="ДокументыОтрузкиИДосписанияВиправитиКонтекстноеМеню" id="895"/>
+									<ExtendedTooltip name="ДокументыОтрузкиИДосписанияВиправитиРасширеннаяПодсказка" id="896"/>
+								</CheckBoxField>
+								<InputField name="ДокументыОтрузкиИДосписанияВидОперации" id="711">
+									<DataPath>Объект.ДокументыОтрузкиИДосписания.ВидОперации</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ДокументыОтрузкиИДосписанияВидОперацииКонтекстноеМеню" id="712"/>
+									<ExtendedTooltip name="ДокументыОтрузкиИДосписанияВидОперацииРасширеннаяПодсказка" id="713"/>
+								</InputField>
+								<InputField name="ДокументыОтрузкиИДосписанияСтатус" id="745">
+									<DataPath>Объект.ДокументыОтрузкиИДосписания.Статус</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ДокументыОтрузкиИДосписанияСтатусКонтекстноеМеню" id="746"/>
+									<ExtendedTooltip name="ДокументыОтрузкиИДосписанияСтатусРасширеннаяПодсказка" id="747"/>
+								</InputField>
+								<InputField name="ДокументыОтрузкиИДосписанияСклад" id="714">
+									<DataPath>Объект.ДокументыОтрузкиИДосписания.Склад</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ДокументыОтрузкиИДосписанияСкладКонтекстноеМеню" id="715"/>
+									<ExtendedTooltip name="ДокументыОтрузкиИДосписанияСкладРасширеннаяПодсказка" id="716"/>
+								</InputField>
+								<InputField name="ДокументыОтрузкиИДосписанияСкладОтправитель" id="748">
+									<DataPath>Объект.ДокументыОтрузкиИДосписания.СкладОтправитель</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ДокументыОтрузкиИДосписанияСкладОтправительКонтекстноеМеню" id="749"/>
+									<ExtendedTooltip name="ДокументыОтрузкиИДосписанияСкладОтправительРасширеннаяПодсказка" id="750"/>
+								</InputField>
+								<InputField name="ДокументыОтрузкиИДосписанияДата" id="723">
+									<DataPath>Объект.ДокументыОтрузкиИДосписания.Дата</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ДокументыОтрузкиИДосписанияДатаКонтекстноеМеню" id="724"/>
+									<ExtendedTooltip name="ДокументыОтрузкиИДосписанияДатаРасширеннаяПодсказка" id="725"/>
+								</InputField>
+								<InputField name="ДокументыОтрузкиИДосписанияДатаФакт" id="751">
+									<DataPath>Объект.ДокументыОтрузкиИДосписания.ДатаФакт</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ДокументыОтрузкиИДосписанияДатаФактКонтекстноеМеню" id="752"/>
+									<ExtendedTooltip name="ДокументыОтрузкиИДосписанияДатаФактРасширеннаяПодсказка" id="753"/>
+								</InputField>
+								<InputField name="ДокументыОтрузкиИДосписанияДокумент" id="720">
+									<DataPath>Объект.ДокументыОтрузкиИДосписания.Документ</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ДокументыОтрузкиИДосписанияДокументКонтекстноеМеню" id="721"/>
+									<ExtendedTooltip name="ДокументыОтрузкиИДосписанияДокументРасширеннаяПодсказка" id="722"/>
+								</InputField>
+								<CheckBoxField name="ДокументыОтрузкиИДосписанияПроведен" id="754">
+									<DataPath>Объект.ДокументыОтрузкиИДосписания.Проведен</DataPath>
+									<CheckBoxType>Auto</CheckBoxType>
+									<ContextMenu name="ДокументыОтрузкиИДосписанияПроведенКонтекстноеМеню" id="755"/>
+									<ExtendedTooltip name="ДокументыОтрузкиИДосписанияПроведенРасширеннаяПодсказка" id="756"/>
+								</CheckBoxField>
+								<InputField name="ДокументыОтрузкиИДосписанияНоменклатура" id="757">
+									<DataPath>Объект.ДокументыОтрузкиИДосписания.Номенклатура</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ДокументыОтрузкиИДосписанияНоменклатураКонтекстноеМеню" id="758"/>
+									<ExtendedTooltip name="ДокументыОтрузкиИДосписанияНоменклатураРасширеннаяПодсказка" id="759"/>
+								</InputField>
+								<InputField name="ДокументыОтрузкиИДосписанияКоличество" id="760">
+									<DataPath>Объект.ДокументыОтрузкиИДосписания.Количество</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ДокументыОтрузкиИДосписанияКоличествоКонтекстноеМеню" id="761"/>
+									<ExtendedTooltip name="ДокументыОтрузкиИДосписанияКоличествоРасширеннаяПодсказка" id="762"/>
+								</InputField>
+								<InputField name="ДокументыОтрузкиИДосписанияСумма" id="763">
+									<DataPath>Объект.ДокументыОтрузкиИДосписания.Сумма</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ДокументыОтрузкиИДосписанияСуммаКонтекстноеМеню" id="764"/>
+									<ExtendedTooltip name="ДокументыОтрузкиИДосписанияСуммаРасширеннаяПодсказка" id="765"/>
+								</InputField>
+								<InputField name="ДокументыОтрузкиИДосписанияОрганизация" id="766">
+									<DataPath>Объект.ДокументыОтрузкиИДосписания.Организация</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ДокументыОтрузкиИДосписанияОрганизацияКонтекстноеМеню" id="767"/>
+									<ExtendedTooltip name="ДокументыОтрузкиИДосписанияОрганизацияРасширеннаяПодсказка" id="768"/>
+								</InputField>
+								<InputField name="ДокументыОтрузкиИДосписанияОписаниеОперации" id="717">
+									<DataPath>Объект.ДокументыОтрузкиИДосписания.ОписаниеОперации</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ДокументыОтрузкиИДосписанияОписаниеОперацииКонтекстноеМеню" id="718"/>
+									<ExtendedTooltip name="ДокументыОтрузкиИДосписанияОписаниеОперацииРасширеннаяПодсказка" id="719"/>
+								</InputField>
+								<InputField name="ДокументыОтрузкиИДосписанияДатаДоПереноса" id="897">
+									<DataPath>Объект.ДокументыОтрузкиИДосписания.ДатаДоПереноса</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ДокументыОтрузкиИДосписанияДатаДоПереносаКонтекстноеМеню" id="898"/>
+									<ExtendedTooltip name="ДокументыОтрузкиИДосписанияДатаДоПереносаРасширеннаяПодсказка" id="899"/>
+								</InputField>
+							</ChildItems>
+						</Table>
+					</ChildItems>
+				</Page>
+				<Page name="СтраницаКомплектация" id="618">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Комплектація</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Комплектація</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Страница комплектация</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="СтраницаКомплектацияРасширеннаяПодсказка" id="619"/>
+					<ChildItems>
+						<InputField name="ОтветственныйПоле" id="411">
+							<DataPath>Объект.Ответственный</DataPath>
+							<ContextMenu name="ОтветственныйПолеКонтекстноеМеню" id="412"/>
+							<ExtendedTooltip name="ОтветственныйПолеРасширеннаяПодсказка" id="413"/>
+						</InputField>
+						<InputField name="ПодразделениеОрганизации" id="604">
+							<DataPath>Объект.ПодразделениеОрганизации</DataPath>
+							<ContextMenu name="ПодразделениеОрганизацииКонтекстноеМеню" id="605"/>
+							<ExtendedTooltip name="ПодразделениеОрганизацииРасширеннаяПодсказка" id="606"/>
+						</InputField>
+						<InputField name="НоменклатураКомплект" id="607">
+							<DataPath>Объект.НоменклатураКомплект</DataPath>
+							<ContextMenu name="НоменклатураКомплектКонтекстноеМеню" id="608"/>
+							<ExtendedTooltip name="НоменклатураКомплектРасширеннаяПодсказка" id="609"/>
+						</InputField>
+						<InputField name="КомментарийПоле" id="414">
+							<DataPath>Объект.Комментарий</DataPath>
+							<AutoMaxWidth>false</AutoMaxWidth>
+							<ContextMenu name="КомментарийПолеКонтекстноеМеню" id="415"/>
+							<ExtendedTooltip name="КомментарийПолеРасширеннаяПодсказка" id="416"/>
+						</InputField>
 					</ChildItems>
 				</Page>
 				<Page name="ГруппаКомиссия" id="551">
@@ -1590,35 +2112,388 @@
 						</InputField>
 					</ChildItems>
 				</Page>
-				<Page name="СтраницаКомплектация" id="618">
+				<Page name="СтраницаДополнительно" id="666">
 					<Title>
 						<v8:item>
 							<v8:lang>ru</v8:lang>
-							<v8:content>Комплектація</v8:content>
+							<v8:content>Дополнительно</v8:content>
 						</v8:item>
 						<v8:item>
 							<v8:lang>uk</v8:lang>
-							<v8:content>Комплектація</v8:content>
+							<v8:content>Додатково</v8:content>
 						</v8:item>
 					</Title>
 					<ToolTip>
 						<v8:item>
 							<v8:lang>uk</v8:lang>
-							<v8:content>Страница комплектация</v8:content>
+							<v8:content>Страница дополнительно</v8:content>
 						</v8:item>
 					</ToolTip>
-					<ExtendedTooltip name="СтраницаКомплектацияРасширеннаяПодсказка" id="619"/>
+					<ExtendedTooltip name="СтраницаДополнительноРасширеннаяПодсказка" id="667"/>
 					<ChildItems>
-						<InputField name="ПодразделениеОрганизации" id="604">
-							<DataPath>Объект.ПодразделениеОрганизации</DataPath>
-							<ContextMenu name="ПодразделениеОрганизацииКонтекстноеМеню" id="605"/>
-							<ExtendedTooltip name="ПодразделениеОрганизацииРасширеннаяПодсказка" id="606"/>
-						</InputField>
-						<InputField name="НоменклатураКомплект" id="607">
-							<DataPath>Объект.НоменклатураКомплект</DataPath>
-							<ContextMenu name="НоменклатураКомплектКонтекстноеМеню" id="608"/>
-							<ExtendedTooltip name="НоменклатураКомплектРасширеннаяПодсказка" id="609"/>
-						</InputField>
+						<UsualGroup name="ГруппаОтгрузкаПоКазне" id="674">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Отгрузка по казне</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Відвантаження по казні</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Группа отгрузка по казне</v8:content>
+								</v8:item>
+							</ToolTip>
+							<Group>Vertical</Group>
+							<Behavior>Usual</Behavior>
+							<ExtendedTooltip name="ГруппаОтгрузкаПоКазнеРасширеннаяПодсказка" id="675"/>
+							<ChildItems>
+								<UsualGroup name="Группа1" id="726">
+									<Behavior>Usual</Behavior>
+									<ExtendedTooltip name="Группа1РасширеннаяПодсказка" id="727"/>
+									<ChildItems>
+										<InputField name="ДатаОтгрузкиПоКазне" id="676">
+											<DataPath>Объект.ДатаОтгрузкиПоКазне</DataPath>
+											<ContextMenu name="ДатаОтгрузкиПоКазнеКонтекстноеМеню" id="677"/>
+											<ExtendedTooltip name="ДатаОтгрузкиПоКазнеРасширеннаяПодсказка" id="678"/>
+										</InputField>
+										<Button name="КнопкаЗаполнитьОтгрузкуПоКазне" id="691">
+											<Type>UsualButton</Type>
+											<CommandName>Form.Command.ЗаполнитьОтгрузкуПоКазне</CommandName>
+											<Title>
+												<v8:item>
+													<v8:lang>ru</v8:lang>
+													<v8:content>Заповнити з казни</v8:content>
+												</v8:item>
+												<v8:item>
+													<v8:lang>uk</v8:lang>
+													<v8:content>Заповнити з казни</v8:content>
+												</v8:item>
+											</Title>
+											<ExtendedTooltip name="КнопкаЗаполнитьОтгрузкуПоКазнеРасширеннаяПодсказка" id="692"/>
+										</Button>
+									</ChildItems>
+								</UsualGroup>
+								<InputField name="ОписаниеОтгрузкиПоКазне" id="679">
+									<DataPath>Объект.ОписаниеОтгрузкиПоКазне</DataPath>
+									<AutoMaxWidth>false</AutoMaxWidth>
+									<AutoMaxHeight>false</AutoMaxHeight>
+									<MaxHeight>3</MaxHeight>
+									<MultiLine>true</MultiLine>
+									<ContextMenu name="ОписаниеОтгрузкиПоКазнеКонтекстноеМеню" id="680"/>
+									<ExtendedTooltip name="ОписаниеОтгрузкиПоКазнеРасширеннаяПодсказка" id="681"/>
+								</InputField>
+							</ChildItems>
+						</UsualGroup>
+					</ChildItems>
+				</Page>
+				<Page name="СтраницаОтгрузки" id="693">
+					<Title>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Цикл будинку</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Цикл будинку</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="СтраницаОтгрузкиРасширеннаяПодсказка" id="694"/>
+					<ChildItems>
+						<UsualGroup name="ГруппаОтгрузкиПоБухУчету" id="682">
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Отгрузка по бух учету</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Відвантаження по бух. обліку</v8:content>
+								</v8:item>
+							</Title>
+							<ToolTip>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Группа отгрузки по бух учету</v8:content>
+								</v8:item>
+							</ToolTip>
+							<Behavior>Usual</Behavior>
+							<ExtendedTooltip name="ГруппаОтгрузкиПоБухУчетуРасширеннаяПодсказка" id="683"/>
+							<ChildItems>
+								<InputField name="ДатаОтгрузки" id="671">
+									<DataPath>Объект.ДатаОтгрузки</DataPath>
+									<ContextMenu name="ДатаОтгрузкиКонтекстноеМеню" id="672"/>
+									<ExtendedTooltip name="ДатаОтгрузкиРасширеннаяПодсказка" id="673"/>
+								</InputField>
+								<InputField name="ДокументРеализацияТоваровУслуг" id="668">
+									<DataPath>Объект.ДокументРеализацияТоваровУслуг</DataPath>
+									<ContextMenu name="ДокументРеализацияТоваровУслугКонтекстноеМеню" id="669"/>
+									<ExtendedTooltip name="ДокументРеализацияТоваровУслугРасширеннаяПодсказка" id="670"/>
+								</InputField>
+								<InputField name="ДатаСписанияПоМонтажу" id="684">
+									<DataPath>Объект.ДатаСписанияПоМонтажу</DataPath>
+									<ContextMenu name="ДатаСписанияПоМонтажуКонтекстноеМеню" id="685"/>
+									<ExtendedTooltip name="ДатаСписанияПоМонтажуРасширеннаяПодсказка" id="686"/>
+								</InputField>
+							</ChildItems>
+						</UsualGroup>
+						<CheckBoxField name="АвтоматическиСмещатьДатыПремещений" id="772">
+							<DataPath>Объект.АвтоматическиСмещатьДатыПремещенийДляСкладаПроизводственного</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Автоматически переносить даты перемещений (склад производства)</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Автоматично переносити дати переміщень (виробничий склад)</v8:content>
+								</v8:item>
+							</Title>
+							<CheckBoxType>Auto</CheckBoxType>
+							<ContextMenu name="АвтоматическиСмещатьДатыПремещенийКонтекстноеМеню" id="773"/>
+							<ExtendedTooltip name="АвтоматическиСмещатьДатыПремещенийРасширеннаяПодсказка" id="774"/>
+						</CheckBoxField>
+						<LabelDecoration name="НадписьПідсумокЦиклу" id="775">
+							<Title formatted="false">
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Карту циклу ще не побудовано — натисніть «Проаналізувати».</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Карту циклу ще не побудовано — натисніть «Проаналізувати».</v8:content>
+								</v8:item>
+							</Title>
+							<ContextMenu name="НадписьПідсумокЦиклуКонтекстноеМеню" id="776"/>
+							<ExtendedTooltip name="НадписьПідсумокЦиклуРасширеннаяПодсказка" id="777"/>
+						</LabelDecoration>
+						<Table name="ХронологияПеремещений" id="785">
+							<EnableStartDrag>true</EnableStartDrag>
+							<EnableDrag>true</EnableDrag>
+							<DataPath>Объект.ХронологияПеремещений</DataPath>
+							<RowFilter xsi:nil="true"/>
+							<ContextMenu name="ХронологияПеремещенийКонтекстноеМеню" id="786"/>
+							<AutoCommandBar name="ХронологияПеремещенийКоманднаяПанель" id="787">
+								<ChildItems>
+									<Button name="КнопкаПроаналізуватиХр" id="860">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.ПроаналізуватиЦикл</CommandName>
+										<Title>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>Проаналізувати</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>uk</v8:lang>
+												<v8:content>Проаналізувати</v8:content>
+											</v8:item>
+										</Title>
+										<ExtendedTooltip name="КнопкаПроаналізуватиХрРасширеннаяПодсказка" id="861"/>
+									</Button>
+									<Button name="КнопкаВідкритиДокументХронології" id="862">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.ВідкритиДокументХронології</CommandName>
+										<Title>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>Відкрити документ</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>uk</v8:lang>
+												<v8:content>Відкрити документ</v8:content>
+											</v8:item>
+										</Title>
+										<ExtendedTooltip name="КнопкаВідкритиДокументХронологіїРасширеннаяПодсказка" id="863"/>
+									</Button>
+									<Button name="КнопкаВідмітитиПорушниківХр" id="864">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.ВідмітитиПорушників</CommandName>
+										<Title>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>Відмітити порушників</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>uk</v8:lang>
+												<v8:content>Відмітити порушників</v8:content>
+											</v8:item>
+										</Title>
+										<ExtendedTooltip name="КнопкаВідмітитиПорушниківХрРасширеннаяПодсказка" id="865"/>
+									</Button>
+									<Button name="КнопкаЗнятиВідміткиХр" id="866">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.ЗнятиВідмітки</CommandName>
+										<Title>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>Зняти відмітки</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>uk</v8:lang>
+												<v8:content>Зняти відмітки</v8:content>
+											</v8:item>
+										</Title>
+										<ExtendedTooltip name="КнопкаЗнятиВідміткиХрРасширеннаяПодсказка" id="867"/>
+									</Button>
+									<Button name="КнопкаПеренестиДатиВідміченихХр" id="868">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.ПеренестиДатиВідмічених</CommandName>
+										<Title>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>Виправити відмічені</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>uk</v8:lang>
+												<v8:content>Виправити відмічені</v8:content>
+											</v8:item>
+										</Title>
+										<ExtendedTooltip name="КнопкаПеренестиДатиВідміченихХрРасширеннаяПодсказка" id="869"/>
+									</Button>
+									<Button name="КнопкаПерепровестиЦиклХр" id="902">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.ПерепровестиЦикл</CommandName>
+										<Title>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>Перепровести цикл</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>uk</v8:lang>
+												<v8:content>Перепровести цикл</v8:content>
+											</v8:item>
+										</Title>
+										<ExtendedTooltip name="КнопкаПерепровестиЦиклХрРасширеннаяПодсказка" id="903"/>
+									</Button>
+									<Button name="КнопкаЗалишкиЦиклуХр" id="907">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.ЗалишкиЦиклу</CommandName>
+										<Title>
+											<v8:item>
+												<v8:lang>ru</v8:lang>
+												<v8:content>Залишки після циклу</v8:content>
+											</v8:item>
+											<v8:item>
+												<v8:lang>uk</v8:lang>
+												<v8:content>Залишки після циклу</v8:content>
+											</v8:item>
+										</Title>
+										<ExtendedTooltip name="КнопкаЗалишкиЦиклуХрРасширеннаяПодсказка" id="908"/>
+									</Button>
+								</ChildItems>
+							</AutoCommandBar>
+							<ExtendedTooltip name="ХронологияПеремещенийРасширеннаяПодсказка" id="802"/>
+							<SearchStringAddition name="ХронологияПеремещенийСтрокаПоиска" id="803">
+								<AdditionSource>
+									<Item>ХронологияПеремещений</Item>
+									<Type>SearchStringRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="ХронологияПеремещенийСтрокаПоискаКонтекстноеМеню" id="804"/>
+								<ExtendedTooltip name="ХронологияПеремещенийСтрокаПоискаРасширеннаяПодсказка" id="805"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="ХронологияПеремещенийСостояниеПросмотра" id="806">
+								<AdditionSource>
+									<Item>ХронологияПеремещений</Item>
+									<Type>ViewStatusRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="ХронологияПеремещенийСостояниеПросмотраКонтекстноеМеню" id="807"/>
+								<ExtendedTooltip name="ХронологияПеремещенийСостояниеПросмотраРасширеннаяПодсказка" id="808"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="ХронологияПеремещенийУправлениеПоиском" id="809">
+								<AdditionSource>
+									<Item>ХронологияПеремещений</Item>
+									<Type>SearchControl</Type>
+								</AdditionSource>
+								<ContextMenu name="ХронологияПеремещенийУправлениеПоискомКонтекстноеМеню" id="810"/>
+								<ExtendedTooltip name="ХронологияПеремещенийУправлениеПоискомРасширеннаяПодсказка" id="811"/>
+							</SearchControlAddition>
+							<ChildItems>
+								<LabelField name="ХронологияПеремещенийНомерСтроки" id="812">
+									<DataPath>Объект.ХронологияПеремещений.LineNumber</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ХронологияПеремещенийНомерСтрокиКонтекстноеМеню" id="813"/>
+									<ExtendedTooltip name="ХронологияПеремещенийНомерСтрокиРасширеннаяПодсказка" id="814"/>
+								</LabelField>
+								<CheckBoxField name="ХронологияПеремещенийВиправити" id="815">
+									<DataPath>Объект.ХронологияПеремещений.Виправити</DataPath>
+									<CheckBoxType>Auto</CheckBoxType>
+									<ContextMenu name="ХронологияПеремещенийВиправитиКонтекстноеМеню" id="816"/>
+									<ExtendedTooltip name="ХронологияПеремещенийВиправитиРасширеннаяПодсказка" id="817"/>
+								</CheckBoxField>
+								<InputField name="ХронологияПеремещенийВидОперации" id="818">
+									<DataPath>Объект.ХронологияПеремещений.ВидОперации</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ХронологияПеремещенийВидОперацииКонтекстноеМеню" id="819"/>
+									<ExtendedTooltip name="ХронологияПеремещенийВидОперацииРасширеннаяПодсказка" id="820"/>
+								</InputField>
+								<InputField name="ХронологияПеремещенийСтатус" id="821">
+									<DataPath>Объект.ХронологияПеремещений.Статус</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ХронологияПеремещенийСтатусКонтекстноеМеню" id="822"/>
+									<ExtendedTooltip name="ХронологияПеремещенийСтатусРасширеннаяПодсказка" id="823"/>
+								</InputField>
+								<InputField name="ХронологияПеремещенийСклад" id="824">
+									<DataPath>Объект.ХронологияПеремещений.Склад</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ХронологияПеремещенийСкладКонтекстноеМеню" id="825"/>
+									<ExtendedTooltip name="ХронологияПеремещенийСкладРасширеннаяПодсказка" id="826"/>
+								</InputField>
+								<InputField name="ХронологияПеремещенийСкладОтправитель" id="827">
+									<DataPath>Объект.ХронологияПеремещений.СкладОтправитель</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ХронологияПеремещенийСкладОтправительКонтекстноеМеню" id="828"/>
+									<ExtendedTooltip name="ХронологияПеремещенийСкладОтправительРасширеннаяПодсказка" id="829"/>
+								</InputField>
+								<InputField name="ХронологияПеремещенийДата" id="830">
+									<DataPath>Объект.ХронологияПеремещений.Дата</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ХронологияПеремещенийДатаКонтекстноеМеню" id="831"/>
+									<ExtendedTooltip name="ХронологияПеремещенийДатаРасширеннаяПодсказка" id="832"/>
+								</InputField>
+								<InputField name="ХронологияПеремещенийДатаФакт" id="833">
+									<DataPath>Объект.ХронологияПеремещений.ДатаФакт</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ХронологияПеремещенийДатаФактКонтекстноеМеню" id="834"/>
+									<ExtendedTooltip name="ХронологияПеремещенийДатаФактРасширеннаяПодсказка" id="835"/>
+								</InputField>
+								<InputField name="ХронологияПеремещенийДокумент" id="836">
+									<DataPath>Объект.ХронологияПеремещений.Документ</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ХронологияПеремещенийДокументКонтекстноеМеню" id="837"/>
+									<ExtendedTooltip name="ХронологияПеремещенийДокументРасширеннаяПодсказка" id="838"/>
+								</InputField>
+								<CheckBoxField name="ХронологияПеремещенийПроведен" id="839">
+									<DataPath>Объект.ХронологияПеремещений.Проведен</DataPath>
+									<CheckBoxType>Auto</CheckBoxType>
+									<ContextMenu name="ХронологияПеремещенийПроведенКонтекстноеМеню" id="840"/>
+									<ExtendedTooltip name="ХронологияПеремещенийПроведенРасширеннаяПодсказка" id="841"/>
+								</CheckBoxField>
+								<InputField name="ХронологияПеремещенийОрганизация" id="851">
+									<DataPath>Объект.ХронологияПеремещений.Организация</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ХронологияПеремещенийОрганизацияКонтекстноеМеню" id="852"/>
+									<ExtendedTooltip name="ХронологияПеремещенийОрганизацияРасширеннаяПодсказка" id="853"/>
+								</InputField>
+								<InputField name="ХронологияПеремещенийОписаниеОперации" id="854">
+									<DataPath>Объект.ХронологияПеремещений.ОписаниеОперации</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ХронологияПеремещенийОписаниеОперацииКонтекстноеМеню" id="855"/>
+									<ExtendedTooltip name="ХронологияПеремещенийОписаниеОперацииРасширеннаяПодсказка" id="856"/>
+								</InputField>
+								<InputField name="ХронологияПеремещенийДатаДоПереноса" id="857">
+									<DataPath>Объект.ХронологияПеремещений.ДатаДоПереноса</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ХронологияПеремещенийДатаДоПереносаКонтекстноеМеню" id="858"/>
+									<ExtendedTooltip name="ХронологияПеремещенийДатаДоПереносаРасширеннаяПодсказка" id="859"/>
+								</InputField>
+							</ChildItems>
+						</Table>
 					</ChildItems>
 				</Page>
 			</ChildItems>
@@ -1993,6 +2868,238 @@
 			</Title>
 			<Action>ПечатьМ29</Action>
 		</Command>
+		<Command name="ПроаналізуватиЦикл" id="778">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Проаналізувати</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Проаналізувати</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Побудувати карту циклу будинку: план за регламентом, факт із бази, статуси</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ПроаналізуватиЦикл</Action>
+		</Command>
+		<Command name="ВідкритиДокументЦиклу" id="779">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Відкрити документ</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Відкрити документ</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Відкрити документ поточного рядка</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ВідкритиДокументЦиклу</Action>
+		</Command>
+		<Command name="ВідмітитиПорушників" id="780">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Відмітити порушників</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Відмітити порушників</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Поставити «Виправити» усім рядкам з порушенням хронології</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ВідмітитиПорушників</Action>
+		</Command>
+		<Command name="ЗнятиВідмітки" id="781">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Зняти відмітки</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Зняти відмітки</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Зняти всі відмітки «Виправити»</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ЗнятиВідмітки</Action>
+		</Command>
+		<Command name="ПеренестиДатиВідмічених" id="782">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Виправити відмічені</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Виправити відмічені</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Виправити відмічені документи: підрозділ → дім складу, дату → планову (окремими транзакціями)</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ПеренестиДатиВідмічених</Action>
+		</Command>
+		<Command name="СтворитиВідсутні" id="783">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Створити відсутні</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Створити відсутні</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Створити документи для кроків «Планується» (реалізація — ніколи)</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>СтворитиВідсутні</Action>
+		</Command>
+		<Command name="ПровестиЗаХронологією" id="784">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Провести за хронологією</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Провести за хронологією</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Провести документи карти в порядку планових дат</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ПровестиЗаХронологією</Action>
+		</Command>
+		<Command name="ВідкритиДокументХронології" id="886">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Відкрити документ</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Відкрити документ</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Відкрити документ поточного рядка хронології</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ВідкритиДокументХронології</Action>
+		</Command>
+		<Command name="ПеренестиДатуПоточного" id="887">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Перенести дату поточного</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Перенести дату поточного</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Перенести дату документа поточного рядка на планову (з підтвердженням)</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ПеренестиДатуПоточного</Action>
+		</Command>
+		<Command name="ПерепровестиЦикл" id="904">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Перепровести цикл</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Перепровести цикл</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Перепровести всі проведені документи циклу будинку у фактичній хронології (перерахунок партій). Окремо від «Перерахувати і провести»</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ПерепровестиЦикл</Action>
+		</Command>
+		<Command name="ЗалишкиЦиклу" id="909">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Залишки після циклу</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Залишки після циклу</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Залишки 20/22/26/28 по складах будинку на дату списання по монтажу</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ЗалишкиЦиклу</Action>
+		</Command>
+		<Command name="ЗаполнитьОтгрузкуПоКазне" id="690">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Заповнити з казни</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Заповнити з казни</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Заповнити дату і опис відвантаження з бази Казначейства за будинком (реквізит «Підрозділ»)</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Заповнити дату і опис відвантаження з бази Казначейства за будинком (реквізит «Підрозділ»)</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ЗаполнитьОтгрузкуПоКазне</Action>
+		</Command>
 		<Command name="ПечатьАнализЦех" id="612">
 			<Title>
 				<v8:item>
@@ -2078,10 +3185,49 @@
 			<Title>
 				<v8:item>
 					<v8:lang>uk</v8:lang>
-					<v8:content>Акт понаднормового списання (за проведеними)</v8:content>
+					<v8:content>Акт на додаткове списання матеріалів</v8:content>
 				</v8:item>
 			</Title>
 			<Action>ПечатьАктФакт</Action>
+		</Command>
+		<Command name="ЗавантажитиКоментаріЦеху" id="945">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Завантажити коментарі цеху</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Завантажити коментарі цеху</v8:content>
+				</v8:item>
+			</Title>
+			<Action>ЗавантажитиКоментаріЦеху</Action>
+		</Command>
+		<Command name="ЗастосуватиПричиниДоСписання" id="946">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Застосувати причини до списання</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Застосувати причини до списання</v8:content>
+				</v8:item>
+			</Title>
+			<Action>ЗастосуватиПричиниДоСписання</Action>
+		</Command>
+		<Command name="ОчиститиПричиниЦеху" id="947">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Очистити причини цеху</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Очистити причини цеху</v8:content>
+				</v8:item>
+			</Title>
+			<Action>ОчиститиПричиниЦеху</Action>
 		</Command>
 	</Commands>
 </Form>
