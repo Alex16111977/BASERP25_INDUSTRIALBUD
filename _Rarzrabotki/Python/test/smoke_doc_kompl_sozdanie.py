@@ -91,14 +91,14 @@ check(doc.РасхожденияСкладовДокументов().Колич�
 
 # --- 2. шапки ---
 nds = uid(b.Справочники.НалоговыеНазначенияАктивовИЗатрат.НДС_Облагаемая)
-montazh = uid(b.Перечисления.А_ВидСклада.Монтаж)
+montazh = S(b.Перечисления.А_ВидСклада.Монтаж)   # у перечислень немає GUID
 for tch in TABLES:
     mal = tch == "ДокументиМалоценки"
     t = getattr(doc, tch)
     for i in range(t.Количество()):
         row = t.Получить(i)
         skl = row.Склад
-        is_m = uid(skl.А_ВидСклада) == montazh if b.ЗначениеЗаполнено(skl.А_ВидСклада) else False
+        is_m = S(skl.А_ВидСклада) == montazh
         base = doc.ДатаСписанияПоМонтажу if is_m else doc.ДатаОтгрузки
         hh = (19 if mal else 20) if is_m else (8 if mal else 9)
         mm = 0 if is_m or not mal else 30
@@ -143,7 +143,7 @@ t = obj.ДокументиКомплектації
 idx = None
 for i in range(t.Количество()):
     sk = t.Получить(i).Склад
-    if b.ЗначениеЗаполнено(sk.А_ВидСклада) and uid(sk.А_ВидСклада) == montazh:
+    if S(sk.А_ВидСклада) == montazh:
         idx = i
         break
 check(idx is not None, "у scratch-РК є склад «Відвантажено»")
