@@ -71,4 +71,52 @@ try:
     кн.Close(False)
 finally:
     xl.Quit()
+# --- варіант «з розшифровкою до документів»
+пари = {(buh.String(док.Расчет.Получить(i).Подразделение), buh.String(док.Расчет.Получить(i).Договор))
+        for i in range(док.Расчет.Количество()) if buh.String(док.Расчет.Получить(i).Договор) != ""}
+очік_док = sum(1 for i in range(док.РасшифровкаДокументов.Количество())
+               if (buh.String(док.РасшифровкаДокументов.Получить(i).Подразделение),
+                   buh.String(док.РасшифровкаДокументов.Получить(i).Договор)) in пари)
+шлях2 = os.path.join(tempfile.gettempdir(), "finrep_2509_smoke_rassh.xlsx")
+док.ДвоичныеДанныеExcel(True).Записать(шлях2)
+xl = win32com.client.DispatchEx("Excel.Application")
+xl.Visible = False
+xl.DisplayAlerts = False
+try:
+    кн = xl.Workbooks.Open(шлях2)
+    xl.CalculateFull()
+    ар = кн.Worksheets(1)
+    останній = ар.UsedRange.Row + ар.UsedRange.Rows.Count
+    K2, док_рядків, приховані, розбіжн_сум = [], 0, True, []
+    договір_рядок, суми, є_док = None, {}, False
+
+    def звірити():
+        if договір_рядок and є_док:
+            розбіжн_сум.extend((договір_рядок, к) for к in (5, 6, 8)
+                               if abs(суми[к] - float(ар.Cells(договір_рядок, к).Value or 0)) > 0.01)
+
+    for r in range(7, останній + 1):
+        рівень = ар.Rows(r).OutlineLevel
+        if рівень == 3:
+            док_рядків += 1
+            приховані &= bool(ар.Rows(r).Hidden)
+            є_док = True
+            for к in (5, 6, 8):
+                суми[к] += float(ар.Cells(r, к).Value or 0)
+            continue
+        звірити()
+        договір_рядок, суми, є_док = None, {5: 0.0, 6: 0.0, 8: 0.0}, False
+        if рівень == 2:
+            K2.append(float(ар.Cells(r, 11).Value or 0))
+            договір_рядок = r
+    звірити()
+    перевірка(док_рядків == очік_док, f"з розшифровкою: рядків документів {док_рядків} = розшифровці {очік_док}")
+    перевірка(приховані and док_рядків > 0, "документи згорнуті (рядки приховані)")
+    перевірка(not розбіжн_сум, f"Σ E/F/H документів = договір (розбіжностей {len(розбіжн_сум)}: {розбіжн_сум[:3]})")
+    перевірка(len(K2) == len(K_док) and all(abs(a - b) <= 0.02 for a, b in zip(K2, K_док)),
+              f"з розшифровкою: K договорів після перерахунку = документ ({len(K2)} рядків)")
+    перевірка(str(ар.Range("L4").Value or "").startswith("ПН"), "колонка L «ПН / регистрация в ЕРПН»")
+    кн.Close(False)
+finally:
+    xl.Quit()
 print(f"\nпровалів: {провалів}")
