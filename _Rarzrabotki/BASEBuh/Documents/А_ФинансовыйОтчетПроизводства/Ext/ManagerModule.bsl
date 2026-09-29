@@ -1,4 +1,4 @@
-#Если Сервер Или ТолстыйКлиентОбычноеПриложение Или ВнешнееСоединение Тогда
+﻿#Если Сервер Или ТолстыйКлиентОбычноеПриложение Или ВнешнееСоединение Тогда
 
 #Область ПрограммныйИнтерфейс
 
@@ -107,7 +107,8 @@
 // Стилі (індекси cellXfs — ті, що ставить модель):
 //   1 шапка Arial 10 ж, 2 шапка Arial 9 ж, 3 шапка G5, 4 назва об'єкта, 5 число об'єкта,
 //   6 текст рядка суми, 7 число рядка суми, 8 текст договору, 9 число договору (нуль — порожньо),
-//   10 текст «Итого», 11 число «Итого». Кольори — з директорського звіту 25.09.2026.
+//   10 текст «Итого», 11 число «Итого»; 12/13 текст/число рядка документа (курсив, сірий),
+//   14/15 те саме для непроведеного (коричневий). Кольори — з директорського звіту 25.09.2026.
 Функция ТекстСтилейКниги()
 
 	Рамка = "<left style=""thin""><color auto=""1""/></left><right style=""thin""><color auto=""1""/></right>"
@@ -120,13 +121,15 @@
 		+ "<numFmt numFmtId=""164"" formatCode=""#,##0.00_ ;[Red]\-#,##0.00\ ""/>"
 		+ "<numFmt numFmtId=""165"" formatCode=""#,##0.00_ ;[Red]\-#,##0.00\ ;""/>"
 		+ "</numFmts>"
-		+ "<fonts count=""6"">"
+		+ "<fonts count=""8"">"
 		+ "<font><sz val=""10""/><name val=""Arial""/><family val=""2""/></font>"
 		+ "<font><b/><sz val=""10""/><color rgb=""FF003F2F""/><name val=""Arial""/><family val=""2""/></font>"
 		+ "<font><b/><sz val=""9""/><color rgb=""FF003F2F""/><name val=""Arial""/><family val=""2""/></font>"
 		+ "<font><b/><sz val=""11""/><color rgb=""FF003F2F""/><name val=""Arial""/><family val=""2""/></font>"
 		+ "<font><sz val=""8""/><name val=""Arial""/><family val=""2""/></font>"
 		+ "<font><b/><sz val=""11""/><name val=""Arial""/><family val=""2""/></font>"
+		+ "<font><i/><sz val=""8""/><color rgb=""FF595959""/><name val=""Arial""/><family val=""2""/></font>"
+		+ "<font><i/><sz val=""8""/><color rgb=""FF8A5A00""/><name val=""Arial""/><family val=""2""/></font>"
 		+ "</fonts>"
 		+ "<fills count=""6"">"
 		+ "<fill><patternFill patternType=""none""/></fill>"
@@ -138,7 +141,7 @@
 		+ "</fills>"
 		+ "<borders count=""2""><border><left/><right/><top/><bottom/><diagonal/></border><border>" + Рамка + "</border></borders>"
 		+ "<cellStyleXfs count=""1""><xf numFmtId=""0"" fontId=""0"" fillId=""0"" borderId=""0""/></cellStyleXfs>"
-		+ "<cellXfs count=""12"">"
+		+ "<cellXfs count=""16"">"
 		+ "<xf numFmtId=""0"" fontId=""0"" fillId=""0"" borderId=""0"" xfId=""0""/>"
 		+ "<xf numFmtId=""0"" fontId=""1"" fillId=""2"" borderId=""1"" xfId=""0"" applyFont=""1"" applyFill=""1"" applyBorder=""1"" applyAlignment=""1"">" + Центр + "</xf>"
 		+ "<xf numFmtId=""0"" fontId=""2"" fillId=""2"" borderId=""1"" xfId=""0"" applyFont=""1"" applyFill=""1"" applyBorder=""1"" applyAlignment=""1"">" + Центр + "</xf>"
@@ -151,6 +154,10 @@
 		+ "<xf numFmtId=""165"" fontId=""4"" fillId=""0"" borderId=""1"" xfId=""0"" applyNumberFormat=""1"" applyFont=""1"" applyBorder=""1"" applyAlignment=""1"">" + Центр + "</xf>"
 		+ "<xf numFmtId=""0"" fontId=""5"" fillId=""5"" borderId=""1"" xfId=""0"" applyFont=""1"" applyFill=""1"" applyBorder=""1"" applyAlignment=""1""><alignment vertical=""center""/></xf>"
 		+ "<xf numFmtId=""4"" fontId=""5"" fillId=""5"" borderId=""1"" xfId=""0"" applyNumberFormat=""1"" applyFont=""1"" applyFill=""1"" applyBorder=""1"" applyAlignment=""1"">" + Центр + "</xf>"
+		+ "<xf numFmtId=""0"" fontId=""6"" fillId=""0"" borderId=""1"" xfId=""0"" applyFont=""1"" applyBorder=""1"" applyAlignment=""1""><alignment vertical=""top"" wrapText=""1"" indent=""1""/></xf>"
+		+ "<xf numFmtId=""165"" fontId=""6"" fillId=""0"" borderId=""1"" xfId=""0"" applyNumberFormat=""1"" applyFont=""1"" applyBorder=""1"" applyAlignment=""1"">" + Центр + "</xf>"
+		+ "<xf numFmtId=""0"" fontId=""7"" fillId=""0"" borderId=""1"" xfId=""0"" applyFont=""1"" applyBorder=""1"" applyAlignment=""1""><alignment vertical=""top"" wrapText=""1"" indent=""1""/></xf>"
+		+ "<xf numFmtId=""165"" fontId=""7"" fillId=""0"" borderId=""1"" xfId=""0"" applyNumberFormat=""1"" applyFont=""1"" applyBorder=""1"" applyAlignment=""1"">" + Центр + "</xf>"
 		+ "</cellXfs>"
 		+ "<cellStyles count=""1""><cellStyle name=""Normal"" xfId=""0"" builtinId=""0""/></cellStyles>"
 		+ "</styleSheet>";
@@ -159,16 +166,22 @@
 
 Функция ТекстЛиста(Модель, ЕстьПримечания)
 
+	МаксУровень = 1;
+	Для Каждого СтрокаМодели Из Модель.Строки Цикл
+		МаксУровень = Макс(МаксУровень, СтрокаМодели.Уровень);
+	КонецЦикла;
+	ИтогиСверху = Модель.Свойство("ИтогиСверху") И Модель.ИтогиСверху;
+
 	Части = Новый Массив;
 	Части.Добавить("<?xml version=""1.0"" encoding=""UTF-8"" standalone=""yes""?>"
 		+ "<worksheet xmlns=""http://schemas.openxmlformats.org/spreadsheetml/2006/main"" "
 		+ "xmlns:r=""http://schemas.openxmlformats.org/officeDocument/2006/relationships"">"
-		+ "<sheetPr><outlinePr summaryBelow=""1""/></sheetPr>"
+		+ "<sheetPr><outlinePr summaryBelow=""" + ?(ИтогиСверху, "0", "1") + """/></sheetPr>"
 		+ "<sheetViews><sheetView workbookViewId=""0"">"
 		+ "<pane ySplit=""5"" topLeftCell=""A6"" activePane=""bottomLeft"" state=""frozen""/>"
 		+ "<selection pane=""bottomLeft"" activeCell=""A6"" sqref=""A6""/>"
 		+ "</sheetView></sheetViews>"
-		+ "<sheetFormatPr defaultRowHeight=""11.25"" outlineLevelRow=""1""/>");
+		+ "<sheetFormatPr defaultRowHeight=""11.25"" outlineLevelRow=""" + ЧислоXML(МаксУровень) + """/>");
 
 	Части.Добавить("<cols>");
 	НомерКолонки = 0;
@@ -192,6 +205,9 @@
 		КонецЕсли;
 		Если СтрокаМодели.Уровень > 0 Тогда
 			Атрибуты = Атрибуты + " outlineLevel=""" + ЧислоXML(СтрокаМодели.Уровень) + """";
+		КонецЕсли;
+		Если СтрокаМодели.Свойство("Свернута") И СтрокаМодели.Свернута Тогда
+			Атрибуты = Атрибуты + " collapsed=""1""";
 		КонецЕсли;
 		Если СтрокаМодели.Ячейки.Количество() = 0 Тогда
 			Части.Добавить("<row" + Атрибуты + "/>");
