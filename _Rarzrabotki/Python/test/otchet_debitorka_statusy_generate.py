@@ -127,9 +127,18 @@ def макет_скд():
     # «Статус» колонкой на уровне документа: ресурс считается только в группировке СчетНаОплату
     x.append('\t<calculatedField>\n\t\t<dataPath>СтатусДокумента</dataPath>\n\t\t<expression>Статус</expression>\n'
              f'{заголовок("Статус", chr(9) * 2)}{тип_строки(20, chr(9) * 2)}\t</calculatedField>\n')
+    # «Коментар» — пустая широкая колонка после «Статус»: её заполняют менеджеры (в выгрузке в Excel)
+    x.append('\t<calculatedField>\n\t\t<dataPath>Коментар</dataPath>\n\t\t<expression>""</expression>\n'
+             f'{заголовок("Коментар", chr(9) * 2)}'
+             '\t\t<appearance>\n\t\t\t<dcscor:item xsi:type="dcsset:SettingsParameterValue">\n'
+             '\t\t\t\t<dcscor:parameter>МинимальнаяШирина</dcscor:parameter>\n\t\t\t\t<dcscor:value xsi:type="xs:decimal">45</dcscor:value>\n'
+             '\t\t\t</dcscor:item>\n\t\t</appearance>\n'
+             f'{тип_строки(200, chr(9) * 2)}\t</calculatedField>\n')
     for путь in ["ОстатокДолга"] + [f"ОстатокПериода{i}" for i in range(1, 5)] + ["ПросроченнаяЗадолженность"]:
         x.append(f'\t<totalField>\n\t\t<dataPath>{путь}</dataPath>\n\t\t<expression>Сумма({путь})</expression>\n\t</totalField>\n')
     x.append('\t<totalField>\n\t\t<dataPath>СтатусДокумента</dataPath>\n\t\t<expression>Максимум(Статус)</expression>\n'
+             '\t\t<group>СчетНаОплату</group>\n\t</totalField>\n')
+    x.append('\t<totalField>\n\t\t<dataPath>Коментар</dataPath>\n\t\t<expression>""</expression>\n'
              '\t\t<group>СчетНаОплату</group>\n\t</totalField>\n')
     # параметры
     def параметр(имя, титул, тип, значение, скрыт, список=False):
@@ -203,6 +212,7 @@ def макет_скд():
              '\t\t\t\t<dcsset:item xsi:type="dcsset:SelectedItemField">\n\t\t\t\t\t<dcsset:use>false</dcsset:use>\n'
              '\t\t\t\t\t<dcsset:field>ПросроченнаяЗадолженность</dcsset:field>\n\t\t\t\t</dcsset:item>\n'
              '\t\t\t\t<dcsset:item xsi:type="dcsset:SelectedItemField">\n\t\t\t\t\t<dcsset:field>СтатусДокумента</dcsset:field>\n\t\t\t\t</dcsset:item>\n'
+             '\t\t\t\t<dcsset:item xsi:type="dcsset:SelectedItemField">\n\t\t\t\t\t<dcsset:field>Коментар</dcsset:field>\n\t\t\t\t</dcsset:item>\n'
              '\t\t\t</dcsset:selection>\n'
              '\t\t\t<dcsset:filter>\n' + отборы + '\n' + отбор_статуса
              + f'\t\t\t\t<dcsset:viewMode>Normal</dcsset:viewMode>\n\t\t\t\t<dcsset:userSettingID>{ID_ОТБОР}</dcsset:userSettingID>\n'
