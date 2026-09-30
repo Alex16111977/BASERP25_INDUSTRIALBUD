@@ -200,7 +200,8 @@ def макет_скд():
     интервалы_выбор = "".join(f'\t\t\t\t\t<dcsset:item xsi:type="dcsset:SelectedItemField">\n\t\t\t\t\t\t<dcsset:field>ОстатокПериода{i}</dcsset:field>\n'
                               '\t\t\t\t\t</dcsset:item>\n' for i in range(1, 5))
     x.append('\t<settingsVariant>\n\t\t<dcsset:name>Основний</dcsset:name>\n\t\t<dcsset:presentation xsi:type="v8:LocalStringType">\n'
-             + строка_ls("Основний", "\t\t\t") + '\t\t</dcsset:presentation>\n'
+             # название варианта = название отчёта: так он подписан в панели отчётов «Керівнику» (ключ варианта — «Основний»)
+             + строка_ls(СИНОНИМ, "\t\t\t") + '\t\t</dcsset:presentation>\n'
              '\t\t<dcsset:settings xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" '
              'xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows">\n'
              '\t\t\t<dcsset:selection>\n'
@@ -271,7 +272,62 @@ def метаданные_макета():
             '\t\t</Properties>\n\t</Template>\n</MetaDataObject>')
 
 
+# --- встроенный в конфигурацию BuhBud отчёт (Reports/ в _Rarzrabotki/BASEBuh): свои идентификаторы, тот же макет,
+# модуль — модуль внешнего отчёта без функций регистрации внешнего отчёта
+КОРЕНЬ_КОНФИГУРАЦИИ = os.path.normpath(os.path.join(ПАПКА, "..", "..", "BASEBuh", "Reports"))
+UUID_ОТЧЕТА_КФ, ОБЪЕКТ_TYPE, ОБЪЕКТ_VALUE, МЕНЕДЖЕР_TYPE, МЕНЕДЖЕР_VALUE, UUID_МАКЕТА_КФ = (
+    "1db61744-76c1-4810-a7b5-98c7ac49e77d", "ff924c80-45d1-4b9a-bfca-2630aaddf6a5", "499d4a48-bba5-4616-a597-f2985ae8f989",
+    "91940ac5-70b0-4d29-a727-d1f5c9942bec", "6aba1030-38ef-47c1-bd51-104014c42d95", "356e51e5-6859-4edb-9f7f-b2dd2bc7e7a5")
+
+
+def корневой_xml_конфигурации():
+    return (f'<?xml version="1.0" encoding="UTF-8"?>\n<MetaDataObject {NS_MD}>\n\t<Report uuid="{UUID_ОТЧЕТА_КФ}">\n'
+            f'\t\t<InternalInfo>\n\t\t\t<xr:GeneratedType name="ReportObject.{ИМЯ}" category="Object">\n'
+            f'\t\t\t\t<xr:TypeId>{ОБЪЕКТ_TYPE}</xr:TypeId>\n\t\t\t\t<xr:ValueId>{ОБЪЕКТ_VALUE}</xr:ValueId>\n\t\t\t</xr:GeneratedType>\n'
+            f'\t\t\t<xr:GeneratedType name="ReportManager.{ИМЯ}" category="Manager">\n'
+            f'\t\t\t\t<xr:TypeId>{МЕНЕДЖЕР_TYPE}</xr:TypeId>\n\t\t\t\t<xr:ValueId>{МЕНЕДЖЕР_VALUE}</xr:ValueId>\n\t\t\t</xr:GeneratedType>\n'
+            f'\t\t</InternalInfo>\n\t\t<Properties>\n\t\t\t<Name>{ИМЯ}</Name>\n\t\t\t<Synonym>\n{строка_ls(СИНОНИМ, chr(9) * 4)}\t\t\t</Synonym>\n'
+            '\t\t\t<Comment/>\n\t\t\t<UseStandardCommands>true</UseStandardCommands>\n'
+            '\t\t\t<DefaultForm>CommonForm.ФормаОтчета</DefaultForm>\n\t\t\t<AuxiliaryForm/>\n'
+            f'\t\t\t<MainDataCompositionSchema>Report.{ИМЯ}.Template.ОсновнаяСхемаКомпоновкиДанных</MainDataCompositionSchema>\n'
+            '\t\t\t<DefaultSettingsForm>CommonForm.ФормаНастроекОтчета</DefaultSettingsForm>\n\t\t\t<AuxiliarySettingsForm/>\n'
+            '\t\t\t<DefaultVariantForm>CommonForm.ФормаВариантаОтчета</DefaultVariantForm>\n'
+            # БСП регистрирует варианты только отчётов с ХранилищеВариантовОтчетов (умолчание конфигурации пустое)
+            '\t\t\t<VariantsStorage>SettingsStorage.ХранилищеВариантовОтчетов</VariantsStorage>\n'
+            '\t\t\t<SettingsStorage/>\n\t\t\t<IncludeHelpInContents>false</IncludeHelpInContents>\n\t\t\t<ExtendedPresentation/>\n'
+            '\t\t\t<Explanation/>\n\t\t</Properties>\n\t\t<ChildObjects>\n\t\t\t<Template>ОсновнаяСхемаКомпоновкиДанных</Template>\n'
+            '\t\t</ChildObjects>\n\t</Report>\n</MetaDataObject>')
+
+
+def модуль_конфигурации():
+    """Модуль внешнего отчёта без СведенияОВнешнейОбработке и таблицы команд (в конфигурации не нужны)."""
+    т = io.open(os.path.join(КОРЕНЬ, ИМЯ, "Ext", "ObjectModule.bsl"), encoding="utf-8-sig").read().replace("\r\n", "\n")
+    for начало, конец in (("Функция СведенияОВнешнейОбработке() Экспорт", "КонецФункции\n"),
+                          ("Функция ПолучитьТаблицуКоманд()", "КонецФункции\n"),
+                          ("Процедура ДобавитьКоманду(", "КонецПроцедуры\n")):
+        i = т.index(начало)
+        к = т.index(конец, i) + len(конец)
+        т = т[:i] + т[к:].lstrip("\n")
+    assert "СведенияОВнешнейОбработке" not in т and "ДобавитьКоманду" not in т
+    т = т.replace("// Внешний отчёт «", "// Отчёт «", 1)
+    return т
+
+
+def записать_конфигурацию():
+    for отн, текст in ((f"{ИМЯ}.xml", корневой_xml_конфигурации()),
+                       (f"{ИМЯ}/Ext/ObjectModule.bsl", модуль_конфигурации()),
+                       (f"{ИМЯ}/Templates/ОсновнаяСхемаКомпоновкиДанных.xml",
+                        метаданные_макета().replace(UUID_МАКЕТА, UUID_МАКЕТА_КФ)),
+                       (f"{ИМЯ}/Templates/ОсновнаяСхемаКомпоновкиДанных/Ext/Template.xml", макет_скд())):
+        путь = os.path.join(КОРЕНЬ_КОНФИГУРАЦИИ, отн)
+        os.makedirs(os.path.dirname(путь), exist_ok=True)
+        with io.open(путь, "w", encoding="utf-8-sig", newline="\r\n") as f:
+            f.write(текст)
+        print("записан:", путь)
+
+
 if __name__ == "__main__":
     записать(f"{ИМЯ}.xml", корневой_xml())
     записать(f"{ИМЯ}/Templates/ОсновнаяСхемаКомпоновкиДанных.xml", метаданные_макета())
     записать(f"{ИМЯ}/Templates/ОсновнаяСхемаКомпоновкиДанных/Ext/Template.xml", макет_скд())
+    записать_конфигурацию()
