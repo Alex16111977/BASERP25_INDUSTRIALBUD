@@ -2,9 +2,19 @@
 <Form xmlns="http://v8.1c.ru/8.3/xcf/logform" xmlns:app="http://v8.1c.ru/8.2/managed-application/core" xmlns:cfg="http://v8.1c.ru/8.1/data/enterprise/current-config" xmlns:dcscor="http://v8.1c.ru/8.1/data-composition-system/core" xmlns:dcsset="http://v8.1c.ru/8.1/data-composition-system/settings" xmlns:ent="http://v8.1c.ru/8.1/data/enterprise" xmlns:lf="http://v8.1c.ru/8.2/managed-application/logform" xmlns:style="http://v8.1c.ru/8.1/data/ui/style" xmlns:sys="http://v8.1c.ru/8.1/data/ui/fonts/system" xmlns:v8="http://v8.1c.ru/8.1/data/core" xmlns:v8ui="http://v8.1c.ru/8.1/data/ui" xmlns:web="http://v8.1c.ru/8.1/data/ui/colors/web" xmlns:win="http://v8.1c.ru/8.1/data/ui/colors/windows" xmlns:xr="http://v8.1c.ru/8.3/xcf/readable" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.13">
 	<WindowOpeningMode>LockOwnerWindow</WindowOpeningMode>
 	<UseForFoldersAndItems>Items</UseForFoldersAndItems>
-	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1"/>
+	<AutoCommandBar name="ФормаКоманднаяПанель" id="-1">
+		<ChildItems>
+			<Button name="ФормаОбщаяКомандаПрисоединенныеФайлы" id="300">
+				<Type>CommandBarButton</Type>
+				<CommandName>CommonCommand.ПрисоединенныеФайлы</CommandName>
+				<DataPath>Объект.Ref</DataPath>
+				<ExtendedTooltip name="ФормаОбщаяКомандаПрисоединенныеФайлыРасширеннаяПодсказка" id="301"/>
+			</Button>
+		</ChildItems>
+	</AutoCommandBar>
 	<Events>
 		<Event name="BeforeWrite">ПередЗаписью</Event>
+		<Event name="OnCreateAtServer">ПриСозданииНаСервере</Event>
 	</Events>
 	<ChildItems>
 		<UsualGroup name="Группа1" id="47">
@@ -35,11 +45,35 @@
 				</CheckBoxField>
 			</ChildItems>
 		</UsualGroup>
-		<UsualGroup name="Группа3" id="62">
+		<UsualGroup name="Группа5" id="96">
 			<Group>AlwaysHorizontal</Group>
 			<Behavior>Usual</Behavior>
 			<ShowTitle>false</ShowTitle>
-			<ExtendedTooltip name="Группа3РасширеннаяПодсказка" id="63"/>
+			<ExtendedTooltip name="Группа5РасширеннаяПодсказка" id="97"/>
+			<ChildItems>
+				<InputField name="Подразделение" id="7">
+					<DataPath>Объект.Подразделение</DataPath>
+					<EditMode>EnterOnInput</EditMode>
+					<ContextMenu name="ПодразделениеКонтекстноеМеню" id="8"/>
+					<ExtendedTooltip name="ПодразделениеРасширеннаяПодсказка" id="9"/>
+					<Events>
+						<Event name="OnChange">ПодразделениеПриИзменении</Event>
+					</Events>
+				</InputField>
+				<InputField name="ПодразделениеОбъекта" id="98">
+					<DataPath>Объект.ПодразделениеОбъекта</DataPath>
+					<ContextMenu name="ПодразделениеОбъектаКонтекстноеМеню" id="99"/>
+					<ExtendedTooltip name="ПодразделениеОбъектаРасширеннаяПодсказка" id="100"/>
+					<Events>
+						<Event name="OnChange">ПодразделениеОбъектаПриИзменении</Event>
+					</Events>
+				</InputField>
+				<InputField name="ПодразделениеЗакупки" id="101">
+					<DataPath>Объект.ПодразделениеЗакупки</DataPath>
+					<ContextMenu name="ПодразделениеЗакупкиКонтекстноеМеню" id="102"/>
+					<ExtendedTooltip name="ПодразделениеЗакупкиРасширеннаяПодсказка" id="103"/>
+				</InputField>
+			</ChildItems>
 		</UsualGroup>
 		<UsualGroup name="Группа2" id="49">
 			<Group>AlwaysHorizontal</Group>
@@ -50,20 +84,12 @@
 			<ChildItems>
 				<InputField name="Склад" id="10">
 					<DataPath>Объект.Склад</DataPath>
+					<Visible>false</Visible>
 					<EditMode>EnterOnInput</EditMode>
 					<ContextMenu name="СкладКонтекстноеМеню" id="11"/>
 					<ExtendedTooltip name="СкладРасширеннаяПодсказка" id="12"/>
 					<Events>
 						<Event name="OnChange">СкладПриИзменении</Event>
-					</Events>
-				</InputField>
-				<InputField name="Подразделение" id="7">
-					<DataPath>Объект.Подразделение</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<ContextMenu name="ПодразделениеКонтекстноеМеню" id="8"/>
-					<ExtendedTooltip name="ПодразделениеРасширеннаяПодсказка" id="9"/>
-					<Events>
-						<Event name="OnChange">ПодразделениеПриИзменении</Event>
 					</Events>
 				</InputField>
 			</ChildItems>
@@ -73,6 +99,11 @@
 			<ShowTitle>false</ShowTitle>
 			<ExtendedTooltip name="Группа4РасширеннаяПодсказка" id="80"/>
 			<ChildItems>
+				<InputField name="КоличествоДомов" id="90">
+					<DataPath>Объект.КоличествоДомов</DataPath>
+					<ContextMenu name="КоличествоДомовКонтекстноеМеню" id="91"/>
+					<ExtendedTooltip name="КоличествоДомовРасширеннаяПодсказка" id="92"/>
+				</InputField>
 				<InputField name="КоличествоМодулей" id="81">
 					<DataPath>Объект.КоличествоМодулей</DataPath>
 					<ContextMenu name="КоличествоМодулейКонтекстноеМеню" id="82"/>
@@ -83,144 +114,677 @@
 					<ContextMenu name="ПлощадьКонтекстноеМеню" id="77"/>
 					<ExtendedTooltip name="ПлощадьРасширеннаяПодсказка" id="78"/>
 				</InputField>
-				<CheckBoxField name="ВикористовуватиПеревіркуОдиниць" id="64">
-					<DataPath>Объект.ЗастосовуватиПеревіркуОдиниць</DataPath>
-					<CheckBoxType>Auto</CheckBoxType>
-					<ContextMenu name="ВикористовуватиПеревіркуОдиницьКонтекстноеМеню" id="65"/>
-					<ExtendedTooltip name="ВикористовуватиПеревіркуОдиницьРасширеннаяПодсказка" id="66"/>
-				</CheckBoxField>
 			</ChildItems>
 		</UsualGroup>
-		<Table name="Комплектующие" id="16">
-			<Representation>List</Representation>
-			<Footer>true</Footer>
-			<AutoInsertNewRow>true</AutoInsertNewRow>
-			<EnableStartDrag>true</EnableStartDrag>
-			<EnableDrag>true</EnableDrag>
-			<DataPath>Объект.Комплектующие</DataPath>
-			<RowFilter xsi:nil="true"/>
-			<ContextMenu name="КомплектующиеКонтекстноеМеню" id="17"/>
-			<AutoCommandBar name="КомплектующиеКоманднаяПанель" id="18">
-				<ChildItems>
-					<Button name="КомплектующиеЗагрузить" id="51">
-						<Type>CommandBarButton</Type>
-						<CommandName>Form.Command.Загрузить</CommandName>
-						<ExtendedTooltip name="КомплектующиеЗагрузитьРасширеннаяПодсказка" id="52"/>
-					</Button>
-				</ChildItems>
-			</AutoCommandBar>
-			<ExtendedTooltip name="КомплектующиеРасширеннаяПодсказка" id="19"/>
-			<SearchStringAddition name="КомплектующиеСтрокаПоиска" id="20">
-				<AdditionSource>
-					<Item>Комплектующие</Item>
-					<Type>SearchStringRepresentation</Type>
-				</AdditionSource>
-				<ContextMenu name="КомплектующиеСтрокаПоискаКонтекстноеМеню" id="21"/>
-				<ExtendedTooltip name="КомплектующиеСтрокаПоискаРасширеннаяПодсказка" id="22"/>
-			</SearchStringAddition>
-			<ViewStatusAddition name="КомплектующиеСостояниеПросмотра" id="23">
-				<AdditionSource>
-					<Item>Комплектующие</Item>
-					<Type>ViewStatusRepresentation</Type>
-				</AdditionSource>
-				<ContextMenu name="КомплектующиеСостояниеПросмотраКонтекстноеМеню" id="24"/>
-				<ExtendedTooltip name="КомплектующиеСостояниеПросмотраРасширеннаяПодсказка" id="25"/>
-			</ViewStatusAddition>
-			<SearchControlAddition name="КомплектующиеУправлениеПоиском" id="26">
-				<AdditionSource>
-					<Item>Комплектующие</Item>
-					<Type>SearchControl</Type>
-				</AdditionSource>
-				<ContextMenu name="КомплектующиеУправлениеПоискомКонтекстноеМеню" id="27"/>
-				<ExtendedTooltip name="КомплектующиеУправлениеПоискомРасширеннаяПодсказка" id="28"/>
-			</SearchControlAddition>
+		<Pages name="Группа6" id="104">
+			<PagesRepresentation>TabsOnTop</PagesRepresentation>
+			<ExtendedTooltip name="Группа6РасширеннаяПодсказка" id="105"/>
 			<ChildItems>
-				<LabelField name="КомплектующиеНомерСтроки" id="29">
-					<DataPath>Объект.Комплектующие.LineNumber</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<ContextMenu name="КомплектующиеНомерСтрокиКонтекстноеМеню" id="30"/>
-					<ExtendedTooltip name="КомплектующиеНомерСтрокиРасширеннаяПодсказка" id="31"/>
-				</LabelField>
-				<InputField name="КомплектующиеЭтап" id="53">
-					<DataPath>Объект.Комплектующие.Этап</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<ContextMenu name="КомплектующиеЭтапКонтекстноеМеню" id="54"/>
-					<ExtendedTooltip name="КомплектующиеЭтапРасширеннаяПодсказка" id="55"/>
-				</InputField>
-				<InputField name="КомплектующиеОбщееНазвание" id="32">
-					<DataPath>Объект.Комплектующие.ОбщееНазвание</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<ContextMenu name="КомплектующиеОбщееНазваниеКонтекстноеМеню" id="33"/>
-					<ExtendedTooltip name="КомплектующиеОбщееНазваниеРасширеннаяПодсказка" id="34"/>
-					<Events>
-						<Event name="OnChange">КомплектующиеОбщееНазваниеПриИзменении</Event>
-					</Events>
-				</InputField>
-				<InputField name="КомплектующиеНоменклатураСС" id="56">
-					<DataPath>Объект.Комплектующие.НоменклатураСС</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<ContextMenu name="КомплектующиеНоменклатураССКонтекстноеМеню" id="57"/>
-					<ExtendedTooltip name="КомплектующиеНоменклатураССРасширеннаяПодсказка" id="58"/>
-				</InputField>
-				<InputField name="КомплектующиеЕдиницаСС" id="59">
-					<DataPath>Объект.Комплектующие.ЕдиницаСС</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<ContextMenu name="КомплектующиеЕдиницаССКонтекстноеМеню" id="60"/>
-					<ExtendedTooltip name="КомплектующиеЕдиницаССРасширеннаяПодсказка" id="61"/>
-				</InputField>
-				<InputField name="КомплектующиеНоменклатура" id="35">
-					<DataPath>Объект.Комплектующие.Номенклатура</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<QuickChoice>false</QuickChoice>
-					<ChoiceHistoryOnInput>DontUse</ChoiceHistoryOnInput>
-					<ContextMenu name="КомплектующиеНоменклатураКонтекстноеМеню" id="36"/>
-					<ExtendedTooltip name="КомплектующиеНоменклатураРасширеннаяПодсказка" id="37"/>
-					<Events>
-						<Event name="OnChange">КомплектующиеНоменклатураПриИзменении</Event>
-						<Event name="StartChoice">КомплектующиеНоменклатураНачалоВыбора</Event>
-					</Events>
-				</InputField>
-				<InputField name="КомплектующиеЕдиница" id="38">
-					<DataPath>Объект.Комплектующие.Единица</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<ContextMenu name="КомплектующиеЕдиницаКонтекстноеМеню" id="39"/>
-					<ExtendedTooltip name="КомплектующиеЕдиницаРасширеннаяПодсказка" id="40"/>
-				</InputField>
-				<InputField name="КомплектующиеЕдиницаОбщееНазвание" id="70">
-					<DataPath>Объект.Комплектующие.ЕдиницаОбщееНазвание</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<ContextMenu name="КомплектующиеЕдиницаОбщееНазваниеКонтекстноеМеню" id="71"/>
-					<ExtendedTooltip name="КомплектующиеЕдиницаОбщееНазваниеРасширеннаяПодсказка" id="72"/>
-				</InputField>
-				<InputField name="КомплектующиеКоличество" id="41">
-					<DataPath>Объект.Комплектующие.Количество</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<FooterDataPath>Объект.Комплектующие.TotalКоличество</FooterDataPath>
-					<ContextMenu name="КомплектующиеКоличествоКонтекстноеМеню" id="42"/>
-					<ExtendedTooltip name="КомплектующиеКоличествоРасширеннаяПодсказка" id="43"/>
-				</InputField>
-				<InputField name="КомплектующиеСумма" id="44">
-					<DataPath>Объект.Комплектующие.Сумма</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<FooterDataPath>Объект.Комплектующие.TotalСумма</FooterDataPath>
-					<ContextMenu name="КомплектующиеСуммаКонтекстноеМеню" id="45"/>
-					<ExtendedTooltip name="КомплектующиеСуммаРасширеннаяПодсказка" id="46"/>
-				</InputField>
-				<InputField name="КомплектующиеЦена" id="73">
-					<DataPath>Объект.Комплектующие.Цена</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<ContextMenu name="КомплектующиеЦенаКонтекстноеМеню" id="74"/>
-					<ExtendedTooltip name="КомплектующиеЦенаРасширеннаяПодсказка" id="75"/>
-				</InputField>
-				<CheckBoxField name="КомплектующиеНеСовпадает" id="67">
-					<DataPath>Объект.Комплектующие.НеСовпадает</DataPath>
-					<EditMode>EnterOnInput</EditMode>
-					<CheckBoxType>Auto</CheckBoxType>
-					<ContextMenu name="КомплектующиеНеСовпадаетКонтекстноеМеню" id="68"/>
-					<ExtendedTooltip name="КомплектующиеНеСовпадаетРасширеннаяПодсказка" id="69"/>
-				</CheckBoxField>
+				<Page name="СтраницаОсновная" id="106">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Основная</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Основна</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Страница основная</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="СтраницаОсновнаяРасширеннаяПодсказка" id="107"/>
+					<ChildItems>
+						<Table name="Комплектующие" id="16">
+							<Representation>List</Representation>
+							<Footer>true</Footer>
+							<AutoInsertNewRow>true</AutoInsertNewRow>
+							<EnableStartDrag>true</EnableStartDrag>
+							<EnableDrag>true</EnableDrag>
+							<DataPath>Объект.Комплектующие</DataPath>
+							<RowFilter xsi:nil="true"/>
+							<ContextMenu name="КомплектующиеКонтекстноеМеню" id="17"/>
+							<AutoCommandBar name="КомплектующиеКоманднаяПанель" id="18">
+								<ChildItems>
+									<Button name="КомплектующиеЗагрузить" id="51">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.Загрузить</CommandName>
+										<ExtendedTooltip name="КомплектующиеЗагрузитьРасширеннаяПодсказка" id="52"/>
+									</Button>
+								</ChildItems>
+							</AutoCommandBar>
+							<ExtendedTooltip name="КомплектующиеРасширеннаяПодсказка" id="19"/>
+							<SearchStringAddition name="КомплектующиеСтрокаПоиска" id="20">
+								<AdditionSource>
+									<Item>Комплектующие</Item>
+									<Type>SearchStringRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="КомплектующиеСтрокаПоискаКонтекстноеМеню" id="21"/>
+								<ExtendedTooltip name="КомплектующиеСтрокаПоискаРасширеннаяПодсказка" id="22"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="КомплектующиеСостояниеПросмотра" id="23">
+								<AdditionSource>
+									<Item>Комплектующие</Item>
+									<Type>ViewStatusRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="КомплектующиеСостояниеПросмотраКонтекстноеМеню" id="24"/>
+								<ExtendedTooltip name="КомплектующиеСостояниеПросмотраРасширеннаяПодсказка" id="25"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="КомплектующиеУправлениеПоиском" id="26">
+								<AdditionSource>
+									<Item>Комплектующие</Item>
+									<Type>SearchControl</Type>
+								</AdditionSource>
+								<ContextMenu name="КомплектующиеУправлениеПоискомКонтекстноеМеню" id="27"/>
+								<ExtendedTooltip name="КомплектующиеУправлениеПоискомРасширеннаяПодсказка" id="28"/>
+							</SearchControlAddition>
+							<ChildItems>
+								<LabelField name="КомплектующиеНомерСтроки" id="29">
+									<DataPath>Объект.Комплектующие.LineNumber</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КомплектующиеНомерСтрокиКонтекстноеМеню" id="30"/>
+									<ExtendedTooltip name="КомплектующиеНомерСтрокиРасширеннаяПодсказка" id="31"/>
+								</LabelField>
+								<InputField name="КомплектующиеЭтап" id="53">
+									<DataPath>Объект.Комплектующие.Этап</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КомплектующиеЭтапКонтекстноеМеню" id="54"/>
+									<ExtendedTooltip name="КомплектующиеЭтапРасширеннаяПодсказка" id="55"/>
+								</InputField>
+								<InputField name="КомплектующиеОбщееНазвание" id="32">
+									<DataPath>Объект.Комплектующие.ОбщееНазвание</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КомплектующиеОбщееНазваниеКонтекстноеМеню" id="33"/>
+									<ExtendedTooltip name="КомплектующиеОбщееНазваниеРасширеннаяПодсказка" id="34"/>
+									<Events>
+										<Event name="OnChange">КомплектующиеОбщееНазваниеПриИзменении</Event>
+									</Events>
+								</InputField>
+								<InputField name="КомплектующиеНоменклатураСС" id="56">
+									<DataPath>Объект.Комплектующие.НоменклатураСС</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КомплектующиеНоменклатураССКонтекстноеМеню" id="57"/>
+									<ExtendedTooltip name="КомплектующиеНоменклатураССРасширеннаяПодсказка" id="58"/>
+								</InputField>
+								<InputField name="КомплектующиеЕдиницаСС" id="59">
+									<DataPath>Объект.Комплектующие.ЕдиницаСС</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КомплектующиеЕдиницаССКонтекстноеМеню" id="60"/>
+									<ExtendedTooltip name="КомплектующиеЕдиницаССРасширеннаяПодсказка" id="61"/>
+								</InputField>
+								<InputField name="КомплектующиеНоменклатура" id="35">
+									<DataPath>Объект.Комплектующие.Номенклатура</DataPath>
+									<Visible>false</Visible>
+									<EditMode>EnterOnInput</EditMode>
+									<QuickChoice>false</QuickChoice>
+									<ChoiceHistoryOnInput>DontUse</ChoiceHistoryOnInput>
+									<ContextMenu name="КомплектующиеНоменклатураКонтекстноеМеню" id="36"/>
+									<ExtendedTooltip name="КомплектующиеНоменклатураРасширеннаяПодсказка" id="37"/>
+									<Events>
+										<Event name="OnChange">КомплектующиеНоменклатураПриИзменении</Event>
+										<Event name="StartChoice">КомплектующиеНоменклатураНачалоВыбора</Event>
+									</Events>
+								</InputField>
+								<InputField name="КомплектующиеЕдиница" id="38">
+									<DataPath>Объект.Комплектующие.Единица</DataPath>
+									<Visible>false</Visible>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КомплектующиеЕдиницаКонтекстноеМеню" id="39"/>
+									<ExtendedTooltip name="КомплектующиеЕдиницаРасширеннаяПодсказка" id="40"/>
+								</InputField>
+								<InputField name="КомплектующиеЕдиницаОбщееНазвание" id="70">
+									<DataPath>Объект.Комплектующие.ЕдиницаОбщееНазвание</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КомплектующиеЕдиницаОбщееНазваниеКонтекстноеМеню" id="71"/>
+									<ExtendedTooltip name="КомплектующиеЕдиницаОбщееНазваниеРасширеннаяПодсказка" id="72"/>
+								</InputField>
+								<InputField name="КомплектующиеКоличество" id="41">
+									<DataPath>Объект.Комплектующие.Количество</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<FooterDataPath>Объект.Комплектующие.TotalКоличество</FooterDataPath>
+									<ContextMenu name="КомплектующиеКоличествоКонтекстноеМеню" id="42"/>
+									<ExtendedTooltip name="КомплектующиеКоличествоРасширеннаяПодсказка" id="43"/>
+								</InputField>
+								<InputField name="КомплектующиеСумма" id="44">
+									<DataPath>Объект.Комплектующие.Сумма</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<FooterDataPath>Объект.Комплектующие.TotalСумма</FooterDataPath>
+									<ContextMenu name="КомплектующиеСуммаКонтекстноеМеню" id="45"/>
+									<ExtendedTooltip name="КомплектующиеСуммаРасширеннаяПодсказка" id="46"/>
+								</InputField>
+								<InputField name="КомплектующиеЦена" id="73">
+									<DataPath>Объект.Комплектующие.Цена</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КомплектующиеЦенаКонтекстноеМеню" id="74"/>
+									<ExtendedTooltip name="КомплектующиеЦенаРасширеннаяПодсказка" id="75"/>
+								</InputField>
+								<CheckBoxField name="КомплектующиеНеСовпадает" id="67">
+									<DataPath>Объект.Комплектующие.НеСовпадает</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<CheckBoxType>Auto</CheckBoxType>
+									<ContextMenu name="КомплектующиеНеСовпадаетКонтекстноеМеню" id="68"/>
+									<ExtendedTooltip name="КомплектующиеНеСовпадаетРасширеннаяПодсказка" id="69"/>
+								</CheckBoxField>
+								<CheckBoxField name="КомплектующиеДобавленоВручную" id="302">
+									<DataPath>Объект.Комплектующие.ДобавленоВручную</DataPath>
+									<ReadOnly>true</ReadOnly>
+									<EditMode>EnterOnInput</EditMode>
+									<CheckBoxType>Auto</CheckBoxType>
+									<ContextMenu name="КомплектующиеДобавленоВручнуюКонтекстноеМеню" id="303"/>
+									<ExtendedTooltip name="КомплектующиеДобавленоВручнуюРасширеннаяПодсказка" id="304"/>
+								</CheckBoxField>
+								<InputField name="КомплектующиеКоличествоСС_Оригинал" id="231">
+									<DataPath>Объект.Комплектующие.КоличествоСС_Оригинал</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<FooterDataPath>Объект.Комплектующие.TotalКоличествоСС_Оригинал</FooterDataPath>
+									<ContextMenu name="КомплектующиеКоличествоСС_ОригиналКонтекстноеМеню" id="232"/>
+									<ExtendedTooltip name="КомплектующиеКоличествоСС_ОригиналРасширеннаяПодсказка" id="233"/>
+								</InputField>
+								<InputField name="КомплектующиеЕдиницаСС_Оригинал" id="228">
+									<DataPath>Объект.Комплектующие.ЕдиницаСС_Оригинал</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КомплектующиеЕдиницаСС_ОригиналКонтекстноеМеню" id="229"/>
+									<ExtendedTooltip name="КомплектующиеЕдиницаСС_ОригиналРасширеннаяПодсказка" id="230"/>
+								</InputField>
+							</ChildItems>
+						</Table>
+					</ChildItems>
+				</Page>
+				<Page name="Группа8" id="108">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Дополнительная</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>По модульно</v8:content>
+						</v8:item>
+					</Title>
+					<ExtendedTooltip name="Группа8РасширеннаяПодсказка" id="109"/>
+					<ChildItems>
+						<Table name="ФайлыОснования" id="305">
+							<CommandBarLocation>None</CommandBarLocation>
+							<ReadOnly>true</ReadOnly>
+							<HeightInTableRows>3</HeightInTableRows>
+							<VerticalStretch>false</VerticalStretch>
+							<DataPath>Объект.ФайлыОснования</DataPath>
+							<Title>
+								<v8:item>
+									<v8:lang>ru</v8:lang>
+									<v8:content>Файлы основания (оригиналы Excel; модуль 0 — на всю СС; открыть — кнопка «Файлы»)</v8:content>
+								</v8:item>
+								<v8:item>
+									<v8:lang>uk</v8:lang>
+									<v8:content>Файли підстави (оригінали Excel; модуль 0 — на всю СС; відкрити — кнопка «Файли»)</v8:content>
+								</v8:item>
+							</Title>
+							<RowFilter xsi:nil="true"/>
+							<ContextMenu name="ФайлыОснованияКонтекстноеМеню" id="306"/>
+							<AutoCommandBar name="ФайлыОснованияКоманднаяПанель" id="307"/>
+							<ExtendedTooltip name="ФайлыОснованияРасширеннаяПодсказка" id="308"/>
+							<SearchStringAddition name="ФайлыОснованияСтрокаПоиска" id="309">
+								<AdditionSource>
+									<Item>ФайлыОснования</Item>
+									<Type>SearchStringRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="ФайлыОснованияСтрокаПоискаКонтекстноеМеню" id="310"/>
+								<ExtendedTooltip name="ФайлыОснованияСтрокаПоискаРасширеннаяПодсказка" id="311"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="ФайлыОснованияСостояниеПросмотра" id="312">
+								<AdditionSource>
+									<Item>ФайлыОснования</Item>
+									<Type>ViewStatusRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="ФайлыОснованияСостояниеПросмотраКонтекстноеМеню" id="313"/>
+								<ExtendedTooltip name="ФайлыОснованияСостояниеПросмотраРасширеннаяПодсказка" id="314"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="ФайлыОснованияУправлениеПоиском" id="315">
+								<AdditionSource>
+									<Item>ФайлыОснования</Item>
+									<Type>SearchControl</Type>
+								</AdditionSource>
+								<ContextMenu name="ФайлыОснованияУправлениеПоискомКонтекстноеМеню" id="316"/>
+								<ExtendedTooltip name="ФайлыОснованияУправлениеПоискомРасширеннаяПодсказка" id="317"/>
+							</SearchControlAddition>
+							<ChildItems>
+								<InputField name="ФайлыОснованияМодуль" id="318">
+									<DataPath>Объект.ФайлыОснования.Модуль</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ФайлыОснованияМодульКонтекстноеМеню" id="319"/>
+									<ExtendedTooltip name="ФайлыОснованияМодульРасширеннаяПодсказка" id="320"/>
+								</InputField>
+								<InputField name="ФайлыОснованияФайл" id="321">
+									<DataPath>Объект.ФайлыОснования.Файл</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ФайлыОснованияФайлКонтекстноеМеню" id="322"/>
+									<ExtendedTooltip name="ФайлыОснованияФайлРасширеннаяПодсказка" id="323"/>
+								</InputField>
+								<InputField name="ФайлыОснованияДатаЗагрузки" id="324">
+									<DataPath>Объект.ФайлыОснования.ДатаЗагрузки</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ФайлыОснованияДатаЗагрузкиКонтекстноеМеню" id="325"/>
+									<ExtendedTooltip name="ФайлыОснованияДатаЗагрузкиРасширеннаяПодсказка" id="326"/>
+								</InputField>
+								<InputField name="ФайлыОснованияКоличествоСтрок" id="327">
+									<DataPath>Объект.ФайлыОснования.КоличествоСтрок</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ФайлыОснованияКоличествоСтрокКонтекстноеМеню" id="328"/>
+									<ExtendedTooltip name="ФайлыОснованияКоличествоСтрокРасширеннаяПодсказка" id="329"/>
+								</InputField>
+								<InputField name="ФайлыОснованияСуммаИтого" id="330">
+									<DataPath>Объект.ФайлыОснования.СуммаИтого</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="ФайлыОснованияСуммаИтогоКонтекстноеМеню" id="331"/>
+									<ExtendedTooltip name="ФайлыОснованияСуммаИтогоРасширеннаяПодсказка" id="332"/>
+								</InputField>
+							</ChildItems>
+						</Table>
+						<Table name="КомплектующиеПоМодульно" id="170">
+							<Footer>true</Footer>
+							<AutoInsertNewRow>true</AutoInsertNewRow>
+							<EnableStartDrag>true</EnableStartDrag>
+							<EnableDrag>true</EnableDrag>
+							<DataPath>Объект.КомплектующиеПоМодульно</DataPath>
+							<RowFilter xsi:nil="true"/>
+							<ContextMenu name="КомплектующиеПоМодульноКонтекстноеМеню" id="171"/>
+							<AutoCommandBar name="КомплектующиеПоМодульноКоманднаяПанель" id="172"/>
+							<ExtendedTooltip name="КомплектующиеПоМодульноРасширеннаяПодсказка" id="173"/>
+							<SearchStringAddition name="КомплектующиеПоМодульноСтрокаПоиска" id="174">
+								<AdditionSource>
+									<Item>КомплектующиеПоМодульно</Item>
+									<Type>SearchStringRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="КомплектующиеПоМодульноСтрокаПоискаКонтекстноеМеню" id="175"/>
+								<ExtendedTooltip name="КомплектующиеПоМодульноСтрокаПоискаРасширеннаяПодсказка" id="176"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="КомплектующиеПоМодульноСостояниеПросмотра" id="177">
+								<AdditionSource>
+									<Item>КомплектующиеПоМодульно</Item>
+									<Type>ViewStatusRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="КомплектующиеПоМодульноСостояниеПросмотраКонтекстноеМеню" id="178"/>
+								<ExtendedTooltip name="КомплектующиеПоМодульноСостояниеПросмотраРасширеннаяПодсказка" id="179"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="КомплектующиеПоМодульноУправлениеПоиском" id="180">
+								<AdditionSource>
+									<Item>КомплектующиеПоМодульно</Item>
+									<Type>SearchControl</Type>
+								</AdditionSource>
+								<ContextMenu name="КомплектующиеПоМодульноУправлениеПоискомКонтекстноеМеню" id="181"/>
+								<ExtendedTooltip name="КомплектующиеПоМодульноУправлениеПоискомРасширеннаяПодсказка" id="182"/>
+							</SearchControlAddition>
+							<ChildItems>
+								<LabelField name="КомплектующиеПоМодульноНомерСтроки" id="183">
+									<DataPath>Объект.КомплектующиеПоМодульно.LineNumber</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КомплектующиеПоМодульноНомерСтрокиКонтекстноеМеню" id="184"/>
+									<ExtendedTooltip name="КомплектующиеПоМодульноНомерСтрокиРасширеннаяПодсказка" id="185"/>
+								</LabelField>
+								<InputField name="КомплектующиеПоМодульноМодуль" id="186">
+									<DataPath>Объект.КомплектующиеПоМодульно.Модуль</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КомплектующиеПоМодульноМодульКонтекстноеМеню" id="187"/>
+									<ExtendedTooltip name="КомплектующиеПоМодульноМодульРасширеннаяПодсказка" id="188"/>
+								</InputField>
+								<InputField name="КомплектующиеПоМодульноОбщееНазвание" id="189">
+									<DataPath>Объект.КомплектующиеПоМодульно.ОбщееНазвание</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КомплектующиеПоМодульноОбщееНазваниеКонтекстноеМеню" id="190"/>
+									<ExtendedTooltip name="КомплектующиеПоМодульноОбщееНазваниеРасширеннаяПодсказка" id="191"/>
+								</InputField>
+								<InputField name="КомплектующиеПоМодульноНоменклатура" id="192">
+									<DataPath>Объект.КомплектующиеПоМодульно.Номенклатура</DataPath>
+									<Visible>false</Visible>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КомплектующиеПоМодульноНоменклатураКонтекстноеМеню" id="193"/>
+									<ExtendedTooltip name="КомплектующиеПоМодульноНоменклатураРасширеннаяПодсказка" id="194"/>
+								</InputField>
+								<InputField name="КомплектующиеПоМодульноЕдиница" id="195">
+									<DataPath>Объект.КомплектующиеПоМодульно.Единица</DataPath>
+									<Visible>false</Visible>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КомплектующиеПоМодульноЕдиницаКонтекстноеМеню" id="196"/>
+									<ExtendedTooltip name="КомплектующиеПоМодульноЕдиницаРасширеннаяПодсказка" id="197"/>
+								</InputField>
+								<InputField name="КомплектующиеПоМодульноКоличество" id="198">
+									<DataPath>Объект.КомплектующиеПоМодульно.Количество</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<FooterDataPath>Объект.КомплектующиеПоМодульно.TotalКоличество</FooterDataPath>
+									<ContextMenu name="КомплектующиеПоМодульноКоличествоКонтекстноеМеню" id="199"/>
+									<ExtendedTooltip name="КомплектующиеПоМодульноКоличествоРасширеннаяПодсказка" id="200"/>
+								</InputField>
+								<InputField name="КомплектующиеПоМодульноСумма" id="201">
+									<DataPath>Объект.КомплектующиеПоМодульно.Сумма</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<FooterDataPath>Объект.Комплектующие.TotalСумма</FooterDataPath>
+									<ContextMenu name="КомплектующиеПоМодульноСуммаКонтекстноеМеню" id="202"/>
+									<ExtendedTooltip name="КомплектующиеПоМодульноСуммаРасширеннаяПодсказка" id="203"/>
+								</InputField>
+								<InputField name="КомплектующиеПоМодульноЭтап" id="204">
+									<DataPath>Объект.КомплектующиеПоМодульно.Этап</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КомплектующиеПоМодульноЭтапКонтекстноеМеню" id="205"/>
+									<ExtendedTooltip name="КомплектующиеПоМодульноЭтапРасширеннаяПодсказка" id="206"/>
+								</InputField>
+								<InputField name="КомплектующиеПоМодульноНоменклатураСС" id="207">
+									<DataPath>Объект.КомплектующиеПоМодульно.НоменклатураСС</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КомплектующиеПоМодульноНоменклатураССКонтекстноеМеню" id="208"/>
+									<ExtendedTooltip name="КомплектующиеПоМодульноНоменклатураССРасширеннаяПодсказка" id="209"/>
+								</InputField>
+								<InputField name="КомплектующиеПоМодульноЕдиницаСС" id="210">
+									<DataPath>Объект.КомплектующиеПоМодульно.ЕдиницаСС</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КомплектующиеПоМодульноЕдиницаССКонтекстноеМеню" id="211"/>
+									<ExtendedTooltip name="КомплектующиеПоМодульноЕдиницаССРасширеннаяПодсказка" id="212"/>
+								</InputField>
+								<CheckBoxField name="КомплектующиеПоМодульноНеСовпадает" id="213">
+									<DataPath>Объект.КомплектующиеПоМодульно.НеСовпадает</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<CheckBoxType>Auto</CheckBoxType>
+									<ContextMenu name="КомплектующиеПоМодульноНеСовпадаетКонтекстноеМеню" id="214"/>
+									<ExtendedTooltip name="КомплектующиеПоМодульноНеСовпадаетРасширеннаяПодсказка" id="215"/>
+								</CheckBoxField>
+								<InputField name="КомплектующиеПоМодульноЕдиницаОбщееНазвание" id="216">
+									<DataPath>Объект.КомплектующиеПоМодульно.ЕдиницаОбщееНазвание</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КомплектующиеПоМодульноЕдиницаОбщееНазваниеКонтекстноеМеню" id="217"/>
+									<ExtendedTooltip name="КомплектующиеПоМодульноЕдиницаОбщееНазваниеРасширеннаяПодсказка" id="218"/>
+								</InputField>
+								<InputField name="КомплектующиеПоМодульноЦена" id="219">
+									<DataPath>Объект.КомплектующиеПоМодульно.Цена</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КомплектующиеПоМодульноЦенаКонтекстноеМеню" id="220"/>
+									<ExtendedTooltip name="КомплектующиеПоМодульноЦенаРасширеннаяПодсказка" id="221"/>
+								</InputField>
+								<InputField name="КомплектующиеПоМодульноЕдиницаСС_Оригинал" id="222">
+									<DataPath>Объект.КомплектующиеПоМодульно.ЕдиницаСС_Оригинал</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КомплектующиеПоМодульноЕдиницаСС_ОригиналКонтекстноеМеню" id="223"/>
+									<ExtendedTooltip name="КомплектующиеПоМодульноЕдиницаСС_ОригиналРасширеннаяПодсказка" id="224"/>
+								</InputField>
+								<InputField name="КомплектующиеПоМодульноКоличествоСС_Оригинал" id="225">
+									<DataPath>Объект.КомплектующиеПоМодульно.КоличествоСС_Оригинал</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<FooterDataPath>Объект.Комплектующие.TotalКоличествоСС_Оригинал</FooterDataPath>
+									<ContextMenu name="КомплектующиеПоМодульноКоличествоСС_ОригиналКонтекстноеМеню" id="226"/>
+									<ExtendedTooltip name="КомплектующиеПоМодульноКоличествоСС_ОригиналРасширеннаяПодсказка" id="227"/>
+								</InputField>
+							</ChildItems>
+						</Table>
+					</ChildItems>
+				</Page>
+				<Page name="СтраницаПерерахунок" id="333">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Пересчет</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Перерахунок</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Коэффициенты пересчета единиц оригинала в единицы закупки</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Коефіцієнти перерахунку одиниць оригіналу в одиниці закупівлі</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="СтраницаПерерахунокРасширеннаяПодсказка" id="334"/>
+					<ChildItems>
+						<Table name="КоэффициентыПересчета" id="335">
+							<Representation>List</Representation>
+							<ChangeRowSet>false</ChangeRowSet>
+							<Footer>true</Footer>
+							<DataPath>Объект.КоэффициентыПересчета</DataPath>
+							<RowFilter xsi:nil="true"/>
+							<ContextMenu name="КоэффициентыПересчетаКонтекстноеМеню" id="336"/>
+							<AutoCommandBar name="КоэффициентыПересчетаКоманднаяПанель" id="337">
+								<ChildItems>
+									<Button name="КоэффициентыПересчетаЗаполнитьКоэффициенты" id="338">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.ЗаполнитьКоэффициенты</CommandName>
+										<ExtendedTooltip name="КоэффициентыПересчетаЗаполнитьКоэффициентыРасширеннаяПодсказка" id="339"/>
+									</Button>
+									<Button name="КоэффициентыПересчетаПересчитатьКоличество" id="340">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.ПересчитатьКоличество</CommandName>
+										<ExtendedTooltip name="КоэффициентыПересчетаПересчитатьКоличествоРасширеннаяПодсказка" id="341"/>
+									</Button>
+									<Button name="КоэффициентыПересчетаПересчитатьСтроку" id="384">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.ПересчитатьСтроку</CommandName>
+										<ExtendedTooltip name="КоэффициентыПересчетаПересчитатьСтрокуРасширеннаяПодсказка" id="385"/>
+									</Button>
+									<Button name="КоэффициентыПересчетаЗаписатьПравилоВСправочник" id="342">
+										<Type>CommandBarButton</Type>
+										<CommandName>Form.Command.ЗаписатьПравилоВСправочник</CommandName>
+										<ExtendedTooltip name="КоэффициентыПересчетаЗаписатьПравилоВСправочникРасширеннаяПодсказка" id="343"/>
+									</Button>
+								</ChildItems>
+							</AutoCommandBar>
+							<ExtendedTooltip name="КоэффициентыПересчетаРасширеннаяПодсказка" id="344"/>
+							<SearchStringAddition name="КоэффициентыПересчетаСтрокаПоиска" id="345">
+								<AdditionSource>
+									<Item>КоэффициентыПересчета</Item>
+									<Type>SearchStringRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="КоэффициентыПересчетаСтрокаПоискаКонтекстноеМеню" id="346"/>
+								<ExtendedTooltip name="КоэффициентыПересчетаСтрокаПоискаРасширеннаяПодсказка" id="347"/>
+							</SearchStringAddition>
+							<ViewStatusAddition name="КоэффициентыПересчетаСостояниеПросмотра" id="348">
+								<AdditionSource>
+									<Item>КоэффициентыПересчета</Item>
+									<Type>ViewStatusRepresentation</Type>
+								</AdditionSource>
+								<ContextMenu name="КоэффициентыПересчетаСостояниеПросмотраКонтекстноеМеню" id="349"/>
+								<ExtendedTooltip name="КоэффициентыПересчетаСостояниеПросмотраРасширеннаяПодсказка" id="350"/>
+							</ViewStatusAddition>
+							<SearchControlAddition name="КоэффициентыПересчетаУправлениеПоиском" id="351">
+								<AdditionSource>
+									<Item>КоэффициентыПересчета</Item>
+									<Type>SearchControl</Type>
+								</AdditionSource>
+								<ContextMenu name="КоэффициентыПересчетаУправлениеПоискомКонтекстноеМеню" id="352"/>
+								<ExtendedTooltip name="КоэффициентыПересчетаУправлениеПоискомРасширеннаяПодсказка" id="353"/>
+							</SearchControlAddition>
+							<ChildItems>
+								<LabelField name="КоэффициентыПересчетаНомерСтроки" id="354">
+									<DataPath>Объект.КоэффициентыПересчета.LineNumber</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КоэффициентыПересчетаНомерСтрокиКонтекстноеМеню" id="355"/>
+									<ExtendedTooltip name="КоэффициентыПересчетаНомерСтрокиРасширеннаяПодсказка" id="356"/>
+								</LabelField>
+								<InputField name="КоэффициентыПересчетаЭтап" id="357">
+									<DataPath>Объект.КоэффициентыПересчета.Этап</DataPath>
+									<ReadOnly>true</ReadOnly>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КоэффициентыПересчетаЭтапКонтекстноеМеню" id="358"/>
+									<ExtendedTooltip name="КоэффициентыПересчетаЭтапРасширеннаяПодсказка" id="359"/>
+								</InputField>
+								<InputField name="КоэффициентыПересчетаОбщееНазвание" id="360">
+									<DataPath>Объект.КоэффициентыПересчета.ОбщееНазвание</DataPath>
+									<ReadOnly>true</ReadOnly>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КоэффициентыПересчетаОбщееНазваниеКонтекстноеМеню" id="361"/>
+									<ExtendedTooltip name="КоэффициентыПересчетаОбщееНазваниеРасширеннаяПодсказка" id="362"/>
+								</InputField>
+								<InputField name="КоэффициентыПересчетаНоменклатураСС" id="363">
+									<DataPath>Объект.КоэффициентыПересчета.НоменклатураСС</DataPath>
+									<ReadOnly>true</ReadOnly>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КоэффициентыПересчетаНоменклатураССКонтекстноеМеню" id="364"/>
+									<ExtendedTooltip name="КоэффициентыПересчетаНоменклатураССРасширеннаяПодсказка" id="365"/>
+								</InputField>
+								<InputField name="КоэффициентыПересчетаКоличествоОригинал" id="366">
+									<DataPath>Объект.КоэффициентыПересчета.КоличествоОригинал</DataPath>
+									<ReadOnly>true</ReadOnly>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Кол-во оригинал</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Кількість оригінал</v8:content>
+										</v8:item>
+									</Title>
+									<EditMode>EnterOnInput</EditMode>
+									<FooterDataPath>Объект.КоэффициентыПересчета.TotalКоличествоОригинал</FooterDataPath>
+									<ContextMenu name="КоэффициентыПересчетаКоличествоОригиналКонтекстноеМеню" id="367"/>
+									<ExtendedTooltip name="КоэффициентыПересчетаКоличествоОригиналРасширеннаяПодсказка" id="368"/>
+								</InputField>
+								<InputField name="КоэффициентыПересчетаЕдиницаСС" id="369">
+									<DataPath>Объект.КоэффициентыПересчета.ЕдиницаСС</DataPath>
+									<ReadOnly>true</ReadOnly>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Ед. оригинала</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Од. оригіналу</v8:content>
+										</v8:item>
+									</Title>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КоэффициентыПересчетаЕдиницаССКонтекстноеМеню" id="370"/>
+									<ExtendedTooltip name="КоэффициентыПересчетаЕдиницаССРасширеннаяПодсказка" id="371"/>
+								</InputField>
+								<InputField name="КоэффициентыПересчетаКоэффициент" id="372">
+									<DataPath>Объект.КоэффициентыПересчета.Коэффициент</DataPath>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КоэффициентыПересчетаКоэффициентКонтекстноеМеню" id="373"/>
+									<ExtendedTooltip name="КоэффициентыПересчетаКоэффициентРасширеннаяПодсказка" id="374"/>
+									<Events>
+										<Event name="OnChange">КоэффициентыПересчетаКоэффициентПриИзменении</Event>
+									</Events>
+								</InputField>
+								<InputField name="КоэффициентыПересчетаКоличествоПересчитанное" id="375">
+									<DataPath>Объект.КоэффициентыПересчета.КоличествоПересчитанное</DataPath>
+									<ReadOnly>true</ReadOnly>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Кол-во закупки</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Кількість закупівлі</v8:content>
+										</v8:item>
+									</Title>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КоэффициентыПересчетаКоличествоПересчитанноеКонтекстноеМеню" id="376"/>
+									<ExtendedTooltip name="КоэффициентыПересчетаКоличествоПересчитанноеРасширеннаяПодсказка" id="377"/>
+								</InputField>
+								<InputField name="КоэффициентыПересчетаЕдиницаЗакупки" id="378">
+									<DataPath>Объект.КоэффициентыПересчета.ЕдиницаЗакупки</DataPath>
+									<ReadOnly>true</ReadOnly>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Ед. закупки</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Од. закупівлі</v8:content>
+										</v8:item>
+									</Title>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КоэффициентыПересчетаЕдиницаЗакупкиКонтекстноеМеню" id="379"/>
+									<ExtendedTooltip name="КоэффициентыПересчетаЕдиницаЗакупкиРасширеннаяПодсказка" id="380"/>
+								</InputField>
+								<InputField name="КоэффициентыПересчетаИсточникКоэффициента" id="381">
+									<DataPath>Объект.КоэффициентыПересчета.ИсточникКоэффициента</DataPath>
+									<ReadOnly>true</ReadOnly>
+									<Title>
+										<v8:item>
+											<v8:lang>ru</v8:lang>
+											<v8:content>Источник</v8:content>
+										</v8:item>
+										<v8:item>
+											<v8:lang>uk</v8:lang>
+											<v8:content>Джерело</v8:content>
+										</v8:item>
+									</Title>
+									<EditMode>EnterOnInput</EditMode>
+									<ContextMenu name="КоэффициентыПересчетаИсточникКоэффициентаКонтекстноеМеню" id="382"/>
+									<ExtendedTooltip name="КоэффициентыПересчетаИсточникКоэффициентаРасширеннаяПодсказка" id="383"/>
+								</InputField>
+							</ChildItems>
+						</Table>
+					</ChildItems>
+				</Page>
+				<Page name="СтраницаДоплнительная" id="165">
+					<Title>
+						<v8:item>
+							<v8:lang>ru</v8:lang>
+							<v8:content>Дополнительно</v8:content>
+						</v8:item>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Додаткова</v8:content>
+						</v8:item>
+					</Title>
+					<ToolTip>
+						<v8:item>
+							<v8:lang>uk</v8:lang>
+							<v8:content>Страница доплнительная</v8:content>
+						</v8:item>
+					</ToolTip>
+					<ExtendedTooltip name="СтраницаДоплнительнаяРасширеннаяПодсказка" id="166"/>
+					<ChildItems>
+						<CheckBoxField name="ЗапретитьРедактированиеСС" id="167">
+							<DataPath>Объект.ЗапретитьРедактированиеСС</DataPath>
+							<CheckBoxType>Auto</CheckBoxType>
+							<ContextMenu name="ЗапретитьРедактированиеССКонтекстноеМеню" id="168"/>
+							<ExtendedTooltip name="ЗапретитьРедактированиеССРасширеннаяПодсказка" id="169"/>
+						</CheckBoxField>
+						<UsualGroup name="Группа3" id="62">
+							<Group>AlwaysHorizontal</Group>
+							<Behavior>Usual</Behavior>
+							<ShowTitle>false</ShowTitle>
+							<ExtendedTooltip name="Группа3РасширеннаяПодсказка" id="63"/>
+							<ChildItems>
+								<CheckBoxField name="ВикористовуватиПеревіркуОдиниць" id="64">
+									<DataPath>Объект.ЗастосовуватиПеревіркуОдиниць</DataPath>
+									<CheckBoxType>Auto</CheckBoxType>
+									<ContextMenu name="ВикористовуватиПеревіркуОдиницьКонтекстноеМеню" id="65"/>
+									<ExtendedTooltip name="ВикористовуватиПеревіркуОдиницьРасширеннаяПодсказка" id="66"/>
+								</CheckBoxField>
+								<CheckBoxField name="ЗастосовуватиПеревіркуПоЗагальнимНазвам" id="84">
+									<DataPath>Объект.ЗастосовуватиПеревіркуПоЗагальнимНазвам</DataPath>
+									<CheckBoxType>Auto</CheckBoxType>
+									<ContextMenu name="ЗастосовуватиПеревіркуПоЗагальнимНазвамКонтекстноеМеню" id="85"/>
+									<ExtendedTooltip name="ЗастосовуватиПеревіркуПоЗагальнимНазвамРасширеннаяПодсказка" id="86"/>
+								</CheckBoxField>
+								<CheckBoxField name="ЗастосовуватиПеревіркуЗаПідрозділом" id="93">
+									<DataPath>Объект.ЗастосовуватиПеревіркуЗаПідрозділом</DataPath>
+									<CheckBoxType>Auto</CheckBoxType>
+									<ContextMenu name="ЗастосовуватиПеревіркуЗаПідрозділомКонтекстноеМеню" id="94"/>
+									<ExtendedTooltip name="ЗастосовуватиПеревіркуЗаПідрозділомРасширеннаяПодсказка" id="95"/>
+								</CheckBoxField>
+							</ChildItems>
+						</UsualGroup>
+						<InputField name="НаименованиеРаботыМ29" id="87">
+							<DataPath>Объект.НаименованиеРаботыМ29</DataPath>
+							<ContextMenu name="НаименованиеРаботыМ29КонтекстноеМеню" id="88"/>
+							<ExtendedTooltip name="НаименованиеРаботыМ29РасширеннаяПодсказка" id="89"/>
+						</InputField>
+					</ChildItems>
+				</Page>
 			</ChildItems>
-		</Table>
+		</Pages>
 	</ChildItems>
 	<Attributes>
 		<Attribute name="Объект" id="1">
@@ -250,6 +814,98 @@
 				</v8:item>
 			</ToolTip>
 			<Action>Загрузить</Action>
+		</Command>
+		<Command name="ЗаполнитьКоэффициенты" id="2">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Заполнить коэффициенты</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Заповнити коефіцієнти</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Позиции оригинала с несовпадающими единицами; коэффициенты — из правил общих названий (ручные не перезаписываются)</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Позиції оригіналу з різними одиницями; коефіцієнти — з правил загальних назв (ручні не перезаписуються)</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ЗаполнитьКоэффициенты</Action>
+		</Command>
+		<Command name="ПересчитатьКоличество" id="3">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Пересчитать количество</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Перерахувати кількість</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Количество Комплектующих = оригинал × коэффициент; сумма не меняется</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Кількість Комплектуючих = оригінал × коефіцієнт; сума не змінюється</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ПересчитатьКоличество</Action>
+		</Command>
+		<Command name="ЗаписатьПравилоВСправочник" id="4">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Записать в справочник</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Записати в довідник</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Сохранить коэффициент текущей строки как правило общего названия</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Зберегти коефіцієнт поточного рядка як правило загальної назви</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ЗаписатьПравилоВСправочник</Action>
+		</Command>
+		<Command name="ПересчитатьСтроку" id="5">
+			<Title>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Пересчитать строку</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Перерахувати рядок</v8:content>
+				</v8:item>
+			</Title>
+			<ToolTip>
+				<v8:item>
+					<v8:lang>ru</v8:lang>
+					<v8:content>Пересчитать только строки Комплектующих текущей строки коэффициента (позиция + единица); сумма не меняется</v8:content>
+				</v8:item>
+				<v8:item>
+					<v8:lang>uk</v8:lang>
+					<v8:content>Перерахувати тільки рядки Комплектуючих поточного рядка коефіцієнта (позиція + одиниця); сума не змінюється</v8:content>
+				</v8:item>
+			</ToolTip>
+			<Action>ПересчитатьСтроку</Action>
 		</Command>
 	</Commands>
 </Form>
