@@ -17,7 +17,9 @@
 import sys, collections, math, datetime
 from moy_byudzhet_common import *
 
-SCENARIO, ВЕРСИЯ = "Бюджет (октябрь-декабрь 2026) - мой расчет", "v2"  # v2: без дубля ЗП Ф2 (УТ-001042), см. 11_ПРИМЕНЕННЫЕ_ИСПРАВЛЕНИЯ_v2.md
+# v3: материалы IRC — метод потоков M05 §3.5 по факту списания и остаткам (снимок №11 irc_fakt.json),
+#     см. 12_КОРРЕКТИРОВКА_МАТЕРИАЛОВ_IRC_ПО_ФАКТУ_v3.md; v2: без дубля ЗП Ф2 (УТ-001042), см. 11_ПРИМЕНЕННЫЕ_ИСПРАВЛЕНИЯ_v2.md
+SCENARIO, ВЕРСИЯ = "Бюджет (октябрь-декабрь 2026) - мой расчет", "v3"
 МЕСЯЦЫ = ["2026-10", "2026-11", "2026-12"]
 ПЕРВЫЙ, ПОСЛЕДНИЙ = МЕСЯЦЫ[0], МЕСЯЦЫ[-1]
 LOAD = "--load" in sys.argv
@@ -84,6 +86,14 @@ for _x in DOLGI["kniga"]:  # в книге «Долги Коррект» ЦФО 
     _x["cfo"] = " ".join(_x["cfo"].replace("\xa0", " ").split())
 ECON = load("byudzhety_ekonomista.json")["rows"]
 СНИМОК = FAKT["stamp"]
+# снимок №11 «факты IRC» (moy_byudzhet_11_irc_fakt.py): без него v3 не считается — молчаливый откат на v2 запрещён
+try:
+    IRC_FAKT = load("irc_fakt.json")
+except FileNotFoundError:
+    sys.exit("нет снимка data/irc_fakt.json — сначала python moy_byudzhet_11_irc_fakt.py (материалы IRC v3)")
+_ctl_bad = [c["n"] for c in IRC_FAKT["controls"] if not c["ok"]]
+if _ctl_bad or not IRC_FAKT.get("cache_ok"):
+    sys.exit(f"снимок irc_fakt.json: контрольные строки §3.2 не сошлись {_ctl_bad} (кэш актуален: {IRC_FAKT.get('cache_ok')})")
 
 
 def факт(проект, коды=None, с="2025-01", по="2026-09", вид=None):
@@ -341,6 +351,90 @@ class Бюджет:
                            "text": f"{текст} = {ч(сумма)}", "basis": основа})
 
 
+def материалы_irc_по_факту(б, F, дома, ship, пф, гр, сценарий):
+    """IRC v3 (12_КОРРЕКТИРОВКА_МАТЕРИАЛОВ_IRC_ПО_ФАКТУ_v3.md): метод потоков M05 §3.5 по снимку №11.
+    067 = КЗ за полученное (по поставщику; «Долги Коррект» — по большей стороне, X1 §3.4) − свежие авансы под позиции дефицита
+          + дефицит до нормы СС 000000009 незавершённых 30 м №3–№7 (норма − списано − свой склад − склад проекта FIFO, цена СС),
+          КЗ — октябрь, дефицит — за mat_lead мес. до отгрузки; одна строка на месяц.
+    065 = МШП-часть КЗ (Вручную, октябрь) + МШП_h по факту выдачи на 30 м №1–№2 (РасчетПоСС, месяц оплаты дома).
+    ВС_h, СК_h (n = 2 < 3, M08 §3.9) и вариант «норматив цеха» — только в чувствительности предпросмотра."""
+    п = "МД IRC 2026"
+    буд = {f"30-{h['id'][1:]}": h for h in дома if not h["shipped"]}
+    fifo = sorted(буд, key=lambda k: (ship(буд[k]), int(k[3:])))
+    assert fifo == sorted(буд, key=lambda k: int(k[3:])), f"FIFO склада проекта в снимке (по №) ≠ порядку отгрузки {fifo}"
+    assert set(буд) == set(F["deficit"]["folded"]["by_house"]), (sorted(буд), F["deficit"]["folded"]["by_house"])
+    G, M, AV = F["deficit"]["folded"]["by_house"], F["mshp_h"]["by_house"], F["av"]["zachet_by_house"]
+    оплата = {k: max(ПЕРВЫЙ, сдвиг(ship(буд[k]), -пф["mat_lead"])) for k in fifo}
+    kz067, kz065 = F["kz"]["067"], F["kz"]["065"]
+    больше = [x for x in F["suppliers"] if x["kz"] > x["erp_kz"] + 0.005 and not x["ao_only"]]
+    надлишок = sum(x["kz"] - x["erp_kz"] for x in больше)
+    ао = F["kz"]["ao_excluded"]
+    ао_гр = F["kz"].get("ao_groups", [])
+    дм = lambda d: f"{d[8:10]}.{d[5:7]}"
+    ао_txt = "; ".join(
+        [f"закупівлі за авансовими звітами від {', '.join(дм(g['date']) for g in ао_гр if g['reimbursed'])} {ч(ао)} відшкодовані Казною "
+         f"{', '.join(дм(g['reimbursed']['date']) for g in ао_гр if g['reimbursed'])} — не борг"]
+        + ([f"за звітами від {', '.join(дм(g['date']) for g in ао_гр if not g['reimbursed'])} "
+            f"{ч(F['kz']['ao_unreimbursed_067_065'][0])} відшкодування не знайдено — у боргу (ще "
+            f"{ч(F['kz']['ao_unreimbursed_067_065'][1])} — у МШП-рядку 065)"] if F["kz"].get("ao_unreimbursed", 0) > 0.005 else []))
+    ряди067 = lambda x: [r for r in x["book_rows"] if r not in x["book_rows065"]]
+    av_items = [a for a in F["av"]["items"] if a["zachet"] > 0]
+    av_trade = F["av"]["trade"]
+    ном = lambda k: "№" + k[3:]
+    коротко = lambda n: " ".join([w for w in n.replace('"', "").split() if w not in ("ТОВ", "ФОП", "ПНВП")][:2])
+    pref = f"Матеріали IRC (v3, метод потоків; дослідження економії IRC 02.10.2026 + перевірка; знімок {F['stamp']})"
+    irc = {"months": {}, "kz067": kz067, "kz065": kz065}
+    for м in sorted(set(оплата.values()) | {ПЕРВЫЙ}):
+        hs = [k for k in fifo if оплата[k] == м]
+        g = sum(G[k] for k in hs)
+        av = sum(AV.get(k, 0.0) for k in hs)
+        части, сумма = [], g - av
+        if м == ПЕРВЫЙ:
+            сумма += kz067
+            части.append(f"борг постачальникам за отримані матеріали {ч(kz067)} (закупівлі ERP мінус оплати Казни 067+065 по кожному "
+                         f"постачальнику на 30.09, без МШП-частини; розбіжності з Долгами Коррект — за більшою стороною +{ч(надлишок)}: "
+                         + ", ".join(f"{коротко(x['name'])} (ряди {', '.join(str(r) for r in ряди067(x))})" for x in больше)
+                         + f"; {ао_txt})")
+            if av > 0.005:
+                части.append(f"зараховано аванси {ч(av)} (свіжі, під позиції дефіциту: "
+                             + "; ".join(f"{коротко(a['name'])} — {g['item'].lower()} {g['qty']} шт. за ціною СС (оплата "
+                                         f"{g['date'][8:10]}.{g['date'][5:7]} {ч(g['pay'])})" for a in av_items for g in a["goods_list"])
+                             + f"), не зараховано {ч(av_trade - F['av']['zachet'])} (старі або не під дефіцит — у ризиках)")
+        if hs:
+            части.append(f"дефіцит до норми СС 000000009 (норма − списано − склад будинку − склад «ІБ _МД IRC 2026» FIFO, ціна СС, "
+                         f"оплата за {пф['mat_lead']} міс. до відвантаження, графік {гр}): "
+                         + ", ".join(f"буд. 30 м {ном(k)} {ч(G[k])}" if i == 0 else f"{ном(k)} {ч(G[k])}" for i, k in enumerate(hs)))
+        части.append("поза кошторисом і не взяті позиції СС не перенесено (n = 2 < 3)")
+        б.add(п, м, "УТ-001067", БН, сумма, РАСЧЕТ, f"{pref}: " + "; ".join(части))
+        irc["months"][м] = {"houses": hs, "G": g, "AV": av, "KZ": kz067 if м == ПЕРВЫЙ else 0.0,
+                            "MSHP": sum(M[k] for k in hs) if F["mshp_h"]["confirmed"] else 0.0}
+    msp = [x for x in F["kz"]["mshp_suppliers"] if not x.get("ao")]
+    msp_ao = [x for x in F["kz"]["mshp_suppliers"] if x.get("ao")]
+    рядки = sorted({r for x in msp for r in x["rows"]})
+    б.add(п, ПЕРВЫЙ, "УТ-001065", БН, kz065, ВРУЧНУЮ,
+          f"МШП IRC: борг за отримані МШП {ч(kz065)} (постачальникам {ч(sum(x['kz065'] for x in msp))}: "
+          + ", ".join(f"{коротко(x['name'])} {ч(x['kz065'])}" + (" — частка МШП у закупівлях ERP понад книгу" if x["erp_rest"] else "")
+                      for x in msp)
+          + f"; Долги Коррект, ряди {', '.join(str(r) for r in рядки)}"
+          + (f"; працівнику за авансовими звітами від "
+             + ", ".join(дм(g["date"]) for g in ао_гр if not g["reimbursed"])
+             + f" без відшкодування в Казні {ч(sum(x['kz065'] for x in msp_ao))}: "
+             + ", ".join(f"{коротко(x['name'])} {ч(x['kz065'])}" for x in msp_ao) if msp_ao else "")
+          + "; входить до закупівель IRC ERP)")
+    if F["mshp_h"]["confirmed"]:
+        mh = F["mshp_h"]
+        for м in sorted(set(оплата.values())):
+            hs = [k for k in fifo if оплата[k] == м]
+            б.add(п, м, "УТ-001065", БН, sum(M[k] for k in hs), РАСЧЕТ,
+                  f"МШП на буд. 30 м " + ", ".join(f"{ном(k)} {ч(M[k])}" for k in hs)
+                  + f" за фактом видачі на 30 м №1–№2 (у картці СС МШП немає; лише група «мшп» без позицій норми СС і їх аліасів — дріт, "
+                    f"електроди, відрізні диски, клей Lacrysil уже в дефіциті матеріалів; на будинок — менша з видач: №1 {ч(mh['houses_built']['30-1'])}, "
+                    f"№2 {ч(mh['houses_built']['30-2'])}"
+                  + (f"; №3 — мінус уже видані {ч(mh['houses_built']['30-3'])}" if "30-3" in hs else "")
+                  + f"; оплата за {пф['mat_lead']} міс. до відвантаження, графік {гр})")
+    б.irc = irc
+
+
 def собрать_бюджет(д, н, пф, сценарий):
     б = Бюджет(сценарий)
     гр = "реалістичний" if сценарий == "real" else "план"
@@ -353,41 +447,44 @@ def собрать_бюджет(д, н, пф, сценарий):
         ship = lambda h: h["ship_" + сценарий]
         будущие = sorted([h for h in дома if not h["shipped"]], key=lambda h: (ship(h), int(h["id"][1:])))
         # --- материалы: остаток к оплате = норма − оплачено, FIFO по домам, оплата за L мес. до отгрузки
-        if нр.get("houses_total"):
-            норма = sum(c["materials"] * n for c, n in нр["houses_total"])
-            норма_txt = " + ".join(f"{n} × {ч(c['materials'])} (СС {c['code']})" for c, n in нр["houses_total"])
+        if проект == "МД IRC 2026":   # v3: метод потоков по факту (снимок №11)
+            материалы_irc_по_факту(б, IRC_FAKT, дома, ship, пф, гр, сценарий)
         else:
-            норма, норма_txt = нр["bom"], f"{ч(нр['bom'])} (бюджет проєкту економіста, СС)"
-        оплачено = -факт(проект, {"УТ-001067"})
-        покрытие = оплачено - (норма - нр["bom"] * len(будущие))  # что оплачено сверх домов, уже отгруженных
-        долг_мат = sum(x["debt"] for x in DOLGI["kniga"] if x["cfo"] == проект and x["article"] == "Строительные материалы")
-        по_мес = collections.defaultdict(list)
-        for h in будущие:
-            часть = нр["bom"]
-            if покрытие > 0:
-                взято = min(покрытие, часть)
-                покрытие -= взято
-                часть -= взято
-            if часть > 0.005:
-                по_мес[сдвиг(ship(h), -пф["mat_lead"])].append((h, часть))
-        план_мат = {м: sum(x[1] for x in v) for м, v in по_мес.items()}
-        # кредиторка за материалы на 01.10 внутри остатка: октябрь не меньше долга
-        окт = sum(v for м, v in план_мат.items() if м <= ПЕРВЫЙ)
-        перенос = max(0.0, min(долг_мат, sum(план_мат.values())) - окт)
-        for м, части in sorted(по_мес.items()):
-            сумма = sum(x[1] for x in части)
-            k = min(перенос, сумма) if м > ПЕРВЫЙ else 0.0
-            перенос -= k
-            дома_txt = ", ".join(h["id"] for h, _ in части)
-            нем = len(части)
-            hdr = (f"Матеріали: буд. {дома_txt} ({нем} шт., відвантаження — {', '.join(sorted({мес(ship(h)) for h, _ in части}))}, графік {гр})"
-                   f" × норма {ч(нр['bom'])} — оплата за {пф['mat_lead']} міс. до відвантаження")
-            if abs(сумма - нр["bom"] * нем) > 0.5:
-                hdr += f"; частину вже сплачено (норма проєкту {норма_txt} = {ч(норма)}, сплачено {ч(оплачено)} — факт Казни)"
-            if k > 0.005:
-                б.add(проект, ПЕРВЫЙ, "УТ-001067", БН, k, РАСЧЕТ,
-                      f"{hdr}; перенесено на жовтень у межах боргу постачальникам {ч(долг_мат)} (Долги Коррект на 01.10)")
-            б.add(проект, м, "УТ-001067", БН, сумма - k, РАСЧЕТ, hdr)
+            if нр.get("houses_total"):
+                норма = sum(c["materials"] * n for c, n in нр["houses_total"])
+                норма_txt = " + ".join(f"{n} × {ч(c['materials'])} (СС {c['code']})" for c, n in нр["houses_total"])
+            else:
+                норма, норма_txt = нр["bom"], f"{ч(нр['bom'])} (бюджет проєкту економіста, СС)"
+            оплачено = -факт(проект, {"УТ-001067"})
+            покрытие = оплачено - (норма - нр["bom"] * len(будущие))  # что оплачено сверх домов, уже отгруженных
+            долг_мат = sum(x["debt"] for x in DOLGI["kniga"] if x["cfo"] == проект and x["article"] == "Строительные материалы")
+            по_мес = collections.defaultdict(list)
+            for h in будущие:
+                часть = нр["bom"]
+                if покрытие > 0:
+                    взято = min(покрытие, часть)
+                    покрытие -= взято
+                    часть -= взято
+                if часть > 0.005:
+                    по_мес[сдвиг(ship(h), -пф["mat_lead"])].append((h, часть))
+            план_мат = {м: sum(x[1] for x in v) for м, v in по_мес.items()}
+            # кредиторка за материалы на 01.10 внутри остатка: октябрь не меньше долга
+            окт = sum(v for м, v in план_мат.items() if м <= ПЕРВЫЙ)
+            перенос = max(0.0, min(долг_мат, sum(план_мат.values())) - окт)
+            for м, части in sorted(по_мес.items()):
+                сумма = sum(x[1] for x in части)
+                k = min(перенос, сумма) if м > ПЕРВЫЙ else 0.0
+                перенос -= k
+                дома_txt = ", ".join(h["id"] for h, _ in части)
+                нем = len(части)
+                hdr = (f"Матеріали: буд. {дома_txt} ({нем} шт., відвантаження — {', '.join(sorted({мес(ship(h)) for h, _ in части}))}, графік {гр})"
+                       f" × норма {ч(нр['bom'])} — оплата за {пф['mat_lead']} міс. до відвантаження")
+                if abs(сумма - нр["bom"] * нем) > 0.5:
+                    hdr += f"; частину вже сплачено (норма проєкту {норма_txt} = {ч(норма)}, сплачено {ч(оплачено)} — факт Казни)"
+                if k > 0.005:
+                    б.add(проект, ПЕРВЫЙ, "УТ-001067", БН, k, РАСЧЕТ,
+                          f"{hdr}; перенесено на жовтень у межах боргу постачальникам {ч(долг_мат)} (Долги Коррект на 01.10)")
+                б.add(проект, м, "УТ-001067", БН, сумма - k, РАСЧЕТ, hdr)
         # --- ЗП производства (Ф2): ядро 45 % за мес. до отгрузки / 55 % в мес. отгрузки; доделки на объекте — +1 мес.
         оплачено_зп = -факт(проект, ЗП_СТАТЬИ)
         if проект in ("МД IRC 2026", "МД ООН Админ"):
@@ -574,6 +671,8 @@ def собрать_бюджет(д, н, пф, сценарий):
             continue  # ЦО — в скользящем среднем факте
         if x["cfo"] in ("МД IRC 2026", "МД ООН Админ", "МД ООН 2026") and x["article"] == "Строительные материалы":
             continue
+        if x["cfo"] == "МД IRC 2026" and x["article"] == "МШП":
+            continue  # v3: МШП-часть КЗ IRC — в материалы_irc_по_факту (адреса рядов — irc_fakt.json → kniga)
         ст = СТАТЬЯ_ДОЛГА[x["article"]]
         б.add(x["cfo"], ПЕРВЫЙ, ст, БН, x["debt"], ВРУЧНУЮ,
               f"Борг постачальнику на 01.10: {x['kontr']} — {x['name'][:70]} (Долги Коррект, ряд {x['row']}), оплата у жовтні")
@@ -832,7 +931,8 @@ def записать(строки, д, н):
         о.ПроцентКомиссииФА = round(ПФ["fa"]["rate"] * 100, 2)
         о.Комментарий = (f"Мій розрахунок {ВЕРСИЯ} (метод: {METHOD_MD}), графік реалістичний, розраховано {сегодня}; "
                          f"дані — знімок {СНИМОК}; прочі податки 3 % не закладено (виробництво їх не платить — факт Казни), "
-                         f"комісія ФА {пр(ПФ['fa']['rate'], 2)} від готівкових витрат (без дубля ЗП Ф2 на УТ-001042)")
+                         f"комісія ФА {пр(ПФ['fa']['rate'], 2)} від готівкових витрат (без дубля ЗП Ф2 на УТ-001042); "
+                         f"матеріали IRC — метод потоків за фактом списання і залишками (v3)")
         о.ПоказателиБДДС.Очистить()
         for r in rows:
             с = о.ПоказателиБДДС.Добавить()
@@ -954,6 +1054,204 @@ def сверки(строки, сц):
     return ошибки
 
 
+
+# ════════════════════════════════════════════ IRC v3: предпросмотр и инварианты (промт v3 §4.6, §5.2 п. 6)
+def irc_v3_предпросмотр(СТР, СТР_П, Б_р, Б_п):
+    """Блок «IRC v3»: компоненты по домам и месяцам, строки v2 → v3, мост M05 §3.5, инварианты §4.6, коридор, адреса рядов книги,
+    авансы, «исключено и почему», чувствительность. Возвращает (инварианты OK?, итоги)."""
+    F = IRC_FAKT
+    п = "МД IRC 2026"
+    print(f"\n══ IRC v3 — материалы методом потоков (M05 §3.5), снимок №11 «факты IRC» {F['stamp']}")
+    print(f"   срезы: товарный — {F['srez']['tovar']}; денежный — Казна по {F['srez']['money']} "
+          f"(зеркало до {F['srez']['kazna_mirror_last']}; Казна: {F['srez']['kazna_status']}, поздние 30.09: {F['srez']['kazna_late_30_09']})")
+    G, M, AV = F["deficit"]["folded"]["by_house"], F["mshp_h"]["by_house"], F["av"]["zachet_by_house"]
+    print("   компоненты по домам: дом | отгрузка (реал / план) | дефицит G_h | МШП_h | зачёт аванса")
+    дома = {f"30-{h['id'][1:]}": h for h in Д["houses"][п] if not h["shipped"]}
+    for k in sorted(G):
+        h = дома[k]
+        print(f"     30 м №{k[3:]} | {h['ship_real']} / {h['ship_plan']} | {ч(G[k]):>14} | {ч(M[k]):>10} | {ч(AV.get(k, 0)):>9}")
+    print(f"     Σ G {ч(sum(G.values()))} (кэш исследования {ч(F['deficit']['cache']['total'])}), Σ МШП_h {ч(sum(M.values()))}, "
+          f"Σ зачёт {ч(sum(AV.values()))}; КЗ 067 {ч(F['kz']['067'])}, КЗ 065 {ч(F['kz']['065'])}")
+    mh = F["mshp_h"]
+    print(f"   МШП_h: {mh['rule']}")
+    print(f"     видано на 30 м №1 / №2 / №3 (лише «мшп»): нетто {' / '.join(ч(mh['built_net'][h]) for h in ('30-1', '30-2', '30-3'))}, "
+          f"брутто {' / '.join(ч(mh['houses_built'][h]) for h in ('30-1', '30-2', '30-3'))} → на будинок {ч(mh['per_house'])}")
+    print("     вилучено з МШП_h (одна потреба — в одному члені, промт §4.5): позиція → ключ норми | нетто №1 / №2 / №3 | причина")
+    for e in mh["excluded"]:
+        print(f"       {e['name'][:40]:<40} → {e['key']:<14} | {ч(e['net']['30-1']):>9} / {ч(e['net']['30-2']):>9} / {ч(e['net']['30-3']):>9} | {e['why']}")
+    print("   корректировки дефицита «кэш → v3» (свёртка алиасов и состава, промт §8):")
+    for a in F["deficit"]["adjust"]:
+        print(f"     {a['what']:<92} {ч(a['cache']):>12} → {ч(a['v3']):>12} (Δ {ч(a['delta'])})")
+    for сц, Б in (("реал", Б_р), ("план", Б_п)):
+        print(f"   по месяцам оплаты ({сц}): " + "; ".join(f"{м}: КЗ {ч(c['KZ'])} − АВ {ч(c['AV'])} + G {ч(c['G'])} [{', '.join(c['houses'])}]"
+                                                     f", МШП_h {ч(c['MSHP'])}" for м, c in sorted(Б.irc["months"].items())))
+    # строки IRC 067 / 065: v2 → v3
+    try:
+        v2 = load("moy_raschet_stroki_v2.json")
+    except FileNotFoundError:
+        v2 = {"real": [], "plan": []}
+    print("   строки IRC v2 → v3 (месяц, статья, источник):")
+    итоги = {}
+    for вид, new, old in (("real", СТР, v2["real"]), ("plan", СТР_П, v2["plan"])):
+        a = collections.defaultdict(float)
+        b = collections.defaultdict(float)
+        for r in old:
+            if r["proj"] == п and r["art"] in ("УТ-001067", "УТ-001065"):
+                a[(r["month"], r["art"], r["src"])] += r["sum"]
+        for r in new:
+            if r["proj"] == п and r["art"] in ("УТ-001067", "УТ-001065"):
+                b[(r["month"], r["art"], r["src"])] += r["sum"]
+        for k in sorted(set(a) | set(b)):
+            print(f"     {вид:<4} {k[0]} {k[1]} {k[2]:<11} v2 {ч(a.get(k, 0)):>14} → v3 {ч(b.get(k, 0)):>14} (Δ {ч(b.get(k, 0) - a.get(k, 0))})")
+        итоги[вид] = (sum(a.values()), sum(b.values()))
+        print(f"     {вид:<4} итого 067+065: v2 {ч(итоги[вид][0])} → v3 {ч(итоги[вид][1])} (Δ {ч(итоги[вид][1] - итоги[вид][0])})")
+    # адреса рядов книги, сверка КЗ по поставщикам, авансы
+    print("   ряды «Долги Коррект» IRC (материалы, МШП) → адрес:")
+    print("     " + "; ".join(f"{x['row']}→{x['to'].split(' ')[0]}" for x in F["kniga"]["rows"]))
+    print("   сверка КЗ по поставщикам (|Δ| > 1, МШП-часть, авансы): ERP закуплено − оплачено | книга 067/065 (ряды) | ERP-расчёты | класс → КЗ 067/065, АВ")
+    for x in F["suppliers"]:
+        if abs(x["delta"]) > 1 or x["kz065"] > 0 or x["av"] > 0 or x["ao_only"]:
+            print(f"     {x['name'][:30]:<30} ERP {ч(x['erp_kz'] - x['erp_av']):>12} | кн {ч(x['book067']):>11}/{ч(x['book065']):>9} {str(x['book_rows']):<14}"
+                  f"| {('—' if not x['erp_tp'] else ч(x['erp_tp'][0] - x['erp_tp'][1])):>11} | {x['cls']} → {ч(x['kz067']):>11}/{ч(x['kz065']):>9}, АВ {ч(x['av'])}"
+                  + (f", upside {ч(x['upside'])}" if x["upside"] else ""))
+    print(f"     авансовые отчёты (по дате): " + "; ".join(f"{g['date']} {ч(g['sum'])} → " + (f"возмещено {g['reimbursed']['date']} {ч(g['reimbursed']['sum'])}"
+          if g["reimbursed"] else "возмещения нет — в КЗ") for g in F["kz"]["ao_groups"]))
+    print(f"     КЗ: ERP брутто {ч(F['kz']['erp_gross'])} − возмещённые авансовые отчёты {ч(F['kz']['ao_excluded'])} + книга сверх ERP "
+          f"{ч(F['kz']['067'] + F['kz']['065'] - F['kz']['erp_gross'] + F['kz']['ao_excluded'])} = {ч(F['kz']['067'] + F['kz']['065'])}; "
+          f"не разрешено (upside) {ч(F['kz']['upside'])}")
+    print("   авансы (каждый): поставщик | сумма | последний платёж | возраст на 30.09 | срок поставки | решение")
+    for a in F["av"]["items"]:
+        print(f"     {a['name'][:28]:<28} {ч(a['av']):>11} | {a['last_pay']} | {a['age_30_09']} дн | {a['term_src'][:60]} | {a['decision']}")
+    ex = F["stocks"]["excluded_sum"]
+    print(f"   исключено из используемого остатка склада проекта (M05 §3.3): усл. 1 (отрицательные / сумма без количества) {ч(ex['1'])}; "
+          f"усл. 4 (вне норм 30 м №3–№7 после свёртки алиасов) {ч(ex['4_no_norm_30m'])} + сверх норм {ч(ex['4_over_norm_left'])}; "
+          f"усл. 6 (неликвид > 180 дн.) {ч(ex['6_illiquid'])} — {ex['6_note']}; остатки построенных домов U {ч(F['stocks']['built_gross'])} — 0 (до сличения)")
+    # чувствительность
+    S_ = F["sens"]
+    v2tot, v3tot = итоги["real"]
+    k_irc = F["inv"]["I13"]["k_stock"]
+    G47 = sum(G[k] + M[k] for k in G if k != "30-3")
+    G46 = sum(G[k] + M[k] for k in ("30-4", "30-5", "30-6"))
+    print("   чувствительность и риски (вне базы; взаимоисключающие — вилкой):")
+    for t_, v in (("цена замещения (M05 §3.6)", S_["rep_price"]),
+                  ("авансы товарные, не зачтённые (при подтверждённой поставке) — до", -(F["av"]["trade"] - F["av"]["zachet"])),
+                  ("КЗ: «книга > ERP» не разрешено — при решении в пользу ERP до", -F["kz"]["upside"]),
+                  ("склады построенных домов: (а) излишек → новым домам до", -F["stocks"]["built_gross"]),
+                  ("склады построенных домов: (б) досписание, докупка для построенных до (оценка исследования)", 256143.88),
+                  ("инвентаризация склада проекта: дисконт A-позиций 5 %", S_["discount"]["5%"]),
+                  ("инвентаризация склада проекта: дисконт A-позиций 10 %", S_["discount"]["10%"]),
+                  ("сдвиг 30 м №4–№7 за горизонт (не начаты): Δ квартала", -G47),
+                  ("   из него переоценка октября (№4–№6)", -G46),
+                  ("вне сметы ВС 100 % (если технолог включит в норму)", S_["vs"]["sum"]),
+                  ("   нетто к УТ-001069 v2 (2 000 × 5 уже стоит)", S_["vs"]["sum"] - 10000),
+                  ("состав СК (позиции не нужны — подтвердит производство): не закуплено", -S_["sk"]["not_bought"]),
+                  ("   все «не використано» на 30 м №1–№2", -S_["sk"]["all"]),
+                  (f"   с весом Z = {S_['sk']['Z']} (n = 2): не закуплено", S_["sk"]["z_weighted_not_bought"]),
+                  ("вариант 2 «норматив цеха» (экономия объёма по ср. №1–№2 + ВС 100 %)", S_["var2"]["total"]),
+                  ("   из него экономия объёма", S_["var2"]["volume"]),
+                  ("асимметричный (прежняя база: ВС 100 % − СК × 8/11, без МШП_h)", S_["vs"]["sum"] - 113030.0 * 8 / 11 - sum(M.values())),
+                  ("МШП_h: если МШП домов IRC платит ЦО", -sum(M.values())),
+                  ("МШП_h: по большей выдаче (30 м №1)", (F["mshp_h"]["max_per_house"] - F["mshp_h"]["per_house"]) * 5),
+                  ("НДС к уплате (меньше НК) при Δ материалов IRC", -(v3tot - v2tot) * (1 - 1 / k_irc))):
+        print(f"     {t_:<92} {ч(v):>14}")
+    print("   реестр рисков снимка (вне базы; вилка «от … до»):")
+    for rk in F.get("risks", []):
+        print(f"     {ч(rk['low']):>12} … {ч(rk['high']):>12}  {rk['what']}; кто: {rk['owner']}")
+    print(f"     Δ строк материалов IRC с НДС {ч(v3tot - v2tot)}; Δ денег нетто от НДС {ч((v3tot - v2tot) / k_irc)} (k_IRC {k_irc:.4f}); "
+          f"строка НДС 00009 — «Вручную» из 00008, с закупками не связана")
+    # ── мост v2 → v3 (тождество M05 §3.5)
+    c8, c9 = CARDS["000000008"]["materials"], CARDS["000000009"]["materials"]
+    норма13, норма8 = 6 * c8 + 7 * c9, 6 * c8 + 2 * c9
+    paid067 = -факт(п, {"УТ-001067"})
+    I6 = F["inv"]["I6"]
+    remain = норма13 - paid067
+    D_ = F["consumed"]["gross8"] - норма8
+    U_ = F["stocks"]["built_gross"]
+    gap6 = I6["paid"] - (I6["consumed_g"] + I6["s_book_g"] + I6["prepaid"] - I6["kz"])
+    sur = F["deficit"]["identity"]["surplus"]
+    sur3 = F["stocks"]["own3_gross"] - F["stocks"]["own3_used"]
+    cheap = F["deficit"]["identity"]["cheap"]
+    kz_net067 = F["kz"]["erp_gross"] - F["kz"]["erp_av"] + (I6["paid"] - paid067)
+    eac = kz_net067 + F["deficit"]["cache"]["total"]
+    мост = remain + D_ + U_ + gap6 + sur + sur3 - cheap
+    kz_fin = F["kz"]["067"] + F["kz"]["065"]
+    base = eac + (kz_fin - kz_net067) - F["av"]["zachet"] + (F["deficit"]["folded"]["total"] - F["deficit"]["cache"]["total"]) + sum(M.values())
+    print("   мост v2 → v3 (M05 §3.5):")
+    for t_, v in (("v2: остаток к оплате 067 = норма 13 домов − оплачено 067", remain), ("+ D: факт 8 домов − норма", D_),
+                  ("+ U: склады построенных домов", U_), ("+ (−S_in + S_out + прочее): невязка I6 без S_in/S_out", gap6),
+                  ("+ излишек склада проекта над нормами", sur), ("+ излишек склада 30 м №3 над нормой", sur3),
+                  ("− удешевление запаса под нормы", -cheap), ("= EAC-остаток при КЗ нетто 067 (вариант 2)", мост)):
+        print(f"     {t_:<70} {ч(v):>16}")
+    print(f"     (EAC = КЗ нетто 067 {ч(kz_net067)} + дефицит {ч(F['deficit']['cache']['total'])} = {ч(eac)}; невязка {ч(eac - мост)}; "
+          f"измеренные S_in {ч(I6['s_in_g'])} / S_out {ч(I6['s_out_g'])} брутто — прочее без них {ч(gap6 + I6['s_in_g'] - I6['s_out_g'])})")
+    for t_, v in (("+ источник КЗ: нетто 067 → брутто 067+065 по поставщикам, большая сторона", kz_fin - kz_net067),
+                  ("   в т.ч. оплачено 065 (в нетто 067 не вычиталось)", -(I6["paid"] - paid067)),
+                  ("   в т.ч. авансы не сворачиваются с долгами других поставщиков", F["kz"]["erp_av"]),
+                  ("   в т.ч. «Долги Коррект» сверх ERP (большая сторона)", kz_fin - F["kz"]["erp_gross"] + F["kz"]["ao_excluded"]),
+                  ("   в т.ч. авансовые отчёты, возмещённые Казной, — не долг поставщику", -F["kz"]["ao_excluded"]),
+                  ("− зачтённые свежие авансы", -F["av"]["zachet"]),
+                  ("+ свёртка алиасов и состава в дефиците", F["deficit"]["folded"]["total"] - F["deficit"]["cache"]["total"]),
+                  ("+ МШП_h домов №3–№7", sum(M.values())), ("= база v3 (067+065) по мосту", base), ("  база v3 по строкам расчётчика", v3tot)):
+        print(f"     {t_:<70} {ч(v):>16}")
+    # ── инварианты §4.6
+    ok_all, rows = True, []
+
+    def chk(code, ok, txt):
+        nonlocal ok_all
+        ok_all &= bool(ok)
+        rows.append((code, ok, txt))
+    ncls = sum(1 for x in F["suppliers"] if abs(x["delta"]) > 1 and x["cls"] not in tuple("RTDACUOMX")) \
+        + sum(1 for x in F["suppliers"] if x["av"] > 0 and x.get("av_cls", "") not in tuple("RTDACUOMX"))
+    by_cls = collections.Counter(x["cls"] for x in F["suppliers"] if abs(x["delta"]) > 1)
+    by_cls.update("АВ:" + x["av_cls"] for x in F["suppliers"] if x["av"] > 0)
+    chk("I2", ncls == 0, f"расхождений > 1 грн по поставщикам: {sum(by_cls.values())}, классы {dict(by_cls)}, неклассифицированных {ncls}; "
+                         f"контроль сборки: оплачено {ч(I6['paid'])} = закуплено − КЗ + АВ")
+    gap6s = I6["paid"] - (I6["consumed_g"] + I6["s_book_g"] + I6["prepaid"] - I6["kz"] - I6["s_in_g"] + I6["s_out_g"])
+    chk("I6", abs(gap6s) <= 0.05 * I6["paid"], f"|Paid − (Consumed + S_book + Prepaid − КЗ − S_in + S_out)| = {ч(abs(gap6s))} "
+                                               f"({abs(gap6s) / I6['paid']:.2%} Paid; без S_in/S_out {ч(gap6)})")
+    G_all = F["deficit"]["folded"]["total"] + sum(M.values())
+    chk("I7", v3tot <= G_all + kz_fin + 0.005, f"Cash_IRC {ч(v3tot)} ≤ G {ч(G_all)} + КЗ {ч(kz_fin)} + R_unpaid 0")
+    chk("I8", abs(F["stocks"]["under_norm"] + F["stocks"]["surplus_after"] - F["stocks"]["P_gross"]) < 0.05,
+        f"U {ч(U_)} и излишек склада проекта {ч(F['stocks']['surplus_after'])} в S_use не входят (склад = под норму "
+        f"{ч(F['stocks']['under_norm'])} + излишек)")
+    i13 = F["inv"]["I13"]
+    chk("I13", i13["share_stock_pct"] <= 1, f"k Consumed {i13['k_consumed']:.4f}, k запаса {i13['k_stock']:.4f}; партии по ставке номенклатуры "
+                                           f"(42 вне IRC + 67 цепочек): Consumed {ч(i13['fallback_consumed_net'])} / {ч(i13['fallback_consumed_gross'])} "
+                                           f"({i13['share_consumed_pct']:.2f} % — материалы с чужих складов, в денежные члены v3 не входят), "
+                                           f"склад проекта {ч(i13['fallback_stockP_gross'])}")
+    i14 = F["inv"]["I14"]
+    chk("I14", abs(i14["dev_pct"]) <= 0.5 and i14["unexplained"] <= 0.01 and abs(i14["ao_erp"] - i14["ao_buh"]) <= 0.01,
+        f"(а) {i14['srez_tovar']}; деньги — {i14['srez_money']}; (б) корзины: АО {ч(i14['ao_erp'])} = {ч(i14['ao_buh'])}, услуги в накладных "
+        f"BuhBud {ч(i14['services_buh'])}, не пояснено {ч(i14['unexplained'])}; (в) ERP {ч(i14['erp_P_gross'])} vs BuhBud {ч(i14['buh_P_gross'])} "
+        f"({i14['dev_pct']:+.2f} %)")
+    oct_ = sum(r["sum"] for r in СТР if r["proj"] == п and r["month"] == ПЕРВЫЙ and r["art"] in ("УТ-001067", "УТ-001065"))
+    chk("B17", oct_ >= kz_fin - 0.005, f"октябрь IRC 067+065 {ч(oct_)} ≥ КЗ {ч(kz_fin)}")
+    vs_g, ms_g, vs_ms = F["sens"]["vs"]["intersect_G"], F["mshp_h"]["intersect_G"], F["sens"]["vs"].get("intersect_MSHP", [])
+    chk("∩ членов", not (vs_g or ms_g or vs_ms),
+        f"после свёртки алиасов: ВС_h ∩ G_h = {vs_g or '∅'}; МШП_h ∩ G_h = {ms_g or '∅'}; ВС_h ∩ МШП_h = {vs_ms or '∅'} "
+        f"(из МШП_h вынесено в G_h: {', '.join(sorted({e['key'] for e in F['mshp_h']['excluded']}))})")
+    c10 = next(c for c in F["controls"] if c["n"] == 10)
+    c9_ = next(c for c in F["controls"] if c["n"] == 9)
+    chk("§5.2", c10["ok"], c10["mine"])
+    chk("Дефицит", c9_["ok"], c9_["mine"])
+    chk("Мост", abs(eac - мост) <= 0.001 * eac and abs(base - v3tot) <= 0.001 * v3tot,
+        f"невязка до EAC {ч(eac - мост)}, от моста до строк {ч(v3tot - base)}")
+    d = v3tot - 3773216.83
+    in_cor = -970000 <= d <= -640000
+    expl = (f"Δ к v2 {ч(d)}: ориентир «КЗ = ERP» −778 849,35 + книга сверх ERP {ч(kz_fin - F['kz']['erp_gross'] + F['kz']['ao_excluded'])} "
+            f"− возмещённые авансовые отчёты {ч(F['kz']['ao_excluded'])} + свёртка {ч(F['deficit']['folded']['total'] - F['deficit']['cache']['total'])} "
+            f"+ МШП_h сверх 32 141,06 {ч(sum(M.values()) - 32141.06)} − зачёт {ч(F['av']['zachet'])} = "
+            f"{ч(-778849.35 + kz_fin - F['kz']['erp_gross'] + F['deficit']['folded']['total'] - F['deficit']['cache']['total'] + sum(M.values()) - 32141.06 - F['av']['zachet'])}")
+    chk("Коридор", in_cor or abs(-778849.35 + kz_fin - F["kz"]["erp_gross"] + F["deficit"]["folded"]["total"] - F["deficit"]["cache"]["total"]
+                                 + sum(M.values()) - 32141.06 - F["av"]["zachet"] - d) <= 0.05,
+        ("в коридоре −0,64…−0,97 млн; " if in_cor else "вне коридора −0,64…−0,97 млн — объяснено до копейки: ") + expl)
+    print("   инварианты §4.6:")
+    for code, ok, txt in rows:
+        print(f"     {code:<8} {'OK ' if ok else 'НЕТ'} {txt}")
+    print(f"   ИНВАРИАНТЫ: {'OK — можно грузить' if ok_all else 'НАРУШЕНЫ — не загружать'}")
+    return ok_all, {"v2": v2tot, "v3": v3tot, "base_bridge": base}
+
+
 # ════════════════════════════════════════════ main
 if __name__ == "__main__":
     print(f"Мой расчётный бюджет ДДС, окт–дек 2026; снимок данных {СНИМОК}")
@@ -990,6 +1288,9 @@ if __name__ == "__main__":
     cmp_ = сравнение(СТР, СТР_П)
     excel(СТР, СТР_П, Д, Н, ПФ, cmp_)
     save("moy_raschet_stroki.json", {"stamp": snapshot_stamp(), "real": СТР, "plan": СТР_П})
+    IRC_OK, _ = irc_v3_предпросмотр(СТР, СТР_П, Б_р, Б_п)
+    if LOAD and not IRC_OK:
+        sys.exit("инварианты IRC v3 (§4.6) нарушены — загрузка запрещена")
     if LOAD or "--check" in sys.argv:
         if LOAD:
             print("\n=== ЗАГРУЗКА ===")
