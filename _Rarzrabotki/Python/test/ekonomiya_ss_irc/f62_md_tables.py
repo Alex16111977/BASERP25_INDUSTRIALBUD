@@ -37,7 +37,7 @@ def tab15(rows, g, nh, plan_h, title):
         ep = dv(e.get("s" + plan_h[:2], Decimal(0)), e.get("q" + plan_h[:2], Decimal(0)))
         w(f"| {r['name']} | {unit(r)} | {f3(nq)} | {f2(dv(ns, nq))} | {f2(ns)} | {f3(cq / nh)} ({f3(D(r[g + '_min']))}–{f3(D(r[g + '_max']))}) | "
           f"{f2(dv(cg, cq))} | {f2(dv(D(r['pu_g']), D(r['pu_q'])))} | {f2(ep)} | {f1(D(r[g + '_dq_pct']) if r[g + '_dq_pct'] not in (None, 'None') else None)} | "
-          f"{f1(D(r[g + '_dp_pct']) if r[g + '_dp_pct'] not in (None, 'None') else None)} | {f2(D(r[g + '_pe']))} | {f2(D(r[g + '_qe']))} | {f2(D(r[g + '_delta']))} | {r[g + '_cat']} |")
+          f"{f1(D(r[g + '_dp_pct']) if r[g + '_dp_pct'] not in (None, 'None') else None)} | {f2(D(r[g + '_pe']))} | {f2(D(r[g + '_qe']))} | {f2(D(r[g + '_delta']))} | {classify_row(r, g)} |")
 
 top15 = sorted(A.values(), key=lambda r: -abs(D(r["d15_delta"])))[:25]
 tab15(top15, "d15", 6, "15-1", "Ф1-А. 15 м №1–№6: 25 назв с наибольшим |Δ| (расход реальный брутто против нормы ×6)")

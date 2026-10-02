@@ -14,14 +14,7 @@ out = []
 w = out.append
 dv = lambda a, b: a / b if b else Decimal(0)
 
-def cls_(r, g):
-    cat = r[f"{g}_cat"]
-    if cat == "сопоставимо":
-        Nq, Cq, Ns, Cg = (D(r[f"{g}_{x}"]) for x in ("Nq", "cq", "Ns", "cg"))
-        pr = dv(dv(Cg, Cq), dv(Ns, Nq)); qr = dv(Cq, Nq)
-        if (pr < D("0.5") and qr > 2) or (pr > 2 and qr < D("0.5")):
-            return "единица/состав"
-    return cat
+cls_ = classify_row
 
 for g, hs, plan_h in (("d15", H15, "15-1"), ("d30", H30, "30-1")):
     w(f"===== {g}")

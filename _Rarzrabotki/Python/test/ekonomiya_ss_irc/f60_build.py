@@ -36,15 +36,7 @@ for sh, t in (("IRS 15", "15"), ("IRS 30", "30")):
         econ[k][f"q{t}"] += D(x["q"]); econ[k][f"s{t}"] += D(x["s"])
 
 # ---------- классификация расхода 15 м / 30 м (ф.1, Б) с учётом «единица/состав»
-def classify(r, g):
-    cat = r[f"{g}_cat"]
-    Nq, Cq = r[f"{g}_Nq"], r[f"{g}_cq"]
-    Ns, Cg = r[f"{g}_Ns"], r[f"{g}_cg"]
-    if cat == "сопоставимо":
-        pr = dv(dv(Cg, Cq), dv(Ns, Nq)); qr = dv(Cq, Nq)
-        if (pr < D("0.5") and qr > 2) or (pr > 2 and qr < D("0.5")):
-            return "единица/состав"
-    return cat
+classify = classify_row
 
 T = defaultdict(Decimal)
 rows1 = []
@@ -59,20 +51,23 @@ for k, r in R.items():
     elif c15 == "поза кошторисом":
         lb = r["d15_delta"]
     elif c15 in ("единица/состав", "несопоставимо"):
-        lb = max(Z, r["d15_delta"])
+        z_ = sum(1 for h in H15 if o[f"c|{h}|q"] == 0)
+        pzx = Decimal(z_) * o["nr|15-1|ПланГрн"] if 0 < z_ < 6 else Z     # норма домов без списания — в «требует подтверждения»
+        lb = max(Z, r["d15_delta"] + pzx)
     else:
         lb = Z
     r["lb15"] = lb
     nq30, ns30 = o["nr|30-1|ПланКол"], o["nr|30-1|ПланГрн"]
     z30 = sum(1 for h in H30 if o[f"c|{h}|q"] == 0)
     pz30 = (Decimal(z30) * nq30 * dv(ns30, nq30)) if (c30 == "сопоставимо" and 0 < z30 < 2) else Z
+    pz30x = (Decimal(z30) * ns30) if 0 < z30 < 2 else Z
     r["d30_partial_zero"] = pz30; r["d30_zero_houses"] = z30
     if c30 == "сопоставимо":
         lb3 = r["d30_pe"] + r["d30_qe"] + pz30
     elif c30 == "поза кошторисом":
         lb3 = r["d30_delta"]
     elif c30 in ("единица/состав", "несопоставимо"):
-        lb3 = max(Z, r["d30_delta"])
+        lb3 = max(Z, r["d30_delta"] + pz30x)
     else:
         lb3 = Z
     r["lb30"] = lb3

@@ -124,3 +124,18 @@ def dump_json(obj, name):
 
 def norm_name(s):
     return " ".join(str(s or "").split())
+
+
+def classify_row(r, g):
+    """Категория строки расхода (g = 'd15' | 'd30') с выделением «единица/состав»: цена < 0,6 нормы при объёме > 2 норм
+    (или цена > 1,67 при объёме < 0,5) — в СС и в списании разная единица или комплектация (плинтус, септик, грунт).
+    Единое правило для f60/f61/f62/f70."""
+    cat = r[f"{g}_cat"]
+    if cat == "сопоставимо":
+        g_ = lambda f: D(r[f"{g}_{f}"])
+        cq, Nq, cg, Ns = g_("cq"), g_("Nq"), g_("cg"), g_("Ns")
+        if cq and Nq and Ns:
+            pr = (cg / cq) / (Ns / Nq); qr = cq / Nq
+            if (pr < D("0.6") and qr > 2) or (pr > D("1.67") and qr < D("0.5")):
+                return "единица/состав"
+    return cat
