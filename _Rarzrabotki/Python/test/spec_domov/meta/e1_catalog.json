@@ -1,0 +1,97 @@
+{
+  "type": "Catalog", "name": "А_СпецификацииДомов", "synonym": "Спецификации домов и узлов",
+  "hierarchical": true, "codeLength": 9, "codeType": "String", "descriptionLength": 150,
+  "checkUnique": true, "autonumbering": true, "dataLockControlMode": "Managed",
+  "attributes": [
+    {"name": "ВидСпецификации", "type": "EnumRef.А_ВидыСпецификацийДомов", "synonym": "Вид"},
+    {"name": "СтруктураСебестоимости", "type": "CatalogRef.СтруктураСебестоимости", "synonym": "Тип дома (СС)", "flags": ["index"]},
+    {"name": "Основание", "type": "CatalogRef.А_СпецификацииДомов", "synonym": "Создано из"},
+    {"name": "Статус", "type": "EnumRef.А_СтатусыСпецификацийДомов", "synonym": "Статус"},
+    {"name": "ДатаНачала", "type": "Date", "synonym": "Действует с"},
+    {"name": "КоличествоВыпуска", "type": "Number(15,3,nonneg)", "synonym": "Количество выпуска"},
+    {"name": "ЕдиницаВыпуска", "type": "CatalogRef.КлассификаторЕдиницИзмерения", "synonym": "Единица выпуска"},
+    {"name": "НоменклатураВузла", "type": "CatalogRef.Номенклатура", "synonym": "Карточка узла (полуфабрикат / готовый)"},
+    {"name": "ДатаИзменения", "type": "DateTime", "synonym": "Изменено"},
+    {"name": "ДатаЦенНормы", "type": "Date", "synonym": "Цены нормы на"},
+    {"name": "ДатаФакта", "type": "DateTime", "synonym": "Факт и цены на"},
+    {"name": "Комментарий", "type": "String(1000)", "synonym": "Комментарий"}
+  ],
+  "tabularSections": [
+    {"name": "Состав", "attributes": [
+      {"name": "КлючСтроки", "type": "v8:UUID", "synonym": "Ключ строки"},
+      {"name": "ВидСтроки", "type": "EnumRef.А_ВидыСтрокСпецификацииДомов", "synonym": "Вид строки"},
+      {"name": "ЭтапСС", "type": "CatalogRef.ЭтапыРабот", "synonym": "Этап СС"},
+      {"name": "ПозицияСС", "type": "String(200)", "synonym": "Позиция СС"},
+      {"name": "Номенклатура", "type": "CatalogRef.Номенклатура", "synonym": "Карточка"},
+      {"name": "ИсточникКарточки", "type": "EnumRef.А_ИсточникиКарточкиСпецификации", "synonym": "Откуда карточка"},
+      {"name": "Проверено", "type": "Boolean", "synonym": "Проверено"},
+      {"name": "НеПоставляется", "type": "Boolean", "synonym": "Не поставляется"},
+      {"name": "ОбщееНазвание", "type": "CatalogRef.ОбщиеНазванияНоменклатуры", "synonym": "Общее название"},
+      {"name": "Узел", "type": "CatalogRef.А_СпецификацииДомов", "synonym": "Узел"},
+      {"name": "ПокупаетсяГотовым", "type": "Boolean", "synonym": "Покупается готовым"},
+      {"name": "Количество", "type": "Number(15,6,nonneg)", "synonym": "Количество"},
+      {"name": "ЕдиницаСтроки", "type": "CatalogRef.КлассификаторЕдиницИзмерения", "synonym": "Единица строки"},
+      {"name": "Коэффициент", "type": "Number(15,9,nonneg)", "synonym": "1 ед. карточки = k ед. строки"},
+      {"name": "ИсточникКоэффициента", "type": "EnumRef.А_ИсточникиКоэффициентаПересчетаСС", "synonym": "Источник коэффициента"},
+      {"name": "ЦенаНормы", "type": "Number(16,6,nonneg)", "synonym": "Цена нормы, с НДС"},
+      {"name": "Комментарий", "type": "String(250)", "synonym": "Примечание"}
+    ]},
+    {"name": "Дома", "attributes": [
+      {"name": "Подразделение", "type": "CatalogRef.Подразделения", "synonym": "Дом"},
+      {"name": "Комментарий", "type": "String(250)", "synonym": "Примечание"}
+    ]},
+    {"name": "СоставОснования", "attributes": [
+      {"name": "КлючСтроки", "type": "v8:UUID", "synonym": "Ключ строки"},
+      {"name": "ВидСтроки", "type": "EnumRef.А_ВидыСтрокСпецификацииДомов", "synonym": "Вид строки"},
+      {"name": "ЭтапСС", "type": "CatalogRef.ЭтапыРабот", "synonym": "Этап СС"},
+      {"name": "ПозицияСС", "type": "String(200)", "synonym": "Позиция СС"},
+      {"name": "Номенклатура", "type": "CatalogRef.Номенклатура", "synonym": "Карточка"},
+      {"name": "ОбщееНазвание", "type": "CatalogRef.ОбщиеНазванияНоменклатуры", "synonym": "Общее название"},
+      {"name": "Узел", "type": "CatalogRef.А_СпецификацииДомов", "synonym": "Узел"},
+      {"name": "ПокупаетсяГотовым", "type": "Boolean", "synonym": "Покупается готовым"},
+      {"name": "НеПоставляется", "type": "Boolean", "synonym": "Не поставляется"},
+      {"name": "Количество", "type": "Number(15,6,nonneg)", "synonym": "Количество"},
+      {"name": "ЕдиницаСтроки", "type": "CatalogRef.КлассификаторЕдиницИзмерения", "synonym": "Единица строки"},
+      {"name": "Коэффициент", "type": "Number(15,9,nonneg)", "synonym": "1 ед. карточки = k ед. строки"},
+      {"name": "ЦенаНормы", "type": "Number(16,6,nonneg)", "synonym": "Цена нормы, с НДС"}
+    ]},
+    {"name": "ДомаФакта", "attributes": [
+      {"name": "Подразделение", "type": "CatalogRef.Подразделения", "synonym": "Дом"},
+      {"name": "ФактСумма", "type": "Number(15,2)", "synonym": "Факт, без НДС"},
+      {"name": "Комментарий", "type": "String(250)", "synonym": "Примечание"}
+    ]},
+    {"name": "ЗакупочныйСостав", "attributes": [
+      {"name": "КлючСтроки", "type": "v8:UUID", "synonym": "Ключ строки"},
+      {"name": "Номенклатура", "type": "CatalogRef.Номенклатура", "synonym": "Карточка"},
+      {"name": "ГруппаЗакупки", "type": "EnumRef.А_ГруппыЗакупочнойСпецификации", "synonym": "Группа"},
+      {"name": "ОбщееНазвание", "type": "CatalogRef.ОбщиеНазванияНоменклатуры", "synonym": "Общее название"},
+      {"name": "Узел", "type": "CatalogRef.А_СпецификацииДомов", "synonym": "Узел строителя"},
+      {"name": "ПутьУзла", "type": "String(200)", "synonym": "Путь узлов"},
+      {"name": "ЭтапСС", "type": "CatalogRef.ЭтапыРабот", "synonym": "Этап СС"},
+      {"name": "ПозицияСС", "type": "String(200)", "synonym": "Позиция СС"},
+      {"name": "НормаЭталона", "type": "Number(15,6)", "synonym": "Норма эталона на дом"},
+      {"name": "СреднееФакта", "type": "Number(15,6)", "synonym": "Среднее факта на дом"},
+      {"name": "ДомовСФактом", "type": "Number(3,0)", "synonym": "Домов с фактом"},
+      {"name": "КоэффициентВариации", "type": "Number(7,3)", "synonym": "Коэффициент вариации"},
+      {"name": "Количество", "type": "Number(15,6,nonneg)", "synonym": "Количество на дом"},
+      {"name": "ИзмененоВручную", "type": "Boolean", "synonym": "Изменено вручную"},
+      {"name": "ПотребуетРешения", "type": "Boolean", "synonym": "Требует решения"},
+      {"name": "Проверено", "type": "Boolean", "synonym": "Проверено"},
+      {"name": "ЦенаБезНДС", "type": "Number(16,6)", "synonym": "Цена, без НДС"},
+      {"name": "ЦенаСНДС", "type": "Number(16,6)", "synonym": "Цена, с НДС"},
+      {"name": "ИсточникЦены", "type": "EnumRef.А_ИсточникиЦеныЗакупки", "synonym": "Цена из"},
+      {"name": "ДокументЦены", "type": "DocumentRef.ПоступлениеТоваровУслуг", "synonym": "Документ цены"},
+      {"name": "ЦенаНормы", "type": "Number(16,6)", "synonym": "Цена нормы (СС), с НДС"},
+      {"name": "Комментарий", "type": "String(250)", "synonym": "Примечание"}
+    ]},
+    {"name": "ФактПоДомам", "attributes": [
+      {"name": "Подразделение", "type": "CatalogRef.Подразделения", "synonym": "Дом"},
+      {"name": "Номенклатура", "type": "CatalogRef.Номенклатура", "synonym": "Карточка"},
+      {"name": "Списано", "type": "Number(15,6)", "synonym": "Списано"},
+      {"name": "СписаноСумма", "type": "Number(15,2)", "synonym": "Списано, без НДС"},
+      {"name": "Лежит", "type": "Number(15,6)", "synonym": "Лежит на складе дома"},
+      {"name": "ЛежитСумма", "type": "Number(15,2)", "synonym": "Лежит на складе дома, без НДС"},
+      {"name": "ИзСборки", "type": "Boolean", "synonym": "Из полуфабриката"}
+    ]}
+  ]
+}
