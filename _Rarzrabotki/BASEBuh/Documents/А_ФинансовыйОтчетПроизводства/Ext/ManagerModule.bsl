@@ -109,6 +109,7 @@
 //   6 текст рядка суми, 7 число рядка суми, 8 текст договору, 9 число договору (нуль — порожньо),
 //   10 текст «Итого», 11 число «Итого»; 12/13 текст/число рядка документа (курсив, сірий),
 //   14/15 те саме для непроведеного (коричневий). Кольори — з директорського звіту 25.09.2026.
+//   16–21 / 22–27 — числа 5/7/9/11/13/15 у форматі обсягу: тонни (3 знаки) / будинки (ціле), нуль — порожньо.
 Функция ТекстСтилейКниги()
 
 	Рамка = "<left style=""thin""><color auto=""1""/></left><right style=""thin""><color auto=""1""/></right>"
@@ -117,9 +118,11 @@
 
 	Возврат "<?xml version=""1.0"" encoding=""UTF-8"" standalone=""yes""?>"
 		+ "<styleSheet xmlns=""http://schemas.openxmlformats.org/spreadsheetml/2006/main"">"
-		+ "<numFmts count=""2"">"
+		+ "<numFmts count=""4"">"
 		+ "<numFmt numFmtId=""164"" formatCode=""#,##0.00_ ;[Red]\-#,##0.00\ ""/>"
 		+ "<numFmt numFmtId=""165"" formatCode=""#,##0.00_ ;[Red]\-#,##0.00\ ;""/>"
+		+ "<numFmt numFmtId=""166"" formatCode=""#,##0.000_ ;[Red]\-#,##0.000\ ;""/>"
+		+ "<numFmt numFmtId=""167"" formatCode=""#,##0_ ;[Red]\-#,##0\ ;""/>"
 		+ "</numFmts>"
 		+ "<fonts count=""8"">"
 		+ "<font><sz val=""10""/><name val=""Arial""/><family val=""2""/></font>"
@@ -141,7 +144,7 @@
 		+ "</fills>"
 		+ "<borders count=""2""><border><left/><right/><top/><bottom/><diagonal/></border><border>" + Рамка + "</border></borders>"
 		+ "<cellStyleXfs count=""1""><xf numFmtId=""0"" fontId=""0"" fillId=""0"" borderId=""0""/></cellStyleXfs>"
-		+ "<cellXfs count=""16"">"
+		+ "<cellXfs count=""28"">"
 		+ "<xf numFmtId=""0"" fontId=""0"" fillId=""0"" borderId=""0"" xfId=""0""/>"
 		+ "<xf numFmtId=""0"" fontId=""1"" fillId=""2"" borderId=""1"" xfId=""0"" applyFont=""1"" applyFill=""1"" applyBorder=""1"" applyAlignment=""1"">" + Центр + "</xf>"
 		+ "<xf numFmtId=""0"" fontId=""2"" fillId=""2"" borderId=""1"" xfId=""0"" applyFont=""1"" applyFill=""1"" applyBorder=""1"" applyAlignment=""1"">" + Центр + "</xf>"
@@ -158,9 +161,26 @@
 		+ "<xf numFmtId=""165"" fontId=""6"" fillId=""0"" borderId=""1"" xfId=""0"" applyNumberFormat=""1"" applyFont=""1"" applyBorder=""1"" applyAlignment=""1"">" + Центр + "</xf>"
 		+ "<xf numFmtId=""0"" fontId=""7"" fillId=""0"" borderId=""1"" xfId=""0"" applyFont=""1"" applyBorder=""1"" applyAlignment=""1""><alignment vertical=""top"" wrapText=""1"" indent=""1""/></xf>"
 		+ "<xf numFmtId=""165"" fontId=""7"" fillId=""0"" borderId=""1"" xfId=""0"" applyNumberFormat=""1"" applyFont=""1"" applyBorder=""1"" applyAlignment=""1"">" + Центр + "</xf>"
+		+ ТекстСтилейОбъема(Центр)
 		+ "</cellXfs>"
 		+ "<cellStyles count=""1""><cellStyle name=""Normal"" xfId=""0"" builtinId=""0""/></cellStyles>"
 		+ "</styleSheet>";
+
+КонецФункции
+
+// Стилі 16–21 (тонни, формат 166) і 22–27 (будинки, 167): шрифт і заливка — як у числових стилях 5/7/9/11/13/15.
+Функция ТекстСтилейОбъема(Центр)
+
+	Текст = "";
+	Для Каждого ФорматОбъема Из СтрРазделить("166,167", ",") Цикл
+		Для Каждого Основа Из СтрРазделить("0:4,4:3,4:0,5:5,6:0,7:0", ",") Цикл
+			Части = СтрРазделить(Основа, ":");
+			Текст = Текст + "<xf numFmtId=""" + ФорматОбъема + """ fontId=""" + Части[0] + """ fillId=""" + Части[1]
+				+ """ borderId=""1"" xfId=""0"" applyNumberFormat=""1"" applyFont=""1"" applyFill=""1"" applyBorder=""1"""
+				+ " applyAlignment=""1"">" + Центр + "</xf>";
+		КонецЦикла;
+	КонецЦикла;
+	Возврат Текст;
 
 КонецФункции
 
