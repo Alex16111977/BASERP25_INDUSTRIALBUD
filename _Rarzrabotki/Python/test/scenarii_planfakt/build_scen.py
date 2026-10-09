@@ -12,7 +12,7 @@ from openpyxl.utils import get_column_letter
 
 BASE = r"C:\Configuration_downloads\BASERP25\_Rarzrabotki\Письмо Директору по отчетам на производство\09102026"
 SRC = os.path.join(BASE, "План Факт Производство 09-10-2026.xlsx")
-OUT = os.path.join(BASE, "План Факт Производство 09-10-2026 сценарии с примечаниями.xlsx")
+OUT = os.path.join(BASE, "План Факт Производство 09-10-2026 сценарии.xlsx")
 from fo_docs import read as read_fo
 FO = read_fo()
 
@@ -137,79 +137,12 @@ for col in "PQRSTUVW":
 ws.column_dimensions["X"].width = 70
 tot = {c: sum(v[c] for v in calc.values()) for c in "PQRSTUVW"}
 
-# ---- низ: Ф1/Ф2/ФА/Free CF/Fix (вводные перенесены с 25.09 — обновить по CF) ----
-F1, F2, FA, FIX = 4980378.0, 2352215.0, -2845000.0, 2002446.78759457
-b = TOT + 5
-bold = Font(bold=True)
-numfmt = ws["O%d" % TOT].number_format or "#,##0.00"
-ws["P%d" % b] = "ВИРОБНИЦТВО 09-10-2026"
-ws["P%d" % b].font = bold
-lines = [("R", "Ф1", F1), ("R", "Ф2", F2), ("R", "ФА", FA)]
-for i, (lc, lab, val) in enumerate(lines):
-    r = b + i
-    ws["%s%d" % (lc, r)] = lab
-    ws["S%d" % r] = val
-    ws["S%d" % r].fill = YELLOW
-    ws["W%d" % r] = "=S%d" % r
-rF1, rF2, rFA = b, b + 1, b + 2
-rCF, rFIX, rOST = b + 3, b + 5, b + 7
-ws["Q%d" % rCF] = "Free CF до конца месяца"
-ws["S%d" % rCF] = "=S%d+S%d+S%d" % (TOT, rF1, rFA)
-ws["W%d" % rCF] = "=W%d+W%d+W%d" % (TOT, rF1, rFA)
-ws["Q%d" % rFIX] = "Fix Ф1 следующего месяца"
-ws["S%d" % rFIX] = FIX
-ws["S%d" % rFIX].fill = YELLOW
-ws["W%d" % rFIX] = "=S%d" % rFIX
-ws["Q%d" % rOST] = "Остаток после фиксов"
-ws["S%d" % rOST] = "=S%d-S%d" % (rCF, rFIX)
-ws["W%d" % rOST] = "=W%d-W%d" % (rCF, rFIX)
-for r in (rF1, rF2, rFA, rCF, rFIX, rOST):
-    for col in "SW":
-        ws["%s%d" % (col, r)].number_format = "#,##0.00"
-for r in (rCF, rOST):
-    for col in "QSW":
-        ws["%s%d" % (col, r)].font = bold
-
-cf_o = tot["S"] + F1 + FA
-cf_p = tot["W"] + F1 + FA
-ost_o, ost_p = cf_o - FIX, cf_p - FIX
-
-
-def vyvod(name, ost):
-    if ost >= 0:
-        return ("При %s сценарии ДС будет достаточно для формирования Ф2 и фиксов следующего месяца согласно правил "
-                "компании (остаток после фиксов %s грн)." % (name, f"{ost:,.2f}".replace(",", " ").replace(".", ",")))
-    if -ost <= F2:
-        return ("При %s сценарии не будут выполнены правила компании по формированию Ф2 следующего месяца "
-                "(не хватает %s грн). Фиксы следующего месяца будут обеспечены." % (name, f"{-ost:,.2f}".replace(",", " ").replace(".", ",")))
-    return ("При %s сценарии ДС не хватит на фиксы следующего месяца даже с учётом Ф2 (не хватает %s грн)."
-            % (name, f"{-ost:,.2f}".replace(",", " ").replace(".", ",")))
-
-
-r0 = rOST + 3
-ws["P%d" % r0] = vyvod("оптимистическом", ost_o)
-ws["P%d" % (r0 + 1)] = vyvod("пессимистическом", ost_p)
-ws["P%d" % (r0 + 2)] = "Все это при условии, что Лимиты выделенные обеспечат выполнение заказов, согласно графика производства."
-ws["P%d" % (r0 + 4)] = ("Жёлтым — вводные: поступления по сценариям (источник — колонка X, финотчёт 09.10), потребность (заявки производства; на 09.10 не даны — пусто), "
-                       "Ф1/Ф2/ФА/Fix (перенесены с 25.09 — обновить по CF). Лимит = max(0; поступления − недобор маржи) при наличии "
-                       "поступлений; доп. маржа = поступления − лимит (у «МД ООН 2026» ещё − потребность: аванс получен ранее).")
+# Нижний раздел (Ф1/Ф2/ФА, Free CF, Fix, выводы) по решению пользователя 09.10 не выводится.
 from scen_notes import add_notes
-bottom = [
-    ("S%d" % rF1, "Ф1 — безналичные средства направления «Производство» (CF, лист «Остатки ДС»). Перенесено из файла 25.09 — обновить по CF на 09.10."),
-    ("S%d" % rF2, "Ф2 — касса без резерва (CF). В Free CF не входит, справочно: из неё закрывается разрыв, если остатка после фиксов не хватает. Перенесено из 25.09 — обновить."),
-    ("S%d" % rFA, "ФА — обязательство перед финагентом. Перенесено из 25.09 — обновить."),
-    ("S%d" % rCF, "= доп. маржа (итог оптимистичного) + Ф1 + ФА."),
-    ("W%d" % rCF, "= доп. маржа (итог пессимистичного) + Ф1 + ФА."),
-    ("S%d" % rFIX, "Фиксированные расходы Ф1 следующего месяца (CF). Перенесено из 25.09 — обновить."),
-    ("S%d" % rOST, "= Free CF − Fix Ф1. ≥ 0 — хватает на фиксы и Ф2 по правилам; < 0, но меньше Ф2 — фиксы закроем за счёт Ф2, правило Ф2 не выполнено; больше Ф2 — фиксов не хватит."),
-    ("W%d" % rOST, "= Free CF − Fix Ф1 пессимистичного сценария (правила — как у оптимистичного)."),
-]
-add_notes(ws, rows, inp, calc, num, TOT, bottom)
+add_notes(ws, rows, inp, calc, num, TOT, [])
 wb.save(OUT)
 print("saved", OUT)
 for n, v in calc.items():
     if any(abs(x) > 0.004 for x in v.values()):
         print("%-28s P=%13.2f Q=%13.2f R=%13.2f S=%14.2f | T=%13.2f U=%13.2f W=%14.2f" % (n, v["P"], v["Q"], v["R"], v["S"], v["T"], v["U"], v["W"]))
 print("ИТОГО  P=%.2f Q=%.2f R=%.2f S=%.2f | T=%.2f U=%.2f W=%.2f" % tuple(tot[c] for c in "PQRSTUW"))
-print("Free CF опт %.2f песс %.2f | остаток опт %.2f песс %.2f" % (cf_o, cf_p, ost_o, ost_p))
-print(ws["P%d" % r0].value); print(ws["P%d" % (r0 + 1)].value)
