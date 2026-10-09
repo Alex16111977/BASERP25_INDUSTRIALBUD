@@ -165,6 +165,16 @@ def last_purchase_before(project):
     return None if t.Количество() == 0 else t.Получить(0).Дата
 
 
+def doc_date(ref):
+    """Дата документа компонентами из запроса (без COM-сдвига дат)."""
+    q = erp.NewObject("Запрос")
+    q.Текст = ("ВЫБРАТЬ ГОД(Д.Дата) КАК Г, МЕСЯЦ(Д.Дата) КАК М, ДЕНЬ(Д.Дата) КАК Дн, ЧАС(Д.Дата) КАК Ч, МИНУТА(Д.Дата) КАК Мин, "
+               "СЕКУНДА(Д.Дата) КАК С ИЗ Документ.А_ПотребаЗавершенняПроекту КАК Д ГДЕ Д.Ссылка = &Ссылка")
+    q.УстановитьПараметр("Ссылка", ref)
+    r = q.Выполнить().Выгрузить().Получить(0)
+    return dt.datetime(int(r.Г), int(r.М), int(r.Дн), int(r.Ч), int(r.Мин), int(r.С))
+
+
 def section_consumption(rep):
     print("\n[2] Списание потреби закупками после даты списка (транзакция с откатом)")
     p = "МД IRC 2026"
@@ -175,9 +185,11 @@ def section_consumption(rep):
     last_local = dt.datetime(last.year, last.month, last.day) - dt.timedelta(days=1)
     moment = dt.datetime(last_local.year, last_local.month, last_local.day, 12)
     print(f"      последняя закупка по ОН списка {S(last)} → момент списка {moment:%d.%m.%Y %H:%M}")
+    before = docs()[p]
+    orig_sum, orig_date = float(before["Сумма"]), doc_date(before["Ссылка"])
     erp.НачатьТранзакцию()
     try:
-        obj = docs()[p]["Ссылка"].ПолучитьОбъект()
+        obj = before["Ссылка"].ПолучитьОбъект()
         obj.Дата = moment + SHIFT
         obj.Записать(erp.РежимЗаписиДокумента.Проведение)
         rows = report_rows(rep, D_REPORT)
@@ -211,7 +223,7 @@ def section_consumption(rep):
         tot_potr = sum(v["ПотребаГрн"] for v in g2.values())
         check(abs(tot_without - tot_potr) < 0.01 and tot_without >= tot_with - 0.01,
               f"без ОН потреба не списывается: Σ залишок {tot_without:,.2f} = Σ потреба {tot_potr:,.2f} ≥ с ОН {tot_with:,.2f}".replace(",", " "))
-        obj.Дата = dt.datetime(2026, 10, 8, 11, 36, 56) + SHIFT
+        obj.Дата = orig_date + SHIFT
         obj.Записать(erp.РежимЗаписиДокумента.Проведение)
         rows3 = report_rows(rep, D_REPORT)
         a3 = by_project(rows3)[p]
@@ -220,7 +232,9 @@ def section_consumption(rep):
               "на дату списка итог Прогноза не зависит от сопоставления ОН")
     finally:
         erp.ОтменитьТранзакцию()
-    check(abs(float(docs()[p]["Сумма"]) - 755669.40) < 0.01, "после отката документ IRC не изменился")
+    after_rb = docs()[p]
+    check(abs(float(after_rb["Сумма"]) - orig_sum) < 0.01 and doc_date(after_rb["Ссылка"]) == orig_date,
+          f"после отката документ IRC не изменился (сумма {orig_sum:,.2f}, дата {orig_date:%d.%m.%Y %H:%M:%S})".replace(",", " "))
 
 
 def expected_remainders(project, moment):
@@ -327,7 +341,9 @@ if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--erf")
     ap.add_argument("--builtin", action="store_true")
+    ap.add_argument("--date", default="2026-10-08", help="дата отчёта ГГГГ-ММ-ДД (по умолчанию дата списка директора)")
     args = ap.parse_args()
+    D_REPORT = dt.datetime.strptime(args.date, "%Y-%m-%d").replace(hour=12) + SHIFT
     rep = report_object(args)
     report_rows_cache.append(section_basic(rep))
     section_consumption(rep)
