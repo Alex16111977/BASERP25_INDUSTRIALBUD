@@ -1,0 +1,77 @@
+﻿<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>Інструкція: завантаження накладної з Excel у Реалізацію</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Segoe UI',Tahoma,sans-serif; background:#f4f8fb; color:#1a3a4a; padding:16px 18px; line-height:1.5; font-size:13px; }
+.header { background:#1b6b93; background:linear-gradient(135deg,#1b6b93,#4fc0d0); color:#fff; padding:14px 20px; border-radius:10px; margin-bottom:14px; }
+.header h1 { font-size:17px; font-weight:600; margin-bottom:3px; }
+.header .sub { font-size:12px; opacity:.9; }
+h2 { font-size:14px; color:#1b6b93; margin:16px 0 8px; border-left:3px solid #4fc0d0; padding-left:9px; }
+p { margin-bottom:6px; }
+.card { background:#fff; border:1px solid #d6e6ef; border-radius:8px; padding:10px 14px; margin-bottom:10px; }
+.warn { background:#fff7e6; border-color:#f0c36d; }
+.step { display:table; width:100%; margin-bottom:8px; }
+.num { display:table-cell; width:34px; vertical-align:top; }
+.num span { display:inline-block; width:26px; height:26px; line-height:26px; text-align:center; border-radius:13px; background:#1b6b93; color:#fff; font-weight:600; }
+.txt { display:table-cell; vertical-align:top; padding-top:3px; }
+.btn { display:inline-block; background:#eef5f9; border:1px solid #b9d3e0; border-radius:4px; padding:0 6px; font-weight:600; white-space:nowrap; }
+table { border-collapse:collapse; width:100%; background:#fff; }
+td { border:1px solid #d6e6ef; padding:5px 8px; vertical-align:top; font-size:12px; }
+.c { width:190px; font-weight:600; }
+.ok { background:#dcf5dc; } .sim { background:#fff0c8; } .out { background:#ffe1b4; } .no { background:#ffd7d7; } .off { background:#ececec; }
+ul { margin:4px 0 6px 20px; } li { margin-bottom:3px; }
+</style>
+</head>
+<body>
+<div class="header">
+<h1>Завантаження накладної з Excel у Реалізацію товарів</h1>
+<div class="sub">Програма сама шукає картки товарів серед залишків складів «Чорноморськ» і «Чорноморськ Списання». Вам лишається перевірити й підтвердити.</div>
+</div>
+
+<h2>Як завантажити — 4 кроки</h2>
+<div class="card">
+<div class="step"><div class="num"><span>1</span></div><div class="txt">Відкрийте документ <b>Реалізація</b> і запустіть обробку з кнопки <b>Заповнити</b> (або виберіть документ у полі «Реалізація»). Виберіть <b>файл накладної</b> Excel (xls або xlsx).</div></div>
+<div class="step"><div class="num"><span>2</span></div><div class="txt">Натисніть <span class="btn">1. Прочитати і зіставити</span>. Програма покаже всі рядки накладної і запропонує картку для кожного рядка.</div></div>
+<div class="step"><div class="num"><span>3</span></div><div class="txt">Перевірте таблицю за кольором (див. нижче). Поставте <b>✓</b> там, де картка правильна. Якщо картка не та — виберіть іншу у колонці «Номенклатура 1С» або <b>двічі клацніть</b> потрібний варіант у нижній таблиці.</div></div>
+<div class="step"><div class="num"><span>4</span></div><div class="txt">Звірте підсумки під таблицею з накладною і натисніть <span class="btn">2. Завантажити в документ</span>. У документ потраплять <b>лише рядки з ✓</b>.</div></div>
+</div>
+
+<h2>Що означають кольори</h2>
+<table>
+<tr><td class="c ok">Зелений — підтверджено</td><td>Картку знайдено точно (за кодом 1С, за назвою або ви вже вибирали її раніше). Нічого робити не треба.</td></tr>
+<tr><td class="c sim">Жовтий — схоже, перевірте</td><td>Програма знайшла схожу картку серед залишків. Подивіться назву і розміри. Правильно — поставте ✓. Кнопка <span class="btn">Підтвердити схожі ≥ 85 %</span> ставить ✓ усім жовтим рядкам з високою схожістю.</td></tr>
+<tr><td class="c out">Помаранчевий — поза залишками</td><td>Схожа картка є в довіднику, але її <b>немає на складах</b>. Перевірте уважно, чи це той товар.</td></tr>
+<tr><td class="c no">Червоний — не знайдено</td><td>Картку не знайдено. Виберіть її вручну в колонці «Номенклатура 1С» або подивіться варіанти внизу.</td></tr>
+<tr><td class="c off">Сірий — знято</td><td>Ви зняли ✓ або натиснули «Забути вибір рядка». Рядок не завантажиться, поки ви не виберете картку.</td></tr>
+</table>
+<p style="margin-top:6px">Перемикач над таблицею показує лише потрібні рядки: <b>Потребують рішення</b>, <b>Не знайдено</b>, <b>Підтверджені</b> або <b>Усі</b>.</p>
+
+<h2>Підсумки під таблицею</h2>
+<div class="card">
+<ul>
+<li><b>Усього у файлі</b> — скільки рядків, яка кількість і сума без ПДВ у накладній. Поруч — сума з рядка «Разом» самої накладної: якщо збігається, побачите зелену позначку ✓.</li>
+<li><b>Готово до завантаження</b> — рядки з ✓: саме вони потраплять у документ.</li>
+<li><b>Не підтверджено</b> — що ще треба перевірити. Коли тут 0 — накладна завантажиться повністю.</li>
+</ul>
+</div>
+
+<h2>Корисно знати</h2>
+<div class="card">
+<ul>
+<li>Програма <b>запам'ятовує ваш вибір</b>: наступного разу така сама назва знайдеться одразу (зелена, «Вибрано раніше»). Якщо запам'ятали неправильно — виділіть рядок і натисніть <span class="btn">Забути вибір рядка</span>.</li>
+<li>Можна завантажувати <b>кілька разів</b>: товари документа щоразу замінюються, а не дублюються (галочка «Очищати товари документа» на закладці «Налаштування»).</li>
+<li>Сума рядка береться <b>точно з накладної</b>. Якщо в накладній тонни, а картка в кілограмах — кількість перераховується автоматично.</li>
+<li>До документа прикріплюються <b>файл накладної</b> і <b>журнал зіставлення</b> (кнопка «Приєднані файли» в документі). При повторному завантаженні вони оновлюються, нові копії не додаються.</li>
+<li>Кнопка <span class="btn">Excel з кодами 1С</span> зберігає накладну з кодами карток: наступного разу такий файл завантажиться без перевірки (колонка коду — 6).</li>
+</ul>
+</div>
+<div class="card warn">
+<p><b>Документ має бути не проведений.</b> Якщо проведений — спочатку скасуйте проведення. Після завантаження закрийте і знову відкрийте документ, щоб побачити нові товари.</p>
+<p>Якщо колонки у вашій накладній інші — вкажіть їх номери на закладці <b>Налаштування</b> (A = 1, B = 2, C = 3 …). Налаштування запам'ятовуються.</p>
+</div>
+</body>
+</html>
