@@ -29,4 +29,15 @@ for v in sorted(set(re.findall(r'^\t+(\w+) = ', m, re.M))):
 # заголовки без uk
 for blk in re.findall(r'<Title(?: formatted="false")?>(.*?)</Title>', x, re.S):
     if "<v8:lang>uk</v8:lang>" not in blk: bad.append("Title без uk")
+# ЗначениеВРеквизитФормы вимагає однаковий набір колонок у ТЗ модуля об'єкта і в реквізиті форми
+# (09.10: зайва колонка «Группа» у реквізиті -> «Недопустимое значение параметра (параметр номер '2')»)
+om = open(K + r"\Ext\ObjectModule.bsl", encoding="utf-8-sig").read()
+for атр, функ in (("Распознавание", "НоваяТаблицаРаспознавания"), ("Варианты", "НоваяТаблицаВариантов")):
+    blk = re.search(rf'<Attribute name="{атр}" id="\d+">(.*?)</Attribute>', x, re.S)
+    fb = re.search(rf'Функция {функ}\(\)(.*?)КонецФункции', om, re.S)
+    if blk and fb:
+        a = set(re.findall(r'<Column name="([^"]+)"', blk.group(1)))
+        b = set(re.findall(r'Колонки\.Добавить\("([^"]+)"', fb.group(1)))
+        if a != b:
+            bad.append(f"колонки {атр} ≠ {функ}: {sorted(a ^ b)}")
 print("ПРОБЛЕМИ:", bad or "немає", "| елементів", len(names), "| процедур", len(procs))
