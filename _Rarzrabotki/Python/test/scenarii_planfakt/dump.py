@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """Дамп ячеек xlsx/xls (значения и формулы) в текст. Только чтение исходников."""
-import sys, os, zipfile, io
+import sys, os, zipfile, io, tempfile
 sys.stdout.reconfigure(encoding="utf-8")
 import openpyxl, xlrd
 
@@ -9,7 +9,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 
 def fixed_copy(path):
     """1С кладёт xl/SharedStrings.xml с заглавной S — переписать zip в scratch."""
-    out = os.path.join(HERE, "_fix_" + os.path.basename(path))
+    out = os.path.join(tempfile.gettempdir(), "_fix_" + os.path.basename(path))
     with zipfile.ZipFile(path) as zi, zipfile.ZipFile(out, "w", zipfile.ZIP_DEFLATED) as zo:
         for it in zi.infolist():
             data = zi.read(it.filename)
