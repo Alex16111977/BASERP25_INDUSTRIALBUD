@@ -32,7 +32,7 @@
 | [04_balans_disbalans_obmen.md](04_balans_disbalans_obmen.md) | Управленческий баланс, обработка дисбаланса, обмен с BuhBud | Трогаете баланс или обмен |
 | [05_priemka_i_testy.md](05_priemka_i_testy.md) | Python COM тесты и ожидаемые результаты | Перед любой правкой контура |
 | [06_instrukciya_polzovatelya.md](06_instrukciya_polzovatelya.md) | Как устроена и пересобирается HTML-инструкция | Поменялась форма или поведение |
-| [07_podproekt2_procenty.md](07_podproekt2_procenty.md) | Начисление процентов по Excel, переделка РКО «%%» | Следующий этап |
+| [07_podproekt2_procenty.md](07_podproekt2_procenty.md) | Документ «Нарахування відсотків за кредитами»: способы, ставки, формула, ПТУ, результат 07–09.2026 | Начисляете проценты |
 | [LESSONS.md](LESSONS.md) | Грабли этой доработки | Перед правкой |
 
 ## FAQ
